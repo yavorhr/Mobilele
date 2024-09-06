@@ -18,8 +18,6 @@ public class Offer extends BaseEntity {
   private Double price;
   private TransmissionType transmission;
   private Integer year;
-  private Instant created;
-  private Instant modified;
   private Model model;
   private User seller;
 
@@ -60,16 +58,6 @@ public class Offer extends BaseEntity {
     return year;
   }
 
-  @Column(columnDefinition = "DATETIME")
-  public Instant getCreated() {
-    return created;
-  }
-
-  @Column(columnDefinition = "DATETIME")
-  public Instant getModified() {
-    return modified;
-  }
-
   @ManyToOne
   public Model getModel() {
     return model;
@@ -108,14 +96,6 @@ public class Offer extends BaseEntity {
     this.year = year;
   }
 
-  public void setCreated(Instant created) {
-    this.created = created;
-  }
-
-  public void setModified(Instant modified) {
-    this.modified = modified;
-  }
-
   public void setModel(Model model) {
     this.model = model;
   }
@@ -124,8 +104,5 @@ public class Offer extends BaseEntity {
     this.seller = seller;
   }
 
-  @PostConstruct
-  private void setCreatedTime() {
-    setCreated(Instant.now());
-  }
+
 }
