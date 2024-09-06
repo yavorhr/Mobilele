@@ -1,10 +1,7 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -18,8 +15,6 @@ public class User extends BaseEntity {
   private boolean isActive;
   private UserRole role;
   private String imageUrl;
-  private Instant created;
-  private Instant modified;
 
   public User() {
   }
@@ -54,16 +49,6 @@ public class User extends BaseEntity {
     return imageUrl;
   }
 
-  @Column(columnDefinition = "DATETIME")
-  public Instant getCreated() {
-    return created;
-  }
-
-  @Column(columnDefinition = "DATETIME")
-  public Instant getModified() {
-    return modified;
-  }
-
   public void setUsername(String username) {
     this.username = username;
   }
@@ -88,16 +73,4 @@ public class User extends BaseEntity {
     this.imageUrl = imageUrl;
   }
 
-  public void setCreated(Instant created) {
-    this.created = created;
-  }
-
-  public void setModified(Instant modified) {
-    this.modified = modified;
-  }
-
-  @PostConstruct
-  private void setCreatedTime() {
-    setCreated(Instant.now());
-  }
 }
