@@ -1,26 +1,24 @@
 package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
-
-import java.time.Instant;
-
 
 @Entity
 @Table(name = "models")
 public class Model extends BaseEntity {
-
   private String name;
   private CategoryTypeEnum category;
   private String imageUrl;
   private Integer startYear;
   private Integer endYear;
-  private Instant created;
-  private Instant modified;
   private Brand brand;
 
   public Model() {
+  }
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  public Brand getBrand() {
+    return brand;
   }
 
   @Column(nullable = false, unique = true)
@@ -49,21 +47,6 @@ public class Model extends BaseEntity {
     return endYear;
   }
 
-  @Column(columnDefinition = "DATETIME")
-  public Instant getCreated() {
-    return created;
-  }
-
-  @Column(columnDefinition = "DATETIME")
-  public Instant getModified() {
-    return modified;
-  }
-
-  @ManyToOne
-  public Brand getBrand() {
-    return brand;
-  }
-
   public void setName(String name) {
     this.name = name;
   }
@@ -84,20 +67,7 @@ public class Model extends BaseEntity {
     this.endYear = endYear;
   }
 
-  public void setCreated(Instant created) {
-    this.created = created;
-  }
-
-  public void setModified(Instant modified) {
-    this.modified = modified;
-  }
-
   public void setBrand(Brand brand) {
     this.brand = brand;
-  }
-
-  @PostConstruct
-  private void setCreatedTime() {
-    setCreated(Instant.now());
   }
 }
