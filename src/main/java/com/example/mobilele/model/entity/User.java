@@ -1,10 +1,7 @@
 package com.example.mobilele.model.entity;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,8 +9,9 @@ public class User extends BaseEntity {
   private String username;
   private String firstName;
   private String lastName;
+  private String password;
   private boolean isActive;
-  private UserRole role;
+  private List<UserRole> roles;
   private String imageUrl;
 
   public User() {
@@ -39,14 +37,19 @@ public class User extends BaseEntity {
     return isActive;
   }
 
-  @OneToOne
-  public UserRole getRole() {
-    return role;
+  @ManyToMany
+  public List<UserRole> getRoles() {
+    return roles;
   }
 
   @Column(name = "image_url")
   public String getImageUrl() {
     return imageUrl;
+  }
+
+  @Column(name = "password", nullable = false)
+  public String getPassword() {
+    return password;
   }
 
   public void setUsername(String username) {
@@ -65,12 +68,15 @@ public class User extends BaseEntity {
     isActive = active;
   }
 
-  public void setRole(UserRole role) {
-    this.role = role;
-  }
-
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setRoles(List<UserRole> roles) {
+    this.roles = roles;
+  }
 }
