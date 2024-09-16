@@ -1,6 +1,7 @@
 package com.example.mobilele.model.entity;
 
-import com.example.mobilele.model.entity.enums.RoleEnum;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
@@ -8,17 +9,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "roles")
 public class UserRole extends BaseEntity {
-  private RoleEnum name;
+  private UserRoleEnum role;
 
   public UserRole() {
   }
 
   @Enumerated
-  public RoleEnum getName() {
-    return name;
+  @Column(nullable = false)
+  public UserRoleEnum getRole() {
+    return role;
   }
 
-  public void setName(RoleEnum name) {
-    this.name = name;
+  public void setRole(UserRoleEnum name) {
+    this.role = name;
   }
 }
