@@ -4,6 +4,7 @@ import com.example.mobilele.model.dto.service.UserLoginServiceModel;
 import com.example.mobilele.model.entity.User;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.user.CurrentUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,21 +14,39 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final CurrentUser currentUser;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CurrentUser currentUser) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
+    this.currentUser = currentUser;
   }
 
   @Override
   public boolean login(UserLoginServiceModel userLoginServiceModel) {
 
-    Optional<User> user = this.userRepository.findByUsername(userLoginServiceModel.getUsername());
+    Optional<User> loggedInUserOpt =
+            this.userRepository.findByUsername(userLoginServiceModel.getUsername());
 
-    if (user.isEmpty()) {
+    if (loggedInUserOpt.isEmpty()) {
+      logout();
       return false;
     } else {
-      return passwordEncoder.matches(userLoginServiceModel.getPassword(), user.get().getPassword());
+      boolean success = passwordEncoder.matches(
+              userLoginServiceModel.getPassword(),
+              loggedInUserOpt.get().getPassword());
+
+      if (success) {
+        User loggedInUser = loggedInUserOpt.get();
+
+        currentUser.setUsername(loggedInUser.getUsername());
+        currentUser.setLoggedIn(true);
+        currentUser.setFirstName(loggedInUser.getFirstName());
+        currentUser.setLastName(loggedInUser.getLastName());
+      }
+
+      return success;
     }
   }
+  
 }
