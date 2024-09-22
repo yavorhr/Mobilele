@@ -37,12 +37,6 @@ public class UserLoginController {
     return "auth-login";
   }
 
-  @GetMapping("/users/logout")
-  public String logout() {
-    this.currentUser.clean();
-    return "redirect:/";
-  }
-
   // helpers
 
   private UserLoginServiceModel mapToServiceModel(UserLoginBindingModel userLoginBindingModel) {
