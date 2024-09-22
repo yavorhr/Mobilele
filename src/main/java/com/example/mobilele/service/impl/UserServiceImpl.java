@@ -48,5 +48,10 @@ public class UserServiceImpl implements UserService {
       return success;
     }
   }
-  
+
+  @Override
+  public void logout() {
+    this.currentUser.clean();
+  }
+
 }
