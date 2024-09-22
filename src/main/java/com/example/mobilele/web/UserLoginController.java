@@ -3,7 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.dto.binding.UserLoginBindingModel;
 import com.example.mobilele.model.dto.service.UserLoginServiceModel;
 import com.example.mobilele.service.UserService;
-import org.modelmapper.ModelMapper;
+import com.example.mobilele.user.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserLoginController {
   private final UserService userService;
-  private final ModelMapper modelMapper;
+  private final CurrentUser currentUser;
 
-  public UserLoginController(UserService userService, ModelMapper modelMapper) {
+  public UserLoginController(UserService userService, CurrentUser currentUser) {
     this.userService = userService;
-    this.modelMapper = modelMapper;
+    this.currentUser = currentUser;
   }
 
   @GetMapping("/users/login")
@@ -28,13 +28,19 @@ public class UserLoginController {
   public String registerUser(@ModelAttribute UserLoginBindingModel userLoginBindingModel) {
     UserLoginServiceModel userLoginServiceModel = mapToServiceModel(userLoginBindingModel);
 
-    boolean isLoginSuccessful = this.userService.login(userLoginServiceModel);
+    boolean loginSuccessful = this.userService.login(userLoginServiceModel);
 
-    if (isLoginSuccessful) {
+    if (loginSuccessful) {
       return "redirect:/";
     }
 
     return "auth-login";
+  }
+
+  @GetMapping("/users/logout")
+  public String logout() {
+    this.currentUser.clean();
+    return "redirect:/";
   }
 
   // helpers
