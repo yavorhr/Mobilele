@@ -53,5 +53,4 @@ public class UserServiceImpl implements UserService {
   public void logout() {
     this.currentUser.clean();
   }
-
 }
