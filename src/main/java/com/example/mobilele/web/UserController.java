@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserLoginController {
+public class UserController {
   private final UserService userService;
   private final CurrentUser currentUser;
 
-  public UserLoginController(UserService userService, CurrentUser currentUser) {
+  public UserController(UserService userService, CurrentUser currentUser) {
     this.userService = userService;
     this.currentUser = currentUser;
   }
@@ -25,7 +25,7 @@ public class UserLoginController {
   }
 
   @PostMapping("/users/login")
-  public String registerUser(@ModelAttribute UserLoginBindingModel userLoginBindingModel) {
+  public String loginUser(@ModelAttribute UserLoginBindingModel userLoginBindingModel) {
     UserLoginServiceModel userLoginServiceModel = mapToServiceModel(userLoginBindingModel);
 
     boolean loginSuccessful = this.userService.login(userLoginServiceModel);
