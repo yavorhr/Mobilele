@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -37,19 +37,23 @@
                         <a class="dropdown-item" href="/">Something else here</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <!-- Logout start  -->
+                <li th:if="${@currentUser.isLoggedIn()}" class="nav-item">
                     <div class="form-inline my-2 my-lg-0 border px-3">
-                        <div class="logged-user"
-                             text="Welcome, Gosho"></div>
-                        <a class="nav-link" href="/users/logout">Logout</a>
+                        <div class="logged-user">Welcome,
+                            <th:block th:text="${@currentUser.getFirstName()}">
+                            </th:block>
+                        </div>
+                        <a class="nav-link" th:href="@{/users/logout}">Logout</a>
                     </div>
                 </li>
+                <!-- EO Logout  -->
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/register">Register</a>
+                <li th:unless="${@currentUser.isLoggedIn()}"  class="nav-item">
+                    <a class="nav-link" th:href="@{/users/register}">Register</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/login">Login</a>
+                <li th:unless="${@currentUser.isLoggedIn()}" class="nav-item">
+                    <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
 
             </ul>
