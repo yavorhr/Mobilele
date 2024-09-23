@@ -1,7 +1,12 @@
 package com.example.mobilele.user;
 
+import com.example.mobilele.model.entity.UserRole;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @SessionScope
@@ -10,8 +15,10 @@ public class CurrentUser {
   private String username;
   private String firstName;
   private String lastName;
+  private Set<UserRoleEnum> userRoles;
 
   public CurrentUser() {
+    this.userRoles = new HashSet<>();
   }
 
   public boolean isLoggedIn() {
@@ -30,6 +37,10 @@ public class CurrentUser {
     return lastName;
   }
 
+  public Set<UserRoleEnum> getUserRoles() {
+    return userRoles;
+  }
+
   public void setLoggedIn(boolean loggedIn) {
     isLoggedIn = loggedIn;
   }
@@ -46,10 +57,27 @@ public class CurrentUser {
     this.lastName = lastName;
   }
 
+  public void setUserRoles(Set<UserRoleEnum> userRoles) {
+    this.userRoles = userRoles;
+  }
+
+  public void addRole(UserRoleEnum role) {
+    this.userRoles.add(role);
+  }
+
+  public boolean isAdmin() {
+    return this.userRoles.contains(UserRoleEnum.ADMIN);
+  }
+
   public void clean() {
     this.setFirstName("");
     this.setLastName("");
     this.setLoggedIn(false);
     this.setUsername("");
+    this.clearRoles();
+  }
+
+  private void clearRoles() {
+    this.userRoles.clear();
   }
 }
