@@ -19,6 +19,11 @@ public class UsersController {
     this.currentUser = currentUser;
   }
 
+  @GetMapping("/users/register")
+  public String registerPage(){
+    return "auth-register";
+  }
+
   @GetMapping("/users/login")
   public String loginPage() {
     return "auth-login";
@@ -33,7 +38,6 @@ public class UsersController {
     if (loginSuccessful) {
       return "redirect:/";
     }
-
     return "auth-login";
   }
 
