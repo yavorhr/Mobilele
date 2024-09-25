@@ -8,10 +8,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class UserRole extends BaseEntity {
+public class UserRoleEntity extends BaseEntity {
   private UserRoleEnum role;
 
-  public UserRole() {
+  public UserRoleEntity() {
   }
 
   @Enumerated

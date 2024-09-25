@@ -1,6 +1,5 @@
 package com.example.mobilele.user;
 
-import com.example.mobilele.model.entity.UserRole;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

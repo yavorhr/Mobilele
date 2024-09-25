@@ -3,7 +3,7 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.model.dto.service.UserLoginServiceModel;
 import com.example.mobilele.model.dto.service.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
-import com.example.mobilele.model.entity.UserRole;
+import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
@@ -66,14 +66,14 @@ public class UserServiceImpl implements UserService {
   @Override
   public void initUsers() {
     if (userRepository.count() == 0) {
-      UserRole adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
-      UserRole userRole = this.roleService.findUserRole(UserRoleEnum.USER);
+      UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
+      UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
       UserEntity admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
-      admin.setRoles(List.of(adminRole, userRole));
+      admin.setRoles(List.of(adminRole, userRoleEntity));
 
       UserEntity userEntity = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
-      userEntity.setRoles(List.of(userRole));
+      userEntity.setRoles(List.of(userRoleEntity));
 
       this.userRepository.saveAll(List.of(admin, userEntity));
     }
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void registerAndLoginUser(UserRegisterServiceModel serviceModel) {
-    UserRole userRole = this.roleService.findUserRole(UserRoleEnum.USER);
+    UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
     UserEntity newUserEntity = new UserEntity();
 
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
             setLastName(serviceModel.getLastName()).
             setActive(true).
             setPassword(passwordEncoder.encode(serviceModel.getPassword())).
-            setRoles(List.of(userRole));
+            setRoles(List.of(userRoleEntity));
 
     newUserEntity = userRepository.save(newUserEntity);
 

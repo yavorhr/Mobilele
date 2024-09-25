@@ -1,6 +1,6 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.entity.UserRole;
+import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRoleRepository;
 import com.example.mobilele.service.UserRoleService;
@@ -19,18 +19,18 @@ public class UserRoleServiceImpl implements UserRoleService {
   @Override
   public void initRoles() {
     if (userRoleRepository.count() == 0) {
-      UserRole userRole = new UserRole();
-      userRole.setRole(UserRoleEnum.USER);
+      UserRoleEntity userRoleEntity = new UserRoleEntity();
+      userRoleEntity.setRole(UserRoleEnum.USER);
 
-      UserRole adminRole = new UserRole();
+      UserRoleEntity adminRole = new UserRoleEntity();
       adminRole.setRole(UserRoleEnum.ADMIN);
 
-      this.userRoleRepository.saveAll(List.of(userRole, adminRole));
+      this.userRoleRepository.saveAll(List.of(userRoleEntity, adminRole));
     }
   }
 
   @Override
-  public UserRole findUserRole(UserRoleEnum userRole) {
+  public UserRoleEntity findUserRole(UserRoleEnum userRole) {
     return this.userRoleRepository.findByRole(userRole);
   }
 }
