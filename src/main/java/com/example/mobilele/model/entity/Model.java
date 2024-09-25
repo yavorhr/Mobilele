@@ -47,27 +47,33 @@ public class Model extends BaseEntity {
     return endYear;
   }
 
-  public void setName(String name) {
+  public Model setName(String name) {
     this.name = name;
+    return this;
   }
 
-  public void setCategory(CategoryTypeEnum category) {
+  public Model setCategory(CategoryTypeEnum category) {
     this.category = category;
+    return this;
   }
 
-  public void setImageUrl(String imageUrl) {
+  public Model setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+    return this;
   }
 
-  public void setStartYear(Integer startYear) {
+  public Model setStartYear(Integer startYear) {
     this.startYear = startYear;
+    return this;
   }
 
-  public void setEndYear(Integer endYear) {
+  public Model setEndYear(Integer endYear) {
     this.endYear = endYear;
+    return this;
   }
 
-  public void setBrand(Brand brand) {
+  public Model setBrand(Brand brand) {
     this.brand = brand;
+    return this;
   }
 }
