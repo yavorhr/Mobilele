@@ -1,7 +1,8 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.dto.service.UserLoginServiceModel;
-import com.example.mobilele.model.entity.User;
+import com.example.mobilele.model.dto.service.UserRegisterServiceModel;
+import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRole;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean login(UserLoginServiceModel userLoginServiceModel) {
 
-    Optional<User> loggedInUserOpt =
+    Optional<UserEntity> loggedInUserOpt =
             this.userRepository.findByUsername(userLoginServiceModel.getUsername());
 
     if (loggedInUserOpt.isEmpty()) {
@@ -43,14 +44,14 @@ public class UserServiceImpl implements UserService {
               loggedInUserOpt.get().getPassword());
 
       if (success) {
-        User loggedInUser = loggedInUserOpt.get();
+        UserEntity loggedInUserEntity = loggedInUserOpt.get();
 
-        currentUser.setUsername(loggedInUser.getUsername());
+        currentUser.setUsername(loggedInUserEntity.getUsername());
         currentUser.setLoggedIn(true);
-        currentUser.setFirstName(loggedInUser.getFirstName());
-        currentUser.setLastName(loggedInUser.getLastName());
+        currentUser.setFirstName(loggedInUserEntity.getFirstName());
+        currentUser.setLastName(loggedInUserEntity.getLastName());
 
-        loggedInUser.getRoles().forEach(r-> currentUser.addRole(r.getRole()));
+        loggedInUserEntity.getRoles().forEach(r -> currentUser.addRole(r.getRole()));
       }
 
       return success;
@@ -68,26 +69,50 @@ public class UserServiceImpl implements UserService {
       UserRole adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
       UserRole userRole = this.roleService.findUserRole(UserRoleEnum.USER);
 
-      User admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
+      UserEntity admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
       admin.setRoles(List.of(adminRole, userRole));
 
-      User user = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
-      user.setRoles(List.of(userRole));
+      UserEntity userEntity = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
+      userEntity.setRoles(List.of(userRole));
 
-      this.userRepository.saveAll(List.of(admin, user));
+      this.userRepository.saveAll(List.of(admin, userEntity));
     }
   }
 
-  // Helpers
-  private User createUser(String username, String firstName, String lastName, String imageUrl, boolean isActive, String password) {
-    User user = new User();
-    user.setActive(isActive);
-    user.setUsername(username);
-    user.setImageUrl(imageUrl);
-    user.setFirstName(firstName);
-    user.setLastName(lastName);
-    user.setPassword(passwordEncoder.encode(password));
+  @Override
+  public void registerAndLoginUser(UserRegisterServiceModel serviceModel) {
+    UserRole userRole = this.roleService.findUserRole(UserRoleEnum.USER);
 
-    return user;
+    UserEntity newUserEntity = new UserEntity();
+
+    newUserEntity.
+            setUsername(serviceModel.getUsername()).
+            setFirstName(serviceModel.getFirstName()).
+            setLastName(serviceModel.getLastName()).
+            setActive(true).
+            setPassword(passwordEncoder.encode(serviceModel.getPassword())).
+            setRoles(List.of(userRole));
+
+    newUserEntity = userRepository.save(newUserEntity);
+
+  }
+
+  @Override
+  public Optional<UserEntity> findByUsername(String username) {
+    return userRepository.findByUsername(username);
+  }
+
+
+  // Helpers
+  private UserEntity createUser(String username, String firstName, String lastName, String imageUrl, boolean isActive, String password) {
+    UserEntity userEntity = new UserEntity();
+    userEntity.setActive(isActive);
+    userEntity.setUsername(username);
+    userEntity.setImageUrl(imageUrl);
+    userEntity.setFirstName(firstName);
+    userEntity.setLastName(lastName);
+    userEntity.setPassword(passwordEncoder.encode(password));
+
+    return userEntity;
   }
 }
