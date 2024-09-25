@@ -1,6 +1,6 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.entity.Brand;
+import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
 import com.example.mobilele.repository.ModelRepository;
@@ -24,7 +24,7 @@ public class ModelServiceImpl implements ModelService {
   @Override
   public void initModels() {
     if (modelRepository.count() == 0) {
-      Brand bmw = this.brandService.findBrandByName("bmw").get();
+      BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
 
       ModelEntity x1 = new ModelEntity();
 

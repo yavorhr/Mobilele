@@ -6,10 +6,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "brands")
-public class Brand extends BaseEntity {
+public class BrandEntity extends BaseEntity {
   private String name;
 
-  public Brand() {
+  public BrandEntity() {
   }
 
   @Column(unique = true, nullable = false)

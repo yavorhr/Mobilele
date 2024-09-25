@@ -11,13 +11,13 @@ public class ModelEntity extends BaseEntity {
   private String imageUrl;
   private Integer startYear;
   private Integer endYear;
-  private Brand brand;
+  private BrandEntity brand;
 
   public ModelEntity() {
   }
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  public Brand getBrand() {
+  public BrandEntity getBrand() {
     return brand;
   }
 
@@ -72,7 +72,7 @@ public class ModelEntity extends BaseEntity {
     return this;
   }
 
-  public ModelEntity setBrand(Brand brand) {
+  public ModelEntity setBrand(BrandEntity brand) {
     this.brand = brand;
     return this;
   }

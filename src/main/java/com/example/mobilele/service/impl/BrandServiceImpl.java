@@ -1,6 +1,6 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.entity.Brand;
+import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.service.BrandService;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class BrandServiceImpl implements BrandService {
   @Override
   public void initBrands() {
     if (this.brandRepository.count() == 0) {
-      Brand bmw = new Brand();
+      BrandEntity bmw = new BrandEntity();
       bmw.setName("bmw");
 
       this.brandRepository.save(bmw);
@@ -26,7 +26,7 @@ public class BrandServiceImpl implements BrandService {
   }
 
   @Override
-  public Optional<Brand> findBrandByName(String name) {
+  public Optional<BrandEntity> findBrandByName(String name) {
     return this.brandRepository.findBrandByNameIgnoreCase(name);
   }
 }
