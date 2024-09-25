@@ -1,4 +1,6 @@
 package com.example.mobilele.model.dto.binding;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
   private String username;
@@ -10,6 +12,8 @@ public class UserRegisterBindingModel {
   public UserRegisterBindingModel() {
   }
 
+  @NotNull
+  @Size(min = 2,max = 20)
   public String getUsername() {
     return username;
   }
@@ -18,10 +22,14 @@ public class UserRegisterBindingModel {
     return confirmPassword;
   }
 
+  @NotNull
+  @Size(min = 4,max = 20)
   public String getFirstName() {
     return firstName;
   }
 
+  @NotNull
+  @Size(min = 4,max = 20)
   public String getLastName() {
     return lastName;
   }
