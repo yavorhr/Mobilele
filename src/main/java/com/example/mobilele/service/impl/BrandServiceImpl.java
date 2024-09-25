@@ -17,7 +17,7 @@ public class BrandServiceImpl implements BrandService {
 
   @Override
   public void initBrands() {
-    if (brandRepository.count() == 0) {
+    if (this.brandRepository.count() == 0) {
       Brand bmw = new Brand();
       bmw.setName("bmw");
 
