@@ -52,7 +52,7 @@ public class UsersController {
 
     userService.registerAndLoginUser(serviceModel);
 
-    return "auth-register";
+    return "redirect:/users/login";
   }
 
   @GetMapping("/users/login")
