@@ -47,10 +47,6 @@ public class UsersController {
       return "redirect:/users/register";
     }
 
-    if (!this.userService.isUsernameFree(userModel.getUsername())){
-      return "redirect:/register";
-    }
-
     UserRegisterServiceModel serviceModel =
             modelMapper.map(userModel, UserRegisterServiceModel.class);
 
