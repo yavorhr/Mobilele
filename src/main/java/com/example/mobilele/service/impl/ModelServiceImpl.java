@@ -27,6 +27,7 @@ public class ModelServiceImpl implements ModelService {
       Brand bmw = this.brandService.findBrandByName("bmw").get();
 
       ModelEntity x1 = new ModelEntity();
+
       x1
               .setName("x1")
               .setCategory(CategoryTypeEnum.SUV)
