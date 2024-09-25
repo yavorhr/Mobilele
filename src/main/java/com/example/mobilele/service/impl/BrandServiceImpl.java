@@ -5,6 +5,8 @@ import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.service.BrandService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BrandServiceImpl implements BrandService {
   private final BrandRepository brandRepository;
@@ -21,5 +23,10 @@ public class BrandServiceImpl implements BrandService {
 
       this.brandRepository.save(bmw);
     }
+  }
+
+  @Override
+  public Optional<Brand> findBrandByName(String name) {
+    return this.brandRepository.findBrandByNameIgnoreCase(name);
   }
 }
