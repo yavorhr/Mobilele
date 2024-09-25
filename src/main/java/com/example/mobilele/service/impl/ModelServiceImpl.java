@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.Brand;
-import com.example.mobilele.model.entity.Model;
+import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
 import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.service.BrandService;
@@ -9,6 +9,7 @@ import com.example.mobilele.service.ModelService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -25,7 +26,7 @@ public class ModelServiceImpl implements ModelService {
     if (modelRepository.count() == 0) {
       Brand bmw = this.brandService.findBrandByName("bmw").get();
 
-      Model x1 = new Model();
+      ModelEntity x1 = new ModelEntity();
       x1
               .setName("x1")
               .setCategory(CategoryTypeEnum.SUV)
@@ -33,7 +34,7 @@ public class ModelServiceImpl implements ModelService {
               .setStartYear(1976)
               .setBrand(bmw);
 
-      Model x3 = new Model();
+      ModelEntity x3 = new ModelEntity();
       x3
               .setName("x3")
               .setCategory(CategoryTypeEnum.SUV)
@@ -43,5 +44,10 @@ public class ModelServiceImpl implements ModelService {
 
       modelRepository.saveAll(List.of(x1, x3));
     }
+  }
+
+  @Override
+  public Optional<ModelEntity> findById(Long id) {
+    return this.modelRepository.findById(id);
   }
 }
