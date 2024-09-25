@@ -14,7 +14,7 @@ public class Offer extends BaseEntity {
   private Double price;
   private TransmissionType transmission;
   private Integer year;
-  private Model model;
+  private ModelEntity model;
   private User seller;
 
   @Column(columnDefinition = "TEXT")
@@ -55,7 +55,7 @@ public class Offer extends BaseEntity {
   }
 
   @ManyToOne
-  public Model getModel() {
+  public ModelEntity getModel() {
     return model;
   }
 
@@ -64,41 +64,48 @@ public class Offer extends BaseEntity {
     return seller;
   }
 
-  public void setDescription(String description) {
+  public Offer setDescription(String description) {
     this.description = description;
+    return this;
   }
 
-  public void setEngine(EngineEnum engine) {
+  public Offer setEngine(EngineEnum engine) {
     this.engine = engine;
+    return this;
   }
 
-  public void setImageUrl(String imageUrl) {
+  public Offer setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+    return this;
   }
 
-  public void setMileage(Double mileage) {
+  public Offer setMileage(Double mileage) {
     this.mileage = mileage;
+    return this;
   }
 
-  public void setPrice(Double price) {
+  public Offer setPrice(Double price) {
     this.price = price;
+    return this;
   }
 
-  public void setTransmission(TransmissionType transmission) {
+  public Offer setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
+    return this;
   }
 
-  public void setYear(Integer year) {
+  public Offer setYear(Integer year) {
     this.year = year;
+    return this;
   }
 
-  public void setModel(Model model) {
+  public Offer setModel(ModelEntity model) {
     this.model = model;
+    return this;
   }
 
-  public void setSeller(User seller) {
+  public Offer setSeller(User seller) {
     this.seller = seller;
+    return this;
   }
-
-
 }
