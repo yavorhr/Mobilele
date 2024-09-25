@@ -2,11 +2,7 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "offers")
