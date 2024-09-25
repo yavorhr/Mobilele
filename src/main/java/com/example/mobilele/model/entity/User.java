@@ -52,31 +52,38 @@ public class User extends BaseEntity {
     return password;
   }
 
-  public void setUsername(String username) {
+  public User setUsername(String username) {
     this.username = username;
+    return this;
   }
 
-  public void setFirstName(String firstName) {
+  public User setFirstName(String firstName) {
     this.firstName = firstName;
+    return this;
   }
 
-  public void setLastName(String lastName) {
+  public User setLastName(String lastName) {
     this.lastName = lastName;
+    return this;
   }
 
-  public void setActive(boolean active) {
-    isActive = active;
-  }
-
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-  }
-
-  public void setPassword(String password) {
+  public User setPassword(String password) {
     this.password = password;
+    return this;
   }
 
-  public void setRoles(List<UserRole> roles) {
+  public User setActive(boolean active) {
+    isActive = active;
+    return this;
+  }
+
+  public User setRoles(List<UserRole> roles) {
     this.roles = roles;
+    return this;
+  }
+
+  public User setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+    return this;
   }
 }
