@@ -45,11 +45,7 @@ public class UserServiceImpl implements UserService {
 
       if (success) {
         UserEntity loggedInUserEntity = loggedInUserOpt.get();
-
-        currentUser.setUsername(loggedInUserEntity.getUsername());
-        currentUser.setLoggedIn(true);
-        currentUser.setFirstName(loggedInUserEntity.getFirstName());
-        currentUser.setLastName(loggedInUserEntity.getLastName());
+        saveUserToSession(loggedInUserEntity);
 
         loggedInUserEntity.getRoles().forEach(r -> currentUser.addRole(r.getRole()));
       }
@@ -58,25 +54,10 @@ public class UserServiceImpl implements UserService {
     }
   }
 
+
   @Override
   public void logout() {
     this.currentUser.clean();
-  }
-
-  @Override
-  public void initUsers() {
-    if (userRepository.count() == 0) {
-      UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
-      UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
-
-      UserEntity admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
-      admin.setRoles(List.of(adminRole, userRoleEntity));
-
-      UserEntity userEntity = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
-      userEntity.setRoles(List.of(userRoleEntity));
-
-      this.userRepository.saveAll(List.of(admin, userEntity));
-    }
   }
 
   @Override
@@ -95,6 +76,7 @@ public class UserServiceImpl implements UserService {
 
     newUserEntity = userRepository.save(newUserEntity);
 
+    saveUserToSession(newUserEntity);
   }
 
   @Override
@@ -102,17 +84,40 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByUsername(username);
   }
 
+  @Override
+  public void initUsers() {
+    if (userRepository.count() == 0) {
+      UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
+      UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
+
+      UserEntity admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
+      admin.setRoles(List.of(adminRole, userRoleEntity));
+
+      UserEntity userEntity = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
+      userEntity.setRoles(List.of(userRoleEntity));
+
+      this.userRepository.saveAll(List.of(admin, userEntity));
+    }
+  }
 
   // Helpers
   private UserEntity createUser(String username, String firstName, String lastName, String imageUrl, boolean isActive, String password) {
     UserEntity userEntity = new UserEntity();
-    userEntity.setActive(isActive);
-    userEntity.setUsername(username);
-    userEntity.setImageUrl(imageUrl);
-    userEntity.setFirstName(firstName);
-    userEntity.setLastName(lastName);
-    userEntity.setPassword(passwordEncoder.encode(password));
+
+    userEntity.setActive(isActive)
+            .setUsername(username)
+            .setImageUrl(imageUrl)
+            .setFirstName(firstName)
+            .setLastName(lastName)
+            .setPassword(passwordEncoder.encode(password));
 
     return userEntity;
+  }
+
+  private void saveUserToSession(UserEntity loggedInUserEntity) {
+    currentUser.setUsername(loggedInUserEntity.getUsername());
+    currentUser.setLoggedIn(true);
+    currentUser.setFirstName(loggedInUserEntity.getFirstName());
+    currentUser.setLastName(loggedInUserEntity.getLastName());
   }
 }
