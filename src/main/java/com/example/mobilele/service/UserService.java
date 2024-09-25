@@ -2,7 +2,7 @@ package com.example.mobilele.service;
 
 import com.example.mobilele.model.dto.service.UserLoginServiceModel;
 import com.example.mobilele.model.dto.service.UserRegisterServiceModel;
-import com.example.mobilele.model.entity.User;
+import com.example.mobilele.model.entity.UserEntity;
 
 import java.util.Optional;
 
@@ -16,5 +16,5 @@ public interface UserService {
 
   void registerAndLoginUser(UserRegisterServiceModel serviceModel);
 
-  Optional<User> findByUsername(String username);
+  Optional<UserEntity> findByUsername(String username);
 }

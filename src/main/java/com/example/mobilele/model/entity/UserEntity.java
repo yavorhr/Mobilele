@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
   private String username;
   private String firstName;
   private String lastName;
@@ -14,7 +14,7 @@ public class User extends BaseEntity {
   private List<UserRole> roles;
   private String imageUrl;
 
-  public User() {
+  public UserEntity() {
   }
 
   @Column(unique = true, nullable = false)
@@ -52,37 +52,37 @@ public class User extends BaseEntity {
     return password;
   }
 
-  public User setUsername(String username) {
+  public UserEntity setUsername(String username) {
     this.username = username;
     return this;
   }
 
-  public User setFirstName(String firstName) {
+  public UserEntity setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
 
-  public User setLastName(String lastName) {
+  public UserEntity setLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
 
-  public User setPassword(String password) {
+  public UserEntity setPassword(String password) {
     this.password = password;
     return this;
   }
 
-  public User setActive(boolean active) {
+  public UserEntity setActive(boolean active) {
     isActive = active;
     return this;
   }
 
-  public User setRoles(List<UserRole> roles) {
+  public UserEntity setRoles(List<UserRole> roles) {
     this.roles = roles;
     return this;
   }
 
-  public User setImageUrl(String imageUrl) {
+  public UserEntity setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
     return this;
   }

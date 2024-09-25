@@ -15,7 +15,7 @@ public class Offer extends BaseEntity {
   private TransmissionType transmission;
   private Integer year;
   private ModelEntity model;
-  private User seller;
+  private UserEntity seller;
 
   @Column(columnDefinition = "TEXT")
   public String getDescription() {
@@ -60,7 +60,7 @@ public class Offer extends BaseEntity {
   }
 
   @OneToOne
-  public User getSeller() {
+  public UserEntity getSeller() {
     return seller;
   }
 
@@ -104,7 +104,7 @@ public class Offer extends BaseEntity {
     return this;
   }
 
-  public Offer setSeller(User seller) {
+  public Offer setSeller(UserEntity seller) {
     this.seller = seller;
     return this;
   }
