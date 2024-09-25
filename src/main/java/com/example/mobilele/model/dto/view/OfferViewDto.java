@@ -1,7 +1,6 @@
 package com.example.mobilele.model.dto.view;
 
-import com.example.mobilele.model.entity.Model;
-import com.example.mobilele.model.entity.User;
+import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 
@@ -12,7 +11,7 @@ public class OfferViewDto {
   private Double mileage;
   private TransmissionType transmission;
   private Integer year;
-  private Model model;
+  private ModelEntity model;
   private String brandName;
 
   public OfferViewDto() {
@@ -42,7 +41,7 @@ public class OfferViewDto {
     return year;
   }
 
-  public Model getModel() {
+  public ModelEntity getModel() {
     return model;
   }
 
