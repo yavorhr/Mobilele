@@ -1,6 +1,6 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.entity.Offer;
+import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.repository.OfferRepository;
@@ -29,9 +29,9 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public void initOffers() {
     if (offerRepository.count() == 0) {
-      Offer offer1 = new Offer();
+      OfferEntity offerEntity1 = new OfferEntity();
 
-      offer1
+      offerEntity1
               .setModel(this.modelService.findById(1L).orElse(null))
               .setEngine(EngineEnum.GASOLINE)
               .setTransmission(TransmissionType.MANUAL)
@@ -44,9 +44,9 @@ public class OfferServiceImpl implements OfferService {
               .setImageUrl(
                       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Bill_Gates_-_2023_-_P062021-967902_%28cropped%29.jpg/798px-Bill_Gates_-_2023_-_P062021-967902_%28cropped%29.jpg");
 
-      Offer offer2 = new Offer();
+      OfferEntity offerEntity2 = new OfferEntity();
 
-      offer2
+      offerEntity2
               .setModel(this.modelService.findById(2L).orElse(null))
               .setEngine(EngineEnum.GASOLINE)
               .setTransmission(TransmissionType.MANUAL)
@@ -58,7 +58,7 @@ public class OfferServiceImpl implements OfferService {
                       .orElse(null)) // or currentUser.getUserName()
               .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/0/03/Jeff_Bezos_visits_LAAFB_SMC_%283908618%29_%28cropped%29.jpeg");
 
-      offerRepository.saveAll(List.of(offer1, offer2));
+      offerRepository.saveAll(List.of(offerEntity1, offerEntity2));
     }
   }
 }

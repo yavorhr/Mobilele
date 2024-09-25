@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "offers")
-public class Offer extends BaseEntity {
+public class OfferEntity extends BaseEntity {
   private String description;
   private EngineEnum engine;
   private String imageUrl;
@@ -64,47 +64,47 @@ public class Offer extends BaseEntity {
     return seller;
   }
 
-  public Offer setDescription(String description) {
+  public OfferEntity setDescription(String description) {
     this.description = description;
     return this;
   }
 
-  public Offer setEngine(EngineEnum engine) {
+  public OfferEntity setEngine(EngineEnum engine) {
     this.engine = engine;
     return this;
   }
 
-  public Offer setImageUrl(String imageUrl) {
+  public OfferEntity setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
     return this;
   }
 
-  public Offer setMileage(Double mileage) {
+  public OfferEntity setMileage(Double mileage) {
     this.mileage = mileage;
     return this;
   }
 
-  public Offer setPrice(Double price) {
+  public OfferEntity setPrice(Double price) {
     this.price = price;
     return this;
   }
 
-  public Offer setTransmission(TransmissionType transmission) {
+  public OfferEntity setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
     return this;
   }
 
-  public Offer setYear(Integer year) {
+  public OfferEntity setYear(Integer year) {
     this.year = year;
     return this;
   }
 
-  public Offer setModel(ModelEntity model) {
+  public OfferEntity setModel(ModelEntity model) {
     this.model = model;
     return this;
   }
 
-  public Offer setSeller(UserEntity seller) {
+  public OfferEntity setSeller(UserEntity seller) {
     this.seller = seller;
     return this;
   }
