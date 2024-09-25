@@ -17,6 +17,11 @@ public class UserRoleServiceImpl implements UserRoleService {
   }
 
   @Override
+  public UserRoleEntity findUserRole(UserRoleEnum userRole) {
+    return this.userRoleRepository.findByRole(userRole);
+  }
+
+  @Override
   public void initRoles() {
     if (userRoleRepository.count() == 0) {
       UserRoleEntity userRoleEntity = new UserRoleEntity();
@@ -29,8 +34,5 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
   }
 
-  @Override
-  public UserRoleEntity findUserRole(UserRoleEnum userRole) {
-    return this.userRoleRepository.findByRole(userRole);
-  }
+
 }
