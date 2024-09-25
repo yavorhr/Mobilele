@@ -22,6 +22,11 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
+  public Optional<ModelEntity> findById(Long id) {
+    return this.modelRepository.findById(id);
+  }
+
+  @Override
   public void initModels() {
     if (modelRepository.count() == 0) {
       BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
@@ -47,8 +52,5 @@ public class ModelServiceImpl implements ModelService {
     }
   }
 
-  @Override
-  public Optional<ModelEntity> findById(Long id) {
-    return this.modelRepository.findById(id);
-  }
+
 }
