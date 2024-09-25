@@ -49,11 +49,9 @@ public class UserServiceImpl implements UserService {
 
         loggedInUserEntity.getRoles().forEach(r -> currentUser.addRole(r.getRole()));
       }
-
       return success;
     }
   }
-
 
   @Override
   public void logout() {
