@@ -27,5 +27,6 @@ public class DBInit implements CommandLineRunner {
     userService.initUsers();
     brandService.initBrands();
     modelService.initModels();
+    offerService.initOffers();
   }
 }
