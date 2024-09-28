@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.dto.view.OfferViewModel;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -60,5 +62,13 @@ public class OfferServiceImpl implements OfferService {
 
       offerRepository.saveAll(List.of(offerEntity1, offerEntity2));
     }
+  }
+
+  @Override
+  public List<OfferViewModel> findAllOffers() {
+    return this.offerRepository
+            .findAll()
+            .stream().map(o -> this.modelMapper.map(o, OfferViewModel.class))
+            .collect(Collectors.toList());
   }
 }
