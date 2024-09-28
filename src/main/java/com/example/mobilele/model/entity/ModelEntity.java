@@ -16,7 +16,7 @@ public class ModelEntity extends BaseEntity {
   public ModelEntity() {
   }
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
   public BrandEntity getBrand() {
     return brand;
   }
