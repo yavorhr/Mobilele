@@ -33,6 +33,4 @@ public class UserRoleServiceImpl implements UserRoleService {
       this.userRoleRepository.saveAll(List.of(userRoleEntity, adminRole));
     }
   }
-
-
 }
