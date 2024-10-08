@@ -71,4 +71,13 @@ public class OfferServiceImpl implements OfferService {
             .stream().map(o -> this.modelMapper.map(o, OfferViewModel.class))
             .collect(Collectors.toList());
   }
+
+  @Override
+  public OfferViewModel findOfferById(Long id) {
+    OfferEntity offer = this.offerRepository.findById(id).get();
+
+    OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
+    model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
+    return model;
+  }
 }

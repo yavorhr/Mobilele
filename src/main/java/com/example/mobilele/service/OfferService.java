@@ -9,4 +9,6 @@ public interface OfferService {
   void initOffers();
 
   List<OfferViewModel> findAllOffers();
+
+  OfferViewModel findOfferById(Long id);
 }
