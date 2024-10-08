@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>MobiLeLeLe</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -22,8 +22,8 @@
 
 <div class="container-fluid">
     <h2 class="text-center text-white mt-5">Details</h2>
-    <div class="offers row mx-auto d-flex flex-row justify-content-center">
-        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
+    <div th:object="${offer}"  class="offers row mx-auto d-flex flex-row justify-content-center">
+        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
 
             <div class="card-body pb-1">
                 <h5 class="card-title">
@@ -31,28 +31,35 @@
             </div>
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
-                    <div class="card-text"><span>• Mileage</span></div>
-                    <div class="card-text"><span>• Price</span></div>
-                    <div class="card-text"><span>• Engine type</span></div>
-                    <div class="card-text"><span>• Transmission type</span></div>
-                    <div class="card-text"><span>• Offer created</span></div>
-                    <div class="card-text"><span>• Offer modified</span></div>
-                    <div class="card-text"><span>• Seller - First and Last name</span></div>
+                    <div class="card-text"><span th:text="|Mileage: *{mileage} km|">• Mileage</span></div>
+                    <div class="card-text"><span th:text="|Price: *{price} BGN|">• Price</span></div>
+                    <div class="card-text"><span th:text="|Engine type: *{#strings.capitalize(#strings.substring(engine,0,1)) + #strings.toLowerCase(#strings.substring(engine,1))}|">• Engine type</span></div>
+                    <div class="card-text"><span
+                            th:text="|Transmission: *{#strings.capitalize(#strings.substring(transmission,0,1)) + #strings.toLowerCase(#strings.substring(transmission,1))}|">• Transmission type</span></div>
+                    <div class="card-text"><span th:text="|Offer created: *{#temporals.format(created, 'dd-MMM-yyyy')}|">• Offer created</span></div>
+                    <div class="card-text"><span th:text="|Offer modified: *{modified != null ? #temporals.format(modified, 'dd-MMM-yyyy') : 'Not yet modified'}|">• Offer modified</span></div>
+                    <div class="card-text">
+                        <span th:text="|Seller: *{sellerFullName}|">• Seller - First and Last name</span>
+                    </div>
                 </li>
             </ul>
             <div class="card-body">
-                <a class="card-link" href="/">Update</a>
-                <a class="card-link" href="/">Delete</a>
+                <a class="card-link" th:ref="/">Update</a>
+                <th:block >
+                    <form th:action="@{/offers/{id}(id=*{id})}" th:method="delete">
+                        <input type="submit" class="btn btn-link" value="Delete"/>
+                    </form>
+                </th:block>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-            <img src="/" class="card-img-top"  alt="Car image">
+            <img th:src="*{imageUrl}" class="card-img-top" alt="Car image">
         </div>
     </div>
 </div>
 
 <div>
-             <footer> </footer>
+    <footer></footer>
 </div>
 
 </body>
