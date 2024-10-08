@@ -17,6 +17,7 @@ public class OfferViewModel {
   private String modelName;
   private Instant created;
   private Instant modified;
+  private String sellerFullName;
 
   public OfferViewModel() {
   }
@@ -27,6 +28,10 @@ public class OfferViewModel {
 
   public Double getPrice() {
     return price;
+  }
+
+  public String getSellerFullName() {
+    return sellerFullName;
   }
 
   public Instant getCreated() {
@@ -126,6 +131,11 @@ public class OfferViewModel {
 
   public OfferViewModel setModified(Instant modified) {
     this.modified = modified;
+    return this;
+  }
+
+  public OfferViewModel setSellerFullName(String sellerFullName) {
+    this.sellerFullName = sellerFullName;
     return this;
   }
 }
