@@ -5,6 +5,7 @@ import com.example.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -20,8 +21,17 @@ public class OffersController {
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
     model.addAttribute("offers", offers);
-    
+
     return "offers";
+  }
+
+  @GetMapping("/offers/details/{id}")
+  public String getOffersDetailsPage(@PathVariable Long id, Model model) {
+    OfferViewModel viewModel = this.offerService.findOfferById(id);
+
+    model.addAttribute("offer", viewModel);
+
+    return "details";
   }
 
   @GetMapping("/offers/add")
