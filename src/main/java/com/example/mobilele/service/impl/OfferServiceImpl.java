@@ -44,7 +44,7 @@ public class OfferServiceImpl implements OfferService {
               .setSeller(userService.findByUsername("pesho")
                       .orElse(null)) // or currentUser.getUserName()
               .setImageUrl(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Bill_Gates_-_2023_-_P062021-967902_%28cropped%29.jpg/798px-Bill_Gates_-_2023_-_P062021-967902_%28cropped%29.jpg");
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/BMW_U11_1X7A6826.jpg/420px-BMW_U11_1X7A6826.jpg");
 
       OfferEntity offerEntity2 = new OfferEntity();
 
@@ -58,7 +58,7 @@ public class OfferServiceImpl implements OfferService {
               .setDescription("Perfect condition!.")
               .setSeller(userService.findByUsername("admin")
                       .orElse(null)) // or currentUser.getUserName()
-              .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/0/03/Jeff_Bezos_visits_LAAFB_SMC_%283908618%29_%28cropped%29.jpeg");
+              .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg/1920px-2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg");
 
       offerRepository.saveAll(List.of(offerEntity1, offerEntity2));
     }
