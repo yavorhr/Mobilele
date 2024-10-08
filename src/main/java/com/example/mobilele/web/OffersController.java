@@ -4,6 +4,7 @@ import com.example.mobilele.model.dto.view.OfferViewModel;
 import com.example.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -37,5 +38,12 @@ public class OffersController {
   @GetMapping("/offers/add")
   public String getAddOffersPage() {
     return "offer-add";
+  }
+
+  @DeleteMapping("/offers/{id}")
+  public String deleteOfferById(@PathVariable Long id) {
+    this.offerService.deleteById(id);
+
+    return "redirect:/offers/all";
   }
 }

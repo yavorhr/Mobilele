@@ -80,4 +80,9 @@ public class OfferServiceImpl implements OfferService {
     model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
     return model;
   }
+
+  @Override
+  public void deleteById(Long id) {
+    this.offerRepository.deleteById(id);
+  }
 }
