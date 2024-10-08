@@ -1,12 +1,12 @@
 package com.example.mobilele.model.dto.view;
 
-import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import java.time.Instant;
 
 public class OfferViewModel {
   private Long id;
+  private Double price;
   private String modelBrandName;
   private String description;
   private EngineEnum engine;
@@ -23,6 +23,10 @@ public class OfferViewModel {
 
   public Long getId() {
     return id;
+  }
+
+  public Double getPrice() {
+    return price;
   }
 
   public Instant getCreated() {
@@ -58,7 +62,8 @@ public class OfferViewModel {
   }
 
   public String getModelName() {
-    return modelName;
+    return modelName.substring(0, 1).toUpperCase() + modelName.substring(1).toLowerCase();
+
   }
 
   public OfferViewModel setModelBrandName(String modelBrandName) {
@@ -77,6 +82,11 @@ public class OfferViewModel {
 
   public OfferViewModel setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+    return this;
+  }
+
+  public OfferViewModel setPrice(Double price) {
+    this.price = price;
     return this;
   }
 
@@ -106,7 +116,7 @@ public class OfferViewModel {
   }
 
   public String getModelBrandName() {
-    return modelBrandName;
+    return modelBrandName.substring(0, 1).toUpperCase() + modelBrandName.substring(1).toLowerCase();
   }
 
   public OfferViewModel setCreated(Instant created) {
