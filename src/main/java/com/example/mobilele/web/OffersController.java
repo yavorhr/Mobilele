@@ -18,6 +18,7 @@ public class OffersController {
     this.offerService = offerService;
   }
 
+  // GET
   @GetMapping("/offers/all")
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
@@ -40,10 +41,21 @@ public class OffersController {
     return "offer-add";
   }
 
+  // DELETE
   @DeleteMapping("/offers/{id}")
   public String deleteOfferById(@PathVariable Long id) {
     this.offerService.deleteById(id);
 
     return "redirect:/offers/all";
+  }
+
+  // EDIT
+  @GetMapping("/offers/update/{id}")
+  public String getOfferUpdatePage(@PathVariable Long id, Model model) {
+    OfferViewModel offerModel = this.offerService.findOfferById(id);
+
+    model.addAttribute("offer", offerModel);
+
+    return "update";
   }
 }

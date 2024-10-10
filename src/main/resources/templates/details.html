@@ -52,7 +52,7 @@
             </ul>
             <div class="card-body">
                 <div class="row">
-                    <a class="btn btn-link" th:href="@{/offers/{id}/edit(id=*{id})}">Update</a>
+                    <a class="btn btn-link" th:href="@{/offers/update/{id}(id=*{id})}">Update</a>
                     <form
                             th:action="@{/offers/{id}(id=*{id})}"
                             th:method="delete">
