@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     <script src="/js/jquery-3.5.1.slim.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</head>
+    <!-- Link to the JavaScript file -->
+    <script th:src="@{/js/loadModels.js}"></script></head>
 
 <body>
 
@@ -23,27 +24,46 @@
 
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
-    <form method="POST" 
+    <form method="POST"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
 
             <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
+                <select
+                        id="brand"
+                        class="form-control"
+                        onchange="loadModels()">
+                    <option value="">- Select brand -</option>
+                    <optgroup label="Brand name">
+                        <option>BMW</option>
+                        <option>Audi</option>
+                        <option>Toyota</option>
+                    </optgroup>
+                </select>
+                <p class="errors alert alert-danger">
+                    Vehicle brand is required.
+                </p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="model">Model</label>
                 <select id="model" class="form-control">
-                    <option value="">- Select a model -</option>
+                    <option value="">- Select model -</option>
                     <optgroup label="Brand name">
-                        <option>Model</option>
+                        <option>BMW</option>
                     </optgroup>
                 </select>
                 <p class="errors alert alert-danger">
                     Vechicle model is required.
                 </p>
             </div>
+
             <div class="form-group col-md-6 mb-3">
                 <label for="price" class="text-white font-weight-bold">Price</label>
                 <input id="price" type="number" min="0" step="100" class="form-control"
                        placeholder="Suggested price"/>
-                <p  class="errors alert alert-danger">
+                <p class="errors alert alert-danger">
                     Suggested price is required.
                 </p>
             </div>
@@ -121,7 +141,7 @@
 </div>
 
 <div>
-    <footer> </footer>
+    <footer></footer>
 </div>
 
 </body>
