@@ -18,7 +18,7 @@ public class OffersController {
     this.offerService = offerService;
   }
 
-  // GET
+  // GET ALL OFFERS
   @GetMapping("/offers/all")
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
@@ -27,6 +27,8 @@ public class OffersController {
     return "offers";
   }
 
+  // OFFER DETAILS MAPPINGS
+  // * GET OFFER DETAILS
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model) {
     OfferViewModel viewModel = this.offerService.findOfferById(id);
@@ -36,20 +38,7 @@ public class OffersController {
     return "details";
   }
 
-  @GetMapping("/offers/add")
-  public String getAddOffersPage() {
-    return "offer-add";
-  }
-
-  // DELETE
-  @DeleteMapping("/offers/{id}")
-  public String deleteOfferById(@PathVariable Long id) {
-    this.offerService.deleteById(id);
-
-    return "redirect:/offers/all";
-  }
-
-  // EDIT
+  // * UPDATE OFFER
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id, Model model) {
     OfferViewModel offerModel = this.offerService.findOfferById(id);
@@ -58,4 +47,19 @@ public class OffersController {
 
     return "update";
   }
+
+  // ADD OFFER
+  @GetMapping("/offers/add")
+  public String getAddOffersPage() {
+    return "offer-add";
+  }
+
+  // DELETE OFFER
+  @DeleteMapping("/offers/{id}")
+  public String deleteOfferById(@PathVariable Long id) {
+    this.offerService.deleteById(id);
+
+    return "redirect:/offers/all";
+  }
+
 }
