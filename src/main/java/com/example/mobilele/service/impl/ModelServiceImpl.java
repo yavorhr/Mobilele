@@ -27,6 +27,11 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
+  public List<String> findModelsPerBrand(String brand) {
+    return this.modelRepository.findAllByBrandName(brand);
+  }
+
+  @Override
   public void initModels() {
     if (modelRepository.count() == 0) {
       BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
@@ -51,6 +56,4 @@ public class ModelServiceImpl implements ModelService {
       modelRepository.saveAll(List.of(x1, x3));
     }
   }
-
-
 }
