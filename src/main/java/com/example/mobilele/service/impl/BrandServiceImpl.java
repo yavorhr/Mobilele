@@ -1,24 +1,38 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.dto.view.BrandViewNameModel;
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.service.BrandService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BrandServiceImpl implements BrandService {
   private final BrandRepository brandRepository;
+  private final ModelMapper modelMapper;
 
-  public BrandServiceImpl(BrandRepository brandRepository) {
+  public BrandServiceImpl(BrandRepository brandRepository, ModelMapper modelMapper) {
     this.brandRepository = brandRepository;
+    this.modelMapper = modelMapper;
   }
 
   @Override
   public Optional<BrandEntity> findBrandByName(String name) {
     return this.brandRepository.findBrandByNameIgnoreCase(name);
+  }
+
+  @Override
+  public List<BrandViewNameModel> findAllBrands() {
+    return this.brandRepository
+            .findAll()
+            .stream()
+            .map(brandEntity -> this.modelMapper.map(brandEntity, BrandViewNameModel.class))
+            .collect(Collectors.toList());
   }
 
   @Override
@@ -28,12 +42,12 @@ public class BrandServiceImpl implements BrandService {
       bmw.setName("bmw");
 
       BrandEntity audi = new BrandEntity();
-      bmw.setName("audi");
+      audi.setName("audi");
 
       BrandEntity toyota = new BrandEntity();
-      bmw.setName("toyota");
+      toyota.setName("toyota");
 
-      this.brandRepository.saveAll(List.of(bmw, audi,toyota));
+      this.brandRepository.saveAll(List.of(bmw, audi, toyota));
     }
   }
 }
