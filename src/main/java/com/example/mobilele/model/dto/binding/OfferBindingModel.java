@@ -6,70 +6,69 @@ import jakarta.validation.constraints.*;
 
 public class OfferBindingModel {
 
-  @NotNull
-  @Size(min = 5)
   private String description;
-  @NotNull
   private EngineEnum engine;
-  @NotNull
-  @NotEmpty
   private String imageUrl;
-  @PositiveOrZero
-  @NotNull
   private Double mileage;
-  @NotNull
-  @DecimalMin("100")
-  private Double price;
-  @NotNull
+  private Double price;=
   private TransmissionType transmission;
-  @Positive
   private Integer year;
-  @NotNull
-  @NotEmpty
   private String model;
-  @NotNull
-  @NotEmpty
   private String brand;
 
   public OfferBindingModel() {
   }
-
+  
+  @NotNull
+  @NotEmpty
   public String getModel() {
     return model;
   }
 
+  @NotNull
+  @NotEmpty
   public String getBrand() {
     return brand;
   }
 
+  @NotNull
+  @Size(min = 5)
   public String getDescription() {
     return description;
   }
 
+  @NotNull
   public EngineEnum getEngine() {
     return engine;
   }
 
+  @NotNull
+  @NotEmpty
   public String getImageUrl() {
     return imageUrl;
   }
 
+  @PositiveOrZero
+  @NotNull
   public Double getMileage() {
     return mileage;
   }
 
+  @NotNull
+  @DecimalMin("100")
   public Double getPrice() {
     return price;
   }
 
+  @NotNull
   public TransmissionType getTransmission() {
     return transmission;
   }
 
+  @Positive
   public Integer getYear() {
     return year;
   }
-
 
   public OfferBindingModel setDescription(String description) {
     this.description = description;
