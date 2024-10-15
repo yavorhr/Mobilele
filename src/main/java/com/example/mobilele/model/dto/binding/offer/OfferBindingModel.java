@@ -1,13 +1,11 @@
 package com.example.mobilele.model.dto.binding.offer;
 
-import com.example.mobilele.model.entity.ModelEntity;
-import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import jakarta.validation.constraints.*;
 
 public class OfferBindingModel {
-  private Long id;
+
   @NotNull
   @Size(min = 5)
   private String description;
@@ -34,10 +32,6 @@ public class OfferBindingModel {
   private String brand;
 
   public OfferBindingModel() {
-  }
-
-  public Long getId() {
-    return id;
   }
 
   public String getModel() {
@@ -109,11 +103,6 @@ public class OfferBindingModel {
 
   public OfferBindingModel setYear(Integer year) {
     this.year = year;
-    return this;
-  }
-
-  public OfferBindingModel setId(Long id) {
-    this.id = id;
     return this;
   }
 
