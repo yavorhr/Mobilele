@@ -79,8 +79,8 @@ public class OffersController {
     if (bindingResult.hasErrors()) {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
-
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("brands", this.brandService.findAllBrands());
       return "redirect:/offers/add";
     }
     System.out.println();
