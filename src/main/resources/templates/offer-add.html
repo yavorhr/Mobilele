@@ -10,8 +10,9 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     <script src="/js/jquery-3.5.1.slim.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <!-- Link to the JavaScript file -->
-    <script th:src="@{/js/loadModels.js}"></script></head>
+
+    <script th:src="@{/js/loadModels.js}"></script>
+</head>
 
 <body>
 
@@ -24,8 +25,11 @@
 
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
-    <form method="POST"
-          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+    <form
+            th:action="@{/offers/add}"
+            th:method="POST"
+            th:object="${offerBindingModel}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
 
             <div class="form-group col-md-6 mb-3">
@@ -33,12 +37,15 @@
                 <select
                         id="brand"
                         class="form-control"
-                        onchange="loadModels()">
+                        onchange="loadModels()"
+                        name="brand">
                     <option value="">- Select brand -</option>
                     <optgroup label="Brand name">
-                        <option>BMW</option>
-                        <option>Audi</option>
-                        <option>Toyota</option>
+                        <option
+                                th:each="brand : ${brands}"
+                                th:text="${brand.getName()}"
+                                th:value="${brand.getName()}">BMW
+                        </option>
                     </optgroup>
                 </select>
                 <p class="errors alert alert-danger">
@@ -48,14 +55,16 @@
 
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="model">Model</label>
-                <select id="model" class="form-control">
+                <select id="model"
+                        class="form-control"
+                        name="model">
                     <option value="">- Select model -</option>
-                    <optgroup label="Brand name">
+                    <optgroup label="Model name">
                         <option>BMW</option>
                     </optgroup>
                 </select>
                 <p class="errors alert alert-danger">
-                    Vechicle model is required.
+                    Vehicle model is required.
                 </p>
             </div>
 
@@ -73,8 +82,11 @@
                 <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
                 <select id="engine" class="form-control">
                     <option value="">- Select engine type -</option>
-                    <option>
-                        Engine type
+                    <option th:each="e : ${engines}"
+                            th:text="${e}"
+                            th:value="${e}"
+                            th:selected="${e} == *{engine}"
+                    >Engine type
                     </option>
                 </select>
                 <p class="errors alert alert-danger">
@@ -85,7 +97,11 @@
                 <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
                 <select id="transmission" class="form-control">
                     <option value="">- Select transmission type -</option>
-                    <option> Transmission type
+                    <option th:each="t : ${transmissions}"
+                            th:text="${t}"
+                            th:value="${t}"
+                            th:selected="${t} == *{transmission}"
+                    >Transmission type
                     </option>
                 </select>
                 <p class="errors alert alert-danger">
