@@ -1,6 +1,6 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.dto.binding.offer.OfferBindingModel;
+import com.example.mobilele.model.dto.binding.OfferBindingModel;
 import com.example.mobilele.model.dto.view.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
