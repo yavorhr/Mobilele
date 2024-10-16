@@ -11,4 +11,6 @@ public interface ModelService {
   Optional<ModelEntity> findById(Long id);
 
   List<String> findModelsPerBrand(String brand);
+
+  ModelEntity findByName(String model);
 }
