@@ -76,6 +76,7 @@
                         id="price"
                         type="number"
                         min="0"
+                        step="100"
                         class="form-control"
                         placeholder="Suggested price"
                         th:field="*{price}"
@@ -95,8 +96,8 @@
                         th:errorclass="is-invalid">
                     <option value="">- Select engine type -</option>
                     <option th:each="e : ${engines}"
-                            th:text="${e.getEngineType()}"
-                            th:value="${e.getEngineType()}"
+                            th:text="${e}"
+                            th:value="${e}"
                             th:selected="${e} == *{engine}">
                         Engine type
                     </option>
@@ -146,7 +147,6 @@
                         type="number"
                         min="0"
                         max="900000"
-                        step="1000"
                         class="form-control"
                         placeholder="Mileage in kilometers"
                         th:field="*{mileage}"
