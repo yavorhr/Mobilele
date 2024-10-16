@@ -1,12 +1,15 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.dto.binding.OfferBindingModel;
+import com.example.mobilele.model.dto.service.OfferAddServiceModel;
 import com.example.mobilele.model.dto.view.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.user.CurrentUser;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +22,14 @@ import java.util.List;
 public class OffersController {
   private final OfferService offerService;
   private final BrandService brandService;
+  private final ModelMapper modelMapper;
+  private final CurrentUser currentUser;
 
-  public OffersController(OfferService offerService, BrandService brandService) {
+  public OffersController(OfferService offerService, BrandService brandService, ModelMapper modelMapper, CurrentUser currentUser) {
     this.offerService = offerService;
     this.brandService = brandService;
+    this.modelMapper = modelMapper;
+    this.currentUser = currentUser;
   }
 
   // GET ALL OFFERS
@@ -83,9 +90,13 @@ public class OffersController {
               .addFlashAttribute("brands", this.brandService.findAllBrands());
       return "redirect:/offers/add";
     }
-    System.out.println();
-    return "";
 
+    OfferAddServiceModel serviceModel =
+            this.offerService.addOffer(
+                    this.modelMapper.map(offerBindingModel, OfferAddServiceModel.class),
+                    currentUser.getId());
+
+    return "redirect:/offers/details/" + serviceModel.getId();
   }
 
   // DELETE OFFER
