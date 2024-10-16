@@ -78,8 +78,8 @@ public class OfferServiceImpl implements OfferService {
 
       firstOffer
               .setModel(this.modelService.findById(1L).orElse(null))
-              .setEngine(EngineEnum.GASOLINE)
-              .setTransmission(TransmissionType.MANUAL)
+              .setEngine(EngineEnum.Gasoline)
+              .setTransmission(TransmissionType.Manual)
               .setMileage(22500.30)
               .setPrice(14300.00)
               .setYear(2022)
@@ -93,8 +93,8 @@ public class OfferServiceImpl implements OfferService {
 
       secondOffer
               .setModel(this.modelService.findById(2L).orElse(null))
-              .setEngine(EngineEnum.GASOLINE)
-              .setTransmission(TransmissionType.MANUAL)
+              .setEngine(EngineEnum.Gasoline)
+              .setTransmission(TransmissionType.Manual)
               .setMileage(500.40)
               .setPrice(60000.00)
               .setYear(2020)
