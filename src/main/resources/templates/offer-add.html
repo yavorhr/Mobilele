@@ -95,8 +95,8 @@
                         th:errorclass="is-invalid">
                     <option value="">- Select engine type -</option>
                     <option th:each="e : ${engines}"
-                            th:text="${e}"
-                            th:value="${e}"
+                            th:text="${e.getEngineType()}"
+                            th:value="${e.getEngineType()}"
                             th:selected="${e} == *{engine}">
                         Engine type
                     </option>
