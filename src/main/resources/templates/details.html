@@ -34,10 +34,10 @@
                     <div class="card-text"><span th:text="|Mileage: *{mileage} km|">• Mileage</span></div>
                     <div class="card-text"><span th:text="|Price: *{price} BGN|">• Price</span></div>
                     <div class="card-text"><span
-                            th:text="|Engine type: *{#strings.capitalize(#strings.substring(engine,0,1)) + #strings.toLowerCase(#strings.substring(engine,1))}|">• Engine type</span>
+                            th:text="|Engine type: *{engine}|">• Engine type</span>
                     </div>
                     <div class="card-text"><span
-                            th:text="|Transmission: *{#strings.capitalize(#strings.substring(transmission,0,1)) + #strings.toLowerCase(#strings.substring(transmission,1))}|">• Transmission type</span>
+                            th:text="|Transmission: *{transmission}|">• Transmission type</span>
                     </div>
                     <div class="card-text"><span
                             th:text="|Offer created: *{#temporals.format(created, 'dd-MMM-yyyy')}|">• Offer created</span>
