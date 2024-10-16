@@ -17,4 +17,6 @@ public interface UserService {
   void registerAndLoginUser(UserRegisterServiceModel serviceModel);
 
   Optional<UserEntity> findByUsername(String username);
+
+  UserEntity findById(Long id);
 }
