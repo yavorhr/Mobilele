@@ -10,7 +10,7 @@ public class OfferBindingModel {
   private EngineEnum engine;
   private String imageUrl;
   private Double mileage;
-  private Double price;=
+  private Double price;
   private TransmissionType transmission;
   private Integer year;
   private String model;
@@ -18,7 +18,7 @@ public class OfferBindingModel {
 
   public OfferBindingModel() {
   }
-  
+
   @NotNull
   @NotEmpty
   public String getModel() {
