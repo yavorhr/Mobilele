@@ -10,6 +10,7 @@ import java.util.Set;
 @Component
 @SessionScope
 public class CurrentUser {
+  private Long id;
   private boolean isLoggedIn;
   private String username;
   private String firstName;
@@ -18,6 +19,10 @@ public class CurrentUser {
 
   public CurrentUser() {
     this.userRoles = new HashSet<>();
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public boolean isLoggedIn() {
@@ -68,12 +73,18 @@ public class CurrentUser {
     return this.userRoles.contains(UserRoleEnum.ADMIN);
   }
 
+  public CurrentUser setId(Long id) {
+    this.id = id;
+    return this;
+  }
+
   public void clean() {
     this.setFirstName("");
     this.setLastName("");
     this.setLoggedIn(false);
     this.setUsername("");
     this.clearRoles();
+    this.setId(0L);
   }
 
   private void clearRoles() {
