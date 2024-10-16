@@ -13,4 +13,6 @@ public interface ModelRepository extends JpaRepository<ModelEntity, Long> {
 
   @Query("SELECT m.name FROM ModelEntity m WHERE m.brand.name = :brandName")
   List<String> findAllByBrandName(String brandName);
+
+  ModelEntity findByName(String name);
 }
