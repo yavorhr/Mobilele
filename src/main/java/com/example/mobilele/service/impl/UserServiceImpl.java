@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserEntity findById(Long id) {
+    return this.userRepository.findById(id).get();
+  }
+
+  @Override
   public void initUsers() {
     if (userRepository.count() == 0) {
       UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
@@ -102,7 +107,8 @@ public class UserServiceImpl implements UserService {
   private UserEntity createUser(String username, String firstName, String lastName, String imageUrl, boolean isActive, String password) {
     UserEntity userEntity = new UserEntity();
 
-    userEntity.setActive(isActive)
+    userEntity
+            .setActive(isActive)
             .setUsername(username)
             .setImageUrl(imageUrl)
             .setFirstName(firstName)
@@ -113,9 +119,11 @@ public class UserServiceImpl implements UserService {
   }
 
   private void saveUserToSession(UserEntity loggedInUserEntity) {
+
     currentUser.setUsername(loggedInUserEntity.getUsername());
     currentUser.setLoggedIn(true);
     currentUser.setFirstName(loggedInUserEntity.getFirstName());
     currentUser.setLastName(loggedInUserEntity.getLastName());
+    currentUser.setId(loggedInUserEntity.getId());
   }
 }
