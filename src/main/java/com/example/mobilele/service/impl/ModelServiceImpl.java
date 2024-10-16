@@ -36,6 +36,11 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
+  public ModelEntity findByName(String model) {
+    return this.modelRepository.findByName(model);
+  }
+
+  @Override
   public void initModels() {
     if (modelRepository.count() == 0) {
       BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
@@ -45,7 +50,6 @@ public class ModelServiceImpl implements ModelService {
       x1
               .setName("x1")
               .setCategory(CategoryTypeEnum.SUV)
-              .setImageUrl("https://vehicle-images.dealerinspire.com/8ad5-18003199/WBX73EF02P5Y24821/224e78f55fdf8a9751585798f8c3e968.jpg")
               .setStartYear(1976)
               .setBrand(bmw);
 
@@ -53,7 +57,6 @@ public class ModelServiceImpl implements ModelService {
       x3
               .setName("x3")
               .setCategory(CategoryTypeEnum.SUV)
-              .setImageUrl("https://www.netcarshow.com/BMW-X3-2025-1280-d0c4295e4d8b95d382e2bff356803ec6f0.jpg")
               .setStartYear(1976)
               .setBrand(bmw);
 

@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 public class ModelEntity extends BaseEntity {
   private String name;
   private CategoryTypeEnum category;
-  private String imageUrl;
   private Integer startYear;
   private Integer endYear;
   private BrandEntity brand;
@@ -32,11 +31,6 @@ public class ModelEntity extends BaseEntity {
     return category;
   }
 
-  @Column(name = "image_url", nullable = false)
-  public String getImageUrl() {
-    return imageUrl;
-  }
-
   @Column(name = "start_year", nullable = false)
   public Integer getStartYear() {
     return startYear;
@@ -54,11 +48,6 @@ public class ModelEntity extends BaseEntity {
 
   public ModelEntity setCategory(CategoryTypeEnum category) {
     this.category = category;
-    return this;
-  }
-
-  public ModelEntity setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
     return this;
   }
 
