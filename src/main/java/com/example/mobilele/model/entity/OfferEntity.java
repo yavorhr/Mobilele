@@ -59,7 +59,7 @@ public class OfferEntity extends BaseEntity {
     return model;
   }
 
-  @OneToOne
+  @ManyToOne
   public UserEntity getSeller() {
     return seller;
   }
