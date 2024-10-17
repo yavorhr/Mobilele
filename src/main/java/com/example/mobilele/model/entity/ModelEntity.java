@@ -3,6 +3,8 @@ package com.example.mobilele.model.entity;
 import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "models")
 public class ModelEntity extends BaseEntity {
@@ -11,8 +13,14 @@ public class ModelEntity extends BaseEntity {
   private Integer startYear;
   private Integer endYear;
   private BrandEntity brand;
+  private List<OfferEntity> offers;
 
   public ModelEntity() {
+  }
+
+  @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
+  public List<OfferEntity> getOffers() {
+    return offers;
   }
 
   @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -43,6 +51,11 @@ public class ModelEntity extends BaseEntity {
 
   public ModelEntity setName(String name) {
     this.name = name;
+    return this;
+  }
+
+  public ModelEntity setOffers(List<OfferEntity> offers) {
+    this.offers = offers;
     return this;
   }
 
