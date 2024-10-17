@@ -51,6 +51,7 @@ public class ModelServiceImpl implements ModelService {
               .setName("x1")
               .setCategory(CategoryTypeEnum.SUV)
               .setStartYear(1976)
+              .setEndYear(1990)
               .setBrand(bmw);
 
       ModelEntity x3 = new ModelEntity();
@@ -58,6 +59,7 @@ public class ModelServiceImpl implements ModelService {
               .setName("x3")
               .setCategory(CategoryTypeEnum.SUV)
               .setStartYear(1976)
+              .setEndYear(1995)
               .setBrand(bmw);
 
       modelRepository.saveAll(List.of(x1, x3));
