@@ -17,9 +17,22 @@ public class OfferEntity extends BaseEntity {
   private ModelEntity model;
   private UserEntity seller;
 
+  public OfferEntity() {
+  }
+
   @Column(columnDefinition = "TEXT")
   public String getDescription() {
     return description;
+  }
+
+  @ManyToOne
+  public ModelEntity getModel() {
+    return model;
+  }
+
+  @ManyToOne
+  public UserEntity getSeller() {
+    return seller;
   }
 
   @Enumerated
@@ -52,16 +65,6 @@ public class OfferEntity extends BaseEntity {
   @Column(nullable = false)
   public Integer getYear() {
     return year;
-  }
-
-  @ManyToOne
-  public ModelEntity getModel() {
-    return model;
-  }
-
-  @ManyToOne
-  public UserEntity getSeller() {
-    return seller;
   }
 
   public OfferEntity setDescription(String description) {
