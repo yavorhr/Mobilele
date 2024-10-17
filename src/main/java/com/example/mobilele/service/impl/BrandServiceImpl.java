@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.dto.service.BrandServiceModel;
 import com.example.mobilele.model.dto.view.BrandViewNameModel;
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
@@ -7,6 +8,7 @@ import com.example.mobilele.service.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +34,15 @@ public class BrandServiceImpl implements BrandService {
             .findAll()
             .stream()
             .map(brandEntity -> this.modelMapper.map(brandEntity, BrandViewNameModel.class))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public Collection<BrandServiceModel> getAllBrands() {
+    return this.brandRepository
+            .findAllBrandsWithModels()
+            .stream()
+            .map(brand -> this.modelMapper.map(brand, BrandServiceModel.class))
             .collect(Collectors.toList());
   }
 

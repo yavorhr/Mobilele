@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-       <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>MobiLeLeLe</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -23,9 +23,10 @@
 <div class="container">
     <h2 class="text-center text-white m-3">All Brands</h2>
     <div class='row mb-4 d-flex justify-content-around'>
-        <div  class="brand-section col-md-5 mr-auto d-flex flex-column">
+        <div th:each="brand : ${allBrands}" th:object="${brand}"
+             class="brand-section col-md-5 mr-auto d-flex flex-column">
             <h2>Car brand:
-                <span >Brand name</span>
+                <span th:text="*{getName()}">Brand name</span>
             </h2>
             <div>Models:
                 <table>
@@ -35,16 +36,24 @@
                         <th>Category</th>
                         <th>Start Year</th>
                         <th>End Year</th>
-                        <th>Picture</th>
+                        <th>Offers</th>
                     </tr>
-                    <tr>
-                        <th>No</th>
-                        <th >Model Name</th>
-                        <th >Model Category</th>
-                        <th >Model Start Year</th>
-                        <th >Model End Year</th>
-                        <th><img alt="image" src="/"
-                                 class="img-thumbnail rounded"></th>
+
+                    <tr th:each="model : ${brand.models}" th:object="${model}">
+                        <td th:text="*{id}">No</td>
+                        <td th:text="*{getName()}">Model Name</td>
+                        <td th:text="*{category}">Model Category</td>
+                        <td th:text="*{startYear}">Model Start Year</td>
+                        <td th:text="*{endYear}">Model End Year</td>
+
+                        <td class="offers">
+                        <td th:each="o : ${model.getOffers()}" th:object="${o}">
+                            <a class="card-link" th:href="@{/offers/details/{id}(id=${o.id})}">Details</a>
+                            <img th:src="${o.imageUrl}" alt="image" src="/"
+                                 class="img-thumbnail rounded">
+                        </td>
+                        </td>
+                    </tr>
                     </tr>
                 </table>
             </div>
@@ -52,8 +61,12 @@
     </div>
 
     <div>
-             <footer> </footer>
+        <footer></footer>
     </div>
 </div>
 </body>
 </html>
+
+<body>
+
+</body>
