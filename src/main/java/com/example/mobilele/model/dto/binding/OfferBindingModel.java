@@ -5,7 +5,6 @@ import com.example.mobilele.model.entity.enums.TransmissionType;
 import jakarta.validation.constraints.*;
 
 public class OfferBindingModel {
-
   private String description;
   private EngineEnum engine;
   private String imageUrl;
