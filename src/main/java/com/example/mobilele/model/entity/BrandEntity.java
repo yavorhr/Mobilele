@@ -1,15 +1,18 @@
 package com.example.mobilele.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "brands")
 public class BrandEntity extends BaseEntity {
   private String name;
+  private Collection<ModelEntity> models;
 
   public BrandEntity() {
+    this.models = new ArrayList<>();
   }
 
   @Column(unique = true, nullable = false)
@@ -17,7 +20,17 @@ public class BrandEntity extends BaseEntity {
     return name;
   }
 
+  @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+  public Collection<ModelEntity> getModels() {
+    return models;
+  }
+
   public void setName(String name) {
     this.name = name;
+  }
+
+  public BrandEntity setModels(Collection<ModelEntity> models) {
+    this.models = models;
+    return this;
   }
 }
