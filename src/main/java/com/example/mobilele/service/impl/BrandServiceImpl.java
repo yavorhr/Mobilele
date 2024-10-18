@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.service.BrandServiceModel;
-import com.example.mobilele.model.dto.view.BrandViewNameModel;
+import com.example.mobilele.model.dto.service.brand.BrandServiceModel;
+import com.example.mobilele.model.dto.view.brand.BrandViewNameModel;
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.service.BrandService;
