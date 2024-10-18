@@ -62,7 +62,17 @@ public class ModelServiceImpl implements ModelService {
               .setEndYear(1995)
               .setBrand(bmw);
 
-      modelRepository.saveAll(List.of(x1, x3));
+      BrandEntity audi = this.brandService.findBrandByName("audi").get();
+
+      ModelEntity q5 = new ModelEntity();
+      q5
+              .setName("q5")
+              .setCategory(CategoryTypeEnum.SUV)
+              .setStartYear(2010)
+              .setEndYear(2020)
+              .setBrand(audi);
+
+      modelRepository.saveAll(List.of(x1, x3, q5));
     }
   }
 }
