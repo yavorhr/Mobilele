@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.view;
+package com.example.mobilele.model.dto.view.brand;
 
 public class BrandViewNameModel {
   private String name;

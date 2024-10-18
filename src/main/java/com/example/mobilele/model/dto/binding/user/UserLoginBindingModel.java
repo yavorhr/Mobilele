@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.binding;
+package com.example.mobilele.model.dto.binding.user;
 
 public class UserLoginBindingModel {
   private String username;

@@ -36,7 +36,7 @@
                         <th>Category</th>
                         <th>Start Year</th>
                         <th>End Year</th>
-                        <th>Offers</th>
+                        <th></th>
                     </tr>
 
                     <tr th:each="model : ${brand.models}" th:object="${model}">
@@ -45,12 +45,9 @@
                         <td th:text="*{category}">Model Category</td>
                         <td th:text="*{startYear}">Model Start Year</td>
                         <td th:text="*{endYear}">Model End Year</td>
-
                         <td class="offers">
-                        <td th:each="o : ${model.getOffers()}" th:object="${o}">
-                            <a class="card-link" th:href="@{/offers/details/{id}(id=${o.id})}">Details</a>
-                            <img th:src="${o.imageUrl}" alt="image" src="/"
-                                 class="img-thumbnail rounded">
+                        <td>
+                        <a class="card-link" th:href="@{/offers(brand=${brand.name})}">See offers</a>
                         </td>
                         </td>
                     </tr>

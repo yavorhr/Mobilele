@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.view;
+package com.example.mobilele.model.dto.view.offer;
 
 public class OfferViewModelWithIdAndUrl {
   private Long id;

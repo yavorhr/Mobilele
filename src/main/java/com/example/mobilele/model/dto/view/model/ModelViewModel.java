@@ -1,5 +1,5 @@
-package com.example.mobilele.model.dto.view;
-import com.example.mobilele.model.dto.service.OfferServiceModelWithIdAndUrl;
+package com.example.mobilele.model.dto.view.model;
+import com.example.mobilele.model.dto.service.offer.OfferServiceModelWithIdAndUrl;
 import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
 
 import java.util.List;

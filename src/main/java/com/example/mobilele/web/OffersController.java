@@ -1,8 +1,9 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.dto.binding.OfferBindingModel;
-import com.example.mobilele.model.dto.service.OfferAddServiceModel;
-import com.example.mobilele.model.dto.view.OfferViewModel;
+import com.example.mobilele.model.dto.binding.offer.OfferBindingModel;
+import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.dto.view.brand.BrandViewModel;
+import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.service.BrandService;
@@ -15,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class OffersController {
@@ -37,6 +38,19 @@ public class OffersController {
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
     model.addAttribute("offers", offers);
+
+    return "offers";
+  }
+
+  @GetMapping("/offers")
+  public String getModelsByBrandName(@RequestParam String brand, Model model){
+    List<BrandViewModel> offersByBrand = offerService
+            .findOffersByBrand(brand)
+            .stream()
+            .map(brandServiceModel -> modelMapper.map(brandServiceModel, BrandViewModel.class))
+            .collect(Collectors.toList());
+
+    model.addAttribute("offers", offersByBrand);
 
     return "offers";
   }

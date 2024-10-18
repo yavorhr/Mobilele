@@ -1,4 +1,6 @@
-package com.example.mobilele.model.dto.service;
+package com.example.mobilele.model.dto.service.brand;
+
+import com.example.mobilele.model.dto.service.model.ModelServiceModel;
 
 import java.util.List;
 

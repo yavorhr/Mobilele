@@ -1,4 +1,6 @@
-package com.example.mobilele.model.dto.view;
+package com.example.mobilele.model.dto.view.brand;
+
+import com.example.mobilele.model.dto.view.model.ModelViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

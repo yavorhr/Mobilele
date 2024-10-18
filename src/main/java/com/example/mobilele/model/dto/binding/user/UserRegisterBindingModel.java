@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.binding;
+package com.example.mobilele.model.dto.binding.user;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 

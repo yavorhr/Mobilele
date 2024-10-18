@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.view;
+package com.example.mobilele.model.dto.view.offer;
 
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;

@@ -1,6 +1,6 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.dto.view.BrandViewModel;
+import com.example.mobilele.model.dto.view.brand.BrandViewModel;
 import com.example.mobilele.service.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -32,4 +32,5 @@ public class BrandController {
 
     return "brands";
   }
+
 }

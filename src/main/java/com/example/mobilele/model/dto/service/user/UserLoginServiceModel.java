@@ -1,4 +1,4 @@
-package com.example.mobilele.model.dto.service;
+package com.example.mobilele.model.dto.service.user;
 
 public class UserLoginServiceModel {
   private String username;
