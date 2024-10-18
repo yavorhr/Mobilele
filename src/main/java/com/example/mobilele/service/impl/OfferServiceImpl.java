@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.dto.service.offer.OfferServiceModel;
+import com.example.mobilele.model.dto.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
@@ -12,6 +13,7 @@ import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -44,11 +46,12 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public OfferViewModel findOfferById(Long id) {
+  public OfferServiceModel findOfferById(Long id) {
     OfferEntity offer = this.offerRepository.findById(id).get();
 
-    OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
+    OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
     model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
+
     return model;
   }
 
@@ -83,6 +86,18 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
+  public void updateOffer(OfferUpdateServiceModel serviceModel, Long id) {
+
+    OfferEntity offerEntity =
+            offerRepository.findById(serviceModel.getId()).orElseThrow(() ->
+                    new ObjectNotFoundException("Offer with id " + serviceModel.getId() + " not found!"));
+
+    this.modelMapper.map(serviceModel, offerEntity);
+
+    this.offerRepository.save(offerEntity);
+  }
+
+  @Override
   public void initOffers() {
     if (offerRepository.count() == 0) {
       OfferEntity firstOffer = new OfferEntity();
@@ -93,7 +108,7 @@ public class OfferServiceImpl implements OfferService {
               .setTransmission(TransmissionType.Manual)
               .setMileage(22500.30)
               .setPrice(14300.00)
-              .setYear(2022)
+              .setYear(2000)
               .setDescription("Used, but well services and in good condition.")
               .setSeller(userService.findByUsername("pesho")
                       .orElse(null)) // or currentUser.getUserName()
@@ -108,7 +123,7 @@ public class OfferServiceImpl implements OfferService {
               .setTransmission(TransmissionType.Manual)
               .setMileage(500.40)
               .setPrice(60000.00)
-              .setYear(2020)
+              .setYear(2005)
               .setDescription("Perfect condition!.")
               .setSeller(userService.findByUsername("admin")
                       .orElse(null)) // or currentUser.getUserName()
