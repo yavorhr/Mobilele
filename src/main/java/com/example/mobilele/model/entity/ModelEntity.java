@@ -18,6 +18,7 @@ public class ModelEntity extends BaseEntity {
   public ModelEntity() {
   }
 
+
   @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
   public List<OfferEntity> getOffers() {
     return offers;
