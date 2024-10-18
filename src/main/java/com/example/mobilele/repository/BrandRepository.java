@@ -15,4 +15,6 @@ public interface BrandRepository extends JpaRepository<BrandEntity, Long> {
 
   @Query("SELECT b FROM BrandEntity b WHERE SIZE(b.models)>0 ORDER BY b.name ASC ")
   List<BrandEntity> findAllBrandsWithModels();
+
+
 }
