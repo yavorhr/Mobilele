@@ -13,11 +13,16 @@ public class OfferEntity extends BaseEntity {
   private Double mileage;
   private Double price;
   private TransmissionType transmission;
-  private Integer year;
   private ModelEntity model;
   private UserEntity seller;
+  private Integer year;
 
   public OfferEntity() {
+  }
+
+  @Column(nullable = false, name = "year")
+  public Integer getYear() {
+    return year;
   }
 
   @Column(columnDefinition = "TEXT")
@@ -62,11 +67,6 @@ public class OfferEntity extends BaseEntity {
     return transmission;
   }
 
-  @Column(nullable = false)
-  public Integer getYear() {
-    return year;
-  }
-
   public OfferEntity setDescription(String description) {
     this.description = description;
     return this;
@@ -74,6 +74,11 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setEngine(EngineEnum engine) {
     this.engine = engine;
+    return this;
+  }
+
+  public OfferEntity setYear(Integer productionYear) {
+    this.year = productionYear;
     return this;
   }
 
@@ -94,11 +99,6 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
-    return this;
-  }
-
-  public OfferEntity setYear(Integer year) {
-    this.year = year;
     return this;
   }
 
