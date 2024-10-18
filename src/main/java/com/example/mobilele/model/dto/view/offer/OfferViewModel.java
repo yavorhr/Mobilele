@@ -7,8 +7,8 @@ import java.time.Instant;
 public class OfferViewModel {
   private Long id;
   private Double price;
-  private String modelBrandName;
   private String description;
+  private String modelBrandName;
   private EngineEnum engine;
   private String imageUrl;
   private Double mileage;
