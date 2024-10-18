@@ -33,7 +33,7 @@ public class OffersController {
     this.currentUser = currentUser;
   }
 
-  // GET ALL OFFERS
+  // GET
   @GetMapping("/offers/all")
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
@@ -44,10 +44,10 @@ public class OffersController {
 
   @GetMapping("/offers")
   public String getModelsByBrandName(@RequestParam String brand, Model model){
-    List<BrandViewModel> offersByBrand = offerService
-            .findOffersByBrand(brand)
+    List<OfferViewModel> offersByBrand = offerService
+            .findOffersByBrand(brand.toLowerCase())
             .stream()
-            .map(brandServiceModel -> modelMapper.map(brandServiceModel, BrandViewModel.class))
+            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
             .collect(Collectors.toList());
 
     model.addAttribute("offers", offersByBrand);
@@ -55,8 +55,6 @@ public class OffersController {
     return "offers";
   }
 
-  // OFFER DETAILS MAPPINGS
-  // * GET OFFER DETAILS
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model) {
     OfferViewModel viewModel = this.offerService.findOfferById(id);
@@ -77,7 +75,6 @@ public class OffersController {
   }
 
   // ADD OFFER
-
   @ModelAttribute("offerBindingModel")
   public OfferBindingModel offerBindingModel() {
     return new OfferBindingModel();
