@@ -1,6 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.dto.service.offer.OfferServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
@@ -73,10 +74,11 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Collection<OfferViewModel> findOffersByBrand(String brand) {
+  public Collection<OfferServiceModel> findOffersByBrand(String brand) {
     return this.offerRepository.findAllByModel_BrandName(brand)
             .stream()
-            .map(offerEntity -> this.modelMapper.map(offerEntity, OfferViewModel.class))
+            .map(offerEntity ->
+                    this.modelMapper.map(offerEntity, OfferServiceModel.class))
             .collect(Collectors.toList());
   }
 
