@@ -83,7 +83,7 @@ public class OffersController {
     return "details";
   }
 
-  // * UPDATE OFFER
+  // UPDATE OFFER
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id, Model model) {
     OfferAddBindingModel offerBindingModel =
@@ -97,20 +97,28 @@ public class OffersController {
 
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
-                            @Valid OfferAddBindingModel offerAddBindingModel,
+                            @Valid OfferAddBindingModel offerBindingModel,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerAddBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
-      return "redirect:/offers/update/" + id;
+              .addFlashAttribute("offerBindingModel", offerBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
+
+      return "redirect:/offers/update/errors/" + id;
     }
 
-    this.offerService.updateOffer(this.modelMapper.map(offerAddBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
+    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
 
     return "redirect:/offers/details/" + id;
+  }
+
+  @GetMapping("/offers/update/errors/{id}")
+  public String editOfferErrors(@PathVariable Long id) {
+
+    return "update";
   }
 
   // ADD OFFER
