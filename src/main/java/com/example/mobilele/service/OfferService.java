@@ -1,8 +1,9 @@
 package com.example.mobilele.service;
 
-import com.example.mobilele.model.dto.service.OfferAddServiceModel;
-import com.example.mobilele.model.dto.view.OfferViewModel;
+import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface OfferService {
@@ -16,4 +17,6 @@ public interface OfferService {
   void deleteById(Long id);
 
   OfferAddServiceModel addOffer(OfferAddServiceModel offer, Long id);
+
+  Collection<OfferViewModel> findOffersByBrand(String brand);
 }

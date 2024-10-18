@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.service.UserLoginServiceModel;
-import com.example.mobilele.model.dto.service.UserRegisterServiceModel;
+import com.example.mobilele.model.dto.service.user.UserLoginServiceModel;
+import com.example.mobilele.model.dto.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;

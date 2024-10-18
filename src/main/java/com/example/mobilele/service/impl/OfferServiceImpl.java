@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.service.OfferAddServiceModel;
-import com.example.mobilele.model.dto.view.OfferViewModel;
+import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
@@ -14,6 +14,7 @@ import com.example.mobilele.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +70,14 @@ public class OfferServiceImpl implements OfferService {
     offerServiceModel.setId(offer.getId());
 
     return offerServiceModel;
+  }
+
+  @Override
+  public Collection<OfferViewModel> findOffersByBrand(String brand) {
+    return this.offerRepository.findAllByModel_BrandName(brand)
+            .stream()
+            .map(offerEntity -> this.modelMapper.map(offerEntity, OfferViewModel.class))
+            .collect(Collectors.toList());
   }
 
   @Override
