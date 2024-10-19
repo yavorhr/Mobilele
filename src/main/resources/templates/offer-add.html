@@ -37,7 +37,7 @@
                         id="brand"
                         class="form-control"
                         onchange="loadModels()"
-                        name="brand"
+                        th:name="brand"
                         th:errorclass="is-invalid">
                     <option value="" selected disabled>- Select brand -</option>
                     <optgroup label="Brand name">
@@ -45,7 +45,7 @@
                                 th:each="brand : ${brands}"
                                 th:text="${brand.getName()}"
                                 th:value="${brand.getName()}"
-                                th:selected="${brand.getName()} == *{brand}">BMW
+                                th:selected="${brand.getName()} == *{brand}">
                         </option>
                     </optgroup>
                 </select>
@@ -58,10 +58,17 @@
                 <label class="text-center text-white font-weight-bold" for="model">Model</label>
                 <select id="model"
                         class="form-control"
-                        name="model"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select model -</option>
+                        th:name="model"
+                        th:errorclass="is-invalid"
+                        th:selected="${model} == *{model}">
+                    <option value="" selected disabled>- Select model -</option>
                     <optgroup label="Model name">
+                        <option
+                                th:each="model : ${models}"
+                                th:text="${model}"
+                                th:value="${model}"
+                                th:selected="${model} == *{model}">
+                        </option>
                     </optgroup>
                 </select>
                 <p class="errors alert alert-danger invalid-feedback">
