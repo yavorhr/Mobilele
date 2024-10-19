@@ -125,8 +125,6 @@ public class OffersController {
   @GetMapping("/offers/add")
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
-//    model.addAttribute("engines", EngineEnum.values());
-//    model.addAttribute("transmissions", TransmissionType.values());
 
     return "offer-add";
   }
@@ -139,8 +137,9 @@ public class OffersController {
     if (bindingResult.hasErrors()) {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerAddBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
-//              .addFlashAttribute("brands", this.brandService.findAllBrands());
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
+
       return "redirect:/offers/add";
     }
 
