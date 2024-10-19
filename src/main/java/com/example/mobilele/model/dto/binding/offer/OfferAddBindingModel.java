@@ -24,15 +24,15 @@ public class OfferAddBindingModel {
   }
 
   @NotNull
-  @NotEmpty
+  @NotBlank
   public String getModel() {
-    return this.model.substring(0,1).toUpperCase() + this.model.substring(1);
+    return model;
   }
 
   @NotNull
-  @NotEmpty
+  @NotBlank
   public String getBrand() {
-    return  this.brand.substring(0,1).toUpperCase() + this.brand.substring(1);
+    return brand;
   }
 
   @NotNull
