@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ModelRepository extends JpaRepository<ModelEntity, Long> {
@@ -14,5 +15,5 @@ public interface ModelRepository extends JpaRepository<ModelEntity, Long> {
   @Query("SELECT m.name FROM ModelEntity m WHERE m.brand.name = :brandName")
   List<String> findAllByBrandName(String brandName);
 
-  ModelEntity findByName(String name);
+  Optional<ModelEntity> findByName(String name);
 }

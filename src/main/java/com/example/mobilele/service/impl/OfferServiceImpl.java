@@ -64,7 +64,7 @@ public class OfferServiceImpl implements OfferService {
   public OfferAddServiceModel addOffer(OfferAddServiceModel offerServiceModel, Long id) {
     OfferEntity offer = this.modelMapper.map(offerServiceModel, OfferEntity.class);
 
-    ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel());
+    ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel()).get();
     modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()).get());
 
     offer.setModel(modelEntity);

@@ -37,7 +37,7 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
-  public ModelEntity findByName(String model) {
+  public Optional<ModelEntity> findByName(String model) {
     return this.modelRepository.findByName(model);
   }
 
