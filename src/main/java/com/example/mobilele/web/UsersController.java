@@ -8,6 +8,7 @@ import com.example.mobilele.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +35,7 @@ public class UsersController {
     return "auth-register";
   }
 
+
   @PostMapping("/users/register")
   public String register(
           @Valid UserRegisterBindingModel userModel,
@@ -56,23 +58,26 @@ public class UsersController {
   }
 
   @GetMapping("/users/login")
-  public String loginPage() {
+  public String loginPage(Model model) {
+    if (!model.containsAttribute("userLoginBindingModel")) {
+      model.addAttribute("userLoginBindingModel", new UserLoginBindingModel());
+    }
 
     return "auth-login";
   }
 
   @PostMapping("/users/login")
   public String loginUser(
-          @ModelAttribute UserLoginBindingModel userLoginBindingModel,
+          @Valid UserLoginBindingModel userLoginBindingModel,
+          BindingResult bindingResult,
           RedirectAttributes attributes) {
 
-    UserLoginServiceModel userLoginServiceModel = mapToServiceModel(userLoginBindingModel);
+    if (bindingResult.hasErrors()) {
 
-    boolean loginSuccessful = this.userService.login(userLoginServiceModel);
+      attributes
+              .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
 
-    if (!loginSuccessful) {
-      attributes.addFlashAttribute("bad_credentials", true);
-      attributes.addFlashAttribute("username", userLoginServiceModel.getUsername());
       return "redirect:/users/login";
     }
 
