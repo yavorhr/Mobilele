@@ -13,9 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/users/")
 public class UsersController {
   private final UserService userService;
   private final ModelMapper modelMapper;
@@ -30,13 +32,13 @@ public class UsersController {
     return new UserRegisterBindingModel();
   }
 
-  @GetMapping("/users/register")
+  @GetMapping("/register")
   public String registerPage() {
     return "auth-register";
   }
 
 
-  @PostMapping("/users/register")
+  @PostMapping("/register")
   public String register(
           @Valid UserRegisterBindingModel userModel,
           BindingResult bindingResult,
@@ -57,7 +59,7 @@ public class UsersController {
     return "redirect:/users/login";
   }
 
-  @GetMapping("/users/login")
+  @GetMapping("/login")
   public String loginPage(Model model) {
     if (!model.containsAttribute("userLoginBindingModel")) {
       model.addAttribute("userLoginBindingModel", new UserLoginBindingModel());
@@ -66,7 +68,7 @@ public class UsersController {
     return "auth-login";
   }
 
-  @PostMapping("/users/login")
+  @PostMapping("/login")
   public String loginUser(
           @Valid UserLoginBindingModel userLoginBindingModel,
           BindingResult bindingResult,
@@ -84,7 +86,7 @@ public class UsersController {
     return "redirect:/";
   }
 
-  @GetMapping("/users/logout")
+  @GetMapping("/logout")
   public String logout() {
     this.userService.logout();
     return "redirect:/";
