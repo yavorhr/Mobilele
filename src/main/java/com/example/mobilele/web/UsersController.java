@@ -26,7 +26,7 @@ public class UsersController {
 
   @ModelAttribute("userModel")
   public UserRegisterBindingModel userModel() {
-    return new UserRegisterBindingModel ();
+    return new UserRegisterBindingModel();
   }
 
   @GetMapping("/users/register")
@@ -57,19 +57,26 @@ public class UsersController {
 
   @GetMapping("/users/login")
   public String loginPage() {
+
     return "auth-login";
   }
 
   @PostMapping("/users/login")
-  public String loginUser(@ModelAttribute UserLoginBindingModel userLoginBindingModel) {
+  public String loginUser(
+          @ModelAttribute UserLoginBindingModel userLoginBindingModel,
+          RedirectAttributes attributes) {
+
     UserLoginServiceModel userLoginServiceModel = mapToServiceModel(userLoginBindingModel);
 
     boolean loginSuccessful = this.userService.login(userLoginServiceModel);
 
-    if (loginSuccessful) {
-      return "redirect:/";
+    if (!loginSuccessful) {
+      attributes.addFlashAttribute("bad_credentials", true);
+      attributes.addFlashAttribute("username", userLoginServiceModel.getUsername());
+      return "redirect:/users/login";
     }
-    return "auth-login";
+
+    return "redirect:/";
   }
 
   @GetMapping("/users/logout")
