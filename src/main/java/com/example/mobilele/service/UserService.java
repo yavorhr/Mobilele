@@ -19,4 +19,6 @@ public interface UserService {
   Optional<UserEntity> findByUsername(String username);
 
   UserEntity findById(Long id);
+
+  boolean isUserNameAvailable(String userName);
 }

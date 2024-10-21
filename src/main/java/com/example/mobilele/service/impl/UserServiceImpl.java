@@ -88,6 +88,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public boolean isUserNameAvailable(String username) {
+    return userRepository.findByUsernameIgnoreCase(username).isEmpty();
+
+  }
+
+  @Override
   public void initUsers() {
     if (userRepository.count() == 0) {
       UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
