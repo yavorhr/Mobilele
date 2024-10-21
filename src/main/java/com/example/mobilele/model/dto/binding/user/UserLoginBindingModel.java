@@ -1,5 +1,8 @@
 package com.example.mobilele.model.dto.binding.user;
 
+import com.example.mobilele.validator.validator.ValidLogin;
+
+@ValidLogin
 public class UserLoginBindingModel {
   private String username;
   private String password;
