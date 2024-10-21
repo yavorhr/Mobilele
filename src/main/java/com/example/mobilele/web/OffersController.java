@@ -134,6 +134,10 @@ public class OffersController {
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
 
+    if (!currentUser.isLoggedIn()){
+      return "redirect:/users/login";
+    }
+    
     if (bindingResult.hasErrors()) {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerAddBindingModel)
