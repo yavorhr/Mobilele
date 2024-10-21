@@ -16,11 +16,12 @@
     <form
             method="POST"
             th:action="@{/users/login}"
+            th:object="${userLoginBindingModel}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="form-group">
             <label for="username" class="text-white font-weight-bold">Username</label>
             <input
-                    th:value="${username}"
+                    th:field="*{username}"
                     id="username"
                     name="username"
                     type="text"
@@ -39,10 +40,13 @@
                     placeholder="Password"/>
 
         </div>
-        <p th:if="${bad_credentials}"
-           class="errors alert alert-danger">
-            Invalid username or password.
-        </p>
+
+        <div
+                th:if="${#fields.hasGlobalErrors()}">
+            <p class="errors alert alert-danger" th:each="error : ${#fields.globalErrors()}">
+                <span th:text="${error}"></span>
+            </p>
+        </div>
 
         <div class="row">
             <div class="col col-md-4">
