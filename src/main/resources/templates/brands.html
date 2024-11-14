@@ -16,7 +16,8 @@
 <div class="container">
     <h2 class="text-center text-white m-3">All Brands</h2>
     <div class='row mb-4 d-flex justify-content-around'>
-        <div th:each="brand : ${allBrands}" th:object="${brand}"
+        <div th:each="brand : ${allBrands}"
+             th:object="${brand}"
              class="brand-section col-md-5 mr-auto d-flex flex-column">
             <h2>Car brand:
                 <span th:text="*{getName()}">Brand name</span>
