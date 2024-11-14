@@ -20,13 +20,15 @@
                 >
                     <a class="nav-link" href="/brands/all">All Brands</a>
                 </li>
-                <li th:if="${@currentUser.isLoggedIn()}" class="nav-item">
+                <!-- TODO -->
+                <li class="nav-item">
                     <a class="nav-link" href="/offers/add">Add Offer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/offers/all">All Offers</a>
                 </li>
-                <li th:if="${@currentUser.isAdmin()}" class="nav-item dropdown">
+                <!-- TODO -->
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
@@ -39,20 +41,24 @@
                     </div>
                 </li>
                 <!-- Logout start  -->
-                <li th:if="${@currentUser.isLoggedIn()}" class="nav-item">
+                <!-- TODO -->
+                <li class="nav-item">
                     <div class="form-inline my-2 my-lg-0 border px-3">
                         <div class="logged-user">Welcome,
-                            <th:block th:text="${@currentUser.getFirstName()}">
+                            <!-- TODO - Add logged in first name-->
+                            <th:block >
                             </th:block>
                         </div>
                         <a class="nav-link" th:href="@{/users/logout}">Logout</a>
                     </div>
                 </li>
                 <!-- EO Logout  -->
-                <li th:unless="${@currentUser.isLoggedIn()}"  class="nav-item">
+                <!-- TODO -->
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/users/register}">Register</a>
                 </li>
-                <li th:unless="${@currentUser.isLoggedIn()}" class="nav-item">
+                <!-- TODO -->
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
             </ul>
