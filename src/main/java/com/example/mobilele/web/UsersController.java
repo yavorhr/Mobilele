@@ -86,17 +86,4 @@ public class UsersController {
     return "redirect:/";
   }
 
-  @GetMapping("/logout")
-  public String logout() {
-    this.userService.logout();
-    return "redirect:/";
-  }
-
-  // helpers
-  private UserLoginServiceModel mapToServiceModel(UserLoginBindingModel userLoginBindingModel) {
-    UserLoginServiceModel userLoginServiceModel = new UserLoginServiceModel();
-    userLoginServiceModel.setUsername(userLoginBindingModel.getUsername());
-    userLoginServiceModel.setPassword(userLoginBindingModel.getPassword());
-    return userLoginServiceModel;
-  }
 }
