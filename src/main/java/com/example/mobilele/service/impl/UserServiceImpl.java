@@ -1,6 +1,5 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.service.user.UserLoginServiceModel;
 import com.example.mobilele.model.dto.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
@@ -8,7 +7,6 @@ import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
-import com.example.mobilele.user.CurrentUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,43 +17,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
-  private final CurrentUser currentUser;
   private final UserRoleService roleService;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CurrentUser currentUser, UserRoleService roleService) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
-    this.currentUser = currentUser;
     this.roleService = roleService;
-  }
-
-  @Override
-  public boolean login(UserLoginServiceModel userLoginServiceModel) {
-
-    Optional<UserEntity> loggedInUserOpt =
-            this.userRepository.findByUsername(userLoginServiceModel.getUsername());
-
-    if (loggedInUserOpt.isEmpty()) {
-      logout();
-      return false;
-    } else {
-      boolean success = passwordEncoder.matches(
-              userLoginServiceModel.getPassword(),
-              loggedInUserOpt.get().getPassword());
-
-      if (success) {
-        UserEntity loggedInUserEntity = loggedInUserOpt.get();
-        saveUserToSession(loggedInUserEntity);
-
-        loggedInUserEntity.getRoles().forEach(r -> currentUser.addRole(r.getRole()));
-      }
-      return success;
-    }
-  }
-
-  @Override
-  public void logout() {
-    this.currentUser.clean();
   }
 
   @Override
@@ -73,8 +40,7 @@ public class UserServiceImpl implements UserService {
             setRoles(List.of(userRoleEntity));
 
     newUserEntity = userRepository.save(newUserEntity);
-
-    saveUserToSession(newUserEntity);
+    //TODO : register user
   }
 
   @Override
@@ -124,12 +90,4 @@ public class UserServiceImpl implements UserService {
     return userEntity;
   }
 
-  private void saveUserToSession(UserEntity loggedInUserEntity) {
-
-    currentUser.setUsername(loggedInUserEntity.getUsername());
-    currentUser.setLoggedIn(true);
-    currentUser.setFirstName(loggedInUserEntity.getFirstName());
-    currentUser.setLastName(loggedInUserEntity.getLastName());
-    currentUser.setId(loggedInUserEntity.getId());
-  }
 }
