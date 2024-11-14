@@ -9,7 +9,6 @@ import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
-import com.example.mobilele.user.CurrentUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -26,14 +25,12 @@ public class OffersController {
   private final OfferService offerService;
   private final BrandService brandService;
   private final ModelMapper modelMapper;
-  private final CurrentUser currentUser;
   private final ModelService modelService;
 
-  public OffersController(OfferService offerService, BrandService brandService, ModelMapper modelMapper, CurrentUser currentUser, ModelService modelService) {
+  public OffersController(OfferService offerService, BrandService brandService, ModelMapper modelMapper, ModelService modelService) {
     this.offerService = offerService;
     this.brandService = brandService;
     this.modelMapper = modelMapper;
-    this.currentUser = currentUser;
     this.modelService = modelService;
   }
 
@@ -109,8 +106,8 @@ public class OffersController {
 
       return "redirect:/offers/update/errors/" + id;
     }
-
-    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
+  //TODO:
+    //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
 
     return "redirect:/offers/details/" + id;
   }
@@ -134,10 +131,6 @@ public class OffersController {
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
 
-    if (!currentUser.isLoggedIn()){
-      return "redirect:/users/login";
-    }
-    
     if (bindingResult.hasErrors()) {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerAddBindingModel)
@@ -146,13 +139,15 @@ public class OffersController {
 
       return "redirect:/offers/add";
     }
+//TODO:
 
-    OfferAddServiceModel serviceModel =
-            this.offerService.addOffer(
-                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-                    currentUser.getId());
+//    OfferAddServiceModel serviceModel =
+//            this.offerService.addOffer(
+//                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
+//                    currentUser.getId());
 
-    return "redirect:/offers/details/" + serviceModel.getId();
+//    return "redirect:/offers/details/" + serviceModel.getId();
+    return "";
   }
 
   // DELETE OFFER

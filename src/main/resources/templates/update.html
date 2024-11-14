@@ -77,14 +77,14 @@
                         id="engine"
                         class="form-control"
                         name="engine"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select engine type -</option>
-                    <option th:each="e : ${engines}"
-                            th:text="${e}"
-                            th:value="${e}"
-                            th:selected="${e} == *{engine}">
-                        Engine type
-                    </option>
+                th:errorclass="is-invalid">
+                <option value="">- Select engine type -</option>
+                <option th:each="e : ${engines}"
+                        th:text="${e}"
+                        th:value="${e}"
+                        th:selected="${e} == *{engine}">
+                    Engine type
+                </option>
                 </select>
                 <p class="errors alert alert-danger invalid-feedback">
                     Engine type is required.

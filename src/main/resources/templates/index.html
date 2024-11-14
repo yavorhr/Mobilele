@@ -15,12 +15,13 @@
 
 <div class="container-fluid">
     <h5 class="text-center text-white mt-5">Welcome to MobiLeLe,
-        <span
-                th:if="${@currentUser.isLoggedIn()}"
-                th:text="${@currentUser.username}">
-        </span>
+        <!-- TODO -->
+<!--        <span-->
+<!--                th:if="${@currentUser.isLoggedIn()}"-->
+<!--                th:text="${@currentUser.username}">-->
+<!--        </span>-->
 
-        <span th:unless="${@currentUser.isLoggedIn()}">
+<!--        <span th:unless="${@currentUser.isLoggedIn()}">-->
         Anonymous
         </span>
         !</h5>
