@@ -67,23 +67,4 @@ public class UsersController {
 
     return "auth-login";
   }
-
-  @PostMapping("/login")
-  public String loginUser(
-          @Valid UserLoginBindingModel userLoginBindingModel,
-          BindingResult bindingResult,
-          RedirectAttributes attributes) {
-
-    if (bindingResult.hasErrors()) {
-
-      attributes
-              .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
-
-      return "redirect:/users/login";
-    }
-
-    return "redirect:/";
-  }
-
 }
