@@ -52,7 +52,7 @@ public class ApplicationSecurityConfiguration {
                     // the name of the <input...> HTML filed that keeps the password
                             passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                     // The place where we should land in case that the login is successful
-                            defaultSuccessUrl("/").
+                            defaultSuccessUrl("/", true).
                     // the place where I should land if the login is NOT successful
                             failureForwardUrl("/users/login-error").permitAll()).
             logout(logout -> logout.
