@@ -9,8 +9,10 @@ import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.service.impl.MobileleUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -131,7 +133,7 @@ public class OffersController {
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
-                         Principal principal) {
+                         @AuthenticationPrincipal MobileleUser user) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
@@ -145,7 +147,7 @@ public class OffersController {
     OfferAddServiceModel serviceModel =
             this.offerService.addOffer(
                     this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-                    principal.getName());
+                    user.getUserIdentifier());
 
     return "redirect:/offers/details/" + serviceModel.getId();
   }
