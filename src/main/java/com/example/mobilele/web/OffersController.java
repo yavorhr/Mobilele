@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +130,8 @@ public class OffersController {
   @PostMapping("/offers/add")
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes,
+                         Principal principal) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
@@ -139,15 +141,13 @@ public class OffersController {
 
       return "redirect:/offers/add";
     }
-//TODO:
 
-//    OfferAddServiceModel serviceModel =
-//            this.offerService.addOffer(
-//                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-//                    currentUser.getId());
+    OfferAddServiceModel serviceModel =
+            this.offerService.addOffer(
+                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
+                    principal.getName());
 
-//    return "redirect:/offers/details/" + serviceModel.getId();
-    return "";
+    return "redirect:/offers/details/" + serviceModel.getId();
   }
 
   // DELETE OFFER

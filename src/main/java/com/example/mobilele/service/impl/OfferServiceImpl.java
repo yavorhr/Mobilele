@@ -61,14 +61,14 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public OfferAddServiceModel addOffer(OfferAddServiceModel offerServiceModel, Long id) {
+  public OfferAddServiceModel addOffer(OfferAddServiceModel offerServiceModel, String username) {
     OfferEntity offer = this.modelMapper.map(offerServiceModel, OfferEntity.class);
 
     ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel()).get();
     modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()).get());
 
     offer.setModel(modelEntity);
-    offer.setSeller(this.userService.findById(id));
+    offer.setSeller(this.userService.findByUsername(username).get());
 
     offer = this.offerRepository.save(offer);
     offerServiceModel.setId(offer.getId());

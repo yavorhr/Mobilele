@@ -18,7 +18,7 @@ public interface OfferService {
 
   void deleteById(Long id);
 
-  OfferAddServiceModel addOffer(OfferAddServiceModel offer, Long id);
+  OfferAddServiceModel addOffer(OfferAddServiceModel offer, String username);
 
   Collection<OfferServiceModel> findOffersByBrand(String brand);
 
