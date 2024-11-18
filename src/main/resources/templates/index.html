@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/head">
 </head>
 
 <body>
 
-<div>
     <div th:replace="fragments/navbar">
-        Navbar
     </div>
-</div>
-
 
 <div class="container-fluid">
-    <h5 class="text-center text-white mt-5">Welcome to MobiLeLe,
-        <!-- TODO -->
-<!--        <span-->
-<!--                th:if="${@currentUser.isLoggedIn()}"-->
-<!--                th:text="${@currentUser.username}">-->
-<!--        </span>-->
-
-<!--        <span th:unless="${@currentUser.isLoggedIn()}">-->
-        Anonymous
+    <h5 class="text-center text-white mt-5">Welcome to MobiLeLeLe,
+        <span
+                sec:authorize="isAuthenticated()"
+                sec:authentication="name">
+            Name of the logged in user.
         </span>
-        !</h5>
+        <span sec:authorize="!isAuthenticated()">
+            Anonymous!
+        </span>
+    </h5>
 </div>
-
 <div>
     <footer></footer>
 </div>
