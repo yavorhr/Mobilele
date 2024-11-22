@@ -2,7 +2,6 @@ package com.example.mobilele.service.impl;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
 import java.util.Collection;
 
 public class MobileleUser extends User {
