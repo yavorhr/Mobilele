@@ -26,6 +26,7 @@ public class ApplicationSecurityConfiguration {
     this.passwordEncoder = passwordEncoder;
   }
 
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(authz ->
