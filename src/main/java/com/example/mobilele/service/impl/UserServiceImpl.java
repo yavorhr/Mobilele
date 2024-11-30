@@ -7,6 +7,10 @@ import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +22,13 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
   private final UserRoleService roleService;
+  private final MobileleUserServiceImpl mobileleUserService;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.roleService = roleService;
+    this.mobileleUserService = mobileleUserService;
   }
 
   @Override
@@ -40,7 +46,17 @@ public class UserServiceImpl implements UserService {
             setRoles(List.of(userRoleEntity));
 
     newUserEntity = userRepository.save(newUserEntity);
-    //TODO : register user
+
+    UserDetails principal = mobileleUserService.loadUserByUsername(newUserEntity.getUsername());
+    Authentication authentication = new UsernamePasswordAuthenticationToken(
+            principal,
+            newUserEntity.getPassword(),
+            principal.getAuthorities()
+    );
+
+    SecurityContextHolder.
+            getContext().
+            setAuthentication(authentication);
   }
 
   @Override
@@ -56,7 +72,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isUserNameAvailable(String username) {
     return userRepository.findByUsernameIgnoreCase(username).isEmpty();
-
   }
 
   @Override
