@@ -41,12 +41,14 @@ public class ApplicationSecurityConfiguration {
                     usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                     passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                     defaultSuccessUrl("/", true).
-                    failureForwardUrl("/login?fail=true"))
+                    failureForwardUrl("/users/login-error"))
             .logout(logout -> logout.
                     logoutUrl("/users/logout").
                     logoutSuccessUrl("/").
                     invalidateHttpSession(true).
-                    deleteCookies("JSESSIONID"));
+                    deleteCookies("JSESSIONID"))
+            .securityContext(securityContext ->
+                    securityContext.requireExplicitSave(false));
 
     return http.build();
   }
