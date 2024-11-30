@@ -3,13 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head">
-</head>
+<head th:replace="fragments/head::head"></head>
 
 <body>
 
-    <div th:replace="fragments/navbar">
-    </div>
+<div th:replace="fragments/navbar :: navbar">
+    Navbar
+</div>
+
 
 <div class="container-fluid">
     <h5 class="text-center text-white mt-5">Welcome to MobiLeLeLe,
@@ -23,8 +24,9 @@
         </span>
     </h5>
 </div>
+
 <div>
-    <footer></footer>
+    <footer> </footer>
 </div>
 
 </body>
