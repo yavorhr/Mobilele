@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class UsersController {
+public class UserRegisterController {
   private final UserService userService;
   private final ModelMapper modelMapper;
 
-  public UsersController(UserService userService, ModelMapper modelMapper) {
+  public UserRegisterController(UserService userService, ModelMapper modelMapper) {
     this.userService = userService;
     this.modelMapper = modelMapper;
   }
@@ -32,7 +32,7 @@ public class UsersController {
     return "auth-register";
   }
 
-  @PostMapping("/login?fail=true")
+  @PostMapping("/users/register")
   public String register(
           @Valid UserRegisterBindingModel userModel,
           BindingResult bindingResult,
@@ -50,6 +50,6 @@ public class UsersController {
 
     userService.registerAndLoginUser(serviceModel);
 
-    return "redirect:/users/login";
+    return "redirect:/";
   }
 }
