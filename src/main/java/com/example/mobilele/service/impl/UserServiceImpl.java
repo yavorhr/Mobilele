@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
     newUserEntity = userRepository.save(newUserEntity);
 
     UserDetails principal = mobileleUserService.loadUserByUsername(newUserEntity.getUsername());
+
     Authentication authentication = new UsernamePasswordAuthenticationToken(
             principal,
             newUserEntity.getPassword(),
