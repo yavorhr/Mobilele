@@ -2,14 +2,13 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.dto.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
-import com.example.mobilele.model.dto.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
-import com.example.mobilele.service.impl.MobileleUser;
+import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,6 +106,7 @@ public class OffersController {
 
       return "redirect:/offers/update/errors/" + id;
     }
+
   //TODO:
     //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
 
@@ -117,7 +115,6 @@ public class OffersController {
 
   @GetMapping("/offers/update/errors/{id}")
   public String editOfferErrors(@PathVariable Long id) {
-
     return "update";
   }
 
