@@ -1,4 +1,4 @@
-package com.example.mobilele.service.impl;
+package com.example.mobilele.service.impl.principal;
 
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.repository.UserRepository;

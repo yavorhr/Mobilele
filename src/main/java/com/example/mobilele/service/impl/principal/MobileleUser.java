@@ -1,4 +1,4 @@
-package com.example.mobilele.service.impl;
+package com.example.mobilele.service.impl.principal;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
