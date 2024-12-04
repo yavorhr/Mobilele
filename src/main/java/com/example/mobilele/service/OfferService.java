@@ -23,4 +23,6 @@ public interface OfferService {
   Collection<OfferServiceModel> findOffersByBrand(String brand);
 
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
+
+  boolean isOwner(String userName, Long id);
 }

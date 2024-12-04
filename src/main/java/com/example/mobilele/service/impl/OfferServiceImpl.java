@@ -6,8 +6,11 @@ import com.example.mobilele.model.dto.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
+import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,6 +99,30 @@ public class OfferServiceImpl implements OfferService {
     this.modelMapper.map(serviceModel, offerEntity);
 
     this.offerRepository.save(offerEntity);
+  }
+
+  public boolean isOwner(String username, Long id) {
+    Optional<OfferEntity> offerOpt = offerRepository.
+            findById(id);
+    Optional<UserEntity> caller = this.userService.
+            findByUsername(username);
+
+    if (offerOpt.isEmpty() || caller.isEmpty()) {
+      return false;
+    } else {
+      OfferEntity offerEntity = offerOpt.get();
+
+      return isAdmin(caller.get()) ||
+              offerEntity.getSeller().getUsername().equals(username);
+    }
+  }
+
+  private boolean isAdmin(UserEntity user) {
+    return user.
+            getRoles().
+            stream().
+            map(UserRoleEntity::getRole).
+            anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
 
   @Override
