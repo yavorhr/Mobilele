@@ -11,12 +11,15 @@ import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -150,6 +153,8 @@ public class OffersController {
   }
 
   // DELETE OFFER
+  @PreAuthorize("isOwner(#id)")
+//  @PreAuthorize("@offerServiceImpl.isOwner(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
   public String deleteOfferById(@PathVariable Long id) {
     this.offerService.deleteById(id);
