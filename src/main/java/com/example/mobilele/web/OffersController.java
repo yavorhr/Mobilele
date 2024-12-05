@@ -75,8 +75,8 @@ public class OffersController {
   }
 
   @GetMapping("/offers/details/{id}")
-  public String getOffersDetailsPage(@PathVariable Long id, Model model) {
-    OfferViewModel viewModel = this.modelMapper.map(this.offerService.findOfferById(id), OfferViewModel.class);
+  public String getOffersDetailsPage(@PathVariable Long id, Model model, Principal principal) {
+    OfferViewModel viewModel = this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
 
     model.addAttribute("offer", viewModel);
 
@@ -85,9 +85,9 @@ public class OffersController {
 
   // UPDATE OFFER
   @GetMapping("/offers/update/{id}")
-  public String getOfferUpdatePage(@PathVariable Long id, Model model) {
+  public String getOfferUpdatePage(@PathVariable Long id, Model model,@AuthenticationPrincipal MobileleUser currentUser) {
     OfferAddBindingModel offerBindingModel =
-            this.modelMapper.map(this.offerService.findOfferById(id), OfferAddBindingModel.class);
+            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferAddBindingModel.class);
 
     model.addAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
     model.addAttribute("offerBindingModel", offerBindingModel);
@@ -110,7 +110,7 @@ public class OffersController {
       return "redirect:/offers/update/errors/" + id;
     }
 
-  //TODO:
+    //TODO:
     //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
 
     return "redirect:/offers/details/" + id;

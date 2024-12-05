@@ -41,12 +41,12 @@
             <div class="card-body">
                 <div class="row">
                     <a class="btn btn-link" th:href="@{/offers/update/{id}(id=*{id})}">Update</a>
-                    <form
-                            th:action="@{/offers/{id}(id=*{id})}"
-                            th:method="delete">
-                        <input type="submit" class="btn btn-link" value="Delete"/>
-                    </form>
-
+                    <th:block th:if="*{canDelete}">
+                        <form th:action="@{/offers/{id}(id=*{id})}"
+                              th:method="delete">
+                            <input type="submit" class="btn btn-link" value="Delete"/>
+                        </form>
+                    </th:block>
                 </div>
 
             </div>
@@ -59,7 +59,7 @@
                 <h5 class="card-title ">Offer Description: </h5>
             </div>
             <p th:class="offer-description"
-                    th:text=" *{description}">
+               th:text=" *{description}">
             </p>
         </div>
     </div>

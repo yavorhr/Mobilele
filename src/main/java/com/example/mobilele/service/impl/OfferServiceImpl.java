@@ -50,11 +50,12 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public OfferServiceModel findOfferById(Long id) {
+  public OfferServiceModel findOfferById(String name, Long id) {
     OfferEntity offer = this.offerRepository.findById(id).get();
 
     OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
     model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
+    model.setCanDelete(isOwner(name, offer.getId()));
 
     return model;
   }

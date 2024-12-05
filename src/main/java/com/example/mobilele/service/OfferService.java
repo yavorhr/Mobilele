@@ -14,7 +14,7 @@ public interface OfferService {
 
   List<OfferViewModel> findAllOffers();
 
-  OfferServiceModel findOfferById(Long id);
+  OfferServiceModel findOfferById(String name, Long id);
 
   void deleteById(Long id);
 
