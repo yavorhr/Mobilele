@@ -19,8 +19,13 @@ public class OfferServiceModel {
   private Instant created;
   private Instant modified;
   private String sellerFullName;
+  private boolean canDelete;
 
   public OfferServiceModel() {
+  }
+
+  public boolean isCanDelete() {
+    return canDelete;
   }
 
   public Long getId() {
@@ -137,6 +142,11 @@ public class OfferServiceModel {
 
   public OfferServiceModel setSellerFullName(String sellerFullName) {
     this.sellerFullName = sellerFullName;
+    return this;
+  }
+
+  public OfferServiceModel setCanDelete(boolean canDelete) {
+    this.canDelete = canDelete;
     return this;
   }
 }

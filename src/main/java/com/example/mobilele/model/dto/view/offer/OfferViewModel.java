@@ -18,8 +18,13 @@ public class OfferViewModel {
   private Instant created;
   private Instant modified;
   private String sellerFullName;
+  private boolean canDelete;
 
   public OfferViewModel() {
+  }
+
+  public boolean isCanDelete() {
+    return canDelete;
   }
 
   public Long getId() {
@@ -69,6 +74,11 @@ public class OfferViewModel {
   public String getModelName() {
     return modelName.substring(0, 1).toUpperCase() + modelName.substring(1).toLowerCase();
 
+  }
+
+  public OfferViewModel setCanDelete(boolean canDelete) {
+    this.canDelete = canDelete;
+    return this;
   }
 
   public OfferViewModel setModelBrandName(String modelBrandName) {
