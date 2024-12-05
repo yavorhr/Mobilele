@@ -18,13 +18,13 @@ public class OfferViewModel {
   private Instant created;
   private Instant modified;
   private String sellerFullName;
-  private boolean canDelete;
+  private boolean canModify;
 
   public OfferViewModel() {
   }
 
-  public boolean isCanDelete() {
-    return canDelete;
+  public boolean isCanModify() {
+    return canModify;
   }
 
   public Long getId() {
@@ -76,8 +76,8 @@ public class OfferViewModel {
 
   }
 
-  public OfferViewModel setCanDelete(boolean canDelete) {
-    this.canDelete = canDelete;
+  public OfferViewModel setCanModify(boolean canModify) {
+    this.canModify = canModify;
     return this;
   }
 

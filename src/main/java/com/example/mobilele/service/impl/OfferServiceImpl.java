@@ -55,7 +55,7 @@ public class OfferServiceImpl implements OfferService {
 
     OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
     model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
-    model.setCanDelete(isOwner(name, offer.getId()));
+    model.setCanModify(isOwner(name, offer.getId()));
 
     return model;
   }
