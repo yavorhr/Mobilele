@@ -13,20 +13,26 @@
 
 
 <div class="container-fluid">
-    <h5 class="text-center text-white mt-5">Welcome to MobiLeLeLe,
-        <span
-                sec:authorize="isAuthenticated()"
-                sec:authentication="name">
+    <div>
+        <h5 class="text-center text-white mt-5">
+        <span th:text="#{greeting}" >Welcome to MobiLeLeLe,
+        </span>
+            <span
+                  sec:authorize="isAuthenticated()"
+                  sec:authentication="name">
             Name of the logged in user.
         </span>
-        <span sec:authorize="!isAuthenticated()">
-            Anonymous!
+            <span
+                    sec:authorize="!isAuthenticated()">
+            Anonymous
         </span>
-    </h5>
+            <span>!</span>
+        </h5>
+    </div>
 </div>
 
 <div>
-    <footer> </footer>
+    <footer></footer>
 </div>
 
 </body>
