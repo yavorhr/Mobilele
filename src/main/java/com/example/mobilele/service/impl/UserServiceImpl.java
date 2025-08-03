@@ -8,13 +8,13 @@ import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -62,13 +62,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<UserEntity> findByUsername(String username) {
-    return userRepository.findByUsername(username);
+  public UserEntity findByUsername(String username) {
+    return userRepository
+            .findByUsername(username)
+            .orElseThrow(()-> new ObjectNotFoundException("User with username" + username + "does not exist!"));
   }
 
   @Override
   public UserEntity findById(Long id) {
-    return this.userRepository.findById(id).get();
+    return this.userRepository.findById(id)
+            .orElseThrow(()-> new ObjectNotFoundException("User with id" + id + "does not exist!"));
   }
 
   @Override
