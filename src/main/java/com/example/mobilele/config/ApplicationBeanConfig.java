@@ -1,6 +1,5 @@
 package com.example.mobilele.config;
 
-import jakarta.servlet.http.Cookie;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +34,6 @@ public class ApplicationBeanConfig {
     localeResolver.setDefaultTimeZone(TimeZone.getTimeZone("UTC"));
     return localeResolver;
   }
-
 
   @Bean
   public LocaleChangeInterceptor localeChangeInterceptor() {
