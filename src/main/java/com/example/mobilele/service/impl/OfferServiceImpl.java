@@ -73,7 +73,7 @@ public class OfferServiceImpl implements OfferService {
     modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()).get());
 
     offer.setModel(modelEntity);
-    offer.setSeller(this.userService.findByUsername(username).get());
+    offer.setSeller(this.userService.findByUsername(username));
 
     offer = this.offerRepository.save(offer);
     offerServiceModel.setId(offer.getId());
@@ -105,15 +105,16 @@ public class OfferServiceImpl implements OfferService {
   public boolean isOwner(String username, Long id) {
     Optional<OfferEntity> offerOpt = offerRepository.
             findById(id);
-    Optional<UserEntity> caller = this.userService.
+
+    UserEntity caller = this.userService.
             findByUsername(username);
 
-    if (offerOpt.isEmpty() || caller.isEmpty()) {
+    if (offerOpt.isEmpty()) {
       return false;
     } else {
       OfferEntity offerEntity = offerOpt.get();
 
-      return isAdmin(caller.get()) ||
+      return isAdmin(caller) ||
               offerEntity.getSeller().getUsername().equals(username);
     }
   }
