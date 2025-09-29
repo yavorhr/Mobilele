@@ -18,12 +18,12 @@ public class UserLoginController {
 
         switch (type) {
           case INVALID_CREDENTIALS -> model.addAttribute("login_error_message", "Invalid credentials. Please try again.");
-          case USER_NOT_FOUND -> model.addAttribute("login_error_message", "User with this email does not exist.");
+          case USER_NOT_FOUND -> model.addAttribute("login_error_message", "User with this username does not exist.");
         }
       } catch (IllegalArgumentException e) {
         model.addAttribute("login_error_message", "An unknown error occurred.");
       }
     }
-    return "login";
+    return "auth-login";
   }
 }
