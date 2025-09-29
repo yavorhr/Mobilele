@@ -48,6 +48,11 @@
             </div>
         </div>
     </form>
+    <div th:if="${login_error_message}">
+        <p th:text="${login_error_message}"
+           class="text-danger errors alert alert-danger login-error">Error passed by model</p>
+    </div>
+</div>
 </div>
 
 <div>
