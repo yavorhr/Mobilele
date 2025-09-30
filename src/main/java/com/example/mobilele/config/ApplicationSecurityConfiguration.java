@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,10 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class ApplicationSecurityConfiguration {
   private final UserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
+  private final CustomLoginFailureHandler failureHandler;
 
-  public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+  public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, CustomLoginFailureHandler failureHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
+    this.failureHandler = failureHandler;
   }
 
   @Bean
@@ -31,16 +34,16 @@ public class ApplicationSecurityConfiguration {
             authz.
                     requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                     requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().
-                    requestMatchers("/", "/users/login", "/users/register", "/logger/**").permitAll().
+                    requestMatchers("/", "/error", "/users/login", "/users/register", "/logger/**").permitAll().
                     requestMatchers("/statistics").hasRole(UserRoleEnum.ADMIN.name()).
                     requestMatchers("/static/**").permitAll().
                     requestMatchers("/**").authenticated())
-            .formLogin(form -> form.
-                    loginPage("/users/login").
-                    usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
-                    passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
-                    defaultSuccessUrl("/", true).
-                    failureForwardUrl("/users/login-error"))
+            .formLogin(form -> form
+                    .loginPage("/users/login")
+                    .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                    .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                    .failureHandler(failureHandler)
+                    .successHandler(successHandler))
             .logout(logout -> logout.
                     logoutUrl("/users/logout").
                     logoutSuccessUrl("/").
@@ -54,12 +57,17 @@ public class ApplicationSecurityConfiguration {
 
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-    AuthenticationManagerBuilder auth =
-            http.getSharedObject(AuthenticationManagerBuilder.class);
 
-    auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder);
+    // WARNING: This exposes whether a username exists and should not be used in production without caution.
+    // Used here for educational/demo purposes to show custom error handling.
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService);
+    authProvider.setPasswordEncoder(passwordEncoder);
+
+    authProvider.setHideUserNotFoundExceptions(false);
+
+    AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
+    auth.authenticationProvider(authProvider);
 
     return auth.build();
   }
