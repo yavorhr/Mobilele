@@ -3,6 +3,8 @@ package com.example.mobilele.service;
 import com.example.mobilele.model.dto.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 
+import java.util.List;
+
 
 public interface UserService {
 
@@ -14,6 +16,8 @@ public interface UserService {
 
   UserEntity findById(Long id);
 
+  void updateUser(UserEntity user);
+
   boolean isUserNameAvailable(String userName);
 
   void increaseUserFailedLoginAttempts(UserEntity user);
@@ -21,4 +25,6 @@ public interface UserService {
   void lockAccount(UserEntity user);
 
   void resetFailedAttempts(UserEntity user);
+
+  List<UserEntity> findLockedUsers();
 }

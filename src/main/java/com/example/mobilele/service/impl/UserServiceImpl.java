@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void updateUser(UserEntity user) {
+    this.userRepository.save(user);
+  }
+
+  @Override
   public boolean isUserNameAvailable(String username) {
     return userRepository.findByUsernameIgnoreCase(username).isEmpty();
   }
@@ -89,6 +94,12 @@ public class UserServiceImpl implements UserService {
       userRepository.save(user);
     }
   }
+
+  @Override
+  public List<UserEntity> findLockedUsers() {
+    return this.userRepository.findAllLockedUsers();
+  }
+
 
   @Override
   public void lockAccount(UserEntity user) {
