@@ -1,6 +1,8 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,11 +12,17 @@ public class UserEntity extends BaseEntity {
   private String firstName;
   private String lastName;
   private String password;
-  private boolean isActive;
   private List<UserRoleEntity> roles;
-  private String imageUrl;
+  // Account lock properties
+  private Integer failedLoginAttempts;
+  private boolean accountLocked;
+  private LocalDateTime lockTime;
+  private Integer timesLocked;
 
   public UserEntity() {
+    this.accountLocked = false;
+    this.failedLoginAttempts = 0;
+    this.timesLocked = 0;
   }
 
   @Column(unique = true, nullable = false)
@@ -32,11 +40,6 @@ public class UserEntity extends BaseEntity {
     return lastName;
   }
 
-  @Column(name = "is_active")
-  public boolean isActive() {
-    return isActive;
-  }
-
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "users_roles",
@@ -47,9 +50,20 @@ public class UserEntity extends BaseEntity {
     return roles;
   }
 
-  @Column(name = "image_url")
-  public String getImageUrl() {
-    return imageUrl;
+  public Integer getFailedLoginAttempts() {
+    return failedLoginAttempts;
+  }
+
+  public boolean isAccountLocked() {
+    return accountLocked;
+  }
+
+  public LocalDateTime getLockTime() {
+    return lockTime;
+  }
+
+  public Integer getTimesLocked() {
+    return timesLocked;
   }
 
   @Column(name = "password", nullable = false)
@@ -77,18 +91,28 @@ public class UserEntity extends BaseEntity {
     return this;
   }
 
-  public UserEntity setActive(boolean active) {
-    isActive = active;
-    return this;
-  }
-
   public UserEntity setRoles(List<UserRoleEntity> roles) {
     this.roles = roles;
     return this;
   }
 
-  public UserEntity setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
+  public UserEntity setFailedLoginAttempts(Integer failedLoginAttempts) {
+    this.failedLoginAttempts = failedLoginAttempts;
+    return this;
+  }
+
+  public UserEntity setAccountLocked(boolean accountLocked) {
+    this.accountLocked = accountLocked;
+    return this;
+  }
+
+  public UserEntity setLockTime(LocalDateTime lockTime) {
+    this.lockTime = lockTime;
+    return this;
+  }
+
+  public UserEntity setTimesLocked(Integer timesLocked) {
+    this.timesLocked = timesLocked;
     return this;
   }
 }
