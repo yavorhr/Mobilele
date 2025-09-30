@@ -7,10 +7,7 @@ body {
     background-color: #464646;
 }
 
-.navbar .logo {
-    max-height: 50px;
-    padding-right: 100px;
-}
+
 
 .container, .container-fluid {
     padding-top: 90px;
