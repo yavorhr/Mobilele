@@ -17,12 +17,10 @@ public class UserEntity extends BaseEntity {
   private Integer failedLoginAttempts;
   private boolean accountLocked;
   private LocalDateTime lockTime;
-  private Integer timesLocked;
 
   public UserEntity() {
     this.accountLocked = false;
     this.failedLoginAttempts = 0;
-    this.timesLocked = 0;
   }
 
   @Column(unique = true, nullable = false)
@@ -60,10 +58,6 @@ public class UserEntity extends BaseEntity {
 
   public LocalDateTime getLockTime() {
     return lockTime;
-  }
-
-  public Integer getTimesLocked() {
-    return timesLocked;
   }
 
   @Column(name = "password", nullable = false)
@@ -110,9 +104,5 @@ public class UserEntity extends BaseEntity {
     this.lockTime = lockTime;
     return this;
   }
-
-  public UserEntity setTimesLocked(Integer timesLocked) {
-    this.timesLocked = timesLocked;
-    return this;
-  }
+  
 }
