@@ -1,9 +1,11 @@
 package com.example.mobilele.model.dto.binding.user;
+import com.example.mobilele.validator.validator.DoesPasswordAndConfirmPasswordMatch;
 import com.example.mobilele.validator.validator.UniqueUsername;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@DoesPasswordAndConfirmPasswordMatch
 public class UserRegisterBindingModel {
   private String username;
   private String firstName;
@@ -16,7 +18,7 @@ public class UserRegisterBindingModel {
 
   @UniqueUsername
   @NotNull
-  @Size(min = 2,max = 20)
+  @Size(min = 2,max = 20, message = "Username should be between 2 and 20 symbols")
   public String getUsername() {
     return username;
   }
@@ -39,7 +41,7 @@ public class UserRegisterBindingModel {
     return lastName;
   }
 
-  @NotNull
+  @Size(min = 5)
   @NotBlank
   public String getPassword() {
     return password;
