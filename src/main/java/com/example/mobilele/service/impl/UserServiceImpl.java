@@ -92,12 +92,17 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void lockAccount(UserEntity user) {
-    user.setLockedAccountCounter(user.getTimesLocked() + 1);
     user.setAccountLocked(true);
     user.setLockTime(LocalDateTime.now().plusMinutes(15));
     user.setFailedLoginAttempts(0);
 
     userRepository.save(user);
+  }
+
+  @Override
+  public void resetFailedAttempts(UserEntity user) {
+    user.setFailedLoginAttempts(0);
+    this.userRepository.save(user);
   }
 
   @Override

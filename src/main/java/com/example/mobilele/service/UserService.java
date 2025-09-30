@@ -19,4 +19,6 @@ public interface UserService {
   void increaseUserFailedLoginAttempts(UserEntity user);
 
   void lockAccount(UserEntity user);
+
+  void resetFailedAttempts(UserEntity user);
 }
