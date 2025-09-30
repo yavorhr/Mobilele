@@ -24,21 +24,17 @@ public class MobileleUserServiceImpl implements UserDetailsService {
     UserEntity userEntity =
             this.userRepository
                     .findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User with name not found"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " was not found."));
 
     return mapToUserDetails(userEntity);
   }
 
   private static UserDetails mapToUserDetails(UserEntity userEntity) {
-    List<GrantedAuthority> authorities = userEntity
+    List<GrantedAuthority> grantedAuthorities = userEntity
             .getRoles()
             .stream()
             .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRole().name())).collect(Collectors.toList());
 
-    return new MobileleUser(
-            userEntity.getUsername(),
-            userEntity.getPassword(),
-            authorities
-    );
+    return new MobileleUser(userEntity, grantedAuthorities);
   }
 }
