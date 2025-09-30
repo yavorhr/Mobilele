@@ -3,6 +3,7 @@ package com.example.mobilele.model.entity;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import jakarta.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "offers")
@@ -14,8 +15,10 @@ public class OfferEntity extends BaseEntity {
   private Double price;
   private TransmissionType transmission;
   private ModelEntity model;
-  private UserEntity seller;
   private Integer year;
+  private Instant created;
+  private Instant modified;
+  private UserEntity seller;
 
   public OfferEntity() {
   }
@@ -67,6 +70,16 @@ public class OfferEntity extends BaseEntity {
     return transmission;
   }
 
+  @Column(columnDefinition = "DATETIME")
+  public Instant getCreated() {
+    return created;
+  }
+
+  @Column(columnDefinition = "DATETIME")
+  public Instant getModified() {
+    return modified;
+  }
+
   public OfferEntity setDescription(String description) {
     this.description = description;
     return this;
@@ -107,8 +120,26 @@ public class OfferEntity extends BaseEntity {
     return this;
   }
 
+  public void setCreated(Instant created) {
+    this.created = created;
+  }
+
+  public void setModified(Instant modified) {
+    this.modified = modified;
+  }
+
   public OfferEntity setSeller(UserEntity seller) {
     this.seller = seller;
     return this;
+  }
+
+  @PrePersist
+  private void preCreate() {
+    setCreated(Instant.now());
+  }
+
+  @PreUpdate
+  private void preUpdate() {
+    setModified(Instant.now());
   }
 }
