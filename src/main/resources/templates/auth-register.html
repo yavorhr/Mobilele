@@ -6,15 +6,15 @@
 </head>
 
 <body>
-    <div th:replace="fragments/navbar">
-    </div>
+<div th:replace="fragments/navbar">
+</div>
 
 
 <div class="container">
     <h2 class="text-center text-white">Register User</h2>
     <form method="POST"
           th:action="@{/users/register}"
-          th:object="${userModel}"
+          th:object="${userRegisterBindingModel}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
@@ -23,11 +23,12 @@
                         th:field="*{firstName}"
                         th:errorclass="is-invalid"
                         id="firstName"
+                        min="4"
                         max="20"
                         type="text" class="form-control"
                         placeholder="First name"/>
                 <p class="invalid-feedback errors alert alert-danger">
-                    First name should be between 2 and 20 symbols
+                    First name should be between 4 and 20 symbols
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
@@ -36,11 +37,11 @@
                         th:field="*{lastName}"
                         th:errorclass="is-invalid"
                         id="lastName"
-                        type="text" min="2"
+                        type="text" min="4"
                         max="20" class="form-control"
                         placeholder="First name"/>
                 <p class="invalid-feedback errors alert alert-danger">
-                    Last name should be between 2 and 20 symbols
+                    Last name should be between 4 and 20 symbols
                 </p>
             </div>
         </div>
@@ -56,7 +57,7 @@
                         placeholder="First name"/>
                 <p th:if="${#fields.hasErrors('username')}"
                    th:errors="*{username}" class="invalid-feedback errors alert alert-danger">
-                    Username is required.
+                    Username error passed by controller
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
@@ -65,10 +66,10 @@
                         th:field="*{password}"
                         th:errorclass="is-invalid"
                         id="password"
-                        type="password" min="2" max="20" class="form-control"
+                        type="password" class="form-control"
                         placeholder="Password"/>
                 <p class="invalid-feedback errors alert alert-danger">
-                    Password is required.
+                    Password should be at least 5 symbols long
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
@@ -77,12 +78,13 @@
                         id="confirmPassword"
                         th:field="*{confirmPassword}"
                         th:errorclass="is-invalid"
-                        type="password" min="2" max="20" class="form-control"
+                        type="password" class="form-control"
                         placeholder="Password"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Confirm Password is required.
-                </p>
             </div>
+            <p th:if="${#fields.hasErrors('confirmPassword')}"
+               th:errors="*{confirmPassword}"
+               class="error-text text-center">
+            </p>
         </div>
         <div class="row">
             <div class="col col-md-4">
