@@ -15,8 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
             setUsername(serviceModel.getUsername()).
             setFirstName(serviceModel.getFirstName()).
             setLastName(serviceModel.getLastName()).
-            setActive(true).
             setPassword(passwordEncoder.encode(serviceModel.getPassword())).
             setRoles(List.of(userRoleEntity));
 
@@ -65,13 +64,13 @@ public class UserServiceImpl implements UserService {
   public UserEntity findByUsername(String username) {
     return userRepository
             .findByUsername(username)
-            .orElseThrow(()-> new ObjectNotFoundException("User with username" + username + "does not exist!"));
+            .orElseThrow(() -> new ObjectNotFoundException("User with username" + username + "does not exist!"));
   }
 
   @Override
   public UserEntity findById(Long id) {
     return this.userRepository.findById(id)
-            .orElseThrow(()-> new ObjectNotFoundException("User with id" + id + "does not exist!"));
+            .orElseThrow(() -> new ObjectNotFoundException("User with id" + id + "does not exist!"));
   }
 
   @Override
@@ -80,15 +79,37 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void increaseUserFailedLoginAttempts(UserEntity user) {
+    int failedAttempts = user.getFailedLoginAttempts() + 1;
+    user.setFailedLoginAttempts(failedAttempts);
+
+    if (user.getFailedLoginAttempts() == 3) {
+      this.lockAccount(user);
+    } else {
+      userRepository.save(user);
+    }
+  }
+
+  @Override
+  public void lockAccount(UserEntity user) {
+    user.setLockedAccountCounter(user.getTimesLocked() + 1);
+    user.setAccountLocked(true);
+    user.setLockTime(LocalDateTime.now().plusMinutes(15));
+    user.setFailedLoginAttempts(0);
+
+    userRepository.save(user);
+  }
+
+  @Override
   public void initUsers() {
     if (userRepository.count() == 0) {
       UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
       UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
-      UserEntity admin = createUser("admin", "admin", "adminov", "noUrl", true, "test");
+      UserEntity admin = createUser("admin", "John", "Atanasoff",   "test");
       admin.setRoles(List.of(adminRole, userRoleEntity));
 
-      UserEntity userEntity = createUser("pesho", "Petar", "Ivanov", "n/a", true, "123");
+      UserEntity userEntity = createUser("user", "Petar", "Ivanov",   "test");
       userEntity.setRoles(List.of(userRoleEntity));
 
       this.userRepository.saveAll(List.of(admin, userEntity));
@@ -96,18 +117,15 @@ public class UserServiceImpl implements UserService {
   }
 
   // Helpers
-  private UserEntity createUser(String username, String firstName, String lastName, String imageUrl, boolean isActive, String password) {
+  private UserEntity createUser(String username, String firstName, String lastName, String password) {
     UserEntity userEntity = new UserEntity();
 
     userEntity
-            .setActive(isActive)
             .setUsername(username)
-            .setImageUrl(imageUrl)
             .setFirstName(firstName)
             .setLastName(lastName)
             .setPassword(passwordEncoder.encode(password));
 
     return userEntity;
   }
-
 }

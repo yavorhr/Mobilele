@@ -15,4 +15,8 @@ public interface UserService {
   UserEntity findById(Long id);
 
   boolean isUserNameAvailable(String userName);
+
+  void increaseUserFailedLoginAttempts(UserEntity user);
+
+  void lockAccount(UserEntity user);
 }
