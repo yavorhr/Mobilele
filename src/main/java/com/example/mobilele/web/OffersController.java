@@ -147,7 +147,7 @@ public class OffersController {
     OfferAddServiceModel serviceModel =
             this.offerService.addOffer(
                     this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-                    user.getUserIdentifier());
+                    user.getUsername());
 
     return "redirect:/offers/details/" + serviceModel.getId();
   }
