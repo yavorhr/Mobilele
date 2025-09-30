@@ -11,6 +11,7 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
 @Component
@@ -31,10 +32,9 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
       if (exception instanceof LockedException) {
         errorType = LoginErrorType.ACCOUNT_LOCKED.name();
+      } else {
+        userService.increaseUserFailedLoginAttempts(user);
       }
-
-      userService.increaseUserFailedLoginAttempts(user);
-
     } catch (ObjectNotFoundException e) {
       errorType = LoginErrorType.USER_NOT_FOUND.name();
     }
