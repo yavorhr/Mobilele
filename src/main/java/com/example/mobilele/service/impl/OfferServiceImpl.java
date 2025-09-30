@@ -140,10 +140,9 @@ public class OfferServiceImpl implements OfferService {
               .setPrice(14300.00)
               .setYear(2000)
               .setDescription("Used, but well services and in good condition.")
-              .setSeller(userService.findByUsername("pesho")
-                      .orElse(null)) // or currentUser.getUserName()
               .setImageUrl(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/BMW_U11_1X7A6826.jpg/420px-BMW_U11_1X7A6826.jpg");
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/BMW_U11_1X7A6826.jpg/420px-BMW_U11_1X7A6826.jpg")
+              .setSeller(userService.findByUsername("admin"));
 
       OfferEntity secondOffer = new OfferEntity();
 
@@ -155,9 +154,8 @@ public class OfferServiceImpl implements OfferService {
               .setPrice(60000.00)
               .setYear(2005)
               .setDescription("Perfect condition!.")
-              .setSeller(userService.findByUsername("admin")
-                      .orElse(null)) // or currentUser.getUserName()
-              .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg/1920px-2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg");
+              .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg/1920px-2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg")
+              .setSeller(userService.findByUsername("user"));
 
       offerRepository.saveAll(List.of(firstOffer, secondOffer));
     }
