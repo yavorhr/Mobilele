@@ -7,12 +7,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 
 @Component
@@ -26,9 +24,10 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
     String errorType = LoginErrorType.INVALID_CREDENTIALS.name();
+    String username = request.getParameter("username");
 
     try {
-      UserEntity user = userService.findByUsername("username");
+      UserEntity user = userService.findByUsername(username);
 
       if (exception instanceof LockedException) {
         errorType = LoginErrorType.ACCOUNT_LOCKED.name();
