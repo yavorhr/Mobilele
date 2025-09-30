@@ -21,11 +21,13 @@ public class ApplicationSecurityConfiguration {
   private final UserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
   private final CustomLoginFailureHandler failureHandler;
+  private final CustomLoginSuccessHandler successHandler;
 
-  public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, CustomLoginFailureHandler failureHandler) {
+  public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, CustomLoginFailureHandler failureHandler, CustomLoginSuccessHandler successHandler) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;
     this.failureHandler = failureHandler;
+    this.successHandler = successHandler;
   }
 
   @Bean
