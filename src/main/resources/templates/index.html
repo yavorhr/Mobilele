@@ -3,12 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head::head"></head>
+<head th:replace="fragments/head :: head(additionalCss='/css/fragments/navbar.css')"></head>
 
 <body>
-
 <div th:replace="fragments/navbar :: navbar">
-    Navbar
 </div>
 
 
