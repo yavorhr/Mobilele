@@ -1,7 +1,6 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -104,5 +103,4 @@ public class UserEntity extends BaseEntity {
     this.lockTime = lockTime;
     return this;
   }
-  
 }
