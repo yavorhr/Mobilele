@@ -22,7 +22,7 @@ public class UserRegisterController {
     this.modelMapper = modelMapper;
   }
 
-  @ModelAttribute("userModel")
+  @ModelAttribute("userRegisterBindingModel")
   public UserRegisterBindingModel userModel() {
     return new UserRegisterBindingModel();
   }
@@ -34,19 +34,19 @@ public class UserRegisterController {
 
   @PostMapping("/users/register")
   public String register(
-          @Valid UserRegisterBindingModel userModel,
+          @Valid UserRegisterBindingModel userRegisterBindingModel,
           BindingResult bindingResult,
           RedirectAttributes redirectAttributes) {
 
-    if (bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword())) {
-      redirectAttributes.addFlashAttribute("userModel", userModel);
-      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel", bindingResult);
+    if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+      redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
 
       return "redirect:/users/register";
     }
 
     UserRegisterServiceModel serviceModel =
-            modelMapper.map(userModel, UserRegisterServiceModel.class);
+            modelMapper.map(userRegisterBindingModel, UserRegisterServiceModel.class);
 
     userService.registerAndLoginUser(serviceModel);
 
