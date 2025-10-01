@@ -2,16 +2,11 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head
-        th:replace="fragments/head">
-</head>
-
+<head th:replace="fragments/head :: head(additionalCss='/css/fragments/navbar.css')"></head>
 
 <body>
-
-    <div th:replace="fragments/navbar">
-    </div>
-
+<div th:replace="fragments/navbar :: navbar">
+</div>
 
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
