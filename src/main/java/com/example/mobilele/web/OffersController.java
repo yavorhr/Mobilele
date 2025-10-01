@@ -53,7 +53,7 @@ public class OffersController {
     return TransmissionType.values();
   }
 
-  // GET - find offers
+  // 1. Find offers - GET
   @GetMapping("/offers/find")
   public String getFindOffersView(Model model) {
     if (!model.containsAttribute("offersFindBindingModel")) {
@@ -66,7 +66,7 @@ public class OffersController {
     return "offers-find";
   }
 
-  // Post - submit form to find offers
+  // 1.2 Find offers - POST
   @PostMapping("/offers/find")
   public String submitFindOffersForm(@Valid OffersFindBindingModel offerBindingModel,
                                      BindingResult bindingResult,
@@ -86,12 +86,13 @@ public class OffersController {
       return "redirect:/offers/find";
     }
 
+    //TODO : Is it needed ?
     model.addAttribute("brands", this.brandService.findAllBrands());
 
     return "redirect:offers/all";
   }
 
-  // GET
+  // 2. Get Offers - All
   @GetMapping("/offers/all")
   public String getAllOffersPage(Model model) {
     List<OfferViewModel> offers = this.offerService.findAllOffers();
@@ -100,6 +101,7 @@ public class OffersController {
     return "offers";
   }
 
+  //TODO ? What is this method for
   @GetMapping("/offers")
   public String getModelsByBrandName(@RequestParam String brand, Model model) {
     List<OfferViewModel> offersByBrand = offerService
@@ -113,6 +115,7 @@ public class OffersController {
     return "offers";
   }
 
+  // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model, Principal principal) {
     OfferViewModel viewModel = this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
@@ -122,7 +125,39 @@ public class OffersController {
     return "details";
   }
 
-  // UPDATE OFFER
+  // 3.1 Add Offer - GET
+  @GetMapping("/offers/add")
+  public String getAddOffersPage(Model model) {
+    model.addAttribute("brands", this.brandService.findAllBrands());
+
+    return "offer-add";
+  }
+
+  // 3.2 Add Offer - POST
+  @PostMapping("/offers/add")
+  public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         @AuthenticationPrincipal MobileleUser user) {
+
+    if (bindingResult.hasErrors()) {
+      redirectAttributes
+              .addFlashAttribute("offerBindingModel", offerAddBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
+
+      return "redirect:/offers/add";
+    }
+
+    OfferAddServiceModel serviceModel =
+            this.offerService.addOffer(
+                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
+                    user.getUsername());
+
+    return "redirect:/offers/details/" + serviceModel.getId();
+  }
+
+  // 4.1 Update offer - GET
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id, Model model, @AuthenticationPrincipal MobileleUser currentUser) {
     OfferAddBindingModel offerBindingModel =
@@ -134,6 +169,7 @@ public class OffersController {
     return "update";
   }
 
+  // 4.2 Update offer - PATCH
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
                             @Valid OfferAddBindingModel offerBindingModel,
@@ -160,38 +196,7 @@ public class OffersController {
     return "update";
   }
 
-  // ADD OFFER
-  @GetMapping("/offers/add")
-  public String getAddOffersPage(Model model) {
-    model.addAttribute("brands", this.brandService.findAllBrands());
-
-    return "offer-add";
-  }
-
-  @PostMapping("/offers/add")
-  public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes,
-                         @AuthenticationPrincipal MobileleUser user) {
-
-    if (bindingResult.hasErrors()) {
-      redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerAddBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
-
-      return "redirect:/offers/add";
-    }
-
-    OfferAddServiceModel serviceModel =
-            this.offerService.addOffer(
-                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-                    user.getUsername());
-
-    return "redirect:/offers/details/" + serviceModel.getId();
-  }
-
-  // DELETE OFFER
+  // 5. Delete offer 
   @PreAuthorize("@offerServiceImpl.isOwner(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
   public String deleteOfferById(@PathVariable Long id, Principal principal) {
