@@ -1,8 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.dto.binding.offer.OfferAddBindingModel;
-import com.example.mobilele.model.dto.binding.offer.OfferSearchBindingModel;
-import com.example.mobilele.model.dto.service.brand.BrandServiceModel;
+import com.example.mobilele.model.dto.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
@@ -54,29 +53,42 @@ public class OffersController {
     return TransmissionType.values();
   }
 
+  // GET - find offers
   @GetMapping("/offers/find")
-  public String getBrandFilterForm(Model model) {
-    if (!model.containsAttribute("offersInputForm")) {
-      model.addAttribute("offersInputForm", new OfferSearchBindingModel());
+  public String getFindOffersView(Model model) {
+    if (!model.containsAttribute("offersFindBindingModel")) {
+      model.addAttribute("offersFindBindingModel", new OffersFindBindingModel());
       model.addAttribute("hideFindButton", true);
     }
 
-//    // Load all brands alphabetically
-//    List<String> brands = brandService.getAllBrands()
-//            .stream()
-//            .map(BrandServiceModel::getName)
-//            .sorted()
-//            .collect(Collectors.toList());
-
-//    model.addAttribute("allBrands", brands);
-
-    // Optionally, load all models (or load via AJAX once brand selected)
-    // model.addAttribute("allModels", modelService.getAllModels());
-
-    model.addAttribute("transmissions", TransmissionType.values());
-    model.addAttribute("engines", EngineEnum.values());
+    model.addAttribute("brands", this.brandService.findAllBrands());
 
     return "offers-find";
+  }
+
+  // Post - submit form to find offers
+  @PostMapping("/offers/find")
+  public String submitFindOffersForm(@Valid OffersFindBindingModel offerBindingModel,
+                                     BindingResult bindingResult,
+                                     RedirectAttributes redirectAttributes,
+                                     Model model) {
+
+    if (!model.containsAttribute("offersFindBindingModel")) {
+      model.addAttribute("hideFindButton", true);
+    }
+
+    if (bindingResult.hasErrors()) {
+      redirectAttributes
+              .addFlashAttribute("offerBindingModel", offerBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("models", offerBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
+
+      return "redirect:/offers/find";
+    }
+
+    model.addAttribute("brands", this.brandService.findAllBrands());
+
+    return "redirect:offers/all";
   }
 
   // GET
@@ -112,7 +124,7 @@ public class OffersController {
 
   // UPDATE OFFER
   @GetMapping("/offers/update/{id}")
-  public String getOfferUpdatePage(@PathVariable Long id, Model model,@AuthenticationPrincipal MobileleUser currentUser) {
+  public String getOfferUpdatePage(@PathVariable Long id, Model model, @AuthenticationPrincipal MobileleUser currentUser) {
     OfferAddBindingModel offerBindingModel =
             this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferAddBindingModel.class);
 
