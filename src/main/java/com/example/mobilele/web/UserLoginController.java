@@ -25,6 +25,6 @@ public class UserLoginController {
         model.addAttribute("login_error_message", "An unknown error occurred.");
       }
     }
-    return "auth-login";
+    return "login";
   }
 }
