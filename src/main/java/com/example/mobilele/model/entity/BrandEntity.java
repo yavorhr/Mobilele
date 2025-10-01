@@ -1,7 +1,6 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
