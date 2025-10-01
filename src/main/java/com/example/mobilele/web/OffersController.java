@@ -1,6 +1,8 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.dto.binding.offer.OfferAddBindingModel;
+import com.example.mobilele.model.dto.binding.offer.OfferSearchBindingModel;
+import com.example.mobilele.model.dto.service.brand.BrandServiceModel;
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.EngineEnum;
@@ -50,6 +52,31 @@ public class OffersController {
   @ModelAttribute("transmissions")
   public TransmissionType[] getTransmissions() {
     return TransmissionType.values();
+  }
+
+  @GetMapping("/offers/find")
+  public String getBrandFilterForm(Model model) {
+    if (!model.containsAttribute("offersInputForm")) {
+      model.addAttribute("offersInputForm", new OfferSearchBindingModel());
+      model.addAttribute("hideFindButton", true);
+    }
+
+//    // Load all brands alphabetically
+//    List<String> brands = brandService.getAllBrands()
+//            .stream()
+//            .map(BrandServiceModel::getName)
+//            .sorted()
+//            .collect(Collectors.toList());
+
+//    model.addAttribute("allBrands", brands);
+
+    // Optionally, load all models (or load via AJAX once brand selected)
+    // model.addAttribute("allModels", modelService.getAllModels());
+
+    model.addAttribute("transmissions", TransmissionType.values());
+    model.addAttribute("engines", EngineEnum.values());
+
+    return "offers-find";
   }
 
   // GET
