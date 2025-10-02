@@ -4,8 +4,7 @@ import com.example.mobilele.model.dto.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.dto.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.dto.view.offer.OfferViewModel;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
@@ -50,6 +49,21 @@ public class OffersController {
   @ModelAttribute("transmissions")
   public TransmissionType[] getTransmissions() {
     return TransmissionType.values();
+  }
+
+  @ModelAttribute("categories")
+  public VehicleCategoryEnum[] getVehicleCategories() {
+    return VehicleCategoryEnum.values();
+  }
+
+  @ModelAttribute("colors")
+  public ColorEnum[] getColors() {
+    return ColorEnum.values();
+  }
+
+  @ModelAttribute("conditions")
+  public ConditionEnum[] getConditions() {
+    return ConditionEnum.values();
   }
 
   // 1. Find offers - GET
