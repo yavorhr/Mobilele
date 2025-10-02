@@ -8,9 +8,7 @@ import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
-import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -133,31 +131,72 @@ public class OfferServiceImpl implements OfferService {
       OfferEntity firstOffer = new OfferEntity();
 
       firstOffer
-              .setModel(this.modelService.findById(1L).orElse(null))
+              .setModel(this.modelService.findById(1L)
+                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 1L does not exist!")))
               .setEngine(EngineEnum.Gasoline)
-              .setTransmission(TransmissionType.Manual)
+              .setTransmission(TransmissionType.Automatic)
+              .setCondition(CarCondition.USED)
+              .setCarCategory(CarCategoryEnum.CAR)
+              .setColor(ColorEnum.GRAY)
               .setMileage(22500.30)
               .setPrice(14300.00)
-              .setYear(2000)
+              .setYear(2010)
               .setDescription("Used, but well services and in good condition.")
-              .setImageUrl(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/BMW_U11_1X7A6826.jpg/420px-BMW_U11_1X7A6826.jpg")
+              .setImageUrl("/images/cars/m1")
               .setSeller(userService.findByUsername("admin"));
 
       OfferEntity secondOffer = new OfferEntity();
 
       secondOffer
-              .setModel(this.modelService.findById(2L).orElse(null))
+              .setModel(this.modelService.findById(2L)
+                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 2L does not exist!")))
               .setEngine(EngineEnum.Gasoline)
               .setTransmission(TransmissionType.Manual)
+              .setCondition(CarCondition.NEW)
+              .setCarCategory(CarCategoryEnum.SUV)
+              .setColor(ColorEnum.WHITE)
               .setMileage(500.40)
               .setPrice(60000.00)
               .setYear(2005)
-              .setDescription("Perfect condition!.")
-              .setImageUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg/1920px-2018_BMW_X3_%28G01%29_xDrive30i_wagon_%282018-11-02%29_01.jpg")
+              .setDescription("The SUV is brand new, just get in and drive!")
+              .setImageUrl("/images/cars/x3")
               .setSeller(userService.findByUsername("user"));
 
-      offerRepository.saveAll(List.of(firstOffer, secondOffer));
+      OfferEntity thirdOffer = new OfferEntity();
+
+      thirdOffer
+              .setModel(this.modelService.findById(3L)
+                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 3L does not exist!")))
+              .setEngine(EngineEnum.Gasoline)
+              .setTransmission(TransmissionType.Manual)
+              .setCarCategory(CarCategoryEnum.SUV)
+              .setCondition(CarCondition.DAMAGED)
+              .setColor(ColorEnum.BLUE)
+              .setMileage(10000.40)
+              .setPrice(3000.00)
+              .setYear(2011)
+              .setDescription("The car is a bit damaged in the back, but this can be fixed easily!")
+              .setImageUrl("/images/cars/q5")
+              .setSeller(userService.findByUsername("user"));
+
+      OfferEntity fourthOffer = new OfferEntity();
+
+      fourthOffer
+              .setModel(this.modelService.findById(4L)
+                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 4L does not exist!")))
+              .setEngine(EngineEnum.Hybrid)
+              .setTransmission(TransmissionType.Automatic)
+              .setCarCategory(CarCategoryEnum.SUV)
+              .setCondition(CarCondition.FOR_PARTS)
+              .setColor(ColorEnum.WHITE)
+              .setMileage(1000000.40)
+              .setPrice(1000.00)
+              .setYear(2022)
+              .setDescription("The car is totally damaged and it could be used for spare parts!")
+              .setImageUrl("/images/cars/rav4")
+              .setSeller(userService.findByUsername("admin"));
+
+      offerRepository.saveAll(List.of(firstOffer, secondOffer, thirdOffer, fourthOffer));
     }
   }
 }
