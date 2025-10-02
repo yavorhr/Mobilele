@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -196,7 +195,7 @@ public class OffersController {
     return "update";
   }
 
-  // 5. Delete offer 
+  // 5. Delete offer
   @PreAuthorize("@offerServiceImpl.isOwner(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
   public String deleteOfferById(@PathVariable Long id, Principal principal) {
