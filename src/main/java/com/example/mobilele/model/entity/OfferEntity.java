@@ -1,8 +1,8 @@
 package com.example.mobilele.model.entity;
 
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
+
 import java.time.Instant;
 
 @Entity
@@ -18,9 +18,28 @@ public class OfferEntity extends BaseEntity {
   private Integer year;
   private Instant created;
   private Instant modified;
+  private CarCondition condition;
   private UserEntity seller;
+  private CarCategoryEnum carCategory;
+  private ColorEnum color;
 
   public OfferEntity() {
+  }
+
+  @ManyToOne
+  public ModelEntity getModel() {
+    return model;
+  }
+
+  @ManyToOne
+  public UserEntity getSeller() {
+    return seller;
+  }
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  public ColorEnum getColor() {
+    return this.color;
   }
 
   @Column(nullable = false, name = "year")
@@ -33,14 +52,16 @@ public class OfferEntity extends BaseEntity {
     return description;
   }
 
-  @ManyToOne
-  public ModelEntity getModel() {
-    return model;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  public CarCategoryEnum getCarCategory() {
+    return carCategory;
   }
 
-  @ManyToOne
-  public UserEntity getSeller() {
-    return seller;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "car_condition", nullable = false)
+  public CarCondition getCondition() {
+    return condition;
   }
 
   @Enumerated
@@ -80,8 +101,23 @@ public class OfferEntity extends BaseEntity {
     return modified;
   }
 
+  public OfferEntity setColor(ColorEnum color) {
+    this.color = color;
+    return this;
+  }
+
   public OfferEntity setDescription(String description) {
     this.description = description;
+    return this;
+  }
+
+  public OfferEntity setCondition(CarCondition condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  public OfferEntity setCarCategory(CarCategoryEnum category) {
+    this.carCategory = category;
     return this;
   }
 
