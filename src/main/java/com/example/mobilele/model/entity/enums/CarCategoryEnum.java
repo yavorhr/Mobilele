@@ -1,6 +1,6 @@
 package com.example.mobilele.model.entity.enums;
 
-public enum CarCategoryTypeEnum {
+public enum CarCategoryEnum {
   CAR,
   BUS,
   TRUCK,
