@@ -59,7 +59,7 @@ public class OfferEntity extends BaseEntity {
   }
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "car_condition", nullable = false)
+  @Column(name = "condition", nullable = false)
   public ConditionEnum getCondition() {
     return condition;
   }
