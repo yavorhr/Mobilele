@@ -1,11 +1,12 @@
 package com.example.mobilele.model.dto.binding.offer;
 
+import com.example.mobilele.model.entity.enums.CarCategoryEnum;
+import com.example.mobilele.model.entity.enums.ColorEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import jakarta.validation.constraints.*;
 
 public class OfferAddBindingModel {
-  private Long id;
   private String description;
   private EngineEnum engine;
   private String imageUrl;
@@ -15,12 +16,10 @@ public class OfferAddBindingModel {
   private Integer year;
   private String model;
   private String brand;
+  private CarCategoryEnum carCategory;
+  private ColorEnum color;
 
   public OfferAddBindingModel() {
-  }
-
-  public Long getId() {
-    return id;
   }
 
   @NotNull
@@ -70,8 +69,19 @@ public class OfferAddBindingModel {
   }
 
   @Positive
+  @NotNull
   public Integer getYear() {
     return year;
+  }
+
+  @NotNull
+  public CarCategoryEnum getCarCategory() {
+    return carCategory;
+  }
+
+  @NotNull
+  public ColorEnum getColor() {
+    return color;
   }
 
   public OfferAddBindingModel setDescription(String description) {
@@ -119,8 +129,13 @@ public class OfferAddBindingModel {
     return this;
   }
 
-  public OfferAddBindingModel setId(Long id) {
-    this.id = id;
+  public OfferAddBindingModel setCarCategory(CarCategoryEnum carCategory) {
+    this.carCategory = carCategory;
+    return this;
+  }
+
+  public OfferAddBindingModel setColor(ColorEnum color) {
+    this.color = color;
     return this;
   }
 }
