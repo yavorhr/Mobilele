@@ -18,9 +18,9 @@ public class OfferEntity extends BaseEntity {
   private Integer year;
   private Instant created;
   private Instant modified;
-  private CarCondition condition;
+  private ConditionEnum condition;
   private UserEntity seller;
-  private CarCategoryEnum carCategory;
+  private VehicleCategoryEnum vehicleCategory;
   private ColorEnum color;
 
   public OfferEntity() {
@@ -54,13 +54,13 @@ public class OfferEntity extends BaseEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
-  public CarCategoryEnum getCarCategory() {
-    return carCategory;
+  public VehicleCategoryEnum getVehicleCategory() {
+    return vehicleCategory;
   }
 
   @Enumerated(EnumType.STRING)
   @Column(name = "car_condition", nullable = false)
-  public CarCondition getCondition() {
+  public ConditionEnum getCondition() {
     return condition;
   }
 
@@ -111,13 +111,13 @@ public class OfferEntity extends BaseEntity {
     return this;
   }
 
-  public OfferEntity setCondition(CarCondition condition) {
+  public OfferEntity setCondition(ConditionEnum condition) {
     this.condition = condition;
     return this;
   }
 
-  public OfferEntity setCarCategory(CarCategoryEnum category) {
-    this.carCategory = category;
+  public OfferEntity setVehicleCategory(VehicleCategoryEnum category) {
+    this.vehicleCategory = category;
     return this;
   }
 

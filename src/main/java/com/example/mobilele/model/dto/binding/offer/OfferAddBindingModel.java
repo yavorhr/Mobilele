@@ -1,9 +1,6 @@
 package com.example.mobilele.model.dto.binding.offer;
 
-import com.example.mobilele.model.entity.enums.CarCategoryEnum;
-import com.example.mobilele.model.entity.enums.ColorEnum;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 import jakarta.validation.constraints.*;
 
 public class OfferAddBindingModel {
@@ -16,10 +13,15 @@ public class OfferAddBindingModel {
   private Integer year;
   private String model;
   private String brand;
-  private CarCategoryEnum carCategory;
+  private VehicleCategoryEnum category;
+  private ConditionEnum condition;
   private ColorEnum color;
 
   public OfferAddBindingModel() {
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
   }
 
   @NotNull
@@ -75,8 +77,8 @@ public class OfferAddBindingModel {
   }
 
   @NotNull
-  public CarCategoryEnum getCarCategory() {
-    return carCategory;
+  public VehicleCategoryEnum getCategory() {
+    return category;
   }
 
   @NotNull
@@ -86,6 +88,11 @@ public class OfferAddBindingModel {
 
   public OfferAddBindingModel setDescription(String description) {
     this.description = description;
+    return this;
+  }
+
+  public OfferAddBindingModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
     return this;
   }
 
@@ -129,8 +136,8 @@ public class OfferAddBindingModel {
     return this;
   }
 
-  public OfferAddBindingModel setCarCategory(CarCategoryEnum carCategory) {
-    this.carCategory = carCategory;
+  public OfferAddBindingModel setCategory(VehicleCategoryEnum category) {
+    this.category = category;
     return this;
   }
 

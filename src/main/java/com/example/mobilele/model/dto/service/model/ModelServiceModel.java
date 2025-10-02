@@ -1,14 +1,14 @@
 package com.example.mobilele.model.dto.service.model;
 
 import com.example.mobilele.model.dto.view.offer.OfferViewModelWithIdAndUrl;
-import com.example.mobilele.model.entity.enums.CarCategoryEnum;
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 
 import java.util.List;
 
 public class ModelServiceModel {
     private Long id;
     private String name;
-    private CarCategoryEnum category;
+    private VehicleCategoryEnum category;
     private Integer startYear;
     private Integer endYear;
     private List<OfferViewModelWithIdAndUrl> offers;
@@ -29,7 +29,7 @@ public class ModelServiceModel {
         return name;
     }
 
-    public CarCategoryEnum getCategory() {
+    public VehicleCategoryEnum getCategory() {
         return category;
     }
 
@@ -51,7 +51,7 @@ public class ModelServiceModel {
         return this;
     }
 
-    public ModelServiceModel setCategory(CarCategoryEnum category) {
+    public ModelServiceModel setCategory(VehicleCategoryEnum category) {
         this.category = category;
         return this;
     }
