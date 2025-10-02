@@ -2,7 +2,6 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.model.entity.ModelEntity;
-import com.example.mobilele.model.entity.enums.CategoryTypeEnum;
 import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -46,21 +45,16 @@ public class ModelServiceImpl implements ModelService {
     if (modelRepository.count() == 0) {
       BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
 
-      ModelEntity x1 = new ModelEntity();
+      ModelEntity m3 = new ModelEntity();
 
-      x1
-              .setName("x1")
-              .setCategory(CategoryTypeEnum.SUV)
-              .setStartYear(1976)
-              .setEndYear(1990)
+      m3
+              .setName("m3")
               .setBrand(bmw);
 
       ModelEntity x3 = new ModelEntity();
+
       x3
               .setName("x3")
-              .setCategory(CategoryTypeEnum.SUV)
-              .setStartYear(1976)
-              .setEndYear(1995)
               .setBrand(bmw);
 
       BrandEntity audi = this.brandService.findBrandByName("audi").get();
@@ -68,12 +62,16 @@ public class ModelServiceImpl implements ModelService {
       ModelEntity q5 = new ModelEntity();
       q5
               .setName("q5")
-              .setCategory(CategoryTypeEnum.SUV)
-              .setStartYear(2010)
-              .setEndYear(2020)
               .setBrand(audi);
 
-      modelRepository.saveAll(List.of(x1, x3, q5));
+      BrandEntity toyota = this.brandService.findBrandByName("toyota").get();
+
+      ModelEntity rav4 = new ModelEntity();
+      rav4
+              .setName("RAV4")
+              .setBrand(toyota);
+
+      modelRepository.saveAll(List.of(m3, x3, x3, q5, rav4));
     }
   }
 }
