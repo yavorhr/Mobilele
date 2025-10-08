@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class Picture extends BaseEntity {
   private String title;
   private String url;
-  private UserEntity author;
+  private UserEntity seller;
   private OfferEntity offer;
   private String publicId;
 
@@ -22,8 +22,8 @@ public class Picture extends BaseEntity {
   }
 
   @ManyToOne
-  public UserEntity getAuthor() {
-    return author;
+  public UserEntity getSeller() {
+    return seller;
   }
 
   @ManyToOne
@@ -51,8 +51,8 @@ public class Picture extends BaseEntity {
     return this;
   }
 
-  public Picture setAuthor(UserEntity author) {
-    this.author = author;
+  public Picture setSeller(UserEntity seller) {
+    this.seller = seller;
     return this;
   }
 
