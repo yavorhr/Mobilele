@@ -1,7 +1,7 @@
 package com.example.mobilele.service;
 
-import com.example.mobilele.model.dto.service.brand.BrandServiceModel;
-import com.example.mobilele.model.dto.view.brand.BrandViewNameModel;
+import com.example.mobilele.model.service.brand.BrandServiceModel;
+import com.example.mobilele.model.view.brand.BrandViewNameModel;
 import com.example.mobilele.model.entity.BrandEntity;
 
 import java.util.Collection;

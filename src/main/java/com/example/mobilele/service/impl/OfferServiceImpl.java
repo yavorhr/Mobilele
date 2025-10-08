@@ -1,9 +1,9 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
-import com.example.mobilele.model.dto.service.offer.OfferServiceModel;
-import com.example.mobilele.model.dto.service.offer.OfferUpdateServiceModel;
-import com.example.mobilele.model.dto.view.offer.OfferViewModel;
+import com.example.mobilele.model.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.service.offer.OfferServiceModel;
+import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
+import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.UserEntity;

@@ -1,6 +1,6 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.dto.view.StatsView;
+import com.example.mobilele.model.view.StatsView;
 import com.example.mobilele.service.StatsService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

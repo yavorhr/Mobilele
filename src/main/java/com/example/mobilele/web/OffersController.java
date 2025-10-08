@@ -1,9 +1,9 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.dto.binding.offer.OfferAddBindingModel;
-import com.example.mobilele.model.dto.binding.offer.OffersFindBindingModel;
-import com.example.mobilele.model.dto.service.offer.OfferAddServiceModel;
-import com.example.mobilele.model.dto.view.offer.OfferViewModel;
+import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
+import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
+import com.example.mobilele.model.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
