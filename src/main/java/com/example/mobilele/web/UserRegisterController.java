@@ -1,7 +1,7 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.dto.binding.user.UserRegisterBindingModel;
-import com.example.mobilele.model.dto.service.user.UserRegisterServiceModel;
+import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
+import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
