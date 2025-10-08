@@ -1,23 +1,18 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
-import com.example.mobilele.model.entity.ModelEntity;
-import com.example.mobilele.model.entity.OfferEntity;
-import com.example.mobilele.model.entity.UserEntity;
-import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
-import com.example.mobilele.service.BrandService;
-import com.example.mobilele.service.ModelService;
-import com.example.mobilele.service.OfferService;
-import com.example.mobilele.service.UserService;
+import com.example.mobilele.service.*;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +25,15 @@ public class OfferServiceImpl implements OfferService {
   private final ModelMapper modelMapper;
   private final UserService userService;
   private final BrandService brandService;
+  private final PictureService pictureService;
 
-  public OfferServiceImpl(OfferRepository offerRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService) {
+  public OfferServiceImpl(OfferRepository offerRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, PictureService pictureService) {
     this.offerRepository = offerRepository;
     this.modelService = modelService;
     this.modelMapper = modelMapper;
     this.userService = userService;
     this.brandService = brandService;
+    this.pictureService = pictureService;
   }
 
   @Override
@@ -64,20 +61,27 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public OfferAddServiceModel addOffer(OfferAddServiceModel offerServiceModel, String username) {
+  public OfferAddServiceModel addOffer(OfferAddServiceModel offerServiceModel, String username) throws IOException {
     OfferEntity offer = this.modelMapper.map(offerServiceModel, OfferEntity.class);
 
+    //Set brand and model
     ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel()).get();
     modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()).get());
-
     offer.setModel(modelEntity);
-    offer.setSeller(this.userService.findByUsername(username));
+
+    // Set seller
+    UserEntity seller = this.userService.findByUsername(username);
+    offer.setSeller(seller);
+
+    // Set pictures
+    setPicturesToOffer(offerServiceModel, offer, seller);
 
     offer = this.offerRepository.save(offer);
     offerServiceModel.setId(offer.getId());
 
     return offerServiceModel;
   }
+
 
   @Override
   public Collection<OfferServiceModel> findOffersByBrand(String brand) {
@@ -199,4 +203,17 @@ public class OfferServiceImpl implements OfferService {
       offerRepository.saveAll(List.of(firstOffer, secondOffer, thirdOffer, fourthOffer));
     }
   }
+
+  //Private
+  private void setPicturesToOffer(OfferAddServiceModel offerServiceModel, OfferEntity offer, UserEntity seller) throws IOException {
+    List<Picture> pictures = this.pictureService.addOfferPictures(offerServiceModel.getPictures());
+
+    for (Picture picture : pictures) {
+      picture.setOffer(offer);
+      picture.setSeller(seller);
+
+      offer.getPictures().add(picture);
+    }
+  }
+
 }
