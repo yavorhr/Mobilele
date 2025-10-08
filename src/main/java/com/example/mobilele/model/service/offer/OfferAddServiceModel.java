@@ -1,13 +1,11 @@
 package com.example.mobilele.model.service.offer;
 
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public class OfferAddServiceModel {
-
   private Long id;
   private String description;
   private EngineEnum engine;
@@ -18,12 +16,27 @@ public class OfferAddServiceModel {
   private Integer year;
   private String model;
   private String brand;
+  private ColorEnum color;
+  private ConditionEnum condition;
+  private VehicleCategoryEnum category;
 
   public OfferAddServiceModel() {
   }
 
   public List<MultipartFile> getPictures() {
     return pictures;
+  }
+
+  public ColorEnum getColor() {
+    return color;
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
+  }
+
+  public VehicleCategoryEnum getCategory() {
+    return category;
   }
 
   public Long getId() {
@@ -79,6 +92,21 @@ public class OfferAddServiceModel {
 
   public OfferAddServiceModel setPictures(List<MultipartFile> pictures) {
     this.pictures = pictures;
+    return this;
+  }
+
+  public OfferAddServiceModel setColor(ColorEnum color) {
+    this.color = color;
+    return this;
+  }
+
+  public OfferAddServiceModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  public OfferAddServiceModel setCategory(VehicleCategoryEnum category) {
+    this.category = category;
     return this;
   }
 
