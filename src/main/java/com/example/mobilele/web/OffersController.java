@@ -19,6 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -152,7 +154,7 @@ public class OffersController {
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
-                         @AuthenticationPrincipal MobileleUser user) {
+                         @AuthenticationPrincipal MobileleUser user) throws IOException {
 
     if (offerAddBindingModel.getPictures() == null ||
             offerAddBindingModel.getPictures().isEmpty() ||
