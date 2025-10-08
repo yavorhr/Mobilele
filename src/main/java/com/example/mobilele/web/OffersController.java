@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
@@ -152,6 +153,13 @@ public class OffersController {
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal MobileleUser user) {
+
+    if (offerAddBindingModel.getPictures() == null ||
+            offerAddBindingModel.getPictures().isEmpty() ||
+            offerAddBindingModel.getPictures().stream().allMatch(MultipartFile::isEmpty)) {
+
+      bindingResult.rejectValue("pictures", "error.pictures", "At least one image is required");
+    }
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
