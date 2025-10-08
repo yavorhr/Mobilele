@@ -4,13 +4,13 @@ import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity {
   private String description;
   private EngineEnum engine;
-  private String imageUrl;
   private Double mileage;
   private Double price;
   private TransmissionType transmission;
@@ -22,8 +22,14 @@ public class OfferEntity extends BaseEntity {
   private UserEntity seller;
   private VehicleCategoryEnum vehicleCategory;
   private ColorEnum color;
+  private List<Picture> pictures;
 
   public OfferEntity() {
+  }
+
+  @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  public List<Picture> getPictures() {
+    return pictures;
   }
 
   @ManyToOne
@@ -70,10 +76,6 @@ public class OfferEntity extends BaseEntity {
     return engine;
   }
 
-  @Column(name = "image_url", nullable = false)
-  public String getImageUrl() {
-    return imageUrl;
-  }
 
   @Column(name = "mileage", nullable = false)
   public Double getMileage() {
@@ -111,6 +113,11 @@ public class OfferEntity extends BaseEntity {
     return this;
   }
 
+  public OfferEntity setPictures(List<Picture> pictures) {
+    this.pictures = pictures;
+    return this;
+  }
+
   public OfferEntity setCondition(ConditionEnum condition) {
     this.condition = condition;
     return this;
@@ -128,11 +135,6 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setYear(Integer productionYear) {
     this.year = productionYear;
-    return this;
-  }
-
-  public OfferEntity setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
     return this;
   }
 
