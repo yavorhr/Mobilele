@@ -9,7 +9,6 @@ import java.util.List;
 public class OfferAddBindingModel {
   private String description;
   private EngineEnum engine;
-  private String imageUrl;
   private Double mileage;
   private Double price;
   private TransmissionType transmission;
@@ -25,6 +24,7 @@ public class OfferAddBindingModel {
   }
 
   @NotNull
+  @NotEmpty
   public List<MultipartFile> getPictures() {
     return pictures;
   }
@@ -47,7 +47,7 @@ public class OfferAddBindingModel {
   }
 
   @NotNull
-  @Size(min = 5)
+  @Size(min = 10)
   public String getDescription() {
     return description;
   }
@@ -55,12 +55,6 @@ public class OfferAddBindingModel {
   @NotNull
   public EngineEnum getEngine() {
     return engine;
-  }
-
-  @NotNull
-  @NotEmpty
-  public String getImageUrl() {
-    return imageUrl;
   }
 
   @PositiveOrZero
@@ -113,11 +107,6 @@ public class OfferAddBindingModel {
 
   public OfferAddBindingModel setEngine(EngineEnum engine) {
     this.engine = engine;
-    return this;
-  }
-
-  public OfferAddBindingModel setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
     return this;
   }
 

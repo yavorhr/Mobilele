@@ -2,19 +2,29 @@ package com.example.mobilele.model.service.offer;
 
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public class OfferAddServiceModel {
 
   private Long id;
   private String description;
   private EngineEnum engine;
-  private String imageUrl;
+  private List<MultipartFile> pictures;
   private Double mileage;
   private Double price;
   private TransmissionType transmission;
   private Integer year;
   private String model;
   private String brand;
+
+  public OfferAddServiceModel() {
+  }
+
+  public List<MultipartFile> getPictures() {
+    return pictures;
+  }
 
   public Long getId() {
     return id;
@@ -26,10 +36,6 @@ public class OfferAddServiceModel {
 
   public EngineEnum getEngine() {
     return engine;
-  }
-
-  public String getImageUrl() {
-    return imageUrl;
   }
 
   public Double getMileage() {
@@ -71,8 +77,8 @@ public class OfferAddServiceModel {
     return this;
   }
 
-  public OfferAddServiceModel setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
+  public OfferAddServiceModel setPictures(List<MultipartFile> pictures) {
+    this.pictures = pictures;
     return this;
   }
 
