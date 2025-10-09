@@ -2,7 +2,6 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class OfferEntity extends BaseEntity {
   public OfferEntity() {
   }
 
-  @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
   public List<Picture> getPictures() {
     return pictures;
   }
