@@ -45,10 +45,10 @@ public class ModelServiceImpl implements ModelService {
     if (modelRepository.count() == 0) {
       BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
 
-      ModelEntity m3 = new ModelEntity();
+      ModelEntity m1 = new ModelEntity();
 
-      m3
-              .setName("m3")
+      m1
+              .setName("m1")
               .setBrand(bmw);
 
       ModelEntity x3 = new ModelEntity();
@@ -71,7 +71,7 @@ public class ModelServiceImpl implements ModelService {
               .setName("RAV4")
               .setBrand(toyota);
 
-      modelRepository.saveAll(List.of(m3, x3, x3, q5, rav4));
+      modelRepository.saveAll(List.of(m1, x3, q5, rav4));
     }
   }
 }
