@@ -9,6 +9,7 @@ import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.service.*;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +75,7 @@ public class OfferServiceImpl implements OfferService {
     offer.setSeller(seller);
 
     // Set pictures
-    setPicturesToOffer(offerServiceModel, offer, seller);
+//    setPicturesToOffer(offerServiceModel, offer, seller);
 
     offer = this.offerRepository.save(offer);
     offerServiceModel.setId(offer.getId());
@@ -121,6 +122,14 @@ public class OfferServiceImpl implements OfferService {
     }
   }
 
+  @Override
+  public OfferEntity findById(long id) {
+    return this.offerRepository
+            .findById(id)
+            .orElseThrow(()
+                    -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
+  }
+
   private boolean isAdmin(UserEntity user) {
     return user.
             getRoles().
@@ -129,91 +138,84 @@ public class OfferServiceImpl implements OfferService {
             anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
 
+
   @Override
+  @Transactional
   public void initOffers() {
     if (offerRepository.count() == 0) {
-      OfferEntity firstOffer = new OfferEntity();
 
-      firstOffer
-              .setModel(this.modelService.findById(1L)
-                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 1L does not exist!")))
-              .setEngine(EngineEnum.Gasoline)
-              .setTransmission(TransmissionType.Automatic)
-              .setCondition(ConditionEnum.USED)
-              .setVehicleCategory(VehicleCategoryEnum.CAR)
-              .setColor(ColorEnum.GRAY)
-              .setMileage(22500.30)
-              .setPrice(14300.00)
-              .setYear(2010)
-              .setDescription("Used, but well services and in good condition.")
-              .setImageUrl("/images/cars/m1")
-              .setSeller(userService.findByUsername("admin"));
+      // Offer 1
+      OfferEntity offer1 = buildOffer(
+              1L, EngineEnum.Gasoline, TransmissionType.Automatic, ConditionEnum.USED,
+              VehicleCategoryEnum.CAR, ColorEnum.GRAY, 22500.30, 14300.00, 2010,
+              "Used, but well serviced and in good condition.",
+              "admin", createPicture("m1", "cars-offers/m1_eicofs",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
+      // Offer 2
+      OfferEntity offer2 = buildOffer(
+              2L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.NEW,
+              VehicleCategoryEnum.SUV, ColorEnum.WHITE, 500.00, 6000.00, 2005,
+              "The SUV is brand new, just get in and drive!",
+              "admin", createPicture("x3", "cars-offers/x3_wxw7fr",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923267/mobilele/cars-offers/x3_wxw7fr.jpg"));
 
-      OfferEntity secondOffer = new OfferEntity();
+      // Offer 3
+      OfferEntity offer3 = buildOffer(
+              3L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.DAMAGED,
+              VehicleCategoryEnum.SUV, ColorEnum.BLUE, 10000.40, 31000.00, 2011,
+              "The SUV is a bit damaged in the back, but this can be fixed easily!",
+              "user", createPicture("rav4", "cars-offers/rav4_j72ktc",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923264/mobilele/cars-offers/rav4_j72ktc.jpg"));
 
-      secondOffer
-              .setModel(this.modelService.findById(2L)
-                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 2L does not exist!")))
-              .setEngine(EngineEnum.Gasoline)
-              .setTransmission(TransmissionType.Manual)
-              .setCondition(ConditionEnum.NEW)
-              .setVehicleCategory(VehicleCategoryEnum.SUV)
-              .setColor(ColorEnum.WHITE)
-              .setMileage(500.40)
-              .setPrice(60000.00)
-              .setYear(2005)
-              .setDescription("The SUV is brand new, just get in and drive!")
-              .setImageUrl("/images/cars/x3")
-              .setSeller(userService.findByUsername("user"));
+      // Offer 4
+      OfferEntity offer4 = buildOffer(
+              4L, EngineEnum.Hybrid, TransmissionType.Automatic, ConditionEnum.FOR_PARTS,
+              VehicleCategoryEnum.SUV, ColorEnum.GREEN, 99999.00, 1000.00, 2022,
+              "The car is totally damaged and it could be used for spare parts!",
+              "user", createPicture("q5", "cars-offers/q5_bd67cg",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923265/mobilele/cars-offers/q5_bd67cg.jpg"));
 
-      OfferEntity thirdOffer = new OfferEntity();
-
-      thirdOffer
-              .setModel(this.modelService.findById(3L)
-                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 3L does not exist!")))
-              .setEngine(EngineEnum.Gasoline)
-              .setTransmission(TransmissionType.Manual)
-              .setVehicleCategory(VehicleCategoryEnum.SUV)
-              .setCondition(ConditionEnum.DAMAGED)
-              .setColor(ColorEnum.BLUE)
-              .setMileage(10000.40)
-              .setPrice(3000.00)
-              .setYear(2011)
-              .setDescription("The car is a bit damaged in the back, but this can be fixed easily!")
-              .setImageUrl("/images/cars/q5")
-              .setSeller(userService.findByUsername("user"));
-
-      OfferEntity fourthOffer = new OfferEntity();
-
-      fourthOffer
-              .setModel(this.modelService.findById(4L)
-                      .orElseThrow(() -> new ObjectNotFoundException("Model with id: 4L does not exist!")))
-              .setEngine(EngineEnum.Hybrid)
-              .setTransmission(TransmissionType.Automatic)
-              .setVehicleCategory(VehicleCategoryEnum.SUV)
-              .setCondition(ConditionEnum.FOR_PARTS)
-              .setColor(ColorEnum.WHITE)
-              .setMileage(1000000.40)
-              .setPrice(1000.00)
-              .setYear(2022)
-              .setDescription("The car is totally damaged and it could be used for spare parts!")
-              .setImageUrl("/images/cars/rav4")
-              .setSeller(userService.findByUsername("admin"));
-
-      offerRepository.saveAll(List.of(firstOffer, secondOffer, thirdOffer, fourthOffer));
+      // Save all offers with pictures (cascade persists pictures too)
+      offerRepository.saveAll(List.of(offer1, offer2, offer3, offer4));
     }
   }
 
-  //Private
-  private void setPicturesToOffer(OfferAddServiceModel offerServiceModel, OfferEntity offer, UserEntity seller) throws IOException {
-    List<Picture> pictures = this.pictureService.addOfferPictures(offerServiceModel.getPictures());
+  private OfferEntity buildOffer(Long modelId, EngineEnum engineType, TransmissionType transmissionType,
+                                 ConditionEnum condition, VehicleCategoryEnum vehicleType, ColorEnum color,
+                                 Double mileage, Double price, int year, String description,
+                                 String username, Picture picture) {
 
-    for (Picture picture : pictures) {
-      picture.setOffer(offer);
-      picture.setSeller(seller);
+    UserEntity seller = userService.findByUsername(username);
 
-      offer.getPictures().add(picture);
-    }
+    OfferEntity offer = new OfferEntity();
+    offer.setModel(modelService.findById(modelId)
+            .orElseThrow(() -> new ObjectNotFoundException("Model with id: " + modelId + " does not exist!")));
+    offer.setEngine(engineType);
+    offer.setTransmission(transmissionType);
+    offer.setCondition(condition);
+    offer.setVehicleCategory(vehicleType);
+    offer.setColor(color);
+    offer.setMileage(mileage);
+    offer.setPrice(price);
+    offer.setYear(year);
+    offer.setDescription(description);
+
+    // Set seller
+    offer.setSeller(seller);
+
+    // Set picture and bidirectional relationship
+    picture.setOffer(offer);
+    picture.setSeller(seller);
+    offer.setPictures(List.of(picture));
+
+    return offer;
   }
 
+  private Picture createPicture(String title, String publicId, String url) {
+    Picture picture = new Picture();
+    picture.setTitle(title);
+    picture.setPublicId(publicId);
+    picture.setUrl(url);
+    return picture;
+  }
 }

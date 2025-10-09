@@ -1,5 +1,6 @@
 package com.example.mobilele.service;
 
+import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
@@ -26,4 +27,6 @@ public interface OfferService {
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 
   boolean isOwner(String userName, Long id);
+
+  OfferEntity findById(long id);
 }
