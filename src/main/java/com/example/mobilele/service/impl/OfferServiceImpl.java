@@ -78,12 +78,15 @@ public class OfferServiceImpl implements OfferService {
     offer.setSeller(seller);
 
     //Set pictures
+    offer.getPictures().clear();
     for (MultipartFile file : offerServiceModel.getPictures()) {
       CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
 
       Picture picture = new Picture();
+
       picture.setUrl(uploaded.getUrl());
       picture.setPublicId(uploaded.getPublicId());
+
       picture.setOffer(offer);
       picture.setSeller(seller);
       picture.setTitle(convertTitle(file.getOriginalFilename()));
