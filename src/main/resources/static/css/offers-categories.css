@@ -1,0 +1,111 @@
+/* --- GRID LAYOUT --- */
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    justify-items: center;
+    max-width: 1000px;
+    margin: 8rem auto;
+}
+
+/* --- VEHICLE CARD --- */
+.vehicle-card {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.85); /* semi-transparent */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px); /* nice glass effect */
+    padding: 2rem;
+    width: 100%;
+    max-width: 300px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+    cursor: pointer;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* --- ICON + TEXT --- */
+.vehicle-card i {
+    font-size: 7.5rem;
+    color: #999;
+    transition: transform 0.6s ease;
+}
+
+.vehicle-card h3 {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* --- DRIVE ANIMATION --- */
+.vehicle-card:hover i {
+    animation: driveBounce 1.6s ease-in-out;
+}
+
+@keyframes driveBounce {
+    0% {
+        transform: translateX(-60px) rotate(0deg);
+    }
+    40% {
+        transform: translateX(25px) rotate(6deg);
+    }
+    70% {
+        transform: translateX(55px) rotate(10deg);
+    }
+    85% {
+        transform: translateX(40px) rotate(6deg);
+    }
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+@media (max-width: 1024px) {
+    .vehicle-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .vehicle-card {
+        max-width: 320px;
+        height: 300px;
+    }
+
+    .vehicle-card i {
+        font-size: 6rem;
+    }
+
+    .vehicle-card h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .vehicle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicle-card {
+        max-width: 280px;
+        height: 300px;
+        padding: 1.5rem;
+    }
+
+    .vehicle-card i {
+        font-size: 4rem;
+    }
+
+    .vehicle-card h3 {
+        font-size: 1.2rem;
+    }
+}
