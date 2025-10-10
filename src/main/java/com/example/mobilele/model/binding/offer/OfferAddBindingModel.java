@@ -1,6 +1,7 @@
 package com.example.mobilele.model.binding.offer;
 
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.validator.ValidYear;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,7 +76,7 @@ public class OfferAddBindingModel {
   }
 
   @Positive
-  @NotNull
+  @NotNull(message = "Please insert year")
   @ValidYear
   public Integer getYear() {
     return year;
