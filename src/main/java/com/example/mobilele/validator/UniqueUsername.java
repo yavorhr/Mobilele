@@ -1,4 +1,4 @@
-package com.example.mobilele.validator.validator;
+package com.example.mobilele.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

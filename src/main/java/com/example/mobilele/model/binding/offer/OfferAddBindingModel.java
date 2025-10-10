@@ -76,6 +76,7 @@ public class OfferAddBindingModel {
 
   @Positive
   @NotNull
+  @ValidYear
   public Integer getYear() {
     return year;
   }

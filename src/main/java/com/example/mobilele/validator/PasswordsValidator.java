@@ -1,4 +1,4 @@
-package com.example.mobilele.validator.validator;
+package com.example.mobilele.validator;
 
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import jakarta.validation.ConstraintValidator;
