@@ -12,9 +12,9 @@
 .vehicle-card {
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 1.5rem;
-    background: rgba(255, 255, 255, 0.85); /* semi-transparent */
+    background: rgba(255, 255, 255, 0.75);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(6px); /* nice glass effect */
+    backdrop-filter: blur(6px);
     padding: 2rem;
     width: 100%;
     max-width: 300px;
@@ -25,6 +25,8 @@
     justify-content: center;
     transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
     cursor: pointer;
+    text-decoration: none !important;
+    color: inherit;
 }
 
 .vehicle-card:hover {
@@ -37,6 +39,7 @@
 .vehicle-card i {
     font-size: 7.5rem;
     color: #999;
+    text-decoration: none;
     transition: transform 0.6s ease;
 }
 
