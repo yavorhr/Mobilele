@@ -44,6 +44,11 @@ public class OffersController {
     return new OfferAddBindingModel();
   }
 
+  @ModelAttribute("offersFindBindingModel")
+  public OffersFindBindingModel offersFindBindingModel() {
+    return new OffersFindBindingModel();
+  }
+
   @ModelAttribute("engines")
   public EngineEnum[] getEngines() {
     return EngineEnum.values();
@@ -72,12 +77,9 @@ public class OffersController {
   // 1. Find offers - GET
   @GetMapping("/offers/find")
   public String getFindOffersView(Model model) {
-    if (!model.containsAttribute("offersFindBindingModel")) {
-      model.addAttribute("offersFindBindingModel", new OffersFindBindingModel());
-      model.addAttribute("hideFindButton", true);
-    }
 
     model.addAttribute("brands", this.brandService.findAllBrands());
+    model.addAttribute("currentPage", "find");
 
     return "offers-find";
   }
@@ -89,10 +91,7 @@ public class OffersController {
                                      RedirectAttributes redirectAttributes,
                                      Model model) {
 
-    if (!model.containsAttribute("offersFindBindingModel")) {
-      model.addAttribute("hideFindButton", true);
-    }
-
+    
     if (bindingResult.hasErrors()) {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerBindingModel)
@@ -145,7 +144,7 @@ public class OffersController {
   @GetMapping("/offers/add")
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
-
+    model.addAttribute("currentPage", "add");
     return "offer-add";
   }
 
