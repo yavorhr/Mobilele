@@ -8,10 +8,13 @@ import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.service.*;
+import com.example.mobilele.util.cloudinary.CloudinaryImage;
+import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -26,15 +29,15 @@ public class OfferServiceImpl implements OfferService {
   private final ModelMapper modelMapper;
   private final UserService userService;
   private final BrandService brandService;
-  private final PictureService pictureService;
+  private final CloudinaryService cloudinaryService;
 
-  public OfferServiceImpl(OfferRepository offerRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, PictureService pictureService) {
+  public OfferServiceImpl(OfferRepository offerRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService) {
     this.offerRepository = offerRepository;
     this.modelService = modelService;
     this.modelMapper = modelMapper;
     this.userService = userService;
     this.brandService = brandService;
-    this.pictureService = pictureService;
+    this.cloudinaryService = cloudinaryService;
   }
 
   @Override
@@ -74,15 +77,26 @@ public class OfferServiceImpl implements OfferService {
     UserEntity seller = this.userService.findByUsername(username);
     offer.setSeller(seller);
 
-    // Set pictures
-//    setPicturesToOffer(offerServiceModel, offer, seller);
+    //Set pictures
+    for (MultipartFile file : offerServiceModel.getPictures()) {
+      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+
+      Picture picture = new Picture();
+      picture.setUrl(uploaded.getUrl());
+      picture.setPublicId(uploaded.getPublicId());
+      picture.setOffer(offer);
+      picture.setSeller(seller);
+      picture.setTitle(convertTitle(file.getOriginalFilename()));
+
+      offer.getPictures().add(picture);
+    }
 
     offer = this.offerRepository.save(offer);
+
     offerServiceModel.setId(offer.getId());
 
     return offerServiceModel;
   }
-
 
   @Override
   public Collection<OfferServiceModel> findOffersByBrand(String brand) {
@@ -130,6 +144,19 @@ public class OfferServiceImpl implements OfferService {
                     -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
   }
 
+  // Private & helpers
+  private String convertTitle(String originalName) {
+    if (originalName != null) {
+      int dotIndex = originalName.lastIndexOf('.');
+
+      if (dotIndex > 0) {
+        originalName = originalName.substring(0, dotIndex);
+      }
+    }
+    return originalName;
+  }
+
+
   private boolean isAdmin(UserEntity user) {
     return user.
             getRoles().
@@ -137,7 +164,6 @@ public class OfferServiceImpl implements OfferService {
             map(UserRoleEntity::getRole).
             anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
-
 
   @Override
   @Transactional
