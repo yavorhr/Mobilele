@@ -1,6 +1,6 @@
 package com.example.mobilele.model.binding.user;
-import com.example.mobilele.validator.validator.DoesPasswordAndConfirmPasswordMatch;
-import com.example.mobilele.validator.validator.UniqueUsername;
+import com.example.mobilele.validator.DoesPasswordAndConfirmPasswordMatch;
+import com.example.mobilele.validator.UniqueUsername;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
