@@ -19,7 +19,6 @@ public class OfferEntity extends BaseEntity {
   private Instant modified;
   private ConditionEnum condition;
   private UserEntity seller;
-  private VehicleCategoryEnum vehicleCategory;
   private ColorEnum color;
   private List<Picture> pictures;
 
@@ -55,12 +54,6 @@ public class OfferEntity extends BaseEntity {
   @Column(columnDefinition = "TEXT")
   public String getDescription() {
     return description;
-  }
-
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
-  public VehicleCategoryEnum getVehicleCategory() {
-    return vehicleCategory;
   }
 
   @Enumerated(EnumType.STRING)
@@ -121,12 +114,7 @@ public class OfferEntity extends BaseEntity {
     this.condition = condition;
     return this;
   }
-
-  public OfferEntity setVehicleCategory(VehicleCategoryEnum category) {
-    this.vehicleCategory = category;
-    return this;
-  }
-
+  
   public OfferEntity setEngine(EngineEnum engine) {
     this.engine = engine;
     return this;

@@ -1,5 +1,6 @@
 package com.example.mobilele.model.entity;
 
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import java.util.List;
 public class ModelEntity extends BaseEntity {
   private String name;
   private BrandEntity brand;
+  private VehicleCategoryEnum vehicleType;
   private List<OfferEntity> offers;
 
   public ModelEntity() {
@@ -16,6 +18,12 @@ public class ModelEntity extends BaseEntity {
   @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
   public List<OfferEntity> getOffers() {
     return offers;
+  }
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "vehicle_type", nullable = false)
+  public VehicleCategoryEnum getVehicleType() {
+    return vehicleType;
   }
 
   @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -44,4 +52,8 @@ public class ModelEntity extends BaseEntity {
     return this;
   }
 
+  public ModelEntity setVehicleType(VehicleCategoryEnum vehicleType) {
+    this.vehicleType = vehicleType;
+    return this;
+  }
 }
