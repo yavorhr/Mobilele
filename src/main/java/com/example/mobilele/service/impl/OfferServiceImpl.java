@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferServiceModel;
@@ -12,12 +13,13 @@ import com.example.mobilele.util.ProjectHelpers;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -121,6 +123,87 @@ public class OfferServiceImpl implements OfferService {
     this.modelMapper.map(serviceModel, offerEntity);
 
     this.offerRepository.save(offerEntity);
+  }
+
+  @Override
+  public List<OfferServiceModel> findOffersByFilters(OffersFindBindingModel filter, VehicleCategoryEnum vehicleType) {
+    return offerRepository.findAll((root, query, cb) -> {
+      List<Predicate> predicates = new ArrayList<>();
+
+      // Mandatory filters
+      predicates.add(cb.equal(root.get("model").get("brand").get("name"), filter.getBrand()));
+      if (filter.getModel() != null && !filter.getModel().isBlank()) {
+        predicates.add(cb.equal(root.get("model").get("name"), filter.getModel()));
+      }
+      predicates.add(cb.equal(root.get("model").get("vehicleType"), vehicleType));
+
+      // Optional filters
+      if (filter.getPrice() != null) {
+        switch (filter.getPriceComparison()) {
+          case "under":
+            predicates.add(cb.lessThanOrEqualTo(root.get("price"), filter.getPrice()));
+            break;
+          case "above":
+            predicates.add(cb.greaterThanOrEqualTo(root.get("price"), filter.getPrice()));
+            break;
+          case "between":
+            if (filter.getPriceMax() != null) {
+              predicates.add(cb.between(root.get("price"), filter.getPrice(), filter.getPriceMax()));
+            }
+            break;
+        }
+      }
+
+      if (filter.getMileage() != null) {
+        switch (filter.getMileageComparison()) {
+          case "under":
+            predicates.add(cb.lessThanOrEqualTo(root.get("mileage"), filter.getMileage()));
+            break;
+          case "above":
+            predicates.add(cb.greaterThanOrEqualTo(root.get("mileage"), filter.getMileage()));
+            break;
+          case "between":
+            if (filter.getMileageMax() != null) {
+              predicates.add(cb.between(root.get("mileage"), filter.getMileage(), filter.getMileageMax()));
+            }
+            break;
+        }
+      }
+
+      if (filter.getYear() != null) {
+        switch (filter.getYearComparison()) {
+          case "under":
+            predicates.add(cb.lessThanOrEqualTo(root.get("year"), filter.getYear()));
+            break;
+          case "above":
+            predicates.add(cb.greaterThanOrEqualTo(root.get("year"), filter.getYear()));
+            break;
+          case "between":
+            if (filter.getYearMax() != null) {
+              predicates.add(cb.between(root.get("year"), filter.getYear(), filter.getYearMax()));
+            }
+            break;
+        }
+      }
+
+      if (filter.getEngine() != null) {
+        predicates.add(cb.equal(root.get("engine"), filter.getEngine()));
+      }
+      if (filter.getTransmission() != null) {
+        predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
+      }
+      if (filter.getCondition() != null) {
+        predicates.add(cb.equal(root.get("condition"), filter.getCondition()));
+      }
+      if (filter.getColor() != null) {
+        predicates.add(cb.equal(root.get("color"), filter.getColor()));
+      }
+
+      return cb.and(predicates.toArray(new Predicate[0]));
+    })
+            .stream()
+            .map(e -> this.modelMapper.map(e, OfferServiceModel.class))
+            .collect(Collectors.toList());
   }
 
   public boolean isOwner(String username, Long id) {
