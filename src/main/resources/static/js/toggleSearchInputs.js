@@ -36,8 +36,7 @@
                     break;
             }
         }
-
-        ['price', 'mileage', 'year'].forEach(field => toggleMaxInput(field));
     }
+        ['price', 'mileage', 'year'].forEach(field => toggleMaxInput(field));
 
 
