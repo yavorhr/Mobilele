@@ -114,7 +114,7 @@ public class OfferEntity extends BaseEntity {
     this.condition = condition;
     return this;
   }
-  
+
   public OfferEntity setEngine(EngineEnum engine) {
     this.engine = engine;
     return this;
