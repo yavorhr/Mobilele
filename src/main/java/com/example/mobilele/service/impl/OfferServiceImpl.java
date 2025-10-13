@@ -8,6 +8,7 @@ import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.service.*;
+import com.example.mobilele.util.ProjectHelpers;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
@@ -89,7 +90,7 @@ public class OfferServiceImpl implements OfferService {
 
       picture.setOffer(offer);
       picture.setSeller(seller);
-      picture.setTitle(convertTitle(file.getOriginalFilename()));
+      picture.setTitle(ProjectHelpers.convertPictureTitle(file.getOriginalFilename()));
 
       offer.getPictures().add(picture);
     }
@@ -102,8 +103,8 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Collection<OfferServiceModel> findOffersByBrand(String brand) {
-    return this.offerRepository.findAllByModel_BrandName(brand)
+  public Collection<OfferServiceModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType) {
+    return this.offerRepository.findAllByModel_Brand_NameAndModel_VehicleType(brand, vehicleType)
             .stream()
             .map(offerEntity ->
                     this.modelMapper.map(offerEntity, OfferServiceModel.class))
@@ -147,17 +148,7 @@ public class OfferServiceImpl implements OfferService {
                     -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
   }
 
-  // Private & helpers
-  private String convertTitle(String originalName) {
-    if (originalName != null) {
-      int dotIndex = originalName.lastIndexOf('.');
 
-      if (dotIndex > 0) {
-        originalName = originalName.substring(0, dotIndex);
-      }
-    }
-    return originalName;
-  }
 
 
   private boolean isAdmin(UserEntity user) {

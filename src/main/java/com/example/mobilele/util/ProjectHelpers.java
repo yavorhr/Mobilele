@@ -31,4 +31,16 @@ public final class ProjectHelpers {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid vehicle type: " + input);
     }
   }
+
+  // Private & helpers
+  public static String convertPictureTitle(String originalName) {
+    if (originalName != null) {
+      int dotIndex = originalName.lastIndexOf('.');
+
+      if (dotIndex > 0) {
+        originalName = originalName.substring(0, dotIndex);
+      }
+    }
+    return originalName;
+  }
 }
