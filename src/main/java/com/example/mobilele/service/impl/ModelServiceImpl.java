@@ -27,14 +27,14 @@ public class ModelServiceImpl implements ModelService {
     return this.modelRepository.findById(id);
   }
 
-  @Override
-  public List<String> findModelsPerBrand(String brand) {
-    return this.modelRepository
-            .findAllByBrandName(brand.toLowerCase())
-            .stream()
-            .map(b -> b.substring(0, 1).toUpperCase() + b.substring(1))
-            .collect(Collectors.toList());
-  }
+//  @Override
+//  public List<String> findModelsPerBrand(String brand) {
+//    return this.modelRepository
+//            .findAllByBrandName(brand.toLowerCase())
+//            .stream()
+//            .map(b -> b.substring(0, 1).toUpperCase() + b.substring(1))
+//            .collect(Collectors.toList());
+//  }
 
   @Override
   public Optional<ModelEntity> findByName(String model) {
@@ -42,9 +42,9 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
-  public List<String> findModelsByVehicleTypeAndBrand(String vehicleType, String brand) {
-      return this.modelRepository
-            .findAllByBrandName(brand.toLowerCase())
+  public List<String> findModelsByVehicleTypeAndBrand(String brand, VehicleCategoryEnum vehicleType) {
+    return this.modelRepository
+            .findAllByBrandNameAndVehicleType(brand.toLowerCase(), vehicleType)
             .stream()
             .map(b -> b.substring(0, 1).toUpperCase() + b.substring(1))
             .collect(Collectors.toList());
