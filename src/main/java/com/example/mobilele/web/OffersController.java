@@ -8,22 +8,20 @@ import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
-import com.example.mobilele.service.impl.principal.MobileleUser;
+import com.example.mobilele.util.ProjectHelpers;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Controller
 public class OffersController {
@@ -77,58 +75,72 @@ public class OffersController {
   // 1. Find offers - GET
   @GetMapping("/offers/find")
   public String getFindOffersView(Model model) {
+    model.addAttribute("currentPage", "find");
+    return "offers-categories";
+  }
 
+  // 2. Find offers by categories
+  @GetMapping("/offers/find/{vehicleType}")
+  public String getSearchFormByCategory(@PathVariable String vehicleType, Model model) {
+
+    model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("currentPage", "find");
 
-    return "offers-find";
+    return "offers-search-form";
   }
 
   // 1.2 Find offers - POST
-  @PostMapping("/offers/find")
-  public String submitFindOffersForm(@Valid OffersFindBindingModel offerBindingModel,
-                                     BindingResult bindingResult,
-                                     RedirectAttributes redirectAttributes,
-                                     Model model) {
+  @PostMapping("/offers/find/{vehicleType}")
+  public String submitFindOffersForm(
+          @PathVariable String vehicleType,
+          @Valid OffersFindBindingModel offersFindBindingModel,
+          BindingResult bindingResult,
+          RedirectAttributes redirectAttributes,
+          Model model) {
 
-    
+    VehicleCategoryEnum vehicleCategoryEnum = ProjectHelpers.parseToVehicleEnum(vehicleType);
+
     if (bindingResult.hasErrors()) {
       redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-              .addFlashAttribute("models", offerBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
+              .addFlashAttribute("offersFindBindingModel", offersFindBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offersFindBindingModel", bindingResult)
+              .addFlashAttribute("models", offersFindBindingModel.getBrand() == null ? "" : this.modelService.findModelsByVehicleTypeAndBrand(offersFindBindingModel.getBrand(), vehicleCategoryEnum));
 
-      return "redirect:/offers/find";
+      return "redirect:/offers/find/" + vehicleType;
     }
 
-    //TODO : Is it needed ?
-    model.addAttribute("brands", this.brandService.findAllBrands());
+    model.addAttribute("viewModels", offerService
+            .findOffersByBrandAndVehicleType(offersFindBindingModel.getBrand(), vehicleCategoryEnum)
+            .stream()
+            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
+            .collect(Collectors.toList()));
 
     return "redirect:offers/all";
   }
 
-  // 2. Get Offers - All
-  @GetMapping("/offers/all")
-  public String getAllOffersPage(Model model) {
-    List<OfferViewModel> offers = this.offerService.findAllOffers();
-    model.addAttribute("offers", offers);
+//  // 2. Get Offers - All
+//  @GetMapping("/offers/all")
+//  public String getAllOffersPage(Model model) {
+//    List<OfferViewModel> offers = this.offerService.findAllOffers();
+//    model.addAttribute("offers", offers);
+//
+//    return "offers";
+//  }
 
-    return "offers";
-  }
-
-  //TODO ? What is this method for
-  @GetMapping("/offers")
-  public String getModelsByBrandName(@RequestParam String brand, Model model) {
-    List<OfferViewModel> offersByBrand = offerService
-            .findOffersByBrand(brand.toLowerCase())
-            .stream()
-            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
-            .collect(Collectors.toList());
-
-    model.addAttribute("offers", offersByBrand);
-
-    return "offers";
-  }
+//  //TODO ? What is this method for
+//  @GetMapping("/offers")
+//  public String getModelsByBrandName(@RequestParam String brand, Model model) {
+//    List<OfferViewModel> offersByBrand = offerService
+//            .findOffersByBrand(brand.toLowerCase())
+//            .stream()
+//            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
+//            .collect(Collectors.toList());
+//
+//    model.addAttribute("offers", offersByBrand);
+//
+//    return "offers";
+//  }
 
   // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
@@ -149,69 +161,69 @@ public class OffersController {
   }
 
   // 3.2 Add Offer - POST
-  @PostMapping("/offers/add")
-  public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes,
-                         @AuthenticationPrincipal MobileleUser user) throws IOException {
-
-    if (offerAddBindingModel.getPictures() == null ||
-            offerAddBindingModel.getPictures().isEmpty() ||
-            offerAddBindingModel.getPictures().stream().allMatch(MultipartFile::isEmpty)) {
-
-      bindingResult.rejectValue("pictures", "error.pictures", "At least one image is required");
-    }
-
-    if (bindingResult.hasErrors()) {
-      redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerAddBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
-
-      return "redirect:/offers/add";
-    }
-
-    OfferAddServiceModel serviceModel =
-            this.offerService.addOffer(
-                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
-                    user.getUsername());
-
-    return "redirect:/offers/details/" + serviceModel.getId();
-  }
+//  @PostMapping("/offers/add")
+//  public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
+//                         BindingResult bindingResult,
+//                         RedirectAttributes redirectAttributes,
+//                         @AuthenticationPrincipal MobileleUser user) throws IOException {
+//
+//    if (offerAddBindingModel.getPictures() == null ||
+//            offerAddBindingModel.getPictures().isEmpty() ||
+//            offerAddBindingModel.getPictures().stream().allMatch(MultipartFile::isEmpty)) {
+//
+//      bindingResult.rejectValue("pictures", "error.pictures", "At least one image is required");
+//    }
+//
+//    if (bindingResult.hasErrors()) {
+//      redirectAttributes
+//              .addFlashAttribute("offerBindingModel", offerAddBindingModel)
+//              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+//              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
+//
+//      return "redirect:/offers/add";
+//    }
+//
+//    OfferAddServiceModel serviceModel =
+//            this.offerService.addOffer(
+//                    this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class),
+//                    user.getUsername());
+//
+//    return "redirect:/offers/details/" + serviceModel.getId();
+//  }
 
   // 4.1 Update offer - GET
-  @GetMapping("/offers/update/{id}")
-  public String getOfferUpdatePage(@PathVariable Long id, Model model, @AuthenticationPrincipal MobileleUser currentUser) {
-    OfferAddBindingModel offerBindingModel =
-            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferAddBindingModel.class);
-
-    model.addAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
-    model.addAttribute("offerBindingModel", offerBindingModel);
-
-    return "update";
-  }
+//  @GetMapping("/offers/update/{id}")
+//  public String getOfferUpdatePage(@PathVariable Long id, Model model, @AuthenticationPrincipal MobileleUser currentUser) {
+//    OfferAddBindingModel offerBindingModel =
+//            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferAddBindingModel.class);
+//
+//    model.addAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
+//    model.addAttribute("offerBindingModel", offerBindingModel);
+//
+//    return "update";
+//  }
 
   // 4.2 Update offer - PATCH
-  @PatchMapping("/offers/update/{id}")
-  public String updateOffer(@PathVariable Long id,
-                            @Valid OfferAddBindingModel offerBindingModel,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes) {
-
-    if (bindingResult.hasErrors()) {
-      redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-              .addFlashAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
-
-      return "redirect:/offers/update/errors/" + id;
-    }
-
-    //TODO:
-    //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
-
-    return "redirect:/offers/details/" + id;
-  }
+//  @PatchMapping("/offers/update/{id}")
+//  public String updateOffer(@PathVariable Long id,
+//                            @Valid OfferAddBindingModel offerBindingModel,
+//                            BindingResult bindingResult,
+//                            RedirectAttributes redirectAttributes) {
+//
+//    if (bindingResult.hasErrors()) {
+//      redirectAttributes
+//              .addFlashAttribute("offerBindingModel", offerBindingModel)
+//              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+//              .addFlashAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
+//
+//      return "redirect:/offers/update/errors/" + id;
+//    }
+//
+//    //TODO:
+//    //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
+//
+//    return "redirect:/offers/details/" + id;
+//  }
 
   @GetMapping("/offers/update/errors/{id}")
   public String editOfferErrors(@PathVariable Long id) {

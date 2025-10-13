@@ -1,11 +1,11 @@
 package com.example.mobilele.service;
 
 import com.example.mobilele.model.entity.OfferEntity;
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +22,7 @@ public interface OfferService {
 
   OfferAddServiceModel addOffer(OfferAddServiceModel offer, String username) throws IOException;
 
-  Collection<OfferServiceModel> findOffersByBrand(String brand);
+  Collection<OfferServiceModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType);
 
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 
