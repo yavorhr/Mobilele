@@ -9,157 +9,160 @@
 <header th:replace="fragments/navbar :: navbar"></header>
 
 <main>
-  <div class="container">
-    <h2 class="text-center text-white"
-        th:text="'Search ' + ${vehicleType} + ' offers'">></h2>
-    <form
-            th:action="@{/offers/find}"
-            th:method="POST"
-            th:object="${offersFindBindingModel}"
-            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-      <div class="row">
-        <div class="form-group col-md-6 mb-3">
-          <input type="hidden" id="vehicleType" th:value="${vehicleType}">
-          <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
-          <select
-                  id="brand"
-                  class="form-control"
-                  onchange="loadModels()"
-                  th:name="brand"
-                  th:errorclass="is-invalid">
-            <option value="" selected disabled>- Select brand -</option>
-            <optgroup label="Brand name">
-              <option
-                      th:each="brand : ${brands}"
-                      th:text="${brand.getName()}"
-                      th:value="${brand.getName()}"
-                      th:selected="${brand.getName()} == *{brand}">
-              </option>
-            </optgroup>
-          </select>
-          <p class="errors alert alert-danger invalid-feedback">
-            Vehicle brand is required.
-          </p>
-        </div>
+    <div class="container">
+        <h2 class="text-center text-white"
+            th:text="'Search ' + ${vehicleType} + ' offers'">></h2>
+        <form
+                th:action="@{/offers/find}"
+                th:method="POST"
+                th:object="${offersFindBindingModel}"
+                class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <input type="hidden" id="vehicleType" th:value="${vehicleType}">
+                    <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
+                    <select
+                            id="brand"
+                            class="form-control"
+                            onchange="loadModels()"
+                            th:name="brand"
+                            th:errorclass="is-invalid">
+                        <option value="" selected disabled>- Select brand -</option>
+                        <optgroup label="Brand name">
+                            <option
+                                    th:each="brand : ${brands}"
+                                    th:text="${brand.getName()}"
+                                    th:value="${brand.getName()}"
+                                    th:selected="${brand.getName()} == *{brand}">
+                            </option>
+                        </optgroup>
+                    </select>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Vehicle brand is required.
+                    </p>
+                </div>
 
-        <div class="form-group col-md-6 mb-3">
-          <label class="text-center text-white font-weight-bold" for="model">Model</label>
-          <select id="model"
-                  class="form-control"
-                  th:name="model"
-                  th:errorclass="is-invalid"
-                  th:selected="${model} == *{model}">
-            <option value="" selected disabled>- Select model -</option>
-            <optgroup label="Model name">
-              <option
-                      th:each="model : ${models}"
-                      th:text="${model}"
-                      th:value="${model}"
-                      th:selected="${model} == *{model}">
-              </option>
-            </optgroup>
-          </select>
-          <p class="errors alert alert-danger invalid-feedback">
-            Vehicle model is required.
-          </p>
-        </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label class="text-center text-white font-weight-bold" for="model">Model</label>
+                    <select id="model"
+                            class="form-control"
+                            th:name="model"
+                            th:errorclass="is-invalid"
+                            th:selected="${model} == *{model}">
+                        <option value="" selected disabled>- Select model -</option>
+                        <optgroup label="Model name">
+                            <option
+                                    th:each="model : ${models}"
+                                    th:text="${model}"
+                                    th:value="${model}"
+                                    th:selected="${model} == *{model}">
+                            </option>
+                        </optgroup>
+                    </select>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Vehicle model is required.
+                    </p>
+                </div>
 
-        <div class="form-group col-md-6 mb-3">
-          <label for="price" class="text-white font-weight-bold">Price</label>
-          <input
-                  id="price"
-                  type="number"
-                  min="0"
-                  class="form-control"
-                  placeholder="Please insert max price"
-                  th:field="*{price}"
-                  th:errorclass="is-invalid"/>
-          <p class="errors alert alert-danger invalid-feedback">
-            Price is required.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6 mb-3">
-          <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
-          <select
-                  id="engine"
-                  class="form-control"
-                  name="engine"
-                  th:errorclass="is-invalid">
-            <option value="">- Select engine type -</option>
-            <option th:each="e : ${engines}"
-                    th:text="${e}"
-                    th:value="${e}"
-                    th:selected="${e} == *{engine}">
-              Engine type
-            </option>
-          </select>
-          <p class="errors alert alert-danger invalid-feedback">
-            Engine type is required.
-          </p>
-        </div>
-        <div class="form-group col-md-6 mb-3">
-          <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
-          <select
-                  name="transmission"
-                  id="transmission"
-                  class="form-control"
-                  th:errorclass="is-invalid">
-            <option value="">- Select transmission type -</option>
-            <option th:each="t : ${transmissions}"
-                    th:text="${t}"
-                    th:value="${t}"
-                    th:selected="${t} == *{transmission}">Transmission type
-            </option>
-          </select>
-          <p class="errors alert alert-danger invalid-feedback">
-            Transmission type is required.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6 mb-3">
-          <label for="year" class="text-white font-weight-bold">Year</label>
-          <input
-                  id="year"
-                  type="number"
-                  min="1900" max="2099"
-                  step="1" class="form-control"
-                  placeholder="Show all models after year"
-                  th:field="*{year}"
-                  th:errorclass="is-invalid"/>
-          <p class="errors alert alert-danger invalid-feedback">
-            Manufacturing year is required.
-          </p>
-        </div>
-        <div class="form-group col-md-6 mb-3">
-          <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-          <input
-                  id="mileage"
-                  type="number"
-                  min="0"
-                  max="900000"
-                  class="form-control"
-                  placeholder="Please insert max mileage"
-                  th:field="*{mileage}"
-                  th:errorclass="is-invalid"
-          />
-          <p class="errors alert alert-danger invalid-feedback">
-            Mileage in kilometers is required.
-          </p>
-        </div>
-      </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="price" class="text-white font-weight-bold">Price</label>
+                    <input
+                            id="price"
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            placeholder="Please insert max price"
+                            th:field="*{price}"
+                            th:errorclass="is-invalid"/>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Price is required.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
+                    <select
+                            id="engine"
+                            class="form-control"
+                            name="engine"
+                            th:errorclass="is-invalid">
+                        <option value="">- Select engine type -</option>
+                        <option th:each="e : ${engines}"
+                                th:text="${e}"
+                                th:value="${e}"
+                                th:selected="${e} == *{engine}">
+                            Engine type
+                        </option>
+                    </select>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Engine type is required.
+                    </p>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
+                    <select
+                            name="transmission"
+                            id="transmission"
+                            class="form-control"
+                            th:errorclass="is-invalid">
+                        <option value="">- Select transmission type -</option>
+                        <option th:each="t : ${transmissions}"
+                                th:text="${t}"
+                                th:value="${t}"
+                                th:selected="${t} == *{transmission}">Transmission type
+                        </option>
+                    </select>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Transmission type is required.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="year" class="text-white font-weight-bold">Year</label>
+                    <input
+                            id="year"
+                            type="number"
+                            min="1900" max="2099"
+                            step="1" class="form-control"
+                            placeholder="Show all models after year"
+                            th:field="*{year}"
+                            th:errorclass="is-invalid"/>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Manufacturing year is required.
+                    </p>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="mileage" class="text-white font-weight-bold">Mileage</label>
+                    <input
+                            id="mileage"
+                            type="number"
+                            min="0"
+                            max="900000"
+                            class="form-control"
+                            placeholder="Please insert max mileage"
+                            th:field="*{mileage}"
+                            th:errorclass="is-invalid"
+                    />
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Mileage in kilometers is required.
+                    </p>
+                </div>
+            </div>
 
-      <div class="row">
-        <div class="col col-md-4">
-          <div class="button-holder d-flex">
-            <input type="submit" class="btn btn-info btn-lg" value="Search "/>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
+            <div class="row">
+                <div class="col col-md-4">
+                    <div class="button-holder d-flex">
+                        <input
+                                id="search-btn"
+                                type="submit"
+                                class="btn btn-info btn-lg" value="Search "/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
 </main>
 </body>
