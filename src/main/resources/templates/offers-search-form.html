@@ -13,7 +13,7 @@
         <h2 class="text-center text-white"
             th:text="'Search ' + ${vehicleType} + ' offers'">></h2>
         <form
-                th:action="@{/offers/find}"
+                th:action="@{/offers/find/{vehicleType}(vehicleType=${vehicleType})}"
                 th:method="POST"
                 th:object="${offersFindBindingModel}"
                 class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
