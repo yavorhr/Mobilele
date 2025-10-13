@@ -1,19 +1,67 @@
 package com.example.mobilele.model.binding.offer;
 
+import com.example.mobilele.model.entity.enums.ColorEnum;
+import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class OffersFindBindingModel {
   private EngineEnum engine;
   private Double mileage;
+  private String mileageComparison;
+  private Double mileageMax;
+
   private Double price;
+  private String priceComparison;
+  private Double priceMax;
+
   private TransmissionType transmission;
   private String model;
   private String brand;
+
   private Integer year;
+  private String yearComparison;
+  private Integer yearMax;
+
+  private ConditionEnum condition;
+  private ColorEnum color;
 
   public OffersFindBindingModel() {
 
+  }
+
+  public String getMileageComparison() {
+    return mileageComparison;
+  }
+
+  public Double getMileageMax() {
+    return mileageMax;
+  }
+
+  public String getPriceComparison() {
+    return priceComparison;
+  }
+
+  public Double getPriceMax() {
+    return priceMax;
+  }
+
+  public String getYearComparison() {
+    return yearComparison;
+  }
+
+  public Integer getYearMax() {
+    return yearMax;
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
+  }
+
+  public ColorEnum getColor() {
+    return color;
   }
 
   public EngineEnum getEngine() {
@@ -36,8 +84,40 @@ public class OffersFindBindingModel {
     return model;
   }
 
+  @NotNull
+  @NotBlank
   public String getBrand() {
     return brand;
+  }
+
+  public OffersFindBindingModel setMileageComparison(String mileageComparison) {
+    this.mileageComparison = mileageComparison;
+    return this;
+  }
+
+  public OffersFindBindingModel setMileageMax(Double mileageMax) {
+    this.mileageMax = mileageMax;
+    return this;
+  }
+
+  public OffersFindBindingModel setPriceComparison(String priceComparison) {
+    this.priceComparison = priceComparison;
+    return this;
+  }
+
+  public OffersFindBindingModel setPriceMax(Double priceMax) {
+    this.priceMax = priceMax;
+    return this;
+  }
+
+  public OffersFindBindingModel setYearComparison(String yearComparison) {
+    this.yearComparison = yearComparison;
+    return this;
+  }
+
+  public OffersFindBindingModel setYearMax(Integer yearMax) {
+    this.yearMax = yearMax;
+    return this;
   }
 
   public Integer getYear() {
@@ -76,6 +156,16 @@ public class OffersFindBindingModel {
 
   public OffersFindBindingModel setYear(Integer year) {
     this.year = year;
+    return this;
+  }
+
+  public OffersFindBindingModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  public OffersFindBindingModel setColor(ColorEnum color) {
+    this.color = color;
     return this;
   }
 }
