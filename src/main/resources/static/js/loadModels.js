@@ -29,7 +29,7 @@ function loadModels() {
                     option.value = "";
                     option.textContent = "-- No models available --";
                     modelSelect.appendChild(option);
-                    if (searchButton) searchButton.disabled = true; 
+                    if (searchButton) searchButton.disabled = true;
                 }
             })
             .catch(error => {
