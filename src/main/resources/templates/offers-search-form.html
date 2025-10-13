@@ -19,7 +19,6 @@
                 class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <input type="hidden" id="vehicleType" th:value="${vehicleType}">
                     <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
                     <select
                             id="brand"
@@ -66,16 +65,58 @@
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="price" class="text-white font-weight-bold">Price</label>
+                    <select th:field="*{priceComparison}" id="priceComparison" onchange="toggleMaxInput('price')">
+                        <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
+                        </option>
+                        <option value="between" th:selected="${offersFindBindingModel.priceComparison == 'between'}">
+                            Between
+                        </option>
+                        <option value="above" th:selected="${offersFindBindingModel.priceComparison == 'above'}">Above
+                        </option>
+                    </select>
                     <input
                             id="price"
                             type="number"
                             min="0"
                             class="form-control"
-                            placeholder="Please insert max price"
+                            placeholder="Suggested price"
                             th:field="*{price}"
                             th:errorclass="is-invalid"/>
+                    <input type="number" th:field="*{priceMax}" id="priceMax" placeholder="Max price"
+                           th:value="${offersFindBindingModel.priceMax}"
+                           th:style="${offersFindBindingModel.priceComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
                     <p class="errors alert alert-danger invalid-feedback">
-                        Price is required.
+                        Suggested price is required.
+                    </p>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="mileage" class="text-white font-weight-bold">Mileage</label>
+                    <select th:field="*{mileageComparison}" id="mileageComparison" onchange="toggleMaxInput('mileage')">
+                        <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
+                            Under
+                        </option>
+                        <option value="between" th:selected="${offersFindBindingModel.mileageComparison == 'between'}">
+                            Between
+                        </option>
+                        <option value="above" th:selected="${offersFindBindingModel.mileageComparison == 'above'}">
+                            Above
+                        </option>
+                    </select>
+                    <input
+                            id="mileage"
+                            type="number"
+                            min="0"
+                            max="900000"
+                            class="form-control"
+                            placeholder="Mileage in km"
+                            th:field="*{mileage}"
+                            th:errorclass="is-invalid"
+                    />
+                    <input type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
+                           th:value="${offersFindBindingModel.mileageMax}"
+                           th:style="${offersFindBindingModel.mileageComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Mileage in kilometers is required.
                     </p>
                 </div>
             </div>
@@ -121,43 +162,78 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="year" class="text-white font-weight-bold">Year</label>
+                    <select th:field="*{yearComparison}" id="yearComparison" onchange="toggleMaxInput('year')">
+                        <option value="under" th:selected="${offersFindBindingModel.yearComparison == 'under'}">
+                            Before
+                        </option>
+                        <option value="between" th:selected="${offersFindBindingModel.yearComparison == 'between'}">
+                            Between
+                        </option>
+                        <option value="above" th:selected="${offersFindBindingModel.yearComparison == 'above'}">
+                            After
+                        </option>
+                    </select>
                     <input
                             id="year"
                             type="number"
-                            min="1900" max="2099"
                             step="1" class="form-control"
-                            placeholder="Show all models after year"
+                            placeholder="Manufacturing year"
                             th:field="*{year}"
                             th:errorclass="is-invalid"/>
-                    <p class="errors alert alert-danger invalid-feedback">
-                        Manufacturing year is required.
+                    <input type="number" th:field="*{yearMax}" id="yearMax" placeholder="To year"
+                           th:value="${offersFindBindingModel.yearMax}"
+                           th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
+                    <p class="errors alert alert-danger invalid-feedback"
+                       th:if="${#fields.hasErrors('year')}"
+                       th:errors="*{year}">
+                        Year error message
                     </p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                    <input
-                            id="mileage"
-                            type="number"
-                            min="0"
-                            max="900000"
+                    <label class="text-center text-white font-weight-bold" for="transmission">Color</label>
+                    <select
+                            name="color"
+                            id="color"
                             class="form-control"
-                            placeholder="Please insert max mileage"
-                            th:field="*{mileage}"
-                            th:errorclass="is-invalid"
-                    />
+                            th:errorclass="is-invalid">
+                        <option value="">- Choose color -</option>
+                        <option th:each="c : ${colors}"
+                                th:text="${c}"
+                                th:value="${c}"
+                                th:selected="${c} == *{color}">Color
+                        </option>
+                    </select>
                     <p class="errors alert alert-danger invalid-feedback">
-                        Mileage in kilometers is required.
+                        Color is required.
                     </p>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col col-md-4">
-                    <div class="button-holder d-flex">
-                        <input
-                                id="search-btn"
-                                type="submit"
-                                class="btn btn-info btn-lg" value="Search "/>
+                <div class="form-group col-md-6 mb-3">
+                    <label class="text-center text-white font-weight-bold" for="engine">Condition</label>
+                    <select
+                            id="condition"
+                            class="form-control"
+                            name="condition"
+                            th:errorclass="is-invalid">
+                        <option value="">- Select condition -</option>
+                        <option th:each="c : ${conditions}"
+                                th:text="${c}"
+                                th:value="${c}"
+                                th:selected="${c} == *{condition}">
+                            Condition
+                        </option>
+                    </select>
+                    <p class="errors alert alert-danger invalid-feedback">
+                        Condition is required.
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col col-md-4">
+                        <div class="button-holder d-flex">
+                            <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,4 +243,6 @@
 </main>
 </body>
 <script th:src="@{/js/loadModels.js}"></script>
+<script th:src="@{/js/toggleSearchInputs.js}"></script>
+
 </html>
