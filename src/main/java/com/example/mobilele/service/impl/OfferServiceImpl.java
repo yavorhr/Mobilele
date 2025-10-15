@@ -133,9 +133,11 @@ public class OfferServiceImpl implements OfferService {
 
       // Mandatory filters
       predicates.add(cb.equal(root.get("model").get("brand").get("name"), filter.getBrand()));
+
       if (filter.getModel() != null && !filter.getModel().isBlank()) {
         predicates.add(cb.equal(root.get("model").get("name"), filter.getModel()));
       }
+
       predicates.add(cb.equal(root.get("model").get("vehicleType"), vehicleType));
 
       // Optional filters
@@ -251,14 +253,14 @@ public class OfferServiceImpl implements OfferService {
 
       // Offer 1
       OfferEntity offer1 = buildOffer(
-              1L, EngineEnum.Gasoline, TransmissionType.Automatic, ConditionEnum.USED,
+              1L, EngineEnum.Gasoline, TransmissionType.AUTOMATIC, ConditionEnum.USED,
               ColorEnum.GRAY, 22500.30, 14300.00, 2010,
               "Used, but well serviced and in good condition.",
               "admin", createPicture("m1", "cars-offers/m1_eicofs",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
       // Offer 2
       OfferEntity offer2 = buildOffer(
-              2L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.NEW
+              2L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.NEW
               , ColorEnum.WHITE, 500.00, 6000.00, 2005,
               "The SUV is brand new, just get in and drive!",
               "admin", createPicture("x3", "cars-offers/x3_wxw7fr",
@@ -266,7 +268,7 @@ public class OfferServiceImpl implements OfferService {
 
       // Offer 3
       OfferEntity offer3 = buildOffer(
-              3L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.DAMAGED
+              3L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.DAMAGED
               , ColorEnum.BLUE, 10000.40, 31000.00, 2011,
               "The SUV is a bit damaged in the back, but this can be fixed easily!",
               "user", createPicture("rav4", "cars-offers/rav4_j72ktc",
@@ -274,7 +276,7 @@ public class OfferServiceImpl implements OfferService {
 
       // Offer 4
       OfferEntity offer4 = buildOffer(
-              4L, EngineEnum.Hybrid, TransmissionType.Automatic, ConditionEnum.FOR_PARTS
+              4L, EngineEnum.Hybrid, TransmissionType.AUTOMATIC, ConditionEnum.FOR_PARTS
               , ColorEnum.GREEN, 99999.00, 1000.00, 2022,
               "The car is totally damaged and it could be used for spare parts!",
               "user", createPicture("q5", "cars-offers/q5_bd67cg",
@@ -295,6 +297,7 @@ public class OfferServiceImpl implements OfferService {
     OfferEntity offer = new OfferEntity();
     offer.setModel(modelService.findById(modelId)
             .orElseThrow(() -> new ObjectNotFoundException("Model with id: " + modelId + " does not exist!")));
+
     offer.setEngine(engineType);
     offer.setTransmission(transmissionType);
     offer.setCondition(condition);

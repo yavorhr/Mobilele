@@ -50,13 +50,13 @@ public class BrandServiceImpl implements BrandService {
   public void initBrands() {
     if (this.brandRepository.count() == 0) {
       BrandEntity bmw = new BrandEntity();
-      bmw.setName("bmw");
+      bmw.setName("BMW");
 
       BrandEntity audi = new BrandEntity();
-      audi.setName("audi");
+      audi.setName("AUDI");
 
       BrandEntity toyota = new BrandEntity();
-      toyota.setName("toyota");
+      toyota.setName("TOYOTA");
 
       this.brandRepository.saveAll(List.of(bmw, audi, toyota));
     }

@@ -53,31 +53,31 @@ public class ModelServiceImpl implements ModelService {
   @Override
   public void initModels() {
     if (modelRepository.count() == 0) {
-      BrandEntity bmw = this.brandService.findBrandByName("bmw").get();
+      BrandEntity bmw = this.brandService.findBrandByName("BMW").get();
 
       ModelEntity m1 = new ModelEntity();
 
       m1
-              .setName("m1")
+              .setName("M1")
               .setBrand(bmw)
               .setVehicleType(VehicleCategoryEnum.CAR);
 
       ModelEntity x3 = new ModelEntity();
 
       x3
-              .setName("x3")
+              .setName("X3")
               .setBrand(bmw)
               .setVehicleType(VehicleCategoryEnum.SUV);
 
-      BrandEntity audi = this.brandService.findBrandByName("audi").get();
+      BrandEntity audi = this.brandService.findBrandByName("AUDI").get();
 
       ModelEntity q5 = new ModelEntity();
       q5
-              .setName("q5")
+              .setName("Q5")
               .setBrand(audi)
               .setVehicleType(VehicleCategoryEnum.SUV);
 
-      BrandEntity toyota = this.brandService.findBrandByName("toyota").get();
+      BrandEntity toyota = this.brandService.findBrandByName("TOYOTA").get();
 
       ModelEntity rav4 = new ModelEntity();
       rav4
