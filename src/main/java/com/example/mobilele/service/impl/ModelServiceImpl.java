@@ -60,14 +60,16 @@ public class ModelServiceImpl implements ModelService {
       m1
               .setName("M1")
               .setBrand(bmw)
-              .setVehicleType(VehicleCategoryEnum.CAR);
+              .setVehicleType(VehicleCategoryEnum.CAR)
+              .setYear(1999);
 
       ModelEntity x3 = new ModelEntity();
 
       x3
               .setName("X3")
               .setBrand(bmw)
-              .setVehicleType(VehicleCategoryEnum.SUV);
+              .setVehicleType(VehicleCategoryEnum.SUV)
+              .setYear(2003);
 
       BrandEntity audi = this.brandService.findBrandByName("AUDI").get();
 
@@ -75,7 +77,8 @@ public class ModelServiceImpl implements ModelService {
       q5
               .setName("Q5")
               .setBrand(audi)
-              .setVehicleType(VehicleCategoryEnum.SUV);
+              .setVehicleType(VehicleCategoryEnum.SUV)
+              .setYear(2015);
 
       BrandEntity toyota = this.brandService.findBrandByName("TOYOTA").get();
 
@@ -83,7 +86,8 @@ public class ModelServiceImpl implements ModelService {
       rav4
               .setName("RAV4")
               .setBrand(toyota)
-              .setVehicleType(VehicleCategoryEnum.SUV);
+              .setVehicleType(VehicleCategoryEnum.SUV)
+              .setYear(2023);
 
       modelRepository.saveAll(List.of(m1, x3, q5, rav4));
     }
