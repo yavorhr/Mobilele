@@ -22,7 +22,6 @@ public class OfferServiceModel {
   private Instant modified;
   private String sellerFirstName;
   private String sellerLastName;
-  private String sellerFullName;
   private boolean canModify;
 
   public OfferServiceModel() {
@@ -34,14 +33,6 @@ public class OfferServiceModel {
 
   public ColorEnum getColor() {
     return color;
-  }
-
-  public String getSellerFullName() {
-    return sellerFullName;
-  }
-
-  public void setSellerFullName() {
-    this.sellerFullName = sellerFirstName + " " + sellerLastName;
   }
 
   public String getSellerFirstName() {
@@ -128,11 +119,6 @@ public class OfferServiceModel {
 
   public OfferServiceModel setColor(ColorEnum color) {
     this.color = color;
-    return this;
-  }
-
-  public OfferServiceModel setSellerFullName(String sellerFullName) {
-    this.sellerFullName = sellerFullName;
     return this;
   }
 

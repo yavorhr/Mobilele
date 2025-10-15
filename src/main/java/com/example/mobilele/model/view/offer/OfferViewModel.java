@@ -2,6 +2,7 @@ package com.example.mobilele.model.view.offer;
 
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+
 import java.time.Instant;
 
 public class OfferViewModel {
@@ -16,10 +17,24 @@ public class OfferViewModel {
   private String modelName;
   private Instant created;
   private Instant modified;
-  private String sellerFullName;
   private boolean canModify;
+  private String sellerFirstName;
+  private String sellerLastName;
+  private String sellerFullName;
 
   public OfferViewModel() {
+  }
+
+  public String getSellerFirstName() {
+    return sellerFirstName;
+  }
+
+  public String getSellerFullName() {
+    return this.sellerFirstName + " " + this.sellerLastName;
+  }
+
+  public String getSellerLastName() {
+    return sellerLastName;
   }
 
   public boolean isCanModify() {
@@ -34,9 +49,6 @@ public class OfferViewModel {
     return price;
   }
 
-  public String getSellerFullName() {
-    return sellerFullName;
-  }
 
   public Instant getCreated() {
     return created;
@@ -134,8 +146,14 @@ public class OfferViewModel {
     return this;
   }
 
-  public OfferViewModel setSellerFullName(String sellerFullName) {
-    this.sellerFullName = sellerFullName;
+
+  public OfferViewModel setSellerFirstName(String sellerFirstName) {
+    this.sellerFirstName = sellerFirstName;
+    return this;
+  }
+
+  public OfferViewModel setSellerLastName(String sellerLastName) {
+    this.sellerLastName = sellerLastName;
     return this;
   }
 }
