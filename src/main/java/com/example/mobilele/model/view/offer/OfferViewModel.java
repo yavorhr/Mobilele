@@ -1,9 +1,12 @@
 package com.example.mobilele.model.view.offer;
 
+import com.example.mobilele.model.entity.Picture;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.service.PictureServiceModel;
 
 import java.time.Instant;
+import java.util.List;
 
 public class OfferViewModel {
   private Long id;
@@ -20,9 +23,13 @@ public class OfferViewModel {
   private boolean canModify;
   private String sellerFirstName;
   private String sellerLastName;
-  private String sellerFullName;
+  private List<PictureServiceModel> pictures;
 
   public OfferViewModel() {
+  }
+
+  public List<PictureServiceModel> getPictures() {
+    return pictures;
   }
 
   public String getSellerFirstName() {
@@ -48,7 +55,6 @@ public class OfferViewModel {
   public Double getPrice() {
     return price;
   }
-
 
   public Instant getCreated() {
     return created;
@@ -90,6 +96,11 @@ public class OfferViewModel {
 
   public OfferViewModel setModelBrandName(String modelBrandName) {
     this.modelBrandName = modelBrandName;
+    return this;
+  }
+
+  public OfferViewModel setPictures(List<PictureServiceModel> pictures) {
+    this.pictures = pictures;
     return this;
   }
 

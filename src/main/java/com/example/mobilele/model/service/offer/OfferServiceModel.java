@@ -1,10 +1,14 @@
 package com.example.mobilele.model.service.offer;
 
+import com.example.mobilele.model.entity.Picture;
 import com.example.mobilele.model.entity.enums.ColorEnum;
 import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.service.PictureServiceModel;
+
 import java.time.Instant;
+import java.util.List;
 
 public class OfferServiceModel {
   private Long id;
@@ -23,8 +27,13 @@ public class OfferServiceModel {
   private String sellerFirstName;
   private String sellerLastName;
   private boolean canModify;
+  private List<PictureServiceModel> pictures;
 
   public OfferServiceModel() {
+  }
+
+  public List<PictureServiceModel> getPictures() {
+    return pictures;
   }
 
   public ConditionEnum getCondition() {
@@ -91,9 +100,13 @@ public class OfferServiceModel {
     return modified;
   }
 
-
   public OfferServiceModel setId(Long id) {
     this.id = id;
+    return this;
+  }
+
+  public OfferServiceModel setPictures(List<PictureServiceModel> pictures) {
+    this.pictures = pictures;
     return this;
   }
 
