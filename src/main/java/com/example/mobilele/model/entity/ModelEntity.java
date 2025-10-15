@@ -10,6 +10,7 @@ public class ModelEntity extends BaseEntity {
   private String name;
   private BrandEntity brand;
   private VehicleCategoryEnum vehicleType;
+  private Integer year;
   private List<OfferEntity> offers;
 
   public ModelEntity() {
@@ -18,6 +19,11 @@ public class ModelEntity extends BaseEntity {
   @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
   public List<OfferEntity> getOffers() {
     return offers;
+  }
+
+  @Column(nullable = false)
+  public Integer getYear() {
+    return year;
   }
 
   @Enumerated(EnumType.STRING)
@@ -36,7 +42,6 @@ public class ModelEntity extends BaseEntity {
     return name;
   }
 
-
   public ModelEntity setName(String name) {
     this.name = name;
     return this;
@@ -54,6 +59,11 @@ public class ModelEntity extends BaseEntity {
 
   public ModelEntity setVehicleType(VehicleCategoryEnum vehicleType) {
     this.vehicleType = vehicleType;
+    return this;
+  }
+
+  public ModelEntity setYear(Integer year) {
+    this.year = year;
     return this;
   }
 }

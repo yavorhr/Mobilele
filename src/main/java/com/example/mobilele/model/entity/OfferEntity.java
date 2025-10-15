@@ -14,7 +14,6 @@ public class OfferEntity extends BaseEntity {
   private Double price;
   private TransmissionType transmission;
   private ModelEntity model;
-  private Integer year;
   private Instant created;
   private Instant modified;
   private ConditionEnum condition;
@@ -44,11 +43,6 @@ public class OfferEntity extends BaseEntity {
   @Column(nullable = false)
   public ColorEnum getColor() {
     return this.color;
-  }
-
-  @Column(nullable = false, name = "year")
-  public Integer getYear() {
-    return year;
   }
 
   @Column(columnDefinition = "TEXT")
@@ -117,11 +111,6 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setEngine(EngineEnum engine) {
     this.engine = engine;
-    return this;
-  }
-
-  public OfferEntity setYear(Integer productionYear) {
-    this.year = productionYear;
     return this;
   }
 
