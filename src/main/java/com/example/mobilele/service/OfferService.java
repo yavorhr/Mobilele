@@ -6,6 +6,7 @@ import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
+import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public interface OfferService {
 
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 
-  List<OfferServiceModel> findOffersByFilters(OffersFindBindingModel offersFindBindingModel, VehicleCategoryEnum vehicleCategory);
+  List<OfferBaseViewModel> findOffersByFilters(OffersFindBindingModel offersFindBindingModel, VehicleCategoryEnum vehicleCategory);
 
   boolean isOwner(String userName, Long id);
 
