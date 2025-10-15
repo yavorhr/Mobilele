@@ -31,7 +31,7 @@ public interface OfferService {
 
   List<OfferBaseViewModel> findOffersByFilters(OffersFindBindingModel offersFindBindingModel, VehicleCategoryEnum vehicleCategory);
 
-  boolean isOwner(String userName, Long id);
+  boolean isOwnerOrIsAdmin(String userName, Long id);
 
   OfferEntity findById(long id);
 }

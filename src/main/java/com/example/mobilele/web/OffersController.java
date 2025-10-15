@@ -158,7 +158,8 @@ public class OffersController {
   // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model, Principal principal) {
-    OfferViewModel viewModel = this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
+    OfferViewModel viewModel =
+            this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
 
     model.addAttribute("offer", viewModel);
 
@@ -244,7 +245,7 @@ public class OffersController {
   }
 
   // 5. Delete offer
-  @PreAuthorize("@offerServiceImpl.isOwner(#principal.name, #id)")
+  @PreAuthorize("@offerServiceImpl.ownerOrIsAdmin(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
   public String deleteOfferById(@PathVariable Long id, Principal principal) {
     this.offerService.deleteById(id);

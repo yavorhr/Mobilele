@@ -55,11 +55,13 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public OfferServiceModel findOfferById(String name, Long id) {
-    OfferEntity offer = this.offerRepository.findById(id).get();
+    OfferEntity offer =
+            this.offerRepository
+                    .findById(id)
+                    .orElseThrow(()-> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
 
     OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
-//    model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
-    model.setCanModify(isOwner(name, offer.getId()));
+    model.setCanModify(isOwnerOrIsAdmin(name, offer.getId()));
 
     return model;
   }
@@ -222,7 +224,7 @@ public class OfferServiceImpl implements OfferService {
             .collect(Collectors.toList());
   }
 
-  public boolean isOwner(String username, Long id) {
+  public boolean isOwnerOrIsAdmin(String username, Long id) {
     Optional<OfferEntity> offerOpt = offerRepository.
             findById(id);
 
