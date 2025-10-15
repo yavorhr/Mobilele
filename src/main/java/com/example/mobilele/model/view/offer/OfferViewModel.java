@@ -10,7 +10,6 @@ public class OfferViewModel {
   private String description;
   private String modelBrandName;
   private EngineEnum engine;
-  private String imageUrl;
   private Double mileage;
   private TransmissionType transmission;
   private Integer year;
@@ -55,10 +54,6 @@ public class OfferViewModel {
     return engine;
   }
 
-  public String getImageUrl() {
-    return imageUrl;
-  }
-
   public Double getMileage() {
     return mileage;
   }
@@ -92,11 +87,6 @@ public class OfferViewModel {
 
   public OfferViewModel setEngine(EngineEnum engine) {
     this.engine = engine;
-    return this;
-  }
-
-  public OfferViewModel setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
     return this;
   }
 

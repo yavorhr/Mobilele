@@ -1,8 +1,9 @@
 package com.example.mobilele.model.service.offer;
 
+import com.example.mobilele.model.entity.enums.ColorEnum;
+import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
-
 import java.time.Instant;
 
 public class OfferServiceModel {
@@ -11,17 +12,44 @@ public class OfferServiceModel {
   private String modelBrandName;
   private String description;
   private EngineEnum engine;
-  private String imageUrl;
   private Double mileage;
   private TransmissionType transmission;
+  private ConditionEnum condition;
+  private ColorEnum color;
   private Integer year;
   private String modelName;
   private Instant created;
   private Instant modified;
+  private String sellerFirstName;
+  private String sellerLastName;
   private String sellerFullName;
   private boolean canModify;
 
   public OfferServiceModel() {
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
+  }
+
+  public ColorEnum getColor() {
+    return color;
+  }
+
+  public String getSellerFullName() {
+    return sellerFullName;
+  }
+
+  public void setSellerFullName() {
+    this.sellerFullName = sellerFirstName + " " + sellerLastName;
+  }
+
+  public String getSellerFirstName() {
+    return sellerFirstName;
+  }
+
+  public String getSellerLastName() {
+    return sellerLastName;
   }
 
   public boolean isCanModify() {
@@ -48,10 +76,6 @@ public class OfferServiceModel {
     return engine;
   }
 
-  public String getImageUrl() {
-    return imageUrl;
-  }
-
   public Double getMileage() {
     return mileage;
   }
@@ -76,9 +100,6 @@ public class OfferServiceModel {
     return modified;
   }
 
-  public String getSellerFullName() {
-    return sellerFullName;
-  }
 
   public OfferServiceModel setId(Long id) {
     this.id = id;
@@ -100,13 +121,23 @@ public class OfferServiceModel {
     return this;
   }
 
-  public OfferServiceModel setEngine(EngineEnum engine) {
-    this.engine = engine;
+  public OfferServiceModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
     return this;
   }
 
-  public OfferServiceModel setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
+  public OfferServiceModel setColor(ColorEnum color) {
+    this.color = color;
+    return this;
+  }
+
+  public OfferServiceModel setSellerFullName(String sellerFullName) {
+    this.sellerFullName = sellerFullName;
+    return this;
+  }
+
+  public OfferServiceModel setEngine(EngineEnum engine) {
+    this.engine = engine;
     return this;
   }
 
@@ -140,8 +171,13 @@ public class OfferServiceModel {
     return this;
   }
 
-  public OfferServiceModel setSellerFullName(String sellerFullName) {
-    this.sellerFullName = sellerFullName;
+  public OfferServiceModel setSellerFirstName(String sellerFirstName) {
+    this.sellerFirstName = sellerFirstName;
+    return this;
+  }
+
+  public OfferServiceModel setSellerLastName(String sellerLastName) {
+    this.sellerLastName = sellerLastName;
     return this;
   }
 
