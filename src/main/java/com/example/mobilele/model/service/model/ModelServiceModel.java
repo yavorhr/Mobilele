@@ -16,7 +16,6 @@ public class ModelServiceModel {
     public ModelServiceModel() {
     }
 
-
     public List<OfferViewModelWithIdAndUrl> getOffers() {
         return offers;
     }
