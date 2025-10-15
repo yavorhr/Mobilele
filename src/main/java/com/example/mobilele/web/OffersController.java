@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,7 +71,8 @@ public class OffersController {
     return ConditionEnum.values();
   }
 
-  // 1. Find offers - GET
+  // I. Offers - GET
+  // 1 Find offers
   @GetMapping("/offers/find")
   public String getFindOffersView(Model model) {
     model.addAttribute("currentPage", "find");
@@ -90,14 +90,20 @@ public class OffersController {
     return "offers-search-form";
   }
 
-  // 1.2 Find offers - POST
+  // 3. Return offers page
+  @GetMapping("/offers")
+  public String showOffersPage() {
+    return "offers";
+  }
+
+  // II. Offers - POST
+  // 1 Submit offers Search form
   @PostMapping("/offers/find/{vehicleType}")
   public String submitFindOffersForm(
           @PathVariable String vehicleType,
           @Valid OffersFindBindingModel offersFindBindingModel,
           BindingResult bindingResult,
-          RedirectAttributes redirectAttributes,
-          Model model) {
+          RedirectAttributes redirectAttributes) {
 
     VehicleCategoryEnum vehicleCategoryEnum = ProjectHelpers.parseToVehicleEnum(vehicleType);
 
@@ -110,13 +116,15 @@ public class OffersController {
       return "redirect:/offers/find/" + vehicleType;
     }
 
-    model.addAttribute("viewModels", offerService
-            .findOffersByBrandAndVehicleType(offersFindBindingModel.getBrand(), vehicleCategoryEnum)
+    List<OfferViewModel> offers = offerService
+            .findOffersByFilters(offersFindBindingModel, vehicleCategoryEnum)
             .stream()
             .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
 
-    return "redirect:offers/all";
+    redirectAttributes.addFlashAttribute("offers", offers);
+
+    return "redirect:/offers";
   }
 
 //  // 2. Get Offers - All
