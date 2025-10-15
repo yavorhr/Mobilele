@@ -28,8 +28,8 @@ public class OffersFindBindingModel {
   private ConditionEnum condition;
   private ColorEnum color;
 
-  public OffersFindBindingModel() {
 
+  public OffersFindBindingModel() {
   }
 
   public String getMileageComparison() {
