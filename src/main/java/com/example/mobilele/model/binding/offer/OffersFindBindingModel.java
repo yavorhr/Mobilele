@@ -28,7 +28,6 @@ public class OffersFindBindingModel {
   private ConditionEnum condition;
   private ColorEnum color;
 
-
   public OffersFindBindingModel() {
   }
 
@@ -154,8 +153,8 @@ public class OffersFindBindingModel {
     return this;
   }
 
-  public OffersFindBindingModel setYear(Integer year) {
-    this.year = year;
+  public OffersFindBindingModel setYear(Integer modelYear) {
+    this.year = modelYear;
     return this;
   }
 

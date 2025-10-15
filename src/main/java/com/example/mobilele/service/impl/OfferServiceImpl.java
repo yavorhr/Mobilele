@@ -177,14 +177,14 @@ public class OfferServiceImpl implements OfferService {
       if (filter.getYear() != null) {
         switch (filter.getYearComparison()) {
           case "under":
-            predicates.add(cb.lessThanOrEqualTo(root.get("year"), filter.getYear()));
+            predicates.add(cb.lessThanOrEqualTo(root.get("model").get("year"), filter.getYear()));
             break;
           case "above":
-            predicates.add(cb.greaterThanOrEqualTo(root.get("year"), filter.getYear()));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("model").get("year"), filter.getYear()));
             break;
           case "between":
             if (filter.getYearMax() != null) {
-              predicates.add(cb.between(root.get("year"), filter.getYear(), filter.getYearMax()));
+              predicates.add(cb.between(root.get("model").get("year"), filter.getYear(), filter.getYearMax()));
             }
             break;
         }

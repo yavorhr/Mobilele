@@ -16,7 +16,7 @@ public class OfferServiceModel {
   private TransmissionType transmission;
   private ConditionEnum condition;
   private ColorEnum color;
-  private Integer year;
+  private Integer modelYear;
   private String modelName;
   private Instant created;
   private Instant modified;
@@ -75,8 +75,8 @@ public class OfferServiceModel {
     return transmission;
   }
 
-  public Integer getYear() {
-    return year;
+  public Integer getModelYear() {
+    return modelYear;
   }
 
   public String getModelName() {
@@ -137,8 +137,8 @@ public class OfferServiceModel {
     return this;
   }
 
-  public OfferServiceModel setYear(Integer year) {
-    this.year = year;
+  public OfferServiceModel setModelYear(Integer modelYear) {
+    this.modelYear = modelYear;
     return this;
   }
 
