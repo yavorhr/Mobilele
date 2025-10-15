@@ -62,7 +62,7 @@ public class OfferEntity extends BaseEntity {
     return condition;
   }
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   public EngineEnum getEngine() {
     return engine;
@@ -79,7 +79,7 @@ public class OfferEntity extends BaseEntity {
     return price;
   }
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   public TransmissionType getTransmission() {
     return transmission;
