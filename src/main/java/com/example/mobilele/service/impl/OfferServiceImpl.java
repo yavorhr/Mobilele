@@ -18,6 +18,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +57,7 @@ public class OfferServiceImpl implements OfferService {
     OfferEntity offer = this.offerRepository.findById(id).get();
 
     OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
-    model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
+//    model.setSellerFullName(String.format("%s %s", offer.getSeller().getFirstName(), offer.getSeller().getLastName()));
     model.setCanModify(isOwner(name, offer.getId()));
 
     return model;
@@ -192,9 +193,11 @@ public class OfferServiceImpl implements OfferService {
       if (filter.getTransmission() != null) {
         predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
       }
+
       if (filter.getCondition() != null) {
         predicates.add(cb.equal(root.get("condition"), filter.getCondition()));
       }
+
       if (filter.getColor() != null) {
         predicates.add(cb.equal(root.get("color"), filter.getColor()));
       }
@@ -232,8 +235,7 @@ public class OfferServiceImpl implements OfferService {
   }
 
 
-
-
+  // Private and helpers
   private boolean isAdmin(UserEntity user) {
     return user.
             getRoles().
@@ -250,14 +252,14 @@ public class OfferServiceImpl implements OfferService {
       // Offer 1
       OfferEntity offer1 = buildOffer(
               1L, EngineEnum.Gasoline, TransmissionType.Automatic, ConditionEnum.USED,
-               ColorEnum.GRAY, 22500.30, 14300.00, 2010,
+              ColorEnum.GRAY, 22500.30, 14300.00, 2010,
               "Used, but well serviced and in good condition.",
               "admin", createPicture("m1", "cars-offers/m1_eicofs",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
       // Offer 2
       OfferEntity offer2 = buildOffer(
               2L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.NEW
-             ,ColorEnum.WHITE, 500.00, 6000.00, 2005,
+              , ColorEnum.WHITE, 500.00, 6000.00, 2005,
               "The SUV is brand new, just get in and drive!",
               "admin", createPicture("x3", "cars-offers/x3_wxw7fr",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923267/mobilele/cars-offers/x3_wxw7fr.jpg"));
@@ -265,7 +267,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 3
       OfferEntity offer3 = buildOffer(
               3L, EngineEnum.Gasoline, TransmissionType.Manual, ConditionEnum.DAMAGED
-             ,ColorEnum.BLUE, 10000.40, 31000.00, 2011,
+              , ColorEnum.BLUE, 10000.40, 31000.00, 2011,
               "The SUV is a bit damaged in the back, but this can be fixed easily!",
               "user", createPicture("rav4", "cars-offers/rav4_j72ktc",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923264/mobilele/cars-offers/rav4_j72ktc.jpg"));
@@ -273,7 +275,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 4
       OfferEntity offer4 = buildOffer(
               4L, EngineEnum.Hybrid, TransmissionType.Automatic, ConditionEnum.FOR_PARTS
-              ,ColorEnum.GREEN, 99999.00, 1000.00, 2022,
+              , ColorEnum.GREEN, 99999.00, 1000.00, 2022,
               "The car is totally damaged and it could be used for spare parts!",
               "user", createPicture("q5", "cars-offers/q5_bd67cg",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923265/mobilele/cars-offers/q5_bd67cg.jpg"));
