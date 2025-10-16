@@ -6,6 +6,7 @@ import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.model.service.PictureServiceModel;
+import com.example.mobilele.model.view.user.UserBasicViewModel;
 
 import java.time.Instant;
 import java.util.List;
@@ -24,12 +25,15 @@ public class OfferServiceModel {
   private String modelName;
   private Instant created;
   private Instant modified;
-  private String sellerFirstName;
-  private String sellerLastName;
+  private UserBasicViewModel seller;
   private boolean canModify;
   private List<PictureServiceModel> pictures;
 
   public OfferServiceModel() {
+  }
+
+  public UserBasicViewModel getSeller() {
+    return seller;
   }
 
   public List<PictureServiceModel> getPictures() {
@@ -42,14 +46,6 @@ public class OfferServiceModel {
 
   public ColorEnum getColor() {
     return color;
-  }
-
-  public String getSellerFirstName() {
-    return sellerFirstName;
-  }
-
-  public String getSellerLastName() {
-    return sellerLastName;
   }
 
   public boolean isCanModify() {
@@ -170,13 +166,8 @@ public class OfferServiceModel {
     return this;
   }
 
-  public OfferServiceModel setSellerFirstName(String sellerFirstName) {
-    this.sellerFirstName = sellerFirstName;
-    return this;
-  }
-
-  public OfferServiceModel setSellerLastName(String sellerLastName) {
-    this.sellerLastName = sellerLastName;
+  public OfferServiceModel setSeller(UserBasicViewModel seller) {
+    this.seller = seller;
     return this;
   }
 

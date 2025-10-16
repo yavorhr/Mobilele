@@ -1,9 +1,11 @@
 package com.example.mobilele.model.view.offer;
 
-import com.example.mobilele.model.entity.Picture;
+import com.example.mobilele.model.entity.enums.ColorEnum;
+import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.model.service.PictureServiceModel;
+import com.example.mobilele.model.view.user.UserBasicViewModel;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,9 +23,10 @@ public class OfferViewModel {
   private Instant created;
   private Instant modified;
   private boolean canModify;
-  private String sellerFirstName;
-  private String sellerLastName;
   private List<PictureServiceModel> pictures;
+  private ColorEnum color;
+  private ConditionEnum condition;
+  private UserBasicViewModel seller;
 
   public OfferViewModel() {
   }
@@ -32,16 +35,13 @@ public class OfferViewModel {
     return pictures;
   }
 
-  public String getSellerFirstName() {
-    return sellerFirstName;
+
+  public ColorEnum getColor() {
+    return color;
   }
 
-  public String getSellerFullName() {
-    return this.sellerFirstName + " " + this.sellerLastName;
-  }
-
-  public String getSellerLastName() {
-    return sellerLastName;
+  public ConditionEnum getCondition() {
+    return condition;
   }
 
   public boolean isCanModify() {
@@ -86,11 +86,20 @@ public class OfferViewModel {
 
   public String getModelName() {
     return modelName.substring(0, 1).toUpperCase() + modelName.substring(1).toLowerCase();
+  }
 
+  public OfferViewModel setColor(ColorEnum color) {
+    this.color = color;
+    return this;
   }
 
   public OfferViewModel setCanModify(boolean canModify) {
     this.canModify = canModify;
+    return this;
+  }
+
+  public OfferViewModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
     return this;
   }
 
@@ -154,17 +163,6 @@ public class OfferViewModel {
 
   public OfferViewModel setModified(Instant modified) {
     this.modified = modified;
-    return this;
-  }
-
-
-  public OfferViewModel setSellerFirstName(String sellerFirstName) {
-    this.sellerFirstName = sellerFirstName;
-    return this;
-  }
-
-  public OfferViewModel setSellerLastName(String sellerLastName) {
-    this.sellerLastName = sellerLastName;
     return this;
   }
 }
