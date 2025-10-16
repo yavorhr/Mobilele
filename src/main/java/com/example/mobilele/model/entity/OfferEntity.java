@@ -8,18 +8,19 @@ import java.util.List;
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity {
+  private UserEntity seller;
+  private List<Picture> pictures;
+  private ModelEntity model;
+  private String location;
+  private Double price;
+  private Double mileage;
   private String description;
   private EngineEnum engine;
-  private Double mileage;
-  private Double price;
+  private ConditionEnum condition;
   private TransmissionType transmission;
-  private ModelEntity model;
+  private ColorEnum color;
   private Instant created;
   private Instant modified;
-  private ConditionEnum condition;
-  private UserEntity seller;
-  private ColorEnum color;
-  private List<Picture> pictures;
 
   public OfferEntity() {
   }
@@ -54,6 +55,10 @@ public class OfferEntity extends BaseEntity {
   @Column(name = "vehicle_condition", nullable = false)
   public ConditionEnum getCondition() {
     return condition;
+  }
+
+  public String getLocation() {
+    return location;
   }
 
   @Enumerated(EnumType.STRING)
@@ -96,6 +101,11 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setDescription(String description) {
     this.description = description;
+    return this;
+  }
+
+  public OfferEntity setLocation(String location) {
+    this.location = location;
     return this;
   }
 
