@@ -1,51 +1,51 @@
 package com.example.mobilele.model.view.user;
 
 public class UserBasicViewModel {
-  private String sellerEmail;
-  private String sellerPhoneNumber;
-  private String sellerFirstName;
-  private String sellerLastName;
+  private String email;
+  private String phoneNumber;
+  private String firstName;
+  private String lastName;
 
   public UserBasicViewModel() {
   }
 
   public String getFullName() {
-    return this.sellerFirstName + " " + this.sellerLastName;
+    return this.firstName + " " + this.lastName;
   }
 
-  public String getSellerEmail() {
-    return sellerEmail;
+  public String getEmail() {
+    return email;
   }
 
-  public String getSellerPhoneNumber() {
-    return sellerPhoneNumber;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
-  public String getSellerFirstName() {
-    return sellerFirstName;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public String getSellerLastName() {
-    return sellerLastName;
+  public String getLastName() {
+    return lastName;
   }
 
-  public UserBasicViewModel setSellerEmail(String sellerEmail) {
-    this.sellerEmail = sellerEmail;
+  public UserBasicViewModel setEmail(String email) {
+    this.email = email;
     return this;
   }
 
-  public UserBasicViewModel setSellerPhoneNumber(String sellerPhoneNumber) {
-    this.sellerPhoneNumber = sellerPhoneNumber;
+  public UserBasicViewModel setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
     return this;
   }
 
-  public UserBasicViewModel setSellerFirstName(String sellerFirstName) {
-    this.sellerFirstName = sellerFirstName;
+  public UserBasicViewModel setFirstName(String firstName) {
+    this.firstName = firstName;
     return this;
   }
 
-  public UserBasicViewModel setSellerLastName(String sellerLastName) {
-    this.sellerLastName = sellerLastName;
+  public UserBasicViewModel setLastName(String lastName) {
+    this.lastName = lastName;
     return this;
   }
 }
