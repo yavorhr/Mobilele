@@ -3,7 +3,6 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
-import com.example.mobilele.model.service.offer.OfferServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
@@ -54,13 +53,13 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public OfferServiceModel findOfferById(String name, Long id) {
+  public OfferViewModel findOfferById(String name, Long id) {
     OfferEntity offer =
             this.offerRepository
                     .findById(id)
                     .orElseThrow(()-> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
 
-    OfferServiceModel model = this.modelMapper.map(offer, OfferServiceModel.class);
+    OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
     model.setCanModify(isOwnerOrIsAdmin(name, offer.getId()));
 
     return model;
@@ -109,11 +108,11 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Collection<OfferServiceModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType) {
+  public Collection<OfferViewModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType) {
     return this.offerRepository.findAllByModel_Brand_NameAndModel_VehicleType(brand, vehicleType)
             .stream()
             .map(offerEntity ->
-                    this.modelMapper.map(offerEntity, OfferServiceModel.class))
+                    this.modelMapper.map(offerEntity, OfferViewModel.class))
             .collect(Collectors.toList());
   }
 
