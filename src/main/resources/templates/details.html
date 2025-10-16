@@ -2,108 +2,83 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head">
-</head>
+<head th:replace="fragments/head :: head(additionalCss='/css/offers/offer-details.css')"></head>
 
 <body>
-
 <header th:replace="fragments/navbar"></header>
 
-<div class="container-fluid">
-    <h2 class="text-center text-white mt-5">Details</h2>
+<div class="offer-page container mt-4">
 
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-
-            <button id="prevBtn" class="nav-btn">&lt;</button>
-            <img id="modalImage" src="" alt="Image preview"/>
-            <button id="nextBtn" class="nav-btn">&gt;</button>
-
-            <form id="deleteForm"
-                  th:action="@{/pictures/delete}"
-                  th:method="DELETE">
-                <input type="hidden" name="public_id" id="modalPublicId"/>
-                <input type="hidden" name="offerId"
-                       th:value="${offer.id}"/>
-                <button type="submit" class="btn btn-danger deletePictureBtn">Delete</button>
-            </form>
-        </div>
-    </div>
-
-    <div th:object="${offer}" class="offers row mx-auto d-flex flex-row justify-content-center">
-        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-            <div class="card-body pb-1">
-                <h5 class="card-title" th:text="*{modelBrandName} + ' ' + *{modelName} + ' - '  + *{year}"></h5>
+    <!-- === MAIN SECTION WITH GRID (70% : 30%) === -->
+    <div class="main-section">
+        <!-- === GALLERY SECTION === -->
+        <section class="gallery-section">
+            <div class="main-image-container">
+                <img id="modalImage" th:src="${offer.pictures[0].pictureUrl}" alt="Main Image" class="main-image">
+                <button id="prevBtn" class="nav-btn left">&lt;</button>
+                <button id="nextBtn" class="nav-btn right">&gt;</button>
             </div>
-            <ul class="offer-details list-group list-group-flush">
-                <li class="list-group-item">
-                    <div class="card-text"><span th:text="|Mileage: *{mileage} km|">• Mileage</span></div>
-                    <div class="card-text"><span th:text="|Price: *{price} BGN|">• Price</span></div>
-                    <div class="card-text"><span
-                            th:text="|Engine type: *{engine}|">• Engine type</span>
-                    </div>
-                    <div class="card-text"><span
-                            th:text="|Transmission: *{transmission}|">• Transmission type</span>
-                    </div>
-                    <div class="card-text"><span
-                            th:text="|Offer created: *{#temporals.format(created, 'dd-MMM-yyyy')}|">• Offer created</span>
-                    </div>
-                    <div class="card-text"><span
-                            th:text="|Offer modified: *{modified != null ? #temporals.format(modified, 'dd-MMM-yyyy') : 'Not yet modified'}|">• Offer modified</span>
-                    </div>
-                    <div class="card-text">
-                        <span th:text="|Seller: *{getSellerFullName()}|">• Seller - First and Last name</span>
-                    </div>
-                </li>
-            </ul>
-            <div class="card-body">
-                <div class="row">
-                    <th:block th:if="*{canModify}">
-                        <a class="btn btn-link"
-                           th:href="@{/offers/update/{id}(id=*{id})}">Update
-                        </a>
-                    </th:block>
 
-                    <th:block th:if="*{canModify}">
-                        <form th:action="@{/offers/{id}(id=*{id})}"
-                              th:method="delete">
-                            <input type="submit" class="btn btn-link" value="Delete"/>
-                        </form>
-                    </th:block>
-                </div>
-
-            </div>
-        </div>
-
-        <section class="gallery">
-            <div th:each="p, iterStat : ${offer.pictures}"
-                 th:object="${p}">
-
-                <img class="gallery-item rounded"
-                     th:src="*{pictureUrl}"
-                     th:attr="data-index=${iterStat.index}, data-public-id=*{picturePublicId}, data-url=*{pictureUrl}"
-                     alt="Image"/>
+            <div class="thumbnail-container">
+                <img th:each="p, iterStat : ${offer.pictures}"
+                     th:src="${p.pictureUrl}"
+                     th:attr="data-index=${iterStat.index}"
+                     class="thumbnail"
+                     alt="Thumbnail">
             </div>
         </section>
 
-        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-            <div class="card-body pb-1 border-btm ">
-                <h5 class="card-title ">Offer Description: </h5>
+        <!-- === INFO SECTION === -->
+        <aside class="info-section">
+            <h2 th:text="${offer.modelBrandName} + ' ' + ${offer.modelName}"></h2>
+            <h4 th:text="'Year: ' + ${offer.modelYear}"></h4>
+            <p class="price" th:text="${offer.price} + ' BGN'"></p>
+            <p class="price" th:text="${offer.location}"></p>
+
+            <div class="seller-info">
+                <h5>Seller Information</h5>
+                <p><i class="fa fa-user"></i> <span th:text="${offer.seller.getFullName()}"></span></p>
+                <p><i class="fa fa-envelope"></i> <span th:text="${offer.seller.getEmail()}"></span></p>
+                <p><i class="fa fa-phone"></i> <span th:text="${offer.seller.getPhoneNumber()}"></span></p>
             </div>
-            <p th:class="offer-description"
-               th:text=" *{description}">
-            </p>
-        </div>
+
+            <button class="btn save-btn">💖 Save to Favorites</button>
+
+            <div class="modify-buttons" th:if="${offer.canModify}">
+                <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
+                <form th:action="@{/offers/{id}(id=${offer.id})}" th:method="delete" class="d-inline">
+                    <button type="submit" class="btn delete-btn">Delete</button>
+                </form>
+            </div>
+        </aside>
     </div>
+
+    <!-- === CAR DETAILS === -->
+    <section class="car-details">
+        <h4>Car Details</h4>
+        <div class="details-grid">
+            <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="${offer.engine}"></span></div>
+            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="${offer.mileage} + ' km'"></span></div>
+            <div class="detail-item"><i class="fa fa-road"></i> <span th:text="${offer.transmission}"></span></div>
+            <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="${offer.color}"></span></div>
+            <div class="detail-item"><i class="fa fa-car"></i> <span th:text="${offer.condition}"></span></div>
+            <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="${offer.modelYear}"></span></div>
+        </div>
+    </section>
+
+    <!-- === DESCRIPTION === -->
+    <section class="description-section">
+        <h4>Description</h4>
+        <p th:text="${offer.description}"></p>
+    </section>
 </div>
 
-<div>
-    <footer></footer>
-</div>
+<!--<footer th:replace="fragments/footer"></footer>-->
 
-</body>
-
+<script src="https://kit.fontawesome.com/a2e0c7b8ad.js" crossorigin="anonymous"></script>
 <script src="/js/gallery.js"></script>
 
+</body>
 </html>
+
+
