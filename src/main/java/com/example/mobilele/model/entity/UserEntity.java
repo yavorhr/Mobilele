@@ -7,13 +7,13 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
+  private List<UserRoleEntity> roles;
   private String username;
   private String email;
+  private String password;
   private String phoneNumber;
   private String firstName;
   private String lastName;
-  private String password;
-  private List<UserRoleEntity> roles;
   // Account lock properties
   private Integer failedLoginAttempts;
   private boolean accountLocked;
@@ -54,7 +54,7 @@ public class UserEntity extends BaseEntity {
     return email;
   }
 
-  @Column(nullable = false, columnDefinition = "phone_number")
+  @Column(nullable = false, name = "phone_number")
   public String getPhoneNumber() {
     return phoneNumber;
   }
