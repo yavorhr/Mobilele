@@ -1,50 +1,54 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.Picture;
+import com.example.mobilele.model.service.offer.PictureAddServiceModel;
 import com.example.mobilele.repository.PictureRepository;
+import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.PictureService;
 import com.example.mobilele.service.UserService;
-import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PictureServiceImpl implements PictureService {
-  private final CloudinaryService cloudinaryService;
   private final PictureRepository pictureRepository;
+  private final OfferService offerService;
+  private final UserService userService;
 
-  public PictureServiceImpl(CloudinaryService cloudinaryService, PictureRepository pictureRepository) {
-    this.cloudinaryService = cloudinaryService;
+  public PictureServiceImpl(CloudinaryService cloudinaryService, PictureRepository pictureRepository, OfferService offerService, UserService userService) {
     this.pictureRepository = pictureRepository;
+    this.offerService = offerService;
+    this.userService = userService;
   }
 
-  @Override
-  public List<Picture> addOfferPictures(List<MultipartFile> pictures) throws IOException {
-    List<Picture> uploadedPictures = new ArrayList<>();
-
-    for (MultipartFile file : pictures) {
-      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
-
-      Picture picture = new Picture();
-      picture.setUrl(uploaded.getUrl());
-      picture.setPublicId(uploaded.getPublicId());
-      picture.setTitle(convertTitle(file.getOriginalFilename()));
-    }
-
-    return uploadedPictures;
-  }
+//  @Override
+//  public List<Picture> addOfferPictures(List<MultipartFile> pictures) throws IOException {
+//    List<Picture> uploadedPictures = new ArrayList<>();
+//
+//    for (MultipartFile file : pictures) {
+//      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+//
+//      Picture picture = new Picture();
+//      picture.setUrl(uploaded.getUrl());
+//      picture.setPublicId(uploaded.getPublicId());
+//      picture.setTitle(convertTitle(file.getOriginalFilename()));
+//    }
+//
+//    return uploadedPictures;
+//  }
 
   @Override
   public Picture findById(Long id) {
     return this.pictureRepository
             .findById(id)
             .orElseThrow(() -> new ObjectNotFoundException("Picture with id" + id + "does not exist!"));
+  }
+
+  @Override
+  public void addOfferPictures(PictureAddServiceModel serviceModel) {
+    Picture picture = mapToPicture(serviceModel);
+    this.pictureRepository.save(picture);
   }
 
   // Helpers
@@ -57,5 +61,18 @@ public class PictureServiceImpl implements PictureService {
       }
     }
     return originalName;
+  }
+
+  private Picture mapToPicture(PictureAddServiceModel serviceModel) {
+    Picture picture = new Picture();
+
+    picture.setUrl(serviceModel.getUrl());
+    picture.setPublicId(serviceModel.getPublicId());
+    picture.setTitle(serviceModel.getTitle());
+
+    picture.setOffer(this.offerService.findById(serviceModel.getOfferId()));
+    picture.setSeller(this.userService.findById(serviceModel.getUserId()));
+
+    return picture;
   }
 }
