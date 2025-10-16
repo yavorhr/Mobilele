@@ -16,9 +16,10 @@ public class OfferViewModel {
   private String description;
   private String modelBrandName;
   private EngineEnum engine;
+  private String location;
   private Double mileage;
   private TransmissionType transmission;
-  private Integer year;
+  private Integer modelYear;
   private String modelName;
   private Instant created;
   private Instant modified;
@@ -31,10 +32,26 @@ public class OfferViewModel {
   public OfferViewModel() {
   }
 
+  public String getLocation() {
+    return location;
+  }
+
+  public Integer getModelYear() {
+    return modelYear;
+  }
+
+  public OfferViewModel setModelYear(Integer modelYear) {
+    this.modelYear = modelYear;
+    return this;
+  }
+
   public List<PictureServiceModel> getPictures() {
     return pictures;
   }
 
+  public UserBasicViewModel getSeller() {
+    return seller;
+  }
 
   public ColorEnum getColor() {
     return color;
@@ -80,8 +97,8 @@ public class OfferViewModel {
     return transmission;
   }
 
-  public Integer getYear() {
-    return year;
+  public int getYear() {
+    return modelYear;
   }
 
   public String getModelName() {
@@ -90,6 +107,16 @@ public class OfferViewModel {
 
   public OfferViewModel setColor(ColorEnum color) {
     this.color = color;
+    return this;
+  }
+
+  public OfferViewModel setSeller(UserBasicViewModel seller) {
+    this.seller = seller;
+    return this;
+  }
+
+  public OfferViewModel setLocation(String location) {
+    this.location = location;
     return this;
   }
 
@@ -137,8 +164,8 @@ public class OfferViewModel {
     return this;
   }
 
-  public OfferViewModel setYear(Integer year) {
-    this.year = year;
+  public OfferViewModel setYear(int year) {
+    this.modelYear = year;
     return this;
   }
 
