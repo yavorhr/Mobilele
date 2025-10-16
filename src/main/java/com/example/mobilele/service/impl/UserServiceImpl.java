@@ -122,10 +122,10 @@ public class UserServiceImpl implements UserService {
       UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
       UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
-      UserEntity admin = createUser("admin", "John", "Atanasoff",   "test");
+      UserEntity admin = createUser("admin", "john.atanasoff@gmail.com", "+359888333222", "John", "Atanasoff",   "test");
       admin.setRoles(List.of(adminRole, userRoleEntity));
 
-      UserEntity userEntity = createUser("user", "Petar", "Ivanov",   "test");
+      UserEntity userEntity = createUser("user", "peter.ivanov@yahoo.com", "+359888333111", "Petar", "Ivanov",   "test");
       userEntity.setRoles(List.of(userRoleEntity));
 
       this.userRepository.saveAll(List.of(admin, userEntity));
@@ -133,11 +133,13 @@ public class UserServiceImpl implements UserService {
   }
 
   // Helpers
-  private UserEntity createUser(String username, String firstName, String lastName, String password) {
+  private UserEntity createUser(String username, String email, String phoneNumber, String firstName, String lastName, String password) {
     UserEntity userEntity = new UserEntity();
 
     userEntity
             .setUsername(username)
+            .setEmail(email)
+            .setPhoneNumber(phoneNumber)
             .setFirstName(firstName)
             .setLastName(lastName)
             .setPassword(passwordEncoder.encode(password));

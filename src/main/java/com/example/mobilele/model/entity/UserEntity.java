@@ -8,6 +8,8 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
   private String username;
+  private String email;
+  private String phoneNumber;
   private String firstName;
   private String lastName;
   private String password;
@@ -45,6 +47,16 @@ public class UserEntity extends BaseEntity {
   )
   public List<UserRoleEntity> getRoles() {
     return roles;
+  }
+
+  @Column(nullable = false)
+  public String getEmail() {
+    return email;
+  }
+
+  @Column(nullable = false, columnDefinition = "phone_number")
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
   public Integer getFailedLoginAttempts() {
@@ -86,6 +98,16 @@ public class UserEntity extends BaseEntity {
 
   public UserEntity setRoles(List<UserRoleEntity> roles) {
     this.roles = roles;
+    return this;
+  }
+
+  public UserEntity setEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public UserEntity setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
     return this;
   }
 
