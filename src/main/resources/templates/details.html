@@ -49,6 +49,28 @@
                 <form th:action="@{/offers/{id}(id=${offer.id})}" th:method="delete" class="d-inline">
                     <button type="submit" class="btn delete-btn">Delete</button>
                 </form>
+<!--                <th:block th:if="*{canModify}">-->
+                    <form id="picture-upload-form"
+                          th:action="@{/pictures}"
+                          th:method="POST"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden" name="offerId" th:value="*{id}"/>
+
+                        <div class="form-group">
+                            <label for="title"></label>
+                            <input hidden type="text" id="title" name="title"/>
+                        </div>
+
+                        <div class="upload-container">
+                            <input hidden id="picture-upload" type="file" name="picture"/>
+                            <label for="picture-upload">
+                                <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
+                                <div id="uploadSuccess" class="upload-success">Picture added</div>
+                            </label>
+                        </div>
+                    </form>
+<!--                </th:block>-->
             </div>
         </aside>
     </div>
@@ -76,7 +98,8 @@
 <!--<footer th:replace="fragments/footer"></footer>-->
 
 <script src="https://kit.fontawesome.com/a2e0c7b8ad.js" crossorigin="anonymous"></script>
-<script src="/js/gallery.js"></script>
+<script src="/js/offer/gallery.js"></script>
+<script src="/js/offer/uploadImage.js"></script>
 
 </body>
 </html>
