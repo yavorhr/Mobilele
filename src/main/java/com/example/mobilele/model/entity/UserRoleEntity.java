@@ -1,10 +1,7 @@
 package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "roles")
@@ -14,8 +11,9 @@ public class UserRoleEntity extends BaseEntity {
   public UserRoleEntity() {
   }
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
+
   public UserRoleEnum getRole() {
     return role;
   }
