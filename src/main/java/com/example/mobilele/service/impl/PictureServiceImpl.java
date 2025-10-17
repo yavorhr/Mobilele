@@ -9,34 +9,37 @@ import com.example.mobilele.service.UserService;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PictureServiceImpl implements PictureService {
   private final PictureRepository pictureRepository;
   private final OfferService offerService;
   private final UserService userService;
+  private final CloudinaryService cloudinaryService;
 
-  public PictureServiceImpl(CloudinaryService cloudinaryService, PictureRepository pictureRepository, OfferService offerService, UserService userService) {
+  public PictureServiceImpl(CloudinaryService cloudinaryService, PictureRepository pictureRepository, OfferService offerService, UserService userService, CloudinaryService cloudinaryService1) {
     this.pictureRepository = pictureRepository;
     this.offerService = offerService;
     this.userService = userService;
+    this.cloudinaryService = cloudinaryService1;
   }
 
-//  @Override
-//  public List<Picture> addOfferPictures(List<MultipartFile> pictures) throws IOException {
-//    List<Picture> uploadedPictures = new ArrayList<>();
-//
-//    for (MultipartFile file : pictures) {
-//      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
-//
-//      Picture picture = new Picture();
-//      picture.setUrl(uploaded.getUrl());
-//      picture.setPublicId(uploaded.getPublicId());
-//      picture.setTitle(convertTitle(file.getOriginalFilename()));
-//    }
-//
-//    return uploadedPictures;
-//  }
+  @Override
+  public List<Picture> addOfferPictures(List<MultipartFile> pictures) throws IOException {
+    List<Picture> uploadedPictures = new ArrayList<>();
+
+    for (MultipartFile file : pictures) {
+      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+
+      Picture picture = new Picture();
+      picture.setUrl(uploaded.getUrl());
+      picture.setPublicId(uploaded.getPublicId());
+      picture.setTitle(convertTitle(file.getOriginalFilename()));
+    }
+
+    return uploadedPictures;
+  }
 
   @Override
   public Picture findById(Long id) {
@@ -49,6 +52,12 @@ public class PictureServiceImpl implements PictureService {
   public void addOfferPictures(PictureAddServiceModel serviceModel) {
     Picture picture = mapToPicture(serviceModel);
     this.pictureRepository.save(picture);
+  }
+
+  @Override
+  @Transactional
+  public void deleteByPublicId(String publicId) {
+    this.pictureRepository.deleteByPublicId(publicId);
   }
 
   // Helpers

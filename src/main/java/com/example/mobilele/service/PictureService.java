@@ -2,9 +2,6 @@ package com.example.mobilele.service;
 
 import com.example.mobilele.model.entity.Picture;
 import com.example.mobilele.model.service.offer.PictureAddServiceModel;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.util.List;
 
 public interface PictureService {
 
@@ -13,4 +10,6 @@ public interface PictureService {
   Picture findById(Long id);
 
   void addOfferPictures(PictureAddServiceModel serviceModel);
+
+  void deleteByPublicId(String publicId);
 }
