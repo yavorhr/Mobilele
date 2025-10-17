@@ -1,5 +1,6 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.binding.PictureDeleteRequest;
 import com.example.mobilele.model.binding.offer.PictureAddBindingModel;
 import com.example.mobilele.model.service.offer.PictureAddServiceModel;
 import com.example.mobilele.service.PictureService;
@@ -7,10 +8,10 @@ import com.example.mobilele.service.impl.principal.MobileleUser;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @Controller
@@ -42,6 +43,16 @@ public class PicturesController {
     this.pictureService.addOfferPictures(serviceModel);
 
     return "redirect:/offers/details/" + bindingModel.getOfferId();
+  }
+
+  // Add @Preauthrorize check
+  @DeleteMapping("/pictures")
+  @ResponseBody
+  public ResponseEntity<Void> deletePicture(@RequestBody PictureDeleteRequest request) {
+
+    pictureService.deleteByPublicId(request.getPublic_id());
+
+    return ResponseEntity.noContent().build();
   }
 
   // Helpers
