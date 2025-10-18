@@ -23,11 +23,13 @@ public class PictureServiceImpl implements PictureService {
   private final UserService userService;
   private final CloudinaryService cloudinaryService;
 
-  public PictureServiceImpl(CloudinaryService cloudinaryService, PictureRepository pictureRepository, OfferService offerService, UserService userService, CloudinaryService cloudinaryService1) {
+  public PictureServiceImpl(CloudinaryService cloudinaryService,
+                            PictureRepository pictureRepository,
+                            OfferService offerService, UserService userService) {
     this.pictureRepository = pictureRepository;
     this.offerService = offerService;
     this.userService = userService;
-    this.cloudinaryService = cloudinaryService1;
+    this.cloudinaryService = cloudinaryService;
   }
 
   @Override
