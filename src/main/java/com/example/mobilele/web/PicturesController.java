@@ -1,11 +1,10 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.PictureDeleteRequest;
-import com.example.mobilele.model.binding.offer.PictureAddBindingModel;
-import com.example.mobilele.model.service.offer.PictureAddServiceModel;
+import com.example.mobilele.model.binding.offer.PicturesAddBindingModel;
+import com.example.mobilele.model.service.user.PicturesAddServiceModel;
 import com.example.mobilele.service.PictureService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
-import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -28,19 +27,13 @@ public class PicturesController {
 
   // Add @Preauthrorize check
   @PostMapping("/pictures")
-  public String addOfferPictures(PictureAddBindingModel bindingModel,
+  public String addOfferPictures(PicturesAddBindingModel bindingModel,
                                  @AuthenticationPrincipal MobileleUser principal) throws IOException {
 
-    CloudinaryImage uploaded = this.cloudinaryService.upload(bindingModel.getPicture(), "cars-offers");
+    PicturesAddServiceModel serviceModel = this.modelMapper.map(bindingModel, PicturesAddServiceModel.class);
+    serviceModel.setUserId(principal.getId());
 
-    if (uploaded == null || uploaded.getUrl() == null || uploaded.getUrl().isBlank()) {
-      throw new RuntimeException("Image upload failed! ");
-    }
-
-    PictureAddServiceModel serviceModel =
-            mapToPictureServiceModel(uploaded, bindingModel, principal.getId());
-
-    this.pictureService.addOfferPictures(serviceModel);
+    this.pictureService.addPicturesToOffer(serviceModel);
 
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
@@ -53,18 +46,5 @@ public class PicturesController {
     pictureService.deleteByPublicId(request.getPublic_id());
 
     return ResponseEntity.noContent().build();
-  }
-
-  // Helpers
-  private PictureAddServiceModel mapToPictureServiceModel(CloudinaryImage image, PictureAddBindingModel bindingModel, Long userId) {
-    PictureAddServiceModel serviceModel =
-            this.modelMapper.map(bindingModel, PictureAddServiceModel.class);
-
-    serviceModel.setOfferId(bindingModel.getOfferId());
-    serviceModel.setUserId(userId);
-    serviceModel.setPublicId(image.getPublicId());
-    serviceModel.setUrl(image.getUrl());
-
-    return serviceModel;
   }
 }
