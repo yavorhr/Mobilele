@@ -1,15 +1,20 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.Picture;
-import com.example.mobilele.model.service.offer.PictureAddServiceModel;
+import com.example.mobilele.model.service.user.PicturesAddServiceModel;
 import com.example.mobilele.repository.PictureRepository;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.PictureService;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PictureServiceImpl implements PictureService {
@@ -26,22 +31,6 @@ public class PictureServiceImpl implements PictureService {
   }
 
   @Override
-  public List<Picture> addOfferPictures(List<MultipartFile> pictures) throws IOException {
-    List<Picture> uploadedPictures = new ArrayList<>();
-
-    for (MultipartFile file : pictures) {
-      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
-
-      Picture picture = new Picture();
-      picture.setUrl(uploaded.getUrl());
-      picture.setPublicId(uploaded.getPublicId());
-      picture.setTitle(convertTitle(file.getOriginalFilename()));
-    }
-
-    return uploadedPictures;
-  }
-
-  @Override
   public Picture findById(Long id) {
     return this.pictureRepository
             .findById(id)
@@ -49,9 +38,26 @@ public class PictureServiceImpl implements PictureService {
   }
 
   @Override
-  public void addOfferPictures(PictureAddServiceModel serviceModel) {
-    Picture picture = mapToPicture(serviceModel);
-    this.pictureRepository.save(picture);
+  public void addPicturesToOffer(PicturesAddServiceModel serviceModel) throws IOException {
+
+    List<Picture> uploadedPictures = new ArrayList<>();
+
+    for (MultipartFile file : serviceModel.getPictures()) {
+      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+
+      if (uploaded == null || uploaded.getUrl() == null || uploaded.getUrl().isBlank()) {
+        throw new RuntimeException("Image upload failed! ");
+      }
+
+      Picture picture = mapToPicture(uploaded.getUrl(), uploaded.getPublicId(), convertTitle(file.getOriginalFilename()));
+
+      picture.setOffer(this.offerService.findById(serviceModel.getOfferId()));
+      picture.setSeller(this.userService.findById(serviceModel.getUserId()));
+
+      uploadedPictures.add(picture);
+    }
+
+    this.pictureRepository.saveAll(uploadedPictures);
   }
 
   @Override
@@ -61,6 +67,14 @@ public class PictureServiceImpl implements PictureService {
   }
 
   // Helpers
+  private Picture mapToPicture(String url, String publicId, String s) {
+    Picture picture = new Picture();
+    picture.setUrl(url);
+    picture.setPublicId(publicId);
+    picture.setTitle(s);
+    return picture;
+  }
+
   private String convertTitle(String originalName) {
     if (originalName != null) {
       int dotIndex = originalName.lastIndexOf('.');
@@ -70,18 +84,5 @@ public class PictureServiceImpl implements PictureService {
       }
     }
     return originalName;
-  }
-
-  private Picture mapToPicture(PictureAddServiceModel serviceModel) {
-    Picture picture = new Picture();
-
-    picture.setUrl(serviceModel.getUrl());
-    picture.setPublicId(serviceModel.getPublicId());
-    picture.setTitle(serviceModel.getTitle());
-
-    picture.setOffer(this.offerService.findById(serviceModel.getOfferId()));
-    picture.setSeller(this.userService.findById(serviceModel.getUserId()));
-
-    return picture;
   }
 }
