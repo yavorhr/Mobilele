@@ -55,7 +55,9 @@
 
             <div class="modify-buttons" th:if="${offer.canModify}">
                 <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
-                <form th:action="@{/offers/{id}(id=${offer.id})}" th:method="delete" class="d-inline">
+                <form th:action="@{/offers/{id}(id=${offer.id})}"
+                      th:method="delete"
+                      class="d-inline">
                     <button type="submit" class="btn delete-btn">Delete</button>
                 </form>
                 <!--                <th:block th:if="*{canModify}">-->
