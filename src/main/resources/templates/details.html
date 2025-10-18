@@ -14,15 +14,24 @@
         <!-- === GALLERY SECTION === -->
         <section class="gallery-section">
             <div class="main-image-container">
-                <img id="modalImage" th:src="${offer.pictures[0].pictureUrl}" alt="Main Image" class="main-image">
+                <img id="modalImage"
+                     th:src="${offer.pictures[0].pictureUrl}"
+                     alt="Main Image"
+                     class="main-image"
+                     th:attr="data-public-id=${offer.pictures[0].picturePublicId}">
+
                 <button id="prevBtn" class="nav-btn left">&lt;</button>
                 <button id="nextBtn" class="nav-btn right">&gt;</button>
+
+                <button type="button" id="deleteBtn" class="btn btn-danger deletePictureBtn">
+                    Delete
+                </button>
             </div>
 
             <div class="thumbnail-container">
                 <img th:each="p, iterStat : ${offer.pictures}"
                      th:src="${p.pictureUrl}"
-                     th:attr="data-index=${iterStat.index}"
+                     th:attr="data-index=${iterStat.index}, data-public-id=${p.picturePublicId}"
                      class="thumbnail"
                      alt="Thumbnail">
             </div>
@@ -49,28 +58,24 @@
                 <form th:action="@{/offers/{id}(id=${offer.id})}" th:method="delete" class="d-inline">
                     <button type="submit" class="btn delete-btn">Delete</button>
                 </form>
-<!--                <th:block th:if="*{canModify}">-->
-                    <form id="picture-upload-form"
-                          th:action="@{/pictures}"
-                          th:method="POST"
-                          enctype="multipart/form-data">
+                <!--                <th:block th:if="*{canModify}">-->
+                <form id="picture-upload-form"
+                      th:action="@{/pictures}"
+                      th:method="POST"
+                      enctype="multipart/form-data">
 
-                        <input type="hidden" name="offerId" th:value="*{id}"/>
+                    <input type="hidden" name="offerId" th:value="*{id}"/>
 
-                        <div class="form-group">
-                            <label for="title"></label>
-                            <input hidden type="text" id="title" name="title"/>
-                        </div>
-
-                        <div class="upload-container">
-                            <input hidden id="picture-upload" type="file" name="picture"/>
-                            <label for="picture-upload">
-                                <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
-                                <div id="uploadSuccess" class="upload-success">Picture added</div>
-                            </label>
-                        </div>
-                    </form>
-<!--                </th:block>-->
+                    <div class="upload-container">
+                        <input id="picture-upload" type="file" name="pictures" multiple/>
+                        <label for="picture-upload">
+                            <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
+                            <div id="uploadSuccess" class="upload-success">Picture added</div>
+                            <div id="uploadFail" class="upload-fail">Picture can't be added</div>
+                        </label>
+                    </div>
+                </form>
+                <!--                </th:block>-->
             </div>
         </aside>
     </div>
@@ -80,7 +85,8 @@
         <h4>Car Details</h4>
         <div class="details-grid">
             <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="${offer.engine}"></span></div>
-            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="${offer.mileage} + ' km'"></span></div>
+            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="${offer.mileage} + ' km'"></span>
+            </div>
             <div class="detail-item"><i class="fa fa-road"></i> <span th:text="${offer.transmission}"></span></div>
             <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="${offer.color}"></span></div>
             <div class="detail-item"><i class="fa fa-car"></i> <span th:text="${offer.condition}"></span></div>
@@ -100,6 +106,7 @@
 <script src="https://kit.fontawesome.com/a2e0c7b8ad.js" crossorigin="anonymous"></script>
 <script src="/js/offer/gallery.js"></script>
 <script src="/js/offer/uploadImage.js"></script>
+<script src="/js/offer/deletePicture.js"></script>
 
 </body>
 </html>
