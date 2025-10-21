@@ -11,12 +11,32 @@
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
     <form
-            th:action="@{/offers/add}"
+            th:action="@{/offers}"
             th:method="POST"
             th:object="${offerBindingModel}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center"
             enctype="multipart/form-data">
+
         <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="vehicleType">Vehicle type</label>
+                <select
+                        name="vehicleType"
+                        id="vehicleType"
+                        class="form-control"
+                        th:errorclass="is-invalid">
+                    <option value="">- Select vehicle category -</option>
+                    <option th:each="c : ${categories}"
+                            th:text="${c}"
+                            th:value="${c}"
+                            th:selected="${c} == *{vehicleType}">Vehicle type
+                    </option>
+                </select>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Vehicle category is required
+                </p>
+            </div>
+
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
                 <select
@@ -76,6 +96,7 @@
                     Suggested price is required.
                 </p>
             </div>
+
             <div class="form-group col-md-6 mb-3">
                 <label for="mileage" class="text-white font-weight-bold">Mileage</label>
                 <input
@@ -92,8 +113,7 @@
                     Mileage in kilometers is required.
                 </p>
             </div>
-        </div>
-        <div class="row">
+
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
                 <select
@@ -113,6 +133,7 @@
                     Engine type is required.
                 </p>
             </div>
+
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
                 <select
@@ -131,8 +152,7 @@
                     Transmission type is required.
                 </p>
             </div>
-        </div>
-        <div class="row">
+
             <div class="form-group col-md-6 mb-3">
                 <label for="year" class="text-white font-weight-bold">Year</label>
                 <input
@@ -145,31 +165,10 @@
                 <p class="errors alert alert-danger invalid-feedback"
                    th:if="${#fields.hasErrors('year')}"
                    th:errors="*{year}">
-                   Year error message
+                    Year error message
                 </p>
             </div>
 
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="category">Vehicle type</label>
-                <select
-                        name="category"
-                        id="category"
-                        class="form-control"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select vehicle category -</option>
-                    <option th:each="c : ${categories}"
-                            th:text="${c}"
-                            th:value="${c}"
-                            th:selected="${c} == *{category}">Vehicle type
-                    </option>
-                </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Vehicle category is required
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="engine">Condition</label>
                 <select
@@ -189,6 +188,7 @@
                     Condition is required.
                 </p>
             </div>
+
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="transmission">Color</label>
                 <select
@@ -207,42 +207,42 @@
                     Color is required.
                 </p>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="text-white font-weight-bold" for="description">Description</label>
-            <textarea
-                    id="description"
-                    type="textarea"
-                    class="form-control"
-                    rows="3"
-                    placeholder="Description"
-                    th:field="*{description}"
-                    th:errorclass="is-invalid"
-            >
+            <div class="form-group col-md-12 mb-3">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea
+                        id="description"
+                        type="textarea"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Description"
+                        th:field="*{description}"
+                        th:errorclass="is-invalid"
+                >
             </textarea>
-            <p class="errors alert alert-danger invalid-feedback">
-                Description must at least 10 symbols long.
-            </p>
-        </div>
-        <div class="form-group">
-            <label for="inputPictures">Add pictures</label>
-            <input type="file"
-                   th:field="*{pictures}"
-                   id="inputPictures"
-                   class="form-control-file" multiple>
-            <p th:if="${#fields.hasErrors('pictures')}"
-               th:errors="*{pictures}" class="errors alert alert-danger"></p>
-        </div>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Description must at least 10 symbols long.
+                </p>
+            </div>
 
-        <div class="row">
+            <div class="form-group col-md-12 mb-3">
+                <label for="inputPictures">Add pictures</label>
+                <input type="file"
+                       th:field="*{pictures}"
+                       id="inputPictures"
+                       class="form-control-file" multiple>
+                <p th:if="${#fields.hasErrors('pictures')}"
+                   th:errors="*{pictures}" class="errors alert alert-danger"></p>
+            </div>
+
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
                     <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
                 </div>
             </div>
         </div>
-    </form>
+</div>
+</form>
 </div>
 
 <div>
