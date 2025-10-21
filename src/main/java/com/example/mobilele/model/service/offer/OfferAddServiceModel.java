@@ -2,23 +2,22 @@ package com.example.mobilele.model.service.offer;
 
 import com.example.mobilele.model.entity.enums.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 public class OfferAddServiceModel {
   private Long id;
-  private String description;
-  private EngineEnum engine;
-  private List<MultipartFile> pictures;
-  private Double mileage;
+  private String brand;
+  private String model;
   private Double price;
+  private Double mileage;
+  private EngineEnum engine;
   private TransmissionType transmission;
   private Integer year;
-  private String model;
-  private String brand;
-  private ColorEnum color;
+  private VehicleCategoryEnum vehicleType;
   private ConditionEnum condition;
-  private VehicleCategoryEnum category;
+  private ColorEnum color;
+  private String description;
+  private List<MultipartFile> pictures;
 
   public OfferAddServiceModel() {
   }
@@ -35,8 +34,8 @@ public class OfferAddServiceModel {
     return condition;
   }
 
-  public VehicleCategoryEnum getCategory() {
-    return category;
+  public VehicleCategoryEnum getVehicleType() {
+    return vehicleType;
   }
 
   public Long getId() {
@@ -105,8 +104,8 @@ public class OfferAddServiceModel {
     return this;
   }
 
-  public OfferAddServiceModel setCategory(VehicleCategoryEnum category) {
-    this.category = category;
+  public OfferAddServiceModel setVehicleType(VehicleCategoryEnum vehicleType) {
+    this.vehicleType = vehicleType;
     return this;
   }
 

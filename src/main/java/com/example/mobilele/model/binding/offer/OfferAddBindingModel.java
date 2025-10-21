@@ -4,21 +4,20 @@ import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.validator.ValidYear;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 public class OfferAddBindingModel {
-  private String description;
-  private EngineEnum engine;
-  private Double mileage;
+  private String brand;
+  private String model;
   private Double price;
+  private Double mileage;
+  private EngineEnum engine;
   private TransmissionType transmission;
   private Integer year;
-  private String model;
-  private String brand;
-  private VehicleCategoryEnum category;
+  private VehicleCategoryEnum vehicleType;
   private ConditionEnum condition;
   private ColorEnum color;
+  private String description;
   private List<MultipartFile> pictures;
 
   public OfferAddBindingModel() {
@@ -76,15 +75,15 @@ public class OfferAddBindingModel {
   }
 
   @Positive
-  @NotNull(message = "Please insert year")
+  @NotNull(message = "Please insert model year")
   @ValidYear
   public Integer getYear() {
     return year;
   }
 
   @NotNull
-  public VehicleCategoryEnum getCategory() {
-    return category;
+  public VehicleCategoryEnum getVehicleType() {
+    return vehicleType;
   }
 
   @NotNull
@@ -142,8 +141,8 @@ public class OfferAddBindingModel {
     return this;
   }
 
-  public OfferAddBindingModel setCategory(VehicleCategoryEnum category) {
-    this.category = category;
+  public OfferAddBindingModel setVehicleType(VehicleCategoryEnum vehicleType) {
+    this.vehicleType = vehicleType;
     return this;
   }
 
