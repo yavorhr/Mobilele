@@ -7,7 +7,6 @@ import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,15 +25,6 @@ public class ModelServiceImpl implements ModelService {
   public Optional<ModelEntity> findById(Long id) {
     return this.modelRepository.findById(id);
   }
-
-//  @Override
-//  public List<String> findModelsPerBrand(String brand) {
-//    return this.modelRepository
-//            .findAllByBrandName(brand.toLowerCase())
-//            .stream()
-//            .map(b -> b.substring(0, 1).toUpperCase() + b.substring(1))
-//            .collect(Collectors.toList());
-//  }
 
   @Override
   public Optional<ModelEntity> findByName(String model) {
