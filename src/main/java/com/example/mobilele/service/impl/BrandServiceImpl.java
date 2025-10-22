@@ -5,6 +5,7 @@ import com.example.mobilele.model.view.brand.BrandViewNameModel;
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.service.BrandService;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,10 @@ public class BrandServiceImpl implements BrandService {
   }
 
   @Override
-  public Optional<BrandEntity> findBrandByName(String name) {
-    return this.brandRepository.findBrandByNameIgnoreCase(name);
+  public BrandEntity findBrandByName(String name) {
+    return this.brandRepository
+            .findBrandByNameIgnoreCase(name)
+            .orElseThrow(() -> new ObjectNotFoundException("Brand with name " + name + " does not exist!"));
   }
 
   @Override
