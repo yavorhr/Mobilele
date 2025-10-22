@@ -6,7 +6,10 @@ import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,15 +30,20 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
-  public Optional<ModelEntity> findByName(String model) {
-    return this.modelRepository.findByName(model);
+  public ModelEntity findByName(String model) {
+    return this.modelRepository.findByName(model)
+            .orElseThrow(() -> new ObjectNotFoundException("Model with name " + model + " was not found!"));
   }
 
   @Override
   public List<String> findModelsByVehicleTypeAndBrand(String brand, VehicleCategoryEnum vehicleType) {
-    return this.modelRepository
-            .findAllByBrandNameAndVehicleType(brand.toLowerCase(), vehicleType)
-            .stream()
+    List<String> results = this.modelRepository.findAllByBrandNameAndVehicleType(brand, vehicleType);
+
+    if (results == null || results.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    return results.stream()
             .map(b -> b.substring(0, 1).toUpperCase() + b.substring(1))
             .collect(Collectors.toList());
   }

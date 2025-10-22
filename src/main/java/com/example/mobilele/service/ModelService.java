@@ -10,7 +10,7 @@ public interface ModelService {
 
   Optional<ModelEntity> findById(Long id);
 
-  Optional<ModelEntity> findByName(String model);
+  ModelEntity findByName(String model);
 
   List<String> findModelsByVehicleTypeAndBrand(String brand, VehicleCategoryEnum vehicle);
 }
