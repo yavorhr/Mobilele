@@ -186,7 +186,9 @@ public class OffersController {
       redirectAttributes
               .addFlashAttribute("offerBindingModel", offerAddBindingModel)
               .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsPerBrand(offerAddBindingModel.getBrand()));
+              .addFlashAttribute("models", offerAddBindingModel.getBrand() == null ? "" : this.modelService.findModelsByVehicleTypeAndBrand(
+                      offerAddBindingModel.getBrand(),
+                      offerAddBindingModel.getVehicleType()));
 
       return "redirect:/offers";
     }
