@@ -74,8 +74,9 @@ public class OfferServiceImpl implements OfferService {
     OfferEntity offer = this.modelMapper.map(offerServiceModel, OfferEntity.class);
 
     //Set brand and model
-    ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel()).get();
-    modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()).get());
+    ModelEntity modelEntity = this.modelService.findByName(offerServiceModel.getModel());
+    modelEntity.setBrand(this.brandService.findBrandByName(offerServiceModel.getBrand()));
+
     offer.setModel(modelEntity);
 
     // Set seller
