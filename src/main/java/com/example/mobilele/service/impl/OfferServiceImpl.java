@@ -4,6 +4,7 @@ import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
+import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
@@ -129,7 +130,7 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferBaseViewModel> findOffersByFilters(OffersFindBindingModel filter, VehicleCategoryEnum vehicleType) {
+  public List<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel filter, VehicleCategoryEnum vehicleType) {
     return offerRepository.findAll((root, query, cb) -> {
       List<Predicate> predicates = new ArrayList<>();
 
@@ -204,6 +205,10 @@ public class OfferServiceImpl implements OfferService {
 
       if (filter.getColor() != null) {
         predicates.add(cb.equal(root.get("color"), filter.getColor()));
+      }
+
+      if (filter.getLocation() != null) {
+        predicates.add(cb.equal(root.get("location"), filter.getLocation()));
       }
 
       return cb.and(predicates.toArray(new Predicate[0]));
