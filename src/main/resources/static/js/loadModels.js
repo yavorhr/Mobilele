@@ -1,43 +1,47 @@
-function loadModels() {
-    const brand = document.getElementById('brand').value.toLowerCase();
+document.addEventListener('DOMContentLoaded', () => {
+    const brandEl = document.getElementById('brand');
     const modelSelect = document.getElementById('model');
-    const vehicleType = document.getElementById('vehicleType')?.value.toLowerCase();
-    const searchButton = document.getElementById('search-btn');
+    const vehicleTypeEl = document.getElementById('vehicleType');
 
-    if (!modelSelect) return;
+    if (!brandEl || !modelSelect || !vehicleTypeEl) return;
 
-    modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
-    if (searchButton) searchButton.disabled = true;
+    brandEl.addEventListener('change', () => {
+        const brand = brandEl.value;
+        const vehicleType = vehicleTypeEl.value;
 
-    if (brand && vehicleType) {
-        fetch(`/models?vehicleType=${encodeURIComponent(vehicleType)}&brand=${encodeURIComponent(brand)}`)
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                if (Array.isArray(data) && data.length > 0) {
-                    data.forEach(model => {
+        modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+
+        if (brand && vehicleType) {
+            fetch(`/models?vehicleType=${encodeURIComponent(vehicleType)}&brand=${encodeURIComponent(brand)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(model => {
+                            const option = document.createElement('option');
+                            option.value = model;
+                            option.textContent = model;
+                            modelSelect.appendChild(option);
+                        });
+                    } else {
                         const option = document.createElement('option');
-                        option.value = model;
-                        option.textContent = model;
+                        option.value = "";
+                        option.textContent = "-- No models available --";
                         modelSelect.appendChild(option);
-                    });
-                    if (searchButton) searchButton.disabled = false;
-                } else {
-                    const option = document.createElement('option');
-                    option.value = "";
-                    option.textContent = "-- No models available --";
-                    modelSelect.appendChild(option);
-                    if (searchButton) searchButton.disabled = true;
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching models:', error);
-                if (searchButton) searchButton.disabled = true;
-            });
-    } else {
-        if (searchButton) searchButton.disabled = true;
-    }
-}
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching models:', error);
+                });
+        }
+    });
 
+    vehicleTypeEl.addEventListener('change', () => {
+        brandEl.value = "";
+        modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+    });
+});
