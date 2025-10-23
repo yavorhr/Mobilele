@@ -3,6 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
@@ -21,10 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -105,7 +106,7 @@ public class OffersController {
           BindingResult bindingResult,
           RedirectAttributes redirectAttributes) {
 
-    VehicleCategoryEnum vehicleCategoryEnum = ProjectHelpers.parseToVehicleEnum(vehicleType);
+    VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
@@ -117,14 +118,14 @@ public class OffersController {
     }
 
     List<OfferBaseViewModel> offers = offerService
-            .findOffersByFilters(offersFindBindingModel, vehicleCategoryEnum)
+            .findOffersByFilters(this.modelMapper.map(offersFindBindingModel, OffersFindServiceModel.class), vehicleCategoryEnum)
             .stream()
             .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferBaseViewModel.class))
             .collect(Collectors.toList());
 
     redirectAttributes.addFlashAttribute("offers", offers);
 
-    return "redirect:/offers";
+    return "redirect:/offers/find/" + vehicleType;
   }
 
 //  // 2. Get Offers - All
