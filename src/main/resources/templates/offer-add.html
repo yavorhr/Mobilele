@@ -9,7 +9,7 @@
 <header th:replace="fragments/navbar"></header>
 
 <div class="container">
-    <h2 class="text-center text-white">Upload Offer</h2>
+    <h2 class="text-center text-white">Add Offer</h2>
     <form
             th:action="@{/offers}"
             th:method="POST"
@@ -32,7 +32,7 @@
                             th:selected="${c} == *{vehicleType}">Vehicle type
                     </option>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
+                <p class="errors alert alert-danger invalid-feedback error-text">
                     Vehicle category is required
                 </p>
             </div>
@@ -42,7 +42,6 @@
                 <select
                         id="brand"
                         class="form-control"
-                        onchange="loadModels()"
                         th:name="brand"
                         th:errorclass="is-invalid">
                     <option value="" selected disabled>- Select brand -</option>
@@ -55,8 +54,8 @@
                         </option>
                     </optgroup>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Vehicle brand is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Vehicle brand is required
                 </p>
             </div>
 
@@ -77,8 +76,8 @@
                         </option>
                     </optgroup>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Vehicle model is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Vehicle model is required
                 </p>
             </div>
 
@@ -92,8 +91,8 @@
                         placeholder="Suggested price"
                         th:field="*{price}"
                         th:errorclass="is-invalid"/>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Suggested price is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Suggested price is required
                 </p>
             </div>
 
@@ -109,8 +108,8 @@
                         th:field="*{mileage}"
                         th:errorclass="is-invalid"
                 />
-                <p class="errors alert alert-danger invalid-feedback">
-                    Mileage in kilometers is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Mileage is required
                 </p>
             </div>
 
@@ -129,8 +128,8 @@
                         Engine type
                     </option>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Engine type is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Engine type is required
                 </p>
             </div>
 
@@ -148,13 +147,13 @@
                             th:selected="${t} == *{transmission}">Transmission type
                     </option>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Transmission type is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Transmission type is required
                 </p>
             </div>
 
             <div class="form-group col-md-6 mb-3">
-                <label for="year" class="text-white font-weight-bold">Year</label>
+                <label for="year" class="text-white font-weight-bold">Model year</label>
                 <input
                         id="year"
                         type="number"
@@ -162,7 +161,7 @@
                         placeholder="Manufacturing year"
                         th:field="*{year}"
                         th:errorclass="is-invalid"/>
-                <p class="errors alert alert-danger invalid-feedback"
+                <p class="errors alert alert-danger invalid-feedback error-text"
                    th:if="${#fields.hasErrors('year')}"
                    th:errors="*{year}">
                     Year error message
@@ -184,8 +183,8 @@
                         Condition
                     </option>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Condition is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Condition is required
                 </p>
             </div>
 
@@ -203,8 +202,8 @@
                             th:selected="${c} == *{color}">Color
                     </option>
                 </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Color is required.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Color is required
                 </p>
             </div>
 
@@ -220,8 +219,8 @@
                         th:errorclass="is-invalid"
                 >
             </textarea>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Description must at least 10 symbols long.
+                <p class="errors alert alert-danger invalid-feedback error-text">
+                    Description must at least 10 symbols long
                 </p>
             </div>
 
@@ -232,7 +231,7 @@
                        id="inputPictures"
                        class="form-control-file" multiple>
                 <p th:if="${#fields.hasErrors('pictures')}"
-                   th:errors="*{pictures}" class="errors alert alert-danger"></p>
+                   th:errors="*{pictures}" class="errors alert alert-danger error-text"></p>
             </div>
 
             <div class="col col-md-4">
@@ -241,11 +240,10 @@
                             id="submit-btn"
                             type="submit"
                             class="btn btn-info btn-lg"
-                            value="Submit Offer"/>
+                            value="Add Offer"/>
                 </div>
             </div>
         </div>
-</div>
 </form>
 </div>
 
