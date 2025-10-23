@@ -8,27 +8,31 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class OffersFindBindingModel {
-  private EngineEnum engine;
+  private String brand;
+  private String model;
+  private Double price;
   private Double mileage;
+  private EngineEnum engine;
+  private TransmissionType transmission;
+  private Integer year;
+  private ColorEnum color;
+  private ConditionEnum condition;
+  private String location;
+
   private String mileageComparison;
   private Double mileageMax;
 
-  private Double price;
   private String priceComparison;
   private Double priceMax;
 
-  private TransmissionType transmission;
-  private String model;
-  private String brand;
-
-  private Integer year;
   private String yearComparison;
   private Integer yearMax;
 
-  private ConditionEnum condition;
-  private ColorEnum color;
-
   public OffersFindBindingModel() {
+  }
+
+  public String getLocation() {
+    return location;
   }
 
   public String getMileageComparison() {

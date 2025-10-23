@@ -6,18 +6,55 @@ import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 
 public class OffersFindServiceModel {
-  private EngineEnum engine;
-  private Double mileage;
-  private Double price;
-  private TransmissionType transmission;
-  private String model;
   private String brand;
+  private String model;
+  private Double price;
+  private Double mileage;
+  private EngineEnum engine;
+  private TransmissionType transmission;
   private Integer year;
-  private ConditionEnum condition;
   private ColorEnum color;
+  private ConditionEnum condition;
+  private String location;
+
+  private String mileageComparison;
+  private Double mileageMax;
+
+  private String priceComparison;
+  private Double priceMax;
+
+  private String yearComparison;
+  private Integer yearMax;
 
   public OffersFindServiceModel() {
+  }
 
+  public String getLocation() {
+    return location;
+  }
+
+  public String getMileageComparison() {
+    return mileageComparison;
+  }
+
+  public Double getMileageMax() {
+    return mileageMax;
+  }
+
+  public String getPriceComparison() {
+    return priceComparison;
+  }
+
+  public Double getPriceMax() {
+    return priceMax;
+  }
+
+  public String getYearComparison() {
+    return yearComparison;
+  }
+
+  public Integer getYearMax() {
+    return yearMax;
   }
 
   public ConditionEnum getCondition() {
@@ -88,6 +125,41 @@ public class OffersFindServiceModel {
 
   public OffersFindServiceModel setYear(Integer year) {
     this.year = year;
+    return this;
+  }
+
+  public OffersFindServiceModel setLocation(String location) {
+    this.location = location;
+    return this;
+  }
+
+  public OffersFindServiceModel setMileageComparison(String mileageComparison) {
+    this.mileageComparison = mileageComparison;
+    return this;
+  }
+
+  public OffersFindServiceModel setMileageMax(Double mileageMax) {
+    this.mileageMax = mileageMax;
+    return this;
+  }
+
+  public OffersFindServiceModel setPriceComparison(String priceComparison) {
+    this.priceComparison = priceComparison;
+    return this;
+  }
+
+  public OffersFindServiceModel setPriceMax(Double priceMax) {
+    this.priceMax = priceMax;
+    return this;
+  }
+
+  public OffersFindServiceModel setYearComparison(String yearComparison) {
+    this.yearComparison = yearComparison;
+    return this;
+  }
+
+  public OffersFindServiceModel setYearMax(Integer yearMax) {
+    this.yearMax = yearMax;
     return this;
   }
 
