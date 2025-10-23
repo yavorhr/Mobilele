@@ -24,7 +24,6 @@
                     <select
                             id="brand"
                             class="form-control"
-                            onchange="loadModels()"
                             th:name="brand"
                             th:errorclass="is-invalid">
                         <option value="" selected disabled>- Select brand -</option>
@@ -234,7 +233,6 @@
                     <div class="col col-md-4">
                         <div class="button-holder d-flex">
                             <input
-                                    id="search-btn"
                                     type="submit"
                                     class="btn btn-info btn-lg" value="Search "/>
                         </div>
