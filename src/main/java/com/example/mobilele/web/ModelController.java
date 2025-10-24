@@ -31,6 +31,4 @@ public class ModelController {
 
     return ResponseEntity.ok(models);
   }
-
-
 }
