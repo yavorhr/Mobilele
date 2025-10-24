@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -94,7 +95,7 @@ public class OffersController {
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("currentPage", "find");
 
-    return "offers-search-form";
+    return "offers-find";
   }
 
   // II. Offers - POST
@@ -125,7 +126,15 @@ public class OffersController {
 
     redirectAttributes.addFlashAttribute("offers", offers);
 
-    return "redirect:/offers/find/" + vehicleType;
+    return "redirect:/offers/" + offersFindBindingModel.getBrand().toUpperCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
+  }
+
+  // 2. Get Offers - All
+  @GetMapping("/offers/{brand}/{vehicleModel}")
+  public String getAllOffersPage(@PathVariable String brand,
+                                 @PathVariable String vehicleModel,
+                                 Model model) {
+    return "offers";
   }
 
 //  // 2. Get Offers - All
