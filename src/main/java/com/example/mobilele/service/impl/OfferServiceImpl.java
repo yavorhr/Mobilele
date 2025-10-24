@@ -207,7 +207,7 @@ public class OfferServiceImpl implements OfferService {
         predicates.add(cb.equal(root.get("color"), filter.getColor()));
       }
 
-      if (filter.getLocation() != null) {
+      if (filter.getLocation() != null && !filter.getLocation().isEmpty() ) {
         predicates.add(cb.equal(root.get("location"), filter.getLocation()));
       }
 
