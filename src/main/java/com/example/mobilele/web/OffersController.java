@@ -7,11 +7,11 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import org.springframework.http.ResponseEntity;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
-import com.example.mobilele.util.ProjectHelpers;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,9 +22,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -77,6 +77,11 @@ public class OffersController {
   @ModelAttribute("conditions")
   public ConditionEnum[] getConditions() {
     return ConditionEnum.values();
+  }
+
+  @ModelAttribute("countries")
+  public CountryEnum[] getCountries() {
+    return CountryEnum.values();
   }
 
   // I. Offers - GET
@@ -135,6 +140,17 @@ public class OffersController {
                                  @PathVariable String vehicleModel,
                                  Model model) {
     return "offers";
+  }
+
+  @ResponseBody
+  @GetMapping("/locations/cities")
+  public ResponseEntity<List<String>> getCities(@RequestParam("country") CountryEnum country) {
+    List<String> cities = Arrays.stream(CityEnum.values())
+            .filter(city -> city.getCountry().equals(country))
+            .map(Enum::name)
+            .toList();
+
+    return ResponseEntity.ok(cities);
   }
 
 //  // 2. Get Offers - All
