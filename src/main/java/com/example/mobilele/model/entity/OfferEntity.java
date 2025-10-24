@@ -11,9 +11,7 @@ public class OfferEntity extends BaseEntity {
   private UserEntity seller;
   private List<Picture> pictures;
   private ModelEntity model;
-  @Enumerated(EnumType.STRING)
   private CountryEnum country;
-  @Enumerated(EnumType.STRING)
   private CityEnum city;
   private Double price;
   private Double mileage;
@@ -60,10 +58,12 @@ public class OfferEntity extends BaseEntity {
     return condition;
   }
 
+  @Enumerated(EnumType.STRING)
   public CountryEnum getCountry() {
     return country;
   }
 
+  @Enumerated(EnumType.STRING)
   public CityEnum getCity() {
     return city;
   }

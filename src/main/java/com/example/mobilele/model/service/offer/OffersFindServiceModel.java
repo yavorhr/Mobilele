@@ -1,9 +1,6 @@
 package com.example.mobilele.model.service.offer;
 
-import com.example.mobilele.model.entity.enums.ColorEnum;
-import com.example.mobilele.model.entity.enums.ConditionEnum;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 
 public class OffersFindServiceModel {
   private String brand;
@@ -15,9 +12,8 @@ public class OffersFindServiceModel {
   private Integer year;
   private ColorEnum color;
   private ConditionEnum condition;
-
-
-
+  private CountryEnum country;
+  private CityEnum city;
   private String mileageComparison;
   private Double mileageMax;
 
@@ -30,8 +26,13 @@ public class OffersFindServiceModel {
   public OffersFindServiceModel() {
   }
 
-  public String getLocation() {
-    return location;
+
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
   }
 
   public String getMileageComparison() {
@@ -99,6 +100,16 @@ public class OffersFindServiceModel {
     return this;
   }
 
+  public OffersFindServiceModel setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OffersFindServiceModel setCity(CityEnum city) {
+    this.city = city;
+    return this;
+  }
+
   public OffersFindServiceModel setMileage(Double mileage) {
     this.mileage = mileage;
     return this;
@@ -126,11 +137,6 @@ public class OffersFindServiceModel {
 
   public OffersFindServiceModel setYear(Integer year) {
     this.year = year;
-    return this;
-  }
-
-  public OffersFindServiceModel setLocation(String location) {
-    this.location = location;
     return this;
   }
 
