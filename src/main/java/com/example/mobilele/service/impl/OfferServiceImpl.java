@@ -200,15 +200,19 @@ public class OfferServiceImpl implements OfferService {
       }
 
       if (filter.getCondition() != null) {
-        predicates.add(cb.equal(root.get("condition"), filter.getCondition()));
+        predicates.add(cb.equal(root.get("vehicle_condition"), filter.getCondition()));
       }
 
       if (filter.getColor() != null) {
         predicates.add(cb.equal(root.get("color"), filter.getColor()));
       }
 
-      if (filter.getLocation() != null && !filter.getLocation().isEmpty() ) {
-        predicates.add(cb.equal(root.get("location"), filter.getLocation()));
+      if (filter.getCountry() != null) {
+        predicates.add(cb.equal(root.get("country"), filter.getCountry()));
+      }
+
+      if (filter.getCity() != null) {
+        predicates.add(cb.equal(root.get("city"), filter.getCity()));
       }
 
       return cb.and(predicates.toArray(new Predicate[0]));
@@ -253,16 +257,6 @@ public class OfferServiceImpl implements OfferService {
                     -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
   }
 
-
-  // Private and helpers
-  private boolean isAdmin(UserEntity user) {
-    return user.
-            getRoles().
-            stream().
-            map(UserRoleEntity::getRole).
-            anyMatch(r -> r == UserRoleEnum.ADMIN);
-  }
-
   @Override
   @Transactional
   public void initOffers() {
@@ -304,6 +298,8 @@ public class OfferServiceImpl implements OfferService {
     }
   }
 
+  // Private and helpers
+
   private OfferEntity buildOffer(Long modelId, EngineEnum engineType, TransmissionType transmissionType,
                                  ConditionEnum condition, ColorEnum color,
                                  Double mileage, Double price, String description,
@@ -322,8 +318,8 @@ public class OfferServiceImpl implements OfferService {
     offer.setMileage(mileage);
     offer.setPrice(price);
     offer.setDescription(description);
-    offer.setCountry(CountryEnum.BULGARIA);
-    offer.setCity(CityEnum.SOFIA);
+    offer.setCountry(country);
+    offer.setCity(city);
 
     // Set seller
     offer.setSeller(seller);
@@ -342,5 +338,13 @@ public class OfferServiceImpl implements OfferService {
     picture.setPublicId(publicId);
     picture.setUrl(url);
     return picture;
+  }
+
+  private boolean isAdmin(UserEntity user) {
+    return user.
+            getRoles().
+            stream().
+            map(UserRoleEntity::getRole).
+            anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
 }
