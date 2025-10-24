@@ -5,6 +5,7 @@ import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class OffersFindBindingModel {
@@ -29,6 +30,46 @@ public class OffersFindBindingModel {
   private Integer yearMax;
 
   public OffersFindBindingModel() {
+  }
+
+  @NotNull
+  @NotEmpty
+  public String getBrand() {
+    return brand;
+  }
+
+  @NotNull
+  @NotEmpty
+  public String getModel() {
+    return model;
+  }
+
+  public Double getPrice() {
+    return price;
+  }
+
+  public Double getMileage() {
+    return mileage;
+  }
+
+  public EngineEnum getEngine() {
+    return engine;
+  }
+
+  public TransmissionType getTransmission() {
+    return transmission;
+  }
+
+  public Integer getYear() {
+    return year;
+  }
+
+  public ColorEnum getColor() {
+    return color;
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
   }
 
   public String getLocation() {
@@ -59,38 +100,54 @@ public class OffersFindBindingModel {
     return yearMax;
   }
 
-  public ConditionEnum getCondition() {
-    return condition;
+  public OffersFindBindingModel setBrand(String brand) {
+    this.brand = brand;
+    return this;
   }
 
-  public ColorEnum getColor() {
-    return color;
+  public OffersFindBindingModel setModel(String model) {
+    this.model = model;
+    return this;
   }
 
-  public EngineEnum getEngine() {
-    return engine;
+  public OffersFindBindingModel setPrice(Double price) {
+    this.price = price;
+    return this;
   }
 
-  public Double getMileage() {
-    return mileage;
+  public OffersFindBindingModel setMileage(Double mileage) {
+    this.mileage = mileage;
+    return this;
   }
 
-  public Double getPrice() {
-    return price;
+  public OffersFindBindingModel setEngine(EngineEnum engine) {
+    this.engine = engine;
+    return this;
   }
 
-  public TransmissionType getTransmission() {
-    return transmission;
+  public OffersFindBindingModel setTransmission(TransmissionType transmission) {
+    this.transmission = transmission;
+    return this;
   }
 
-  public String getModel() {
-    return model;
+  public OffersFindBindingModel setYear(Integer year) {
+    this.year = year;
+    return this;
   }
 
-  @NotNull
-  @NotBlank
-  public String getBrand() {
-    return brand;
+  public OffersFindBindingModel setColor(ColorEnum color) {
+    this.color = color;
+    return this;
+  }
+
+  public OffersFindBindingModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  public OffersFindBindingModel setLocation(String location) {
+    this.location = location;
+    return this;
   }
 
   public OffersFindBindingModel setMileageComparison(String mileageComparison) {
@@ -120,55 +177,6 @@ public class OffersFindBindingModel {
 
   public OffersFindBindingModel setYearMax(Integer yearMax) {
     this.yearMax = yearMax;
-    return this;
-  }
-
-  public Integer getYear() {
-    return year;
-  }
-
-  public OffersFindBindingModel setEngine(EngineEnum engine) {
-    this.engine = engine;
-    return this;
-  }
-
-  public OffersFindBindingModel setMileage(Double mileage) {
-    this.mileage = mileage;
-    return this;
-  }
-
-  public OffersFindBindingModel setPrice(Double price) {
-    this.price = price;
-    return this;
-  }
-
-  public OffersFindBindingModel setTransmission(TransmissionType transmission) {
-    this.transmission = transmission;
-    return this;
-  }
-
-  public OffersFindBindingModel setModel(String model) {
-    this.model = model;
-    return this;
-  }
-
-  public OffersFindBindingModel setBrand(String brand) {
-    this.brand = brand;
-    return this;
-  }
-
-  public OffersFindBindingModel setYear(Integer modelYear) {
-    this.year = modelYear;
-    return this;
-  }
-
-  public OffersFindBindingModel setCondition(ConditionEnum condition) {
-    this.condition = condition;
-    return this;
-  }
-
-  public OffersFindBindingModel setColor(ColorEnum color) {
-    this.color = color;
     return this;
   }
 }
