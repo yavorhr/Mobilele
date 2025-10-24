@@ -1,10 +1,6 @@
 package com.example.mobilele.model.binding.offer;
 
-import com.example.mobilele.model.entity.enums.ColorEnum;
-import com.example.mobilele.model.entity.enums.ConditionEnum;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
-import jakarta.validation.constraints.NotBlank;
+import com.example.mobilele.model.entity.enums.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,7 +14,9 @@ public class OffersFindBindingModel {
   private Integer year;
   private ColorEnum color;
   private ConditionEnum condition;
-  private String location;
+
+  private CountryEnum country;
+  private CityEnum city;
 
   private String mileageComparison;
   private Double mileageMax;
@@ -72,8 +70,12 @@ public class OffersFindBindingModel {
     return condition;
   }
 
-  public String getLocation() {
-    return location;
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
   }
 
   public String getMileageComparison() {
@@ -145,10 +147,16 @@ public class OffersFindBindingModel {
     return this;
   }
 
-  public OffersFindBindingModel setLocation(String location) {
-    this.location = location;
+  public OffersFindBindingModel setCountry(CountryEnum country) {
+    this.country = country;
     return this;
   }
+
+  public OffersFindBindingModel setCity(CityEnum city) {
+    this.city = city;
+    return this;
+  }
+
 
   public OffersFindBindingModel setMileageComparison(String mileageComparison) {
     this.mileageComparison = mileageComparison;

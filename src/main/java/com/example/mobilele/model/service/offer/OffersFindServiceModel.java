@@ -15,7 +15,8 @@ public class OffersFindServiceModel {
   private Integer year;
   private ColorEnum color;
   private ConditionEnum condition;
-  private String location;
+
+
 
   private String mileageComparison;
   private Double mileageMax;
