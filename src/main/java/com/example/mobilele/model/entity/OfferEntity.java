@@ -53,17 +53,19 @@ public class OfferEntity extends BaseEntity {
   }
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "condition", nullable = false)
+  @Column(name = "vehicle_condition", nullable = false)
   public ConditionEnum getCondition() {
     return condition;
   }
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   public CountryEnum getCountry() {
     return country;
   }
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   public CityEnum getCity() {
     return city;
   }
