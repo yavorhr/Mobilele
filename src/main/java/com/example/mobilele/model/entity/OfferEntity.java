@@ -11,7 +11,10 @@ public class OfferEntity extends BaseEntity {
   private UserEntity seller;
   private List<Picture> pictures;
   private ModelEntity model;
-  private String location;
+  @Enumerated(EnumType.STRING)
+  private CountryEnum country;
+  @Enumerated(EnumType.STRING)
+  private CityEnum city;
   private Double price;
   private Double mileage;
   private String description;
@@ -52,13 +55,17 @@ public class OfferEntity extends BaseEntity {
   }
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "vehicle_condition", nullable = false)
+  @Column(name = "condition", nullable = false)
   public ConditionEnum getCondition() {
     return condition;
   }
 
-  public String getLocation() {
-    return location;
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
   }
 
   @Enumerated(EnumType.STRING)
@@ -104,8 +111,13 @@ public class OfferEntity extends BaseEntity {
     return this;
   }
 
-  public OfferEntity setLocation(String location) {
-    this.location = location;
+  public OfferEntity setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OfferEntity setCity(CityEnum city) {
+    this.city = city;
     return this;
   }
 
