@@ -4,36 +4,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!countryEl || !citySelect) return;
 
-    countryEl.addEventListener('change', () => {
-        const country = countryEl.value;
+    const previousCity = citySelect.getAttribute('data-selected-city');
 
+    const populateCities = (country) => {
         citySelect.innerHTML = '';
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = "-- Select a city --";
+        defaultOption.value = "";
+        citySelect.appendChild(defaultOption);
 
-        const option = document.createElement('option');
-        option.textContent = "-- Select a city --";
-        citySelect.appendChild(option);
+        if (!country) return;
 
-        if (country) {
-            fetch(`/locations/cities?country=${encodeURIComponent(country)}`)
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    if (Array.isArray(data) && data.length > 0) {
-                        data.forEach(city => {
-                            const option = document.createElement('option');
-                            option.value = city;
-                            option.textContent = city;
-                            citySelect.appendChild(option);
-                        });
-                    } else {
-                        const option = document.createElement('option');
-                        option.textContent = "-- No cities available --";
-                        citySelect.appendChild(option);
+        fetch(`/locations/cities?country=${encodeURIComponent(country)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+
+                    if (previousCity && previousCity === city) {
+                        option.selected = true;
                     }
-                })
-                .catch(error => console.error('Error fetching cities:', error));
-        }
+                    citySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching cities:', error));
+    };
+
+    if (countryEl.value) {
+        populateCities(countryEl.value);
+    }
+
+    countryEl.addEventListener('change', () => {
+        populateCities(countryEl.value);
     });
 });
