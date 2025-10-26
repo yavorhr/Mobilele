@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         citySelect.innerHTML = '';
 
         const option = document.createElement('option');
-        option.textContent = "-- Please select city --";
+        option.textContent = "-- Select a city --";
         citySelect.appendChild(option);
 
         if (country) {
