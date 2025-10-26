@@ -44,6 +44,7 @@ public class OffersController {
     this.modelService = modelService;
   }
 
+
   @ModelAttribute("offerBindingModel")
   public OfferAddBindingModel offerBindingModel() {
     return new OfferAddBindingModel();
@@ -114,7 +115,10 @@ public class OffersController {
 
     VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
 
-    if (bindingResult.hasErrors()) {
+    boolean hasRelevantErrors = bindingResult.getFieldErrors().stream()
+            .anyMatch(e -> !"city".equals(e.getField()));
+
+    if (hasRelevantErrors) {
       redirectAttributes
               .addFlashAttribute("offersFindBindingModel", offersFindBindingModel)
               .addFlashAttribute("org.springframework.validation.BindingResult.offersFindBindingModel", bindingResult)
