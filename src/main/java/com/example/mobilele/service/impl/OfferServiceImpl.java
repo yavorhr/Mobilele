@@ -216,17 +216,7 @@ public class OfferServiceImpl implements OfferService {
       return cb.and(predicates.toArray(new Predicate[0]));
     })
             .stream()
-            .map(e -> {
-              OfferBaseViewModel viewModel = this.modelMapper.map(e, OfferBaseViewModel.class);
-              viewModel.setProfileImage(
-                      e.getPictures()
-                              .stream()
-                              .findFirst()
-                              .orElseThrow(() -> new ObjectNotFoundException("No pictures found for model " + e.getModel().getName() + " with ID: " + e.getId()))
-                              .getUrl());
-
-              return viewModel;
-            })
+            .map(this::mapToOfferBaseViewModel)
             .collect(Collectors.toList());
   }
 
@@ -253,6 +243,14 @@ public class OfferServiceImpl implements OfferService {
             .findById(id)
             .orElseThrow(()
                     -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
+  }
+
+  @Override
+  public List<OfferBaseViewModel> findOffersByBrand(String brandName) {
+    return this.offerRepository.findAllByModel_Brand_Name(brandName)
+            .stream()
+            .map(this::mapToOfferBaseViewModel)
+            .collect(Collectors.toList());
   }
 
   @Override
@@ -344,5 +342,17 @@ public class OfferServiceImpl implements OfferService {
             stream().
             map(UserRoleEntity::getRole).
             anyMatch(r -> r == UserRoleEnum.ADMIN);
+  }
+
+  private OfferBaseViewModel mapToOfferBaseViewModel(OfferEntity e) {
+    OfferBaseViewModel viewModel = this.modelMapper.map(e, OfferBaseViewModel.class);
+    viewModel.setProfileImage(
+            e.getPictures()
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(() -> new ObjectNotFoundException("No pictures found for model " + e.getModel().getName() + " with ID: " + e.getId()))
+                    .getUrl());
+
+    return viewModel;
   }
 }

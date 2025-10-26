@@ -33,4 +33,6 @@ public interface OfferService {
   boolean isOwnerOrIsAdmin(String userName, Long id);
 
   OfferEntity findById(long id);
+
+  List<OfferBaseViewModel> findOffersByBrand(String toUpperCase);
 }

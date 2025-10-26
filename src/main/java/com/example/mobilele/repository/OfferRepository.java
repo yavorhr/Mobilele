@@ -10,4 +10,6 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<OfferEntity,Long>, JpaSpecificationExecutor<OfferEntity> {
 
   List<OfferEntity> findAllByModel_Brand_NameAndModel_VehicleType(String brandName, VehicleCategoryEnum vehicleType);
+
+  List<OfferEntity> findAllByModel_Brand_Name(String brandName);
 }
