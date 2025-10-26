@@ -19,9 +19,12 @@ public class OfferAddBindingModel {
   private ColorEnum color;
   private String description;
   private List<MultipartFile> pictures;
+  private CountryEnum country;
+  private CityEnum city;
 
   public OfferAddBindingModel() {
   }
+
 
   @NotNull
   @NotEmpty
@@ -91,6 +94,16 @@ public class OfferAddBindingModel {
     return color;
   }
 
+  @NotNull
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  @NotNull
+  public CityEnum getCity() {
+    return city;
+  }
+
   public OfferAddBindingModel setDescription(String description) {
     this.description = description;
     return this;
@@ -148,6 +161,16 @@ public class OfferAddBindingModel {
 
   public OfferAddBindingModel setColor(ColorEnum color) {
     this.color = color;
+    return this;
+  }
+
+  public OfferAddBindingModel setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OfferAddBindingModel setCity(CityEnum city) {
+    this.city = city;
     return this;
   }
 }

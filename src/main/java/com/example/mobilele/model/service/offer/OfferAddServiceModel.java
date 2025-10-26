@@ -18,6 +18,8 @@ public class OfferAddServiceModel {
   private ColorEnum color;
   private String description;
   private List<MultipartFile> pictures;
+  private CountryEnum country;
+  private CityEnum city;
 
   public OfferAddServiceModel() {
   }
@@ -74,6 +76,14 @@ public class OfferAddServiceModel {
     return brand;
   }
 
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
+  }
+
   public OfferAddServiceModel setId(Long id) {
     this.id = id;
     return this;
@@ -121,6 +131,16 @@ public class OfferAddServiceModel {
 
   public OfferAddServiceModel setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
+    return this;
+  }
+
+  public OfferAddServiceModel setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OfferAddServiceModel setCity(CityEnum city) {
+    this.city = city;
     return this;
   }
 
