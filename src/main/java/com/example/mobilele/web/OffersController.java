@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
@@ -155,6 +156,20 @@ public class OffersController {
             .toList();
 
     return ResponseEntity.ok(cities);
+  }
+
+  // 2. Get Offers - All
+  @GetMapping("/offers/brands")
+  public String getAllOffersPage() {
+    return "offers-brands";
+  }
+
+  @GetMapping("/offers/brands/{brand}")
+  public String getOffersByBrand(@PathVariable String brand, Model model) {
+    model.addAttribute("brand", brand);
+
+    model.addAttribute("offers", this.offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT)));
+    return "offers";
   }
 
 //  // 2. Get Offers - All
