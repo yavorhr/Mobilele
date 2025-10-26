@@ -1,6 +1,5 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
@@ -140,7 +139,6 @@ public class OfferServiceImpl implements OfferService {
       if (filter.getModel() != null && !filter.getModel().isBlank()) {
         predicates.add(cb.equal(root.get("model").get("name"), filter.getModel()));
       }
-
       predicates.add(cb.equal(root.get("model").get("vehicleType"), vehicleType));
 
       // Optional filters
