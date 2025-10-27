@@ -170,19 +170,7 @@ public class OffersController {
               .collect(Collectors.toList());
     }
 
-    offers = new ArrayList<>(offers);
-
-    Comparator<OfferBaseViewModel> comparator = switch (sort) {
-      case "price" -> Comparator.comparing(OfferBaseViewModel::getPrice);
-      case "mileage" -> Comparator.comparing(OfferBaseViewModel::getMileage);
-      default -> Comparator.comparing(OfferBaseViewModel::getCreated);
-    };
-
-    if ("desc".equalsIgnoreCase(dir)) {
-      comparator = comparator.reversed();
-    }
-
-    offers.sort(comparator);
+    offers = sortOffers(sort, dir, offers);
 
     model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("offers", offers);
@@ -207,6 +195,20 @@ public class OffersController {
             .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
             .collect(Collectors.toList());
 
+    offers = sortOffers(sort, dir, offers);
+
+    model.addAttribute("brand", brand);
+    model.addAttribute("offers", offers);
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+
+    return "offers";
+  }
+
+  private List<OfferBaseViewModel> sortOffers(@RequestParam(defaultValue = "creationDate")
+                                                      String sort, @RequestParam(defaultValue = "desc")
+          String dir, List<OfferBaseViewModel> offers) {
+
     offers = new ArrayList<>(offers);
 
     Comparator<OfferBaseViewModel> comparator = switch (sort) {
@@ -217,13 +219,7 @@ public class OffersController {
 
     if ("desc".equalsIgnoreCase(dir)) comparator = comparator.reversed();
     offers.sort(comparator);
-
-    model.addAttribute("brand", brand);
-    model.addAttribute("offers", offers);
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-
-    return "offers";
+    return offers;
   }
 
   @ResponseBody
