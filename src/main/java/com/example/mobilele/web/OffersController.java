@@ -93,7 +93,8 @@ public class OffersController {
 
   // 2. Find offers by categories
   @GetMapping("/offers/find/{vehicleType}")
-  public String getSearchFormByCategory(@PathVariable String vehicleType, Model model) {
+  public String getSearchFormByCategory(@PathVariable String vehicleType,
+                                        Model model) {
 
     model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("brands", this.brandService.findAllBrands());
@@ -189,6 +190,38 @@ public class OffersController {
     model.addAttribute("model", modelName);
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("context", "model");
+
+    return "offers";
+  }
+
+  @GetMapping("/offers/brands/{brand}/sort")
+  public String showOffersByBrandSorted(
+          @PathVariable String brand,
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          Model model) {
+
+    List<OfferBaseViewModel> offers = this.offerService.findOffersByBrand(brand)
+            .stream()
+            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
+            .collect(Collectors.toList());
+
+    offers = new ArrayList<>(offers);
+
+    Comparator<OfferBaseViewModel> comparator = switch (sort) {
+      case "price" -> Comparator.comparing(OfferBaseViewModel::getPrice);
+      case "mileage" -> Comparator.comparing(OfferBaseViewModel::getMileage);
+      default -> Comparator.comparing(OfferBaseViewModel::getCreated);
+    };
+
+    if ("desc".equalsIgnoreCase(dir)) comparator = comparator.reversed();
+    offers.sort(comparator);
+
+    model.addAttribute("brand", brand);
+    model.addAttribute("offers", offers);
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
 
     return "offers";
   }
@@ -213,7 +246,7 @@ public class OffersController {
   @GetMapping("/offers/brands/{brand}")
   public String getOffersByBrand(@PathVariable String brand, Model model) {
     model.addAttribute("brand", brand);
-
+    model.addAttribute("context", "brand");
     model.addAttribute("offers", this.offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT)));
     return "offers";
   }
