@@ -20,8 +20,8 @@
             <form th:action="${context == 'model'} ?
                  @{/offers/{vehicleType}/{brand}/{modelName}(vehicleType=${vehicleType}, brand=${brand}, modelName=${model})} :
                  @{/offers/brands/{brand}/sort(brand=${brand})}"
-                method="GET"
-                class="form-inline">
+                  method="GET"
+                  class="form-inline">
                 <label for="sort" class="text-white mr-2">Sort by:</label>
                 <select
                         name="sort"
@@ -64,6 +64,9 @@
                         <div class="card-text"><span th:text="|Price: *{price}bgn|">Price</span></div>
                         <div class="card-text"><span th:text="|Engine: *{engine}|">Engine type</span></div>
                         <div class="card-text"><span th:text="|Transmission: *{transmission}|">Transmission </span>
+                        </div>
+                        <div class="card-text">
+                        <span th:text="|Creation date: *{#temporals.format(created, 'dd MMM yyyy')}|">Creation Date</span>
                         </div>
                     </li>
                 </ul>
