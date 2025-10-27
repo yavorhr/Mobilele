@@ -3,6 +3,8 @@ package com.example.mobilele.model.view.offer;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 
+import java.time.Instant;
+
 public class OfferBaseViewModel {
   private Long id;
   private Double price;
@@ -13,8 +15,13 @@ public class OfferBaseViewModel {
   private Double mileage;
   private String profileImage;
   private String modelYear;
+  private Instant created;
 
   public OfferBaseViewModel() {
+  }
+
+  public Instant getCreated() {
+    return created;
   }
 
   public String getModelYear() {
@@ -65,6 +72,11 @@ public class OfferBaseViewModel {
 
   public OfferBaseViewModel setPrice(Double price) {
     this.price = price;
+    return this;
+  }
+
+  public OfferBaseViewModel setCreated(Instant created) {
+    this.created = created;
     return this;
   }
 
