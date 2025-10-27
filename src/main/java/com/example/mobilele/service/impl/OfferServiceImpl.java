@@ -18,6 +18,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +57,7 @@ public class OfferServiceImpl implements OfferService {
     OfferEntity offer =
             this.offerRepository
                     .findById(id)
-                    .orElseThrow(()-> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
+                    .orElseThrow(() -> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
 
     OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
     model.setCanModify(isOwnerOrIsAdmin(name, offer.getId()));
@@ -254,6 +255,15 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
+  public List<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum vehicleCategory, String brand, String modelName) {
+    return this.offerRepository
+            .findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(vehicleCategory,brand,modelName)
+            .stream()
+            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
+            .collect(Collectors.toList());
+  }
+
+  @Override
   @Transactional
   public void initOffers() {
     if (offerRepository.count() == 0) {
@@ -270,7 +280,7 @@ public class OfferServiceImpl implements OfferService {
               2L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.NEW
               , ColorEnum.WHITE, 500.00, 6000.00,
               "The SUV is brand new, just get in and drive!",
-              "admin", CountryEnum.GERMANY, CityEnum.BERLIN,  createPicture("x3", "cars-offers/x3_wxw7fr",
+              "admin", CountryEnum.GERMANY, CityEnum.BERLIN, createPicture("x3", "cars-offers/x3_wxw7fr",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923267/mobilele/cars-offers/x3_wxw7fr.jpg"));
 
       // Offer 3
@@ -295,11 +305,10 @@ public class OfferServiceImpl implements OfferService {
   }
 
   // Private and helpers
-
   private OfferEntity buildOffer(Long modelId, EngineEnum engineType, TransmissionType transmissionType,
                                  ConditionEnum condition, ColorEnum color,
                                  Double mileage, Double price, String description,
-                                 String username,CountryEnum country, CityEnum city, Picture picture) {
+                                 String username, CountryEnum country, CityEnum city, Picture picture) {
 
     UserEntity seller = userService.findByUsername(username);
 

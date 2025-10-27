@@ -12,4 +12,6 @@ public interface OfferRepository extends JpaRepository<OfferEntity,Long>, JpaSpe
   List<OfferEntity> findAllByModel_Brand_NameAndModel_VehicleType(String brandName, VehicleCategoryEnum vehicleType);
 
   List<OfferEntity> findAllByModel_Brand_Name(String brandName);
+
+  List<OfferEntity> findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(VehicleCategoryEnum category, String brand, String model);
 }

@@ -25,11 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
-
 
 @Controller
 public class OffersController {
@@ -116,6 +113,7 @@ public class OffersController {
 
     VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
 
+    // ignore city field (fetched with AJAX)
     boolean hasRelevantErrors = bindingResult.getFieldErrors().stream()
             .anyMatch(e -> !"city".equals(e.getField()));
 
@@ -128,22 +126,70 @@ public class OffersController {
       return "redirect:/offers/find/" + vehicleType;
     }
 
-    List<OfferBaseViewModel> offers = offerService
-            .findOffersByFilters(this.modelMapper.map(offersFindBindingModel, OffersFindServiceModel.class), vehicleCategoryEnum)
-            .stream()
-            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferBaseViewModel.class))
-            .collect(Collectors.toList());
+    // pass to @Get
+    redirectAttributes.addFlashAttribute("filters", offersFindBindingModel);
 
-    redirectAttributes.addFlashAttribute("offers", offers);
-
-    return "redirect:/offers/" + offersFindBindingModel.getBrand().toUpperCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
+    return "redirect:/offers/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
   }
 
   // 2. Get Offers - All
-  @GetMapping("/offers/{brand}/{vehicleModel}")
-  public String getAllOffersPage(@PathVariable String brand,
-                                 @PathVariable String vehicleModel,
-                                 Model model) {
+  @GetMapping("/offers/{vehicleType}/{brand}/{modelName}")
+  public String showOffersByModel(
+          @PathVariable String brand,
+          @PathVariable String modelName,
+          @PathVariable String vehicleType,
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          Model model) {
+
+    VehicleCategoryEnum categoryEnum = null;
+
+    if (vehicleType != null) {
+      categoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
+    }
+
+    // redirect attribute from @Post
+    OffersFindBindingModel filters = (OffersFindBindingModel) model.asMap().get("filters");
+
+    List<OfferBaseViewModel> offers;
+
+    OffersFindServiceModel serviceModel = null;
+
+    if (filters != null) {
+      serviceModel = this.modelMapper.map(filters, OffersFindServiceModel.class);
+
+      offers = this.offerService.findOffersByFilters(serviceModel, categoryEnum)
+              .stream()
+              .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
+              .collect(Collectors.toList());
+    } else {
+      offers = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName)
+              .stream()
+              .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
+              .collect(Collectors.toList());
+    }
+
+    offers = new ArrayList<>(offers);
+
+    Comparator<OfferBaseViewModel> comparator = switch (sort) {
+      case "price" -> Comparator.comparing(OfferBaseViewModel::getPrice);
+      case "mileage" -> Comparator.comparing(OfferBaseViewModel::getMileage);
+      default -> Comparator.comparing(OfferBaseViewModel::getCreated);
+    };
+
+    if ("desc".equalsIgnoreCase(dir)) {
+      comparator = comparator.reversed();
+    }
+
+    offers.sort(comparator);
+
+    model.addAttribute("vehicleType", vehicleType);
+    model.addAttribute("offers", offers);
+    model.addAttribute("brand", brand);
+    model.addAttribute("model", modelName);
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+
     return "offers";
   }
 

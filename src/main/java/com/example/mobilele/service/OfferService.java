@@ -35,4 +35,6 @@ public interface OfferService {
   OfferEntity findById(long id);
 
   List<OfferBaseViewModel> findOffersByBrand(String toUpperCase);
+
+  List<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum category, String brand, String modelName);
 }
