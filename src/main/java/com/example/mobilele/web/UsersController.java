@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
+import com.example.mobilele.model.entity.enums.LoginErrorType;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.service.UserService;
 import jakarta.validation.Valid;
@@ -8,19 +9,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/users")
-public class UserRegisterController {
+public class UsersController {
   private final UserService userService;
   private final ModelMapper modelMapper;
 
-  public UserRegisterController(UserService userService, ModelMapper modelMapper) {
+  public UsersController(UserService userService, ModelMapper modelMapper) {
     this.userService = userService;
     this.modelMapper = modelMapper;
   }
@@ -30,6 +28,7 @@ public class UserRegisterController {
     return new UserRegisterBindingModel();
   }
 
+  //1. Register
   @GetMapping("/register")
   public String registerPage(Model model) {
     System.out.println(model);
@@ -57,4 +56,27 @@ public class UserRegisterController {
 
     return "redirect:/";
   }
+
+  //2. Login
+  @GetMapping("/login")
+  public String login(@RequestParam(value = "errorType", required = false) String errorType, Model model) {
+
+    if (errorType != null) {
+      try {
+        LoginErrorType type = LoginErrorType.valueOf(errorType);
+
+        switch (type) {
+          case INVALID_CREDENTIALS -> model.addAttribute("login_error_message", "Invalid username or password");
+          case USER_NOT_FOUND -> model.addAttribute("login_error_message", "User with this username does not exist");
+          case ACCOUNT_LOCKED -> model.addAttribute("login_error_message", "Your account is locked. Try again in 15 minutes");
+        }
+      } catch (IllegalArgumentException e) {
+        model.addAttribute("login_error_message", "An unknown error occurred.");
+      }
+    }
+    return "login";
+  }
+
+  //3. Profile
+
 }
