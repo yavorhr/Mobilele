@@ -1,12 +1,15 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
+import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,5 +90,16 @@ public class UsersController {
     model.addAttribute("user", this.userService.findUserViewModelById(principal.getId()));
 
     return "profile";
+  }
+
+  @PatchMapping("/profile")
+  @ResponseBody
+  public ResponseEntity<UserViewModel> updateProfile(@RequestBody UserEditBindingModel bindingModel,
+                                                     @AuthenticationPrincipal MobileleUser principal) {
+
+    Long userId = principal.getId();
+    UserViewModel updatedUser = userService.updateUserProfile(userId, bindingModel);
+
+    return ResponseEntity.ok(updatedUser);
   }
 }

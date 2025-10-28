@@ -1,5 +1,6 @@
 package com.example.mobilele.service;
 
+import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.view.user.UserViewModel;
@@ -30,4 +31,6 @@ public interface UserService {
   List<UserEntity> findLockedUsers();
 
   UserViewModel findUserViewModelById(Long id);
+
+  UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel);
 }

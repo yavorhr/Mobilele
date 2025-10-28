@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -111,7 +111,22 @@ public class UserServiceImpl implements UserService {
     return this.userRepository
             .findById(id)
             .map(u -> this.modelMapper.map(u, UserViewModel.class))
-            .orElseThrow(()-> new ObjectNotFoundException("User with id: " + id + " was not found!"));
+            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + id + " was not found!"));
+  }
+
+  @Override
+  public UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel) {
+    UserEntity userEntity = this.userRepository
+            .findById(userId)
+            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " was not found!"));
+
+    userEntity.setFirstName(bindingModel.getFirstName());
+    userEntity.setLastName(bindingModel.getLastName());
+    userEntity.setPhoneNumber(bindingModel.getPhoneNumber());
+
+    userRepository.save(userEntity);
+
+    return this.modelMapper.map(userEntity, UserViewModel.class);
   }
 
   @Override
