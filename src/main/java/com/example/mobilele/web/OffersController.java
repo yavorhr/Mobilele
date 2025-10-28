@@ -7,6 +7,10 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -141,6 +145,8 @@ public class OffersController {
           @PathVariable String vehicleType,
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "1") int size,
           Model model) {
 
     VehicleCategoryEnum categoryEnum = null;
@@ -149,35 +155,33 @@ public class OffersController {
       categoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
     }
 
+    // Map UI sort key to entity property
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
     // redirect attribute from @Post
     OffersFindBindingModel filters = (OffersFindBindingModel) model.asMap().get("filters");
 
-    List<OfferBaseViewModel> offers;
-
     OffersFindServiceModel serviceModel = null;
 
-    if (filters != null) {
-      serviceModel = this.modelMapper.map(filters, OffersFindServiceModel.class);
+    Page<OfferBaseViewModel> offersPage;
 
-      offers = this.offerService.findOffersByFilters(serviceModel, categoryEnum)
-              .stream()
-              .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
-              .collect(Collectors.toList());
+    if (filters != null) {
+       serviceModel = this.modelMapper.map(filters, OffersFindServiceModel.class);
+      offersPage = this.offerService.findOffersByFilters(serviceModel, categoryEnum, pageable);
     } else {
-      offers = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName)
-              .stream()
-              .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
-              .collect(Collectors.toList());
+      offersPage = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName, pageable);
     }
 
-    offers = sortOffers(sort, dir, offers);
-
+    model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("vehicleType", vehicleType);
-    model.addAttribute("offers", offers);
     model.addAttribute("brand", brand);
     model.addAttribute("model", modelName);
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("context", "model");
 
     return "offers";
