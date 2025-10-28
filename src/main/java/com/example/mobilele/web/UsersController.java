@@ -4,8 +4,10 @@ import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,5 +80,12 @@ public class UsersController {
   }
 
   //3. Profile
+  @GetMapping("/profile")
+  public String showProfile(Model model,
+                            @AuthenticationPrincipal MobileleUser principal) {
 
+    model.addAttribute("user", this.userService.findUserViewModelById(principal.getId()));
+
+    return "profile";
+  }
 }
