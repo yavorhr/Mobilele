@@ -146,7 +146,7 @@ public class OffersController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
+          @RequestParam(defaultValue = "5") int size,
           Model model) {
 
     VehicleCategoryEnum categoryEnum = null;
@@ -155,7 +155,6 @@ public class OffersController {
       categoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
     }
 
-    // Map UI sort key to entity property
     String sortField = "creationDate".equals(sort) ? "created" : sort;
     Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
     Pageable pageable = PageRequest.of(page, size, sorting);
