@@ -5,7 +5,7 @@ import com.example.mobilele.model.entity.enums.ConditionEnum;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 import com.example.mobilele.model.service.PictureServiceModel;
-import com.example.mobilele.model.view.user.UserBasicViewModel;
+import com.example.mobilele.model.view.user.UserViewModel;
 
 import java.time.Instant;
 import java.util.List;
@@ -27,7 +27,7 @@ public class OfferViewModel {
   private List<PictureServiceModel> pictures;
   private ColorEnum color;
   private ConditionEnum condition;
-  private UserBasicViewModel seller;
+  private UserViewModel seller;
 
   public OfferViewModel() {
   }
@@ -49,7 +49,7 @@ public class OfferViewModel {
     return pictures;
   }
 
-  public UserBasicViewModel getSeller() {
+  public UserViewModel getSeller() {
     return seller;
   }
 
@@ -110,7 +110,7 @@ public class OfferViewModel {
     return this;
   }
 
-  public OfferViewModel setSeller(UserBasicViewModel seller) {
+  public OfferViewModel setSeller(UserViewModel seller) {
     this.seller = seller;
     return this;
   }

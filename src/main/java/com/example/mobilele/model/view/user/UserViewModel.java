@@ -1,12 +1,17 @@
 package com.example.mobilele.model.view.user;
 
-public class UserBasicViewModel {
+public class UserViewModel {
   private String email;
   private String phoneNumber;
+  private String username;
   private String firstName;
   private String lastName;
 
-  public UserBasicViewModel() {
+  public UserViewModel() {
+  }
+
+  public String getUsername() {
+    return username;
   }
 
   public String getFullName() {
@@ -29,23 +34,28 @@ public class UserBasicViewModel {
     return lastName;
   }
 
-  public UserBasicViewModel setEmail(String email) {
+  public UserViewModel setEmail(String email) {
     this.email = email;
     return this;
   }
 
-  public UserBasicViewModel setPhoneNumber(String phoneNumber) {
+  public UserViewModel setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
 
-  public UserBasicViewModel setFirstName(String firstName) {
+  public UserViewModel setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
 
-  public UserBasicViewModel setLastName(String lastName) {
+  public UserViewModel setLastName(String lastName) {
     this.lastName = lastName;
+    return this;
+  }
+
+  public UserViewModel setUsername(String username) {
+    this.username = username;
     return this;
   }
 }
