@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head(additionalCss='/css/users/profile.css')"></head>
+
+<body>
+<header th:replace="fragments/navbar"></header>
+
+<main class="container profile-container mt-5">
+    <div class="profile-card">
+        <h2 class="text-center mb-4">My Profile</h2>
+
+        <div class="profile-info" th:object="${user}">
+            <p><strong>Username:</strong> <span th:text="*{username}"></span></p>
+            <p><strong>First Name:</strong> <span th:text="*{firstName}"></span></p>
+            <p><strong>Last Name:</strong> <span th:text="*{lastName}"></span></p>
+            <p><strong>Email:</strong> <span th:text="*{email}"></span></p>
+            <p><strong>Phone Number:</strong> <span th:text="*{phoneNumber}"></span></p>
+        </div>
+
+        <div class="actions mt-4">
+            <a class="btn btn-primary" th:href="@{/users/edit}">Edit Profile</a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
