@@ -207,7 +207,8 @@ public class OfferServiceImpl implements OfferService {
       return cb.and(predicates.toArray(new Predicate[0]));
     };
 
-    return offerRepository.findAll(spec, pageable)
+    return offerRepository
+            .findAll(spec, pageable)
             .map(this::mapToOfferBaseViewModel);
   }
 
@@ -253,7 +254,7 @@ public class OfferServiceImpl implements OfferService {
 
     return this.offerRepository
             .findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(vehicleCategory, brand, modelName, pageable)
-            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class));
+            .map(this::mapToOfferBaseViewModel);
   }
 
   @Override
