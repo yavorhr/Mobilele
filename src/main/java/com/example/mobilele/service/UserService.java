@@ -2,6 +2,7 @@ package com.example.mobilele.service;
 
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.view.user.UserViewModel;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface UserService {
   void resetFailedAttempts(UserEntity user);
 
   List<UserEntity> findLockedUsers();
+
+  UserViewModel findUserViewModelById(Long id);
 }

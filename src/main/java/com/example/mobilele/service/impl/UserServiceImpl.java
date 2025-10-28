@@ -4,19 +4,23 @@ import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,12 +28,14 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final UserRoleService roleService;
   private final MobileleUserServiceImpl mobileleUserService;
+  private final ModelMapper modelMapper;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.roleService = roleService;
     this.mobileleUserService = mobileleUserService;
+    this.modelMapper = modelMapper;
   }
 
   @Override
@@ -100,6 +106,13 @@ public class UserServiceImpl implements UserService {
     return this.userRepository.findAllLockedUsers();
   }
 
+  @Override
+  public UserViewModel findUserViewModelById(Long id) {
+    return this.userRepository
+            .findById(id)
+            .map(u -> this.modelMapper.map(u, UserViewModel.class))
+            .orElseThrow(()-> new ObjectNotFoundException("User with id: " + id + " was not found!"));
+  }
 
   @Override
   public void lockAccount(UserEntity user) {
@@ -122,10 +135,10 @@ public class UserServiceImpl implements UserService {
       UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
       UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
-      UserEntity admin = createUser("admin", "john.atanasoff@gmail.com", "+359888333222", "John", "Atanasoff",   "test");
+      UserEntity admin = createUser("admin", "john.atanasoff@gmail.com", "+359888333222", "John", "Atanasoff", "test");
       admin.setRoles(List.of(adminRole, userRoleEntity));
 
-      UserEntity userEntity = createUser("user", "peter.ivanov@yahoo.com", "+359888333111", "Petar", "Ivanov",   "test");
+      UserEntity userEntity = createUser("user", "peter.ivanov@yahoo.com", "+359888333111", "Petar", "Ivanov", "test");
       userEntity.setRoles(List.of(userRoleEntity));
 
       this.userRepository.saveAll(List.of(admin, userEntity));
