@@ -7,23 +7,54 @@
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<main class="container profile-container mt-5">
+<main class="container profile-container mt-5" th:object="${user}">
     <div class="profile-card">
         <h2 class="text-center mb-4">My Profile</h2>
 
-        <div class="profile-info" th:object="${user}">
-            <p><strong>Username:</strong> <span th:text="*{username}"></span></p>
-            <p><strong>First Name:</strong> <span th:text="*{firstName}"></span></p>
-            <p><strong>Last Name:</strong> <span th:text="*{lastName}"></span></p>
-            <p><strong>Email:</strong> <span th:text="*{email}"></span></p>
-            <p><strong>Phone Number:</strong> <span th:text="*{phoneNumber}"></span></p>
+        <div class="profile-info">
+            <!-- Username -->
+            <p>
+                <strong>Username:</strong>
+                <span id="username-display" th:text="*{username}"></span>
+                <input id="username-input" type="text" th:value="*{username}" readonly class="hidden readonly-input">
+            </p>
+
+            <!-- First Name -->
+            <p>
+                <strong>First Name:</strong>
+                <span id="firstName-display" th:text="*{firstName}"></span>
+                <input id="firstName-input" type="text" th:value="*{firstName}" class="hidden editable-input">
+            </p>
+
+            <!-- Last Name -->
+            <p>
+                <strong>Last Name:</strong>
+                <span id="lastName-display" th:text="*{lastName}"></span>
+                <input id="lastName-input" type="text" th:value="*{lastName}" class="hidden editable-input">
+            </p>
+
+            <!-- Email -->
+            <p>
+                <strong>Email:</strong>
+                <span id="email-display" th:text="*{email}"></span>
+                <input id="email-input" type="email" th:value="*{email}" readonly class="hidden readonly-input">
+            </p>
+
+            <!-- Phone Number -->
+            <p>
+                <strong>Phone Number:</strong>
+                <span id="phoneNumber-display" th:text="*{phoneNumber}"></span>
+                <input id="phoneNumber-input" type="text" th:value="*{phoneNumber}" class="hidden editable-input">
+            </p>
         </div>
 
         <div class="actions mt-4">
-            <a class="btn btn-primary" th:href="@{/users/edit}">Edit Profile</a>
+            <button id="edit-btn" class="btn btn-primary">Edit Profile</button>
+            <button id="save-btn" class="btn btn-success hidden">Save</button>
+            <button id="cancel-btn" class="btn btn-secondary hidden">Cancel</button>
         </div>
     </div>
 </main>
-
 </body>
+<script th:src="@{/js/editProfile.js}"></script>
 </html>
