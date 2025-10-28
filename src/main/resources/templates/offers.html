@@ -2,8 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head">
-</head>
+<head th:replace="fragments/head :: head(additionalCss='/css/offers/all-offers.css')"></head>
 
 <body>
 
@@ -66,11 +65,10 @@
                         <div class="card-text"><span th:text="|Transmission: *{transmission}|">Transmission </span>
                         </div>
                         <div class="card-text">
-                        <span th:text="|Creation date: *{#temporals.format(created, 'dd MMM yyyy')}|">Creation Date</span>
+                            <span th:text="|Creation date: *{#temporals.format(created, 'dd MMM yyyy')}|">Creation Date</span>
                         </div>
                     </li>
                 </ul>
-
 
                 <div class="card-body">
                     <a class="card-link" th:href="@{/offers/details/{id}(id=*{id})}">Details</a>
@@ -83,5 +81,44 @@
         <footer></footer>
     </div>
 
+    <div class="pagination-container d-flex justify-content-center align-items-center mt-4">
+        <a th:if="${currentPage > 0}"
+           th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                   vehicleType=${vehicleType},
+                   brand=${brand},
+                   modelName=${model},
+                   page=${currentPage - 1},
+                   sort=${sort},
+                   dir=${dir})}"
+           class="pagination-btn">&laquo; Prev</a>
+
+        <div class="pagination-numbers">
+            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+               th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                       vehicleType=${vehicleType},
+                       brand=${brand},
+                       modelName=${model},
+                       page=${i},
+                       sort=${sort},
+                       dir=${dir})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''"
+               class="pagination-number">
+            </a>
+        </div>
+
+        <a th:if="${currentPage + 1 < totalPages}"
+           th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                   vehicleType=${vehicleType},
+                   brand=${brand},
+                   modelName=${model},
+                   page=${currentPage + 1},
+                   sort=${sort},
+                   dir=${dir})}"
+           class="pagination-btn">Next &raquo;</a>
+    </div>
+
+
+</div>
 </body>
 </html>
