@@ -8,6 +8,9 @@ import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +31,9 @@ public interface OfferService {
 
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 
-  List<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel offersFindServiceModel, VehicleCategoryEnum vehicleCategory);
+  Page<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel offersFindServiceModel, VehicleCategoryEnum vehicleCategory, Pageable pageable);
+
+  Page<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum category, String brand, String modelName, Pageable pageable);
 
   boolean isOwnerOrIsAdmin(String userName, Long id);
 
@@ -36,5 +41,4 @@ public interface OfferService {
 
   List<OfferBaseViewModel> findOffersByBrand(String toUpperCase);
 
-  List<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum category, String brand, String modelName);
 }

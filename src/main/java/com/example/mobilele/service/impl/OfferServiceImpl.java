@@ -16,6 +16,9 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -129,9 +132,12 @@ public class OfferServiceImpl implements OfferService {
     this.offerRepository.save(offerEntity);
   }
 
-  @Override
-  public List<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel filter, VehicleCategoryEnum vehicleType) {
-    return offerRepository.findAll((root, query, cb) -> {
+  public Page<OfferBaseViewModel> findOffersByFilters(
+          OffersFindServiceModel filter,
+          VehicleCategoryEnum vehicleType,
+          Pageable pageable) {
+
+    Specification<OfferEntity> spec = (root, query, cb) -> {
       List<Predicate> predicates = new ArrayList<>();
 
       // Mandatory filters
@@ -191,34 +197,18 @@ public class OfferServiceImpl implements OfferService {
         }
       }
 
-      if (filter.getEngine() != null) {
-        predicates.add(cb.equal(root.get("engine"), filter.getEngine()));
-      }
-      if (filter.getTransmission() != null) {
-        predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
-      }
-
-      if (filter.getCondition() != null) {
-        predicates.add(cb.equal(root.get("vehicle_condition"), filter.getCondition()));
-      }
-
-      if (filter.getColor() != null) {
-        predicates.add(cb.equal(root.get("color"), filter.getColor()));
-      }
-
-      if (filter.getCountry() != null) {
-        predicates.add(cb.equal(root.get("country"), filter.getCountry()));
-      }
-
-      if (filter.getCity() != null) {
-        predicates.add(cb.equal(root.get("city"), filter.getCity()));
-      }
+      if (filter.getEngine() != null) predicates.add(cb.equal(root.get("engine"), filter.getEngine()));
+      if (filter.getTransmission() != null) predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
+      if (filter.getCondition() != null) predicates.add(cb.equal(root.get("vehicleCondition"), filter.getCondition()));
+      if (filter.getColor() != null) predicates.add(cb.equal(root.get("color"), filter.getColor()));
+      if (filter.getCountry() != null) predicates.add(cb.equal(root.get("country"), filter.getCountry()));
+      if (filter.getCity() != null) predicates.add(cb.equal(root.get("city"), filter.getCity()));
 
       return cb.and(predicates.toArray(new Predicate[0]));
-    })
-            .stream()
-            .map(this::mapToOfferBaseViewModel)
-            .collect(Collectors.toList());
+    };
+
+    return offerRepository.findAll(spec, pageable)
+            .map(this::mapToOfferBaseViewModel);
   }
 
   public boolean isOwnerOrIsAdmin(String username, Long id) {
@@ -255,12 +245,15 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum vehicleCategory, String brand, String modelName) {
+  public Page<OfferBaseViewModel> findByTypeBrandAndModel(
+          VehicleCategoryEnum vehicleCategory,
+          String brand,
+          String modelName,
+          Pageable pageable) {
+
     return this.offerRepository
-            .findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(vehicleCategory,brand,modelName)
-            .stream()
-            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
-            .collect(Collectors.toList());
+            .findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(vehicleCategory, brand, modelName, pageable)
+            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class));
   }
 
   @Override
