@@ -198,7 +198,8 @@ public class OfferServiceImpl implements OfferService {
       }
 
       if (filter.getEngine() != null) predicates.add(cb.equal(root.get("engine"), filter.getEngine()));
-      if (filter.getTransmission() != null) predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
+      if (filter.getTransmission() != null)
+        predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
       if (filter.getCondition() != null) predicates.add(cb.equal(root.get("vehicleCondition"), filter.getCondition()));
       if (filter.getColor() != null) predicates.add(cb.equal(root.get("color"), filter.getColor()));
       if (filter.getCountry() != null) predicates.add(cb.equal(root.get("country"), filter.getCountry()));
@@ -240,6 +241,14 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public List<OfferBaseViewModel> findOffersByBrand(String brandName) {
     return this.offerRepository.findAllByModel_Brand_Name(brandName)
+            .stream()
+            .map(this::mapToOfferBaseViewModel)
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<OfferBaseViewModel> findOffersByUserId(Long userId) {
+    return this.offerRepository.findAllBySeller_Id(userId)
             .stream()
             .map(this::mapToOfferBaseViewModel)
             .collect(Collectors.toList());

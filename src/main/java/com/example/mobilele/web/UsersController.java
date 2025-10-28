@@ -4,7 +4,9 @@ import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
+import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
+import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.validation.Valid;
@@ -17,15 +19,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/users")
 public class UsersController {
   private final UserService userService;
   private final ModelMapper modelMapper;
+  private final OfferService offerService;
 
-  public UsersController(UserService userService, ModelMapper modelMapper) {
+  public UsersController(UserService userService, ModelMapper modelMapper, OfferService offerService) {
     this.userService = userService;
     this.modelMapper = modelMapper;
+    this.offerService = offerService;
   }
 
   @ModelAttribute("userRegisterBindingModel")
@@ -101,5 +107,15 @@ public class UsersController {
     UserViewModel updatedUser = userService.updateUserProfile(userId, bindingModel);
 
     return ResponseEntity.ok(updatedUser);
+  }
+
+  @GetMapping("/my-offers")
+  public String showPrincipalsOffers(@AuthenticationPrincipal MobileleUser principal,
+                                     Model model) {
+
+    Long userId = principal.getId();
+
+    model.addAttribute("offers", this.offerService.findOffersByUserId(userId));
+    return "offers";
   }
 }

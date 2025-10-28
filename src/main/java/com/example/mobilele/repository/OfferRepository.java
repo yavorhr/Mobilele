@@ -21,4 +21,6 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
           String brand,
           String modelName,
           Pageable pageable);
+
+  List<OfferEntity> findAllBySeller_Id(Long userId);
 }
