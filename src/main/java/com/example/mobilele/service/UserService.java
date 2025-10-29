@@ -33,4 +33,8 @@ public interface UserService {
   UserViewModel findUserViewModelById(Long id);
 
   UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel);
+
+  void deleteProfileById(Long userId);
+
+  boolean isEmailAvailable(String email);
 }
