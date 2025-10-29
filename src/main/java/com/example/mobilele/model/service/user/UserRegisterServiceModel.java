@@ -2,11 +2,16 @@ package com.example.mobilele.model.service.user;
 
 public class UserRegisterServiceModel {
   private String username;
+  private String email;
   private String firstName;
   private String lastName;
   private String password;
 
   public UserRegisterServiceModel() {
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public String getUsername() {
@@ -39,5 +44,10 @@ public class UserRegisterServiceModel {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public UserRegisterServiceModel setEmail(String email) {
+    this.email = email;
+    return this;
   }
 }
