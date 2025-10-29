@@ -9,6 +9,9 @@ import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -110,12 +111,25 @@ public class UsersController {
   }
 
   @GetMapping("/my-offers")
-  public String showPrincipalsOffers(@AuthenticationPrincipal MobileleUser principal,
-                                     Model model) {
+  public String showPrincipalsOffers(@AuthenticationPrincipal MobileleUser principal, Model model) {
 
     Long userId = principal.getId();
 
     model.addAttribute("offers", this.offerService.findOffersByUserId(userId));
     return "offers";
+  }
+
+  @DeleteMapping("/delete")
+  public String deleteUserProfile(
+          @AuthenticationPrincipal MobileleUser principal,
+          HttpServletRequest request,
+          HttpServletResponse response) throws ServletException {
+
+    Long userId = principal.getId();
+    this.userService.deleteProfileById(userId);
+
+    request.logout();
+
+    return "redirect:/";
   }
 }
