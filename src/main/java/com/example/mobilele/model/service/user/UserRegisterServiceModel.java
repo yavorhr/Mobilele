@@ -6,12 +6,17 @@ public class UserRegisterServiceModel {
   private String firstName;
   private String lastName;
   private String password;
+  private String phoneNumber;
 
   public UserRegisterServiceModel() {
   }
 
   public String getEmail() {
     return email;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
   public String getUsername() {
@@ -48,6 +53,11 @@ public class UserRegisterServiceModel {
 
   public UserRegisterServiceModel setEmail(String email) {
     this.email = email;
+    return this;
+  }
+
+  public UserRegisterServiceModel setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
     return this;
   }
 }

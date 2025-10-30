@@ -4,12 +4,14 @@ import com.example.mobilele.validator.UniqueEmail;
 import com.example.mobilele.validator.UniqueUsername;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @DoesPasswordAndConfirmPasswordMatch
 public class UserRegisterBindingModel {
   private String username;
   private String firstName;
+  private String phoneNumber;
   private String lastName;
   private String email;
   private String password;
@@ -19,17 +21,23 @@ public class UserRegisterBindingModel {
   }
 
   @UniqueUsername
-  @NotNull
   @Size(min = 2,max = 20, message = "Username should be between 2 and 20 symbols")
   public String getUsername() {
     return username;
   }
 
   @UniqueEmail
-  @NotNull
-  @Size(min = 2,max = 20, message = "Email should be between 2 and 20 symbols")
+  @Size(min = 2,max = 30, message = "Email should be between 2 and 20 symbols")
+  @Pattern(
+          regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+          message = "Invalid email format"
+  )
   public String getEmail() {
     return email;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
   @NotNull
@@ -38,13 +46,11 @@ public class UserRegisterBindingModel {
     return confirmPassword;
   }
 
-  @NotNull
   @Size(min = 4,max = 20)
   public String getFirstName() {
     return firstName;
   }
 
-  @NotNull
   @Size(min = 4,max = 20)
   public String getLastName() {
     return lastName;
@@ -55,7 +61,6 @@ public class UserRegisterBindingModel {
   public String getPassword() {
     return password;
   }
-
 
   public void setUsername(String username) {
     this.username = username;
@@ -79,6 +84,11 @@ public class UserRegisterBindingModel {
 
   public UserRegisterBindingModel setEmail(String email) {
     this.email = email;
+    return this;
+  }
+
+  public UserRegisterBindingModel setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
     return this;
   }
 }
