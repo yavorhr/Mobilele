@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,22 +42,18 @@ public class UserServiceImpl implements UserService {
   public void registerAndLoginUser(UserRegisterServiceModel serviceModel) {
     UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
 
-    UserEntity newUserEntity = new UserEntity();
+    UserEntity userEntity = this.modelMapper.map(serviceModel, UserEntity.class);
 
-    newUserEntity.
-            setUsername(serviceModel.getUsername()).
-            setFirstName(serviceModel.getFirstName()).
-            setLastName(serviceModel.getLastName()).
-            setPassword(passwordEncoder.encode(serviceModel.getPassword())).
-            setRoles(List.of(userRoleEntity));
+    userEntity.setPassword(passwordEncoder.encode(serviceModel.getPassword()))
+            .setRoles(List.of(userRoleEntity));
 
-    newUserEntity = userRepository.save(newUserEntity);
+    userEntity = userRepository.save(userEntity);
 
-    UserDetails principal = mobileleUserService.loadUserByUsername(newUserEntity.getUsername());
+    UserDetails principal = mobileleUserService.loadUserByUsername(userEntity.getUsername());
 
     Authentication authentication = new UsernamePasswordAuthenticationToken(
             principal,
-            newUserEntity.getPassword(),
+            userEntity.getPassword(),
             principal.getAuthorities()
     );
 
