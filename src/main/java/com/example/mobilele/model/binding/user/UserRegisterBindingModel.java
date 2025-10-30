@@ -1,11 +1,9 @@
 package com.example.mobilele.model.binding.user;
 import com.example.mobilele.validator.DoesPasswordAndConfirmPasswordMatch;
 import com.example.mobilele.validator.UniqueEmail;
+import com.example.mobilele.validator.UniquePhoneNumber;
 import com.example.mobilele.validator.UniqueUsername;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @DoesPasswordAndConfirmPasswordMatch
 public class UserRegisterBindingModel {
@@ -36,6 +34,11 @@ public class UserRegisterBindingModel {
     return email;
   }
 
+  @Pattern(
+          regexp = "^\\+359\\d{9}$",
+          message = "Phone number must start with +359 and contain exactly 9 digits after that"
+  )
+  @UniquePhoneNumber
   public String getPhoneNumber() {
     return phoneNumber;
   }

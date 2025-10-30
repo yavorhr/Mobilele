@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -133,6 +132,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isEmailAvailable(String email) {
     return userRepository.findByEmailIgnoreCase(email).isEmpty();
+  }
+
+  @Override
+  public boolean isPhoneNumberAvailable(String phoneNumber) {
+    return userRepository.findByPhoneNumberIgnoreCase(phoneNumber).isEmpty();
   }
 
   @Override

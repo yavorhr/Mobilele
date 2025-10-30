@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
   Optional<UserEntity> findByUsernameIgnoreCase(String username);
 
+  Optional<UserEntity> findByPhoneNumberIgnoreCase(String phoneNumber);
+
   @Query("SELECT u FROM UserEntity u Where u.accountLocked")
   List<UserEntity> findAllLockedUsers();
 }

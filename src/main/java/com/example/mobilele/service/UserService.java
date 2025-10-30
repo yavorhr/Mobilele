@@ -37,4 +37,6 @@ public interface UserService {
   void deleteProfileById(Long userId);
 
   boolean isEmailAvailable(String email);
+
+  boolean isPhoneNumberAvailable(String phoneNumber);
 }
