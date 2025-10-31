@@ -1,9 +1,6 @@
 package com.example.mobilele.model.view.offer;
 
-import com.example.mobilele.model.entity.enums.ColorEnum;
-import com.example.mobilele.model.entity.enums.ConditionEnum;
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.service.PictureServiceModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 
@@ -17,7 +14,8 @@ public class OfferViewModel {
   private String modelBrandName;
   private String modelVehicleType;
   private EngineEnum engine;
-  private String location;
+  private CountryEnum country;
+  private CityEnum city;
   private Double mileage;
   private TransmissionType transmission;
   private Integer modelYear;
@@ -37,8 +35,12 @@ public class OfferViewModel {
     return modelVehicleType;
   }
 
-  public String getLocation() {
-    return location;
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
   }
 
   public Integer getModelYear() {
@@ -102,6 +104,16 @@ public class OfferViewModel {
     return transmission;
   }
 
+  public OfferViewModel setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OfferViewModel setCity(CityEnum city) {
+    this.city = city;
+    return this;
+  }
+
   public int getYear() {
     return modelYear;
   }
@@ -122,11 +134,6 @@ public class OfferViewModel {
 
   public OfferViewModel setSeller(UserViewModel seller) {
     this.seller = seller;
-    return this;
-  }
-
-  public OfferViewModel setLocation(String location) {
-    this.location = location;
     return this;
   }
 
