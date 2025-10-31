@@ -1,128 +1,94 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head">
-</head>
+<head th:replace="fragments/head :: head(additionalCss='/css/users/register.css')"></head>
 
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<div class="container">
-    <h2 class="text-center text-white">Register User</h2>
-    <form th:method="POST"
-          th:action="@{/users/register}"
-          th:object="${userRegisterBindingModel}"
-          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="firstName" class="text-white font-weight-bold">First Name</label>
-                <input
-                        th:field="*{firstName}"
-                        th:errorclass="is-invalid"
-                        id="firstName"
-                        min="4"
-                        max="20"
-                        type="text" class="form-control"
-                        placeholder="First name"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    First name should be between 4 and 20 symbols
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="lastName" class="text-white font-weight-bold">Last Name</label>
-                <input
-                        th:field="*{lastName}"
-                        th:errorclass="is-invalid"
-                        id="lastName"
-                        type="text" min="4"
-                        max="20" class="form-control"
-                        placeholder="First name"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Last name should be between 4 and 20 symbols
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="username" class="text-white font-weight-bold">Username</label>
-                <input
-                        th:field="*{username}"
-                        th:errorclass="is-invalid"
-                        id="username" type="text"
-                        class="form-control"
-                        placeholder="First name"/>
-                <p th:if="${#fields.hasErrors('username')}"
-                   th:errors="*{username}" class="invalid-feedback errors alert alert-danger">
-                    Username error passed by controller
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="email" class="text-white font-weight-bold">Email</label>
-                <input
-                        th:field="*{email}"
-                        th:errorclass="is-invalid"
-                        id="email" type="text"
-                        class="form-control"
-                        placeholder="First name"/>
-                <p th:if="${#fields.hasErrors('email')}"
-                   th:errors="*{email}"
-                   class="invalid-feedback errors alert alert-danger">
-                    Username error passed by controller
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="phoneNumber" class="text-white font-weight-bold">Phone Number</label>
-                <input
-                        th:field="*{phoneNumber}"
-                        th:errorclass="is-invalid"
-                        id="phoneNumber"
-                        type="text"
-                        class="form-control"
-                        placeholder="+359XXXXXXXXX"
-                        pattern="^\+359\d{9}$"
-                        title="Phone number must start with +359 and contain exactly 9 digits"/>
-                <p th:if="${#fields.hasErrors('phoneNumber')}"
-                   th:errors="*{phoneNumber}"
-                   class="invalid-feedback errors alert alert-danger">
-                    Invalid phone number format
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="password" class="text-white font-weight-bold">Password</label>
-                <input
-                        th:field="*{password}"
-                        th:errorclass="is-invalid"
-                        id="password"
-                        type="password" class="form-control"
-                        placeholder="Password"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Password should be at least 5 symbols long
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="password" class="text-white font-weight-bold">Confirm password</label>
-                <input
-                        id="confirmPassword"
-                        th:field="*{confirmPassword}"
-                        th:errorclass="is-invalid"
-                        type="password" class="form-control"
-                        placeholder="Password"/>
-                <p th:if="${#fields.hasErrors('confirmPassword')}"
-                   th:errors="*{confirmPassword}"
-                   class="invalid-feedback errors alert alert-danger">
-                </p>
-            </div>
-            <div class="col col-md-4">
-                <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Create account"/>
+<main class="register-container">
+    <div class="register-card">
+        <h2 class="text-center mb-4">Register User</h2>
+
+        <form th:method="POST"
+              th:action="@{/users/register}"
+              th:object="${userRegisterBindingModel}"
+              class="register-form">
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input th:field="*{firstName}" th:errorclass="is-invalid"
+                           id="firstName" type="text" placeholder="First name">
+                    <p th:if="${#fields.hasErrors('firstName')}"
+                       th:errors="*{firstName}" class="error-msg">First name should be between 4 and 20 symbols</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input th:field="*{lastName}" th:errorclass="is-invalid"
+                           id="lastName" type="text" placeholder="Last name">
+                    <p th:if="${#fields.hasErrors('lastName')}"
+                       th:errors="*{lastName}" class="error-msg">Last name should be between 4 and 20 symbols</p>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
 
-<div>
-    <footer></footer>
-</div>
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input th:field="*{username}" th:errorclass="is-invalid"
+                           id="username" type="text" placeholder="Username">
+                    <p th:if="${#fields.hasErrors('username')}"
+                       th:errors="*{username}" class="error-msg">Username error passed by controller</p>
+                </div>
 
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input th:field="*{email}" th:errorclass="is-invalid"
+                           id="email" type="email" placeholder="Email">
+                    <p th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}" class="error-msg">Invalid email address</p>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group phone-number">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input th:field="*{phoneNumber}" th:errorclass="is-invalid"
+                           id="phoneNumber" type="text" placeholder="+359XXXXXXXXX"
+                           pattern="^\+359\d{9}$"
+                           title="Phone number must start with +359 and contain exactly 9 digits">
+                    <p th:if="${#fields.hasErrors('phoneNumber')}"
+                       th:errors="*{phoneNumber}" class="error-msg">Invalid phone number format</p>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input th:field="*{password}" th:errorclass="is-invalid"
+                           id="password" type="password" placeholder="Password">
+                    <p th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}" class="error-msg">Password should be at least 5 symbols long</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input th:field="*{confirmPassword}" th:errorclass="is-invalid"
+                           id="confirmPassword" type="password" placeholder="Confirm password">
+                    <p th:if="${#fields.hasErrors('confirmPassword')}"
+                       th:errors="*{confirmPassword}" class="error-msg"></p>
+                </div>
+            </div>
+
+
+
+            <div class="button-holder">
+                <input type="submit" class="btn-submit" value="Create Account">
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer></footer>
 </body>
 </html>
