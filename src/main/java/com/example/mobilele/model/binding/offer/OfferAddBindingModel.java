@@ -25,81 +25,76 @@ public class OfferAddBindingModel {
   public OfferAddBindingModel() {
   }
 
-
-  @NotNull
-  @NotEmpty
-  public List<MultipartFile> getPictures() {
-    return pictures;
+  @NotNull(message = "Please select vehicle category")
+  public VehicleCategoryEnum getVehicleType() {
+    return vehicleType;
   }
 
-  @NotNull
-  public ConditionEnum getCondition() {
-    return condition;
-  }
-
-  @NotNull
-  @NotBlank
+  @NotBlank(message = "Please select model")
   public String getModel() {
     return model;
   }
 
-  @NotNull
-  @NotBlank
+  @NotBlank(message = "Please select brand")
   public String getBrand() {
     return brand;
   }
 
-  @NotNull
-  @Size(min = 10)
+  @NotNull(message = "Please upload at least one picture")
+  public List<MultipartFile> getPictures() {
+    return pictures;
+  }
+
+  @NotNull(message = "Please select condition")
+  public ConditionEnum getCondition() {
+    return condition;
+  }
+
+  @Size(min = 10, message = "Description must be at least 10 characters long")
   public String getDescription() {
     return description;
   }
 
-  @NotNull
+  @NotNull(message = "Please select engine type")
   public EngineEnum getEngine() {
     return engine;
   }
 
-  @PositiveOrZero
-  @NotNull
+  @PositiveOrZero(message = "Mileage must be zero or positive")
+  @NotNull(message = "Please enter price")
   public Double getMileage() {
     return mileage;
   }
 
-  @NotNull
-  @DecimalMin("100")
+  @NotNull(message = "Please insert price")
+  @DecimalMin(value = "100", message = "Price must be at least 100")
   public Double getPrice() {
     return price;
   }
 
-  @NotNull
+  @NotNull(message = "Please select transmission type")
   public TransmissionType getTransmission() {
     return transmission;
   }
 
-  @Positive
   @NotNull(message = "Please insert model year")
+  @Positive(message = "Model year must be positive")
   @ValidYear
   public Integer getYear() {
     return year;
   }
 
-  @NotNull
-  public VehicleCategoryEnum getVehicleType() {
-    return vehicleType;
-  }
-
-  @NotNull
+  @NotNull(message = "Please select color")
   public ColorEnum getColor() {
     return color;
   }
 
-  @NotNull
+  @NotNull(message = "Please choose country")
   public CountryEnum getCountry() {
     return country;
   }
 
-  @NotNull
+  @NotNull(message = "Please choose city")
   public CityEnum getCity() {
     return city;
   }
