@@ -1,0 +1,130 @@
+/* === Login Page Styling (same as Profile + Register theme) === */
+
+body {
+    background-color: #222;
+    color: #f8f9fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7rem;
+    padding: 2rem;
+}
+
+.login-card {
+    background-color: #343a40;
+    border-radius: 15px;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 450px;
+}
+
+.login-card h2 {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* === Form === */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    color: #ffc107;
+    margin-bottom: 0.3rem;
+}
+
+.form-input {
+    background-color: #495057;
+    border: 1px solid #666;
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #17a2b8;
+    outline: none;
+    box-shadow: 0 0 5px #17a2b8;
+}
+
+/* === Error message === */
+.error-container {
+    text-align: center;
+}
+
+.error-msg {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 0.6rem;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+/* === Submit Button === */
+.button-holder {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btn-submit {
+    background-color: #17a2b8;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.7rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #138496;
+    transform: scale(1.03);
+}
+
+/* === Register Hint === */
+.register-hint {
+    color: #bbb;
+    font-size: 0.95rem;
+}
+
+.register-link {
+    color: #17a2b8;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.register-link:hover {
+    color: #ffc107;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 1.5rem;
+        max-width: 95%;
+    }
+}
