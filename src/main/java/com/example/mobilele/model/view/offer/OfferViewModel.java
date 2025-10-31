@@ -15,6 +15,7 @@ public class OfferViewModel {
   private Double price;
   private String description;
   private String modelBrandName;
+  private String modelVehicleType;
   private EngineEnum engine;
   private String location;
   private Double mileage;
@@ -30,6 +31,10 @@ public class OfferViewModel {
   private UserViewModel seller;
 
   public OfferViewModel() {
+  }
+
+  public String getModelVehicleType() {
+    return modelVehicleType;
   }
 
   public String getLocation() {
@@ -103,6 +108,11 @@ public class OfferViewModel {
 
   public String getModelName() {
     return modelName.substring(0, 1).toUpperCase() + modelName.substring(1).toLowerCase();
+  }
+
+  public OfferViewModel setModelVehicleType(String modelVehicleType) {
+    this.modelVehicleType = modelVehicleType;
+    return this;
   }
 
   public OfferViewModel setColor(ColorEnum color) {
