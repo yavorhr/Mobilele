@@ -2,186 +2,208 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head">
-</head>
+<head th:replace="fragments/head :: head(additionalCss='/css/offers/add-offer.css')"></head>
 
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<div class="container">
-    <h2 class="text-center text-white">Update Offer</h2>
-    <form
-            th:object="${offerBindingModel}"
-            th:action="@{/offers/update/{id}(id=*{id})}"
-            th:method="patch"
-            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
-                <select
-                        id="brand"
-                        class="form-control"
-                        name="brand"
-                        th:errorclass="is-invalid">
-                    <option
-                            th:text="*{getBrand()}"
-                            th:value="*{getBrand()}">
-                    </option>
-                </select>
-            </div>
+<main class="offer-container">
+    <div class="offer-card">
+        <h2 class="text-center mb-4">Update Offer</h2>
 
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="model">Model</label>
-                <select
-                        id="model"
-                        class="form-control"
-                        name="model"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select model -</option>
-                    <optgroup label="Model name">
-                        <option
-                                th:each="model : ${models}"
-                                th:text="${model}"
-                                th:value="${model}"
-                                th:selected="${model} == *{model}">
+        <form
+                th:action="@{/offers}"
+                th:method="POST"
+                th:object="${offerBindingModel}"
+                enctype="multipart/form-data"
+                class="offer-form">
+
+            <div class="form-flex">
+
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType" th:field="*{vehicleType}">
+                        <option value="">- Select vehicle category -</option>
+                        <option th:each="c : ${categories}"
+                                th:value="${c}"
+                                th:text="${c}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('vehicleType')}"
+                         th:errors="*{vehicleType}"
+                         class="error-msg"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <select id="brand" th:field="*{brand}">
+                        <option value="">- Select brand -</option>
+                        <option th:each="b : ${brands}"
+                                th:value="${b.name}"
+                                th:text="${b.name}">
                         </option>
-                    </optgroup>
-                </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Vehicle model is required.
-                </p>
-            </div>
-
-            <div class="form-group col-md-6 mb-3">
-                <label for="price" class="text-white font-weight-bold">Price</label>
-                <input
-                        th:field="*{price}"
-                        th:errorclass="is-invalid"
-                        id="price"
-                        type="number" min="0" step="100"
-                        class="form-control"
-                        placeholder="Suggested price"/>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Suggested price is required.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
-                <select
-                        id="engine"
-                        class="form-control"
-                        name="engine"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select engine type -</option>
-                    <option th:each="e : ${engines}"
-                            th:text="${e}"
-                            th:value="${e}"
-                            th:selected="${e} == *{engine}">
-                        Engine type
-                    </option>
-                </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Engine type is required.
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
-                <select
-                        name="transmission"
-                        id="transmission"
-                        class="form-control"
-                        th:errorclass="is-invalid">
-                    <option value="">- Select transmission type -</option>
-                    <option th:each="t : ${transmissions}"
-                            th:text="${t}"
-                            th:value="${t}"
-                            th:selected="${t} == *{transmission}">Transmission type
-                    </option>
-                </select>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Transmission type is required.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="year" class="text-white font-weight-bold">Year</label>
-                <input
-                        id="year"
-                        type="number"
-                        min="1900" max="2099"
-                        step="1" class="form-control"
-                        placeholder="Manufacturing year"
-                        th:field="*{year}"
-                        th:errorclass="is-invalid"/>
-                <p class="errors alert alert-danger invalid-feedback">
-                    Manufacturing year is required.
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                <input
-                        id="mileage"
-                        type="number"
-                        min="0"
-                        max="900000"
-                        class="form-control"
-                        placeholder="Mileage in kilometers"
-                        th:field="*{mileage}"
-                        th:errorclass="is-invalid"
-                />
-                <p class="errors alert alert-danger invalid-feedback">
-                    Mileage in kilometers is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="text-white font-weight-bold" for="description">Description</label>
-            <textarea
-                    id="description"
-                    type="textarea"
-                    class="form-control"
-                    rows="3"
-                    placeholder="Description"
-                    th:field="*{description}"
-                    th:errorclass="is-invalid"
-            >
-            </textarea>
-            <p class="errors alert alert-danger invalid-feedback">
-                Description is required.
-            </p>
-        </div>
-        <div class="form-group">
-            <label class="text-white font-weight-bold" for="imageUrl">Image URL</label>
-            <input
-                    id="imageUrl"
-                    type="url"
-                    class="form-control"
-                    placeholder="Put vehicle image URL here"
-                    th:field="*{imageUrl}"
-                    th:errorclass="is-invalid"
-            >
-            <p class="errors alert alert-danger invalid-feedback">
-                Vehicle image URL is required.
-            </p>
-        </div>
-
-        <div class="row">
-            <div class="col col-md-4">
-                <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Update Offer"/>
+                    </select>
+                    <div th:if="${#fields.hasErrors('brand')}"
+                         th:errors="*{brand}"
+                         class="error-msg">
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
 
-<div>
-    <footer></footer>
-</div>
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <select id="model"
+                            th:field="*{model}">
+                        <option value="">- Select model -</option>
+                        <option
+                                th:each="m : ${models}"
+                                th:value="${m}"
+                                th:text="${m}">
+                        </option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('model')}"
+                         th:errors="*{model}"
+                         class="error-msg"></div>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input id="price"
+                           type="number"
+                           min="0" placeholder="Suggested price"
+                           th:field="*{price}"/>
+                    <div th:if="${#fields.hasErrors('price')}"
+                         th:errors="*{price}"
+                         class="error-msg"></div>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="mileage">Mileage</label>
+                    <input id="mileage"
+                           type="number"
+                           min="0" placeholder="Mileage in kilometers"
+                           th:field="*{mileage}"/>
+                    <div th:if="${#fields.hasErrors('mileage')}"
+                         th:errors="*{mileage}"
+                         class="error-msg">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="engine">Engine</label>
+                    <select id="engine" th:field="*{engine}">
+                        <option value="">- Select engine type -</option>
+                        <option
+                                th:each="e : ${engines}"
+                                th:value="${e}"
+                                th:text="${e}">
+                        </option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('engine')}"
+                         th:errors="*{engine}"
+                         class="error-msg"></div>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="transmission">Transmission</label>
+                    <select id="transmission" th:field="*{transmission}">
+                        <option value="">- Select transmission type -</option>
+                        <option th:each="t : ${transmissions}"
+                                th:value="${t}"
+                                th:text="${t}"></option>
+                    </select>
+                    <div
+                            th:if="${#fields.hasErrors('transmission')}"
+                            th:errors="*{transmission}"
+                            class="error-msg"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Model Year</label>
+                    <input id="year" type="number" placeholder="e.g. 2020" th:field="*{year}"/>
+                    <div
+                            th:if="${#fields.hasErrors('year')}"
+                            th:errors="*{year}"
+                            class="error-msg"></div>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="condition">Condition</label>
+                    <select id="condition" th:field="*{condition}">
+                        <option value="">- Select condition -</option>
+                        <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                    <div
+                            th:if="${#fields.hasErrors('condition')}"
+                            th:errors="*{condition}"
+                            class="error-msg"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <select id="color" th:field="*{color}">
+                        <option value="">- Select color -</option>
+                        <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                    <div
+                            th:if="${#fields.hasErrors('color')}"
+                            th:errors="*{color}"
+                            class="error-msg"></div>
+                </div>
+            </div>
+
+            <div class="form-flex">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" th:field="*{country}">
+                        <option value="">-- Select a country --</option>
+                        <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('country')}"
+                         th:errors="*{country}"
+                         class="error-msg">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select id="city" th:field="*{city}">
+                        <option value="">-- Select a city --</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('city')}"
+                         th:errors="*{city}"
+                         class="error-msg"></div>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="description">Description</label>
+                <textarea id="description"
+                          rows="3"
+                          placeholder="Description"
+                          th:field="*{description}">
+                </textarea>
+                <div th:if="${#fields.hasErrors('description')}"
+                     th:errors="*{description}"
+                     class="error-msg"></div>
+            </div>
+
+            <div class="button-holder">
+                <input type="submit" class="btn-submit" value="Add Offer">
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer></footer>
+
+<script th:src="@{/js/loadModels.js}"></script>
+<script th:src="@{/js/loadCitiesPerCountry.js}"></script>
 
 </body>
 </html>
