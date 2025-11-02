@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
+import com.example.mobilele.model.binding.offer.OfferEditBindingForm;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
@@ -167,7 +168,7 @@ public class OffersController {
     Page<OfferBaseViewModel> offersPage;
 
     if (filters != null) {
-       serviceModel = this.modelMapper.map(filters, OffersFindServiceModel.class);
+      serviceModel = this.modelMapper.map(filters, OffersFindServiceModel.class);
       offersPage = this.offerService.findOffersByFilters(serviceModel, categoryEnum, pageable);
     } else {
       offersPage = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName, pageable);
@@ -210,7 +211,7 @@ public class OffersController {
 
   private List<OfferBaseViewModel> sortOffers(@RequestParam(defaultValue = "creationDate")
                                                       String sort, @RequestParam(defaultValue = "desc")
-          String dir, List<OfferBaseViewModel> offers) {
+                                                      String dir, List<OfferBaseViewModel> offers) {
 
     offers = new ArrayList<>(offers);
 
@@ -249,29 +250,6 @@ public class OffersController {
     model.addAttribute("offers", this.offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT)));
     return "offers";
   }
-
-//  // 2. Get Offers - All
-//  @GetMapping("/offers/all")
-//  public String getAllOffersPage(Model model) {
-//    List<OfferViewModel> offers = this.offerService.findAllOffers();
-//    model.addAttribute("offers", offers);
-//
-//    return "offers";
-//  }
-
-//  //TODO ? What is this method for
-//  @GetMapping("/offers")
-//  public String getModelsByBrandName(@RequestParam String brand, Model model) {
-//    List<OfferViewModel> offersByBrand = offerService
-//            .findOffersByBrand(brand.toLowerCase())
-//            .stream()
-//            .map(offerServiceModel -> modelMapper.map(offerServiceModel, OfferViewModel.class))
-//            .collect(Collectors.toList());
-//
-//    model.addAttribute("offers", offersByBrand);
-//
-//    return "offers";
-//  }
 
   // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
@@ -325,38 +303,41 @@ public class OffersController {
   }
 
   // 4.1 Update offer - GET
-//  @GetMapping("/offers/update/{id}")
-//  public String getOfferUpdatePage(@PathVariable Long id, Model model, @AuthenticationPrincipal MobileleUser currentUser) {
-//    OfferAddBindingModel offerBindingModel =
-//            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferAddBindingModel.class);
-//
-//    model.addAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
-//    model.addAttribute("offerBindingModel", offerBindingModel);
-//
-//    return "update";
-//  }
+  @GetMapping("/offers/update/{id}")
+  public String getOfferUpdatePage(@PathVariable Long id,
+                                   Model model, @AuthenticationPrincipal MobileleUser currentUser) {
 
-  // 4.2 Update offer - PATCH
-//  @PatchMapping("/offers/update/{id}")
-//  public String updateOffer(@PathVariable Long id,
-//                            @Valid OfferAddBindingModel offerBindingModel,
-//                            BindingResult bindingResult,
-//                            RedirectAttributes redirectAttributes) {
-//
-//    if (bindingResult.hasErrors()) {
-//      redirectAttributes
-//              .addFlashAttribute("offerBindingModel", offerBindingModel)
-//              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
-//              .addFlashAttribute("models", this.modelService.findModelsPerBrand(offerBindingModel.getBrand()));
-//
-//      return "redirect:/offers/update/errors/" + id;
-//    }
-//
-//    //TODO:
-//    //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
-//
-//    return "redirect:/offers/details/" + id;
-//  }
+    OfferEditBindingForm offerBindingModel =
+            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferEditBindingForm.class);
+
+    model.addAttribute("models", this.modelService.findModelsByVehicleTypeAndBrand(offerBindingModel.getBrand(), offerBindingModel.getVehicleType()));
+    model.addAttribute("offerBindingModel", offerBindingModel);
+
+    return "update";
+  }
+
+  // 4.2 Update offer -PATCH
+  @PatchMapping("/offers/update/{id}")
+
+  public String updateOffer(@PathVariable Long id,
+                            @Valid OfferAddBindingModel offerBindingModel,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+
+    if (bindingResult.hasErrors()) {
+      redirectAttributes
+              .addFlashAttribute("offerBindingModel", offerBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult)
+              .addFlashAttribute("models", this.modelService.findModelsByVehicleTypeAndBrand(offerBindingModel.getBrand(), offerBindingModel.getVehicleType()));
+
+      return "redirect:/offers/update/errors/" + id;
+    }
+
+    //TODO:
+    //this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), currentUser.getId());
+
+    return "redirect:/offers/details/" + id;
+  }
 
   @GetMapping("/offers/update/errors/{id}")
   public String editOfferErrors(@PathVariable Long id) {
