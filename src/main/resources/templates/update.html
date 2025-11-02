@@ -12,9 +12,9 @@
         <h2 class="text-center mb-4">Update Offer</h2>
 
         <form
-                th:action="@{/offers}"
-                th:method="POST"
                 th:object="${offerBindingModel}"
+                th:action="@{/offers/update/{id}(id=${offerBindingModel.id})}"
+                th:method="PATCH"
                 enctype="multipart/form-data"
                 class="offer-form">
 
@@ -34,7 +34,8 @@
                     <label for="mileage">Mileage</label>
                     <input id="mileage"
                            type="number"
-                           min="0" placeholder="Mileage in kilometers"
+                           min="0"
+                           placeholder="Mileage in kilometers"
                            th:field="*{mileage}"/>
                     <div th:if="${#fields.hasErrors('mileage')}"
                          th:errors="*{mileage}"
@@ -144,7 +145,7 @@
             <div class="form-group full-width">
                 <label for="description">Description</label>
                 <textarea id="description"
-                          rows="3"
+                          rows="7"
                           placeholder="Description"
                           th:field="*{description}">
                 </textarea>
@@ -154,7 +155,9 @@
             </div>
 
             <div class="button-holder">
-                <input type="submit" class="btn-submit" value="Add Offer">
+                <input type="submit"
+                       class="btn-submit"
+                       value="Update Offer">
             </div>
         </form>
     </div>
