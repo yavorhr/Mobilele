@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const populateCities = (country) => {
         citySelect.innerHTML = '';
         const defaultOption = document.createElement('option');
-        defaultOption.textContent = "-- Select a city --";
+        defaultOption.textContent = "-- Select city --";
         defaultOption.value = "";
         citySelect.appendChild(defaultOption);
 
@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const option = document.createElement('option');
                     option.value = city;
                     option.textContent = city;
-
-                    if (previousCity && previousCity === city) {
+                    
+                    if (previousCity && previousCity.trim().toLowerCase() === city.trim().toLowerCase()) {
                         option.selected = true;
                     }
+
                     citySelect.appendChild(option);
                 });
             })
