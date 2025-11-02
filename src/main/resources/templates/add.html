@@ -171,7 +171,9 @@
 
                 <div class="form-group">
                     <label for="city">City</label>
-                    <select id="city" th:field="*{city}">
+                    <select id="city" th:field="*{city}"
+                            th:attr="data-selected-city=*{city}">
+                        <option value="">-- Select city --</option>
                         <option value="">-- Select a city --</option>
                     </select>
                     <div th:if="${#fields.hasErrors('city')}"
