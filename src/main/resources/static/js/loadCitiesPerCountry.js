@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const option = document.createElement('option');
                     option.value = city;
                     option.textContent = city;
-                    
+
                     if (previousCity && previousCity.trim().toLowerCase() === city.trim().toLowerCase()) {
                         option.selected = true;
                     }
