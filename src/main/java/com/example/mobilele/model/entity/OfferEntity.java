@@ -2,6 +2,8 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class OfferEntity extends BaseEntity {
   private ModelEntity model;
   private CountryEnum country;
   private CityEnum city;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private String description;
   private EngineEnum engine;
@@ -83,7 +85,7 @@ public class OfferEntity extends BaseEntity {
   }
 
   @Column(name = "price", nullable = false)
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -143,7 +145,7 @@ public class OfferEntity extends BaseEntity {
     return this;
   }
 
-  public OfferEntity setPrice(Double price) {
+  public OfferEntity setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

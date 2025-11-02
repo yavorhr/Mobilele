@@ -2,13 +2,15 @@ package com.example.mobilele.model.service.offer;
 
 import com.example.mobilele.model.entity.enums.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OfferAddServiceModel {
   private Long id;
   private String brand;
   private String model;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
@@ -56,7 +58,7 @@ public class OfferAddServiceModel {
     return mileage;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -124,7 +126,7 @@ public class OfferAddServiceModel {
     return this;
   }
 
-  public OfferAddServiceModel setPrice(Double price) {
+  public OfferAddServiceModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

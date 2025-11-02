@@ -2,9 +2,11 @@ package com.example.mobilele.model.binding.offer;
 
 import com.example.mobilele.model.entity.enums.*;
 
-public class OfferEditBindingForm {
+import java.math.BigDecimal;
+
+public class OfferUpdateBindingForm {
   private Long id;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
@@ -15,14 +17,14 @@ public class OfferEditBindingForm {
   private CountryEnum country;
   private CityEnum city;
 
-  public OfferEditBindingForm() {
+  public OfferUpdateBindingForm() {
   }
 
   public Long getId() {
     return id;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -42,7 +44,7 @@ public class OfferEditBindingForm {
     return year;
   }
 
-  public OfferEditBindingForm setId(Long id) {
+  public OfferUpdateBindingForm setId(Long id) {
     this.id = id;
     return this;
   }
@@ -67,52 +69,52 @@ public class OfferEditBindingForm {
     return city;
   }
 
-  public OfferEditBindingForm setPrice(Double price) {
+  public OfferUpdateBindingForm setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }
 
-  public OfferEditBindingForm setMileage(Double mileage) {
+  public OfferUpdateBindingForm setMileage(Double mileage) {
     this.mileage = mileage;
     return this;
   }
 
-  public OfferEditBindingForm setEngine(EngineEnum engine) {
+  public OfferUpdateBindingForm setEngine(EngineEnum engine) {
     this.engine = engine;
     return this;
   }
 
-  public OfferEditBindingForm setTransmission(TransmissionType transmission) {
+  public OfferUpdateBindingForm setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
     return this;
   }
 
-  public OfferEditBindingForm setYear(Integer year) {
+  public OfferUpdateBindingForm setYear(Integer year) {
     this.year = year;
     return this;
   }
 
-  public OfferEditBindingForm setCondition(ConditionEnum condition) {
+  public OfferUpdateBindingForm setCondition(ConditionEnum condition) {
     this.condition = condition;
     return this;
   }
 
-  public OfferEditBindingForm setColor(ColorEnum color) {
+  public OfferUpdateBindingForm setColor(ColorEnum color) {
     this.color = color;
     return this;
   }
 
-  public OfferEditBindingForm setDescription(String description) {
+  public OfferUpdateBindingForm setDescription(String description) {
     this.description = description;
     return this;
   }
 
-  public OfferEditBindingForm setCountry(CountryEnum country) {
+  public OfferUpdateBindingForm setCountry(CountryEnum country) {
     this.country = country;
     return this;
   }
 
-  public OfferEditBindingForm setCity(CityEnum city) {
+  public OfferUpdateBindingForm setCity(CityEnum city) {
     this.city = city;
     return this;
   }

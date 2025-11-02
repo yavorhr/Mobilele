@@ -1,11 +1,12 @@
 package com.example.mobilele.model.service.offer;
 
 import com.example.mobilele.model.entity.enums.*;
+import java.math.BigDecimal;
 
 public class OffersFindServiceModel {
   private String brand;
   private String model;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
@@ -14,18 +15,18 @@ public class OffersFindServiceModel {
   private ConditionEnum condition;
   private CountryEnum country;
   private CityEnum city;
+
   private String mileageComparison;
   private Double mileageMax;
 
   private String priceComparison;
-  private Double priceMax;
+  private BigDecimal priceMax;
 
   private String yearComparison;
   private Integer yearMax;
 
   public OffersFindServiceModel() {
   }
-
 
   public CountryEnum getCountry() {
     return country;
@@ -47,7 +48,7 @@ public class OffersFindServiceModel {
     return priceComparison;
   }
 
-  public Double getPriceMax() {
+  public BigDecimal getPriceMax() {
     return priceMax;
   }
 
@@ -75,7 +76,7 @@ public class OffersFindServiceModel {
     return mileage;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -115,7 +116,7 @@ public class OffersFindServiceModel {
     return this;
   }
 
-  public OffersFindServiceModel setPrice(Double price) {
+  public OffersFindServiceModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }
@@ -155,7 +156,7 @@ public class OffersFindServiceModel {
     return this;
   }
 
-  public OffersFindServiceModel setPriceMax(Double priceMax) {
+  public OffersFindServiceModel setPriceMax(BigDecimal priceMax) {
     this.priceMax = priceMax;
     return this;
   }

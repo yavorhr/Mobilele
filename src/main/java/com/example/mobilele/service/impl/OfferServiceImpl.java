@@ -13,6 +13,7 @@ import com.example.mobilele.util.ProjectHelpers;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -121,10 +123,11 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public void updateOffer(OfferUpdateServiceModel serviceModel, Long id) {
+  public void updateOffer(OfferUpdateServiceModel serviceModel) {
 
     OfferEntity offerEntity =
-            offerRepository.findById(serviceModel.getId()).orElseThrow(() ->
+            offerRepository.findById(serviceModel.
+                    getId()).orElseThrow(() ->
                     new ObjectNotFoundException("Offer with id " + serviceModel.getId() + " not found!"));
 
     this.modelMapper.map(serviceModel, offerEntity);
@@ -150,16 +153,19 @@ public class OfferServiceImpl implements OfferService {
 
       // Optional filters
       if (filter.getPrice() != null) {
+
+        Expression<BigDecimal> pricePath = root.get("price").as(BigDecimal.class);
+
         switch (filter.getPriceComparison()) {
           case "under":
-            predicates.add(cb.lessThanOrEqualTo(root.get("price"), filter.getPrice()));
+            predicates.add(cb.lessThanOrEqualTo(pricePath, filter.getPrice()));
             break;
           case "above":
-            predicates.add(cb.greaterThanOrEqualTo(root.get("price"), filter.getPrice()));
+            predicates.add(cb.greaterThanOrEqualTo(pricePath, filter.getPrice()));
             break;
           case "between":
             if (filter.getPriceMax() != null) {
-              predicates.add(cb.between(root.get("price"), filter.getPrice(), filter.getPriceMax()));
+              predicates.add(cb.between(pricePath, filter.getPrice(), filter.getPriceMax()));
             }
             break;
         }
@@ -274,14 +280,14 @@ public class OfferServiceImpl implements OfferService {
       // Offer 1
       OfferEntity offer1 = buildOffer(
               1L, EngineEnum.Gasoline, TransmissionType.AUTOMATIC, ConditionEnum.USED,
-              ColorEnum.GRAY, 22500.30, 14300.00,
+              ColorEnum.GRAY, 22500.30, BigDecimal.valueOf(14300),
               "Used, but well serviced and in good condition.",
               "admin", CountryEnum.SPAIN, CityEnum.BARCELONA, createPicture("m1", "cars-offers/m1_eicofs",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
       // Offer 2
       OfferEntity offer2 = buildOffer(
               2L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.NEW
-              , ColorEnum.WHITE, 500.00, 6000.00,
+              , ColorEnum.WHITE, 500.00, BigDecimal.valueOf(6500),
               "The SUV is brand new, just get in and drive!",
               "admin", CountryEnum.GERMANY, CityEnum.BERLIN, createPicture("x3", "cars-offers/x3_wxw7fr",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923267/mobilele/cars-offers/x3_wxw7fr.jpg"));
@@ -289,7 +295,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 3
       OfferEntity offer3 = buildOffer(
               3L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.DAMAGED
-              , ColorEnum.BLUE, 10000.40, 31000.00,
+              , ColorEnum.BLUE, 10000.40, BigDecimal.valueOf(31000),
               "The SUV is a bit damaged in the back, but this can be fixed easily!",
               "user", CountryEnum.BULGARIA, CityEnum.VARNA, createPicture("rav4", "cars-offers/rav4_j72ktc",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923264/mobilele/cars-offers/rav4_j72ktc.jpg"));
@@ -297,7 +303,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 4
       OfferEntity offer4 = buildOffer(
               4L, EngineEnum.Hybrid, TransmissionType.AUTOMATIC, ConditionEnum.FOR_PARTS
-              , ColorEnum.GREEN, 99999.00, 1000.00,
+              , ColorEnum.GREEN, 99999.00, BigDecimal.valueOf(1000),
               "The car is totally damaged and it could be used for spare parts!",
               "user", CountryEnum.BULGARIA, CityEnum.SOFIA, createPicture("q5", "cars-offers/q5_bd67cg",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923265/mobilele/cars-offers/q5_bd67cg.jpg"));
@@ -310,7 +316,7 @@ public class OfferServiceImpl implements OfferService {
   // Private and helpers
   private OfferEntity buildOffer(Long modelId, EngineEnum engineType, TransmissionType transmissionType,
                                  ConditionEnum condition, ColorEnum color,
-                                 Double mileage, Double price, String description,
+                                 Double mileage, BigDecimal price, String description,
                                  String username, CountryEnum country, CityEnum city, Picture picture) {
 
     UserEntity seller = userService.findByUsername(username);

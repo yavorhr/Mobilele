@@ -3,6 +3,8 @@ package com.example.mobilele.model.view.offer;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 
+import java.math.BigDecimal;
+
 public class OfferAddViewModel {
 
   private Long id;
@@ -10,7 +12,7 @@ public class OfferAddViewModel {
   private EngineEnum engine;
   private String imageUrl;
   private Double mileage;
-  private Double price;
+  private BigDecimal price;
   private TransmissionType transmission;
   private Integer year;
   private String model;
@@ -36,7 +38,7 @@ public class OfferAddViewModel {
     return mileage;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -81,7 +83,7 @@ public class OfferAddViewModel {
     return this;
   }
 
-  public OfferAddViewModel setPrice(Double price) {
+  public OfferAddViewModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

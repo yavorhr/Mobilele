@@ -3,11 +3,12 @@ package com.example.mobilele.model.view.offer;
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 public class OfferBaseViewModel {
   private Long id;
-  private Double price;
+  private BigDecimal price;
   private String modelName;
   private String modelBrandName;
   private TransmissionType transmission;
@@ -32,7 +33,7 @@ public class OfferBaseViewModel {
     return id;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -70,7 +71,7 @@ public class OfferBaseViewModel {
     return this;
   }
 
-  public OfferBaseViewModel setPrice(Double price) {
+  public OfferBaseViewModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

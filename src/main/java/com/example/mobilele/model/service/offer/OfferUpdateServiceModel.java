@@ -2,6 +2,9 @@ package com.example.mobilele.model.service.offer;
 
 import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionType;
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
+
+import java.math.BigDecimal;
 
 public class OfferUpdateServiceModel {
   private Long id;
@@ -9,7 +12,7 @@ public class OfferUpdateServiceModel {
   private EngineEnum engine;
   private String imageUrl;
   private Double mileage;
-  private Double price;
+  private BigDecimal price;
   private TransmissionType transmission;
   private Integer year;
   private String model;
@@ -62,11 +65,11 @@ public class OfferUpdateServiceModel {
     return this;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public OfferUpdateServiceModel setPrice(Double price) {
+  public OfferUpdateServiceModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

@@ -4,12 +4,13 @@ import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.service.PictureServiceModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
 public class OfferViewModel {
   private Long id;
-  private Double price;
+  private BigDecimal price;
   private String description;
   private String modelBrandName;
   private String modelVehicleType;
@@ -76,7 +77,7 @@ public class OfferViewModel {
     return id;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -166,7 +167,7 @@ public class OfferViewModel {
     return this;
   }
 
-  public OfferViewModel setPrice(Double price) {
+  public OfferViewModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

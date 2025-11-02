@@ -4,12 +4,14 @@ import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.validator.ValidYear;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OfferAddBindingModel {
   private String brand;
   private String model;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
@@ -68,7 +70,7 @@ public class OfferAddBindingModel {
 
   @NotNull(message = "Please insert price")
   @DecimalMin(value = "100", message = "Price must be at least 100")
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -124,7 +126,7 @@ public class OfferAddBindingModel {
     return this;
   }
 
-  public OfferAddBindingModel setPrice(Double price) {
+  public OfferAddBindingModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }

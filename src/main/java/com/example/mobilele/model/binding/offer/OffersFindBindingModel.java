@@ -4,10 +4,12 @@ import com.example.mobilele.model.entity.enums.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 public class OffersFindBindingModel {
   private String brand;
   private String model;
-  private Double price;
+  private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
@@ -42,7 +44,7 @@ public class OffersFindBindingModel {
     return model;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -112,7 +114,7 @@ public class OffersFindBindingModel {
     return this;
   }
 
-  public OffersFindBindingModel setPrice(Double price) {
+  public OffersFindBindingModel setPrice(BigDecimal price) {
     this.price = price;
     return this;
   }
