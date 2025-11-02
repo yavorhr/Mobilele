@@ -268,7 +268,7 @@ public class OffersController {
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("currentPage", "add");
-    return "offer-add";
+    return "add";
   }
 
   @PostMapping("/offers")
