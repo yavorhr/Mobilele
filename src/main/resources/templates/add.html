@@ -80,7 +80,8 @@
                     <label for="mileage">Mileage</label>
                     <input id="mileage"
                            type="number"
-                           min="0" placeholder="Mileage in kilometers"
+                           min="0"
+                           placeholder="Mileage in kilometers"
                            th:field="*{mileage}"/>
                     <div th:if="${#fields.hasErrors('mileage')}"
                          th:errors="*{mileage}"
