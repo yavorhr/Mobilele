@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     [csrfHeaderName]: csrfHeaderValue,
                 }
             })
-
             if (!response.ok) {
                 const errorText = await response.text();
                 alert("Failed to delete picture: " + errorText);
