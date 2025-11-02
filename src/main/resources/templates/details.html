@@ -7,7 +7,8 @@
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<div class="offer-page container mt-4">
+<div class="offer-page container mt-4"
+     th:object="${offer}">
 
     <!-- === MAIN SECTION WITH GRID (70% : 30%) === -->
     <div class="main-section">
@@ -15,10 +16,10 @@
         <section class="gallery-section">
             <div class="main-image-container">
                 <img id="modalImage"
-                     th:src="${offer.pictures[0].pictureUrl}"
+                     th:src="*{pictures[0].pictureUrl}"
                      alt="Main Image"
                      class="main-image"
-                     th:attr="data-public-id=${offer.pictures[0].picturePublicId}">
+                     th:attr="data-public-id=*{pictures[0].picturePublicId}">
 
                 <button id="prevBtn" class="nav-btn left">&lt;</button>
                 <button id="nextBtn" class="nav-btn right">&gt;</button>
@@ -29,7 +30,7 @@
             </div>
 
             <div class="thumbnail-container">
-                <img th:each="p, iterStat : ${offer.pictures}"
+                <img th:each="p, iterStat : *{pictures}"
                      th:src="${p.pictureUrl}"
                      th:attr="data-index=${iterStat.index}, data-public-id=${p.picturePublicId}"
                      class="thumbnail"
@@ -39,21 +40,22 @@
 
         <!-- === INFO SECTION === -->
         <aside class="info-section">
-            <h2 th:text="${offer.modelBrandName} + ' ' + ${offer.modelName}"></h2>
-            <h4 th:text="'Year: ' + ${offer.modelYear}"></h4>
-            <p class="price" th:text="${offer.price} + ' BGN'"></p>
-            <p class="price" th:text="${offer.location}"></p>
+            <h2 th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
+            <h4 th:text="'Year: ' + *{modelYear}"></h4>
+            <p class="price" th:text="*{price} + ' BGN'"></p>
+
+            <p class="price" th:text="*{country} + ', ' + *{city}"></p>
 
             <div class="seller-info">
                 <h5>Seller Information</h5>
-                <p><i class="fa fa-user"></i> <span th:text="${offer.seller.getFullName()}"></span></p>
-                <p><i class="fa fa-envelope"></i> <span th:text="${offer.seller.getEmail()}"></span></p>
-                <p><i class="fa fa-phone"></i> <span th:text="${offer.seller.getPhoneNumber()}"></span></p>
+                <p><i class="fa fa-user"></i> <span th:text="*{seller.getFullName()}"></span></p>
+                <p><i class="fa fa-envelope"></i> <span th:text="*{seller.getEmail()}"></span></p>
+                <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
             </div>
 
             <button class="btn save-btn">💖 Save to Favorites</button>
 
-            <div class="modify-buttons" th:if="${offer.canModify}">
+            <div class="modify-buttons" th:if="*{canModify}">
                 <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
                 <form th:action="@{/offers/{id}(id=${offer.id})}"
                       th:method="delete"
@@ -87,20 +89,20 @@
     <section class="car-details">
         <h4>Car Details</h4>
         <div class="details-grid">
-            <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="${offer.engine}"></span></div>
-            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="${offer.mileage} + ' km'"></span>
+            <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="*{engine}"></span></div>
+            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="*{mileage} + ' km'"></span>
             </div>
-            <div class="detail-item"><i class="fa fa-road"></i> <span th:text="${offer.transmission}"></span></div>
-            <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="${offer.color}"></span></div>
-            <div class="detail-item"><i class="fa fa-car"></i> <span th:text="${offer.condition}"></span></div>
-            <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="${offer.modelYear}"></span></div>
+            <div class="detail-item"><i class="fa fa-road"></i> <span th:text="*{transmission}"></span></div>
+            <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
+            <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{condition}"></span></div>
+            <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="*{modelYear}"></span></div>
         </div>
     </section>
 
     <!-- === DESCRIPTION === -->
     <section class="description-section">
         <h4>Description</h4>
-        <p th:text="${offer.description}"></p>
+        <p th:text="*{description}"></p>
     </section>
 </div>
 
