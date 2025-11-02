@@ -308,9 +308,9 @@ public class OffersController {
                                    Model model, @AuthenticationPrincipal MobileleUser currentUser) {
 
     OfferEditBindingForm offerBindingModel =
-            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id), OfferEditBindingForm.class);
+            this.modelMapper.map(this.offerService.findOfferById(currentUser.getUsername(), id),
+                    OfferEditBindingForm.class);
 
-    model.addAttribute("models", this.modelService.findModelsByVehicleTypeAndBrand(offerBindingModel.getBrand(), offerBindingModel.getVehicleType()));
     model.addAttribute("offerBindingModel", offerBindingModel);
 
     return "update";
