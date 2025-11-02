@@ -4,14 +4,11 @@ import com.example.mobilele.model.entity.enums.*;
 
 public class OfferEditBindingForm {
   private Long id;
-  private String model;
-  private String brand;
   private Double price;
   private Double mileage;
   private EngineEnum engine;
   private TransmissionType transmission;
   private Integer year;
-  private VehicleCategoryEnum vehicleType;
   private ConditionEnum condition;
   private ColorEnum color;
   private String description;
@@ -21,16 +18,8 @@ public class OfferEditBindingForm {
   public OfferEditBindingForm() {
   }
 
-  public String getBrand() {
-    return brand;
-  }
-
   public Long getId() {
     return id;
-  }
-
-  public String getModel() {
-    return model;
   }
 
   public Double getPrice() {
@@ -51,10 +40,6 @@ public class OfferEditBindingForm {
 
   public Integer getYear() {
     return year;
-  }
-
-  public VehicleCategoryEnum getVehicleType() {
-    return vehicleType;
   }
 
   public OfferEditBindingForm setId(Long id) {
@@ -82,16 +67,6 @@ public class OfferEditBindingForm {
     return city;
   }
 
-  public OfferEditBindingForm setModel(String model) {
-    this.model = model;
-    return this;
-  }
-
-  public OfferEditBindingForm setBrand(String brand) {
-    this.brand = brand;
-    return this;
-  }
-
   public OfferEditBindingForm setPrice(Double price) {
     this.price = price;
     return this;
@@ -114,11 +89,6 @@ public class OfferEditBindingForm {
 
   public OfferEditBindingForm setYear(Integer year) {
     this.year = year;
-    return this;
-  }
-
-  public OfferEditBindingForm setVehicleType(VehicleCategoryEnum vehicleType) {
-    this.vehicleType = vehicleType;
     return this;
   }
 
