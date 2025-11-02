@@ -19,52 +19,6 @@
                 class="offer-form">
 
             <div class="form-flex">
-
-                <div class="form-group">
-                    <label for="vehicleType">Vehicle Type</label>
-                    <select id="vehicleType" th:field="*{vehicleType}">
-                        <option value="">- Select vehicle category -</option>
-                        <option th:each="c : ${categories}"
-                                th:value="${c}"
-                                th:text="${c}"></option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('vehicleType')}"
-                         th:errors="*{vehicleType}"
-                         class="error-msg"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="brand">Brand</label>
-                    <select id="brand" th:field="*{brand}">
-                        <option value="">- Select brand -</option>
-                        <option th:each="b : ${brands}"
-                                th:value="${b.name}"
-                                th:text="${b.name}">
-                        </option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('brand')}"
-                         th:errors="*{brand}"
-                         class="error-msg">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-flex">
-                <div class="form-group">
-                    <label for="model">Model</label>
-                    <select id="model"
-                            th:field="*{model}">
-                        <option value="">- Select model -</option>
-                        <option
-                                th:each="m : ${models}"
-                                th:value="${m}"
-                                th:text="${m}">
-                        </option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('model')}"
-                         th:errors="*{model}"
-                         class="error-msg"></div>
-                </div>
                 <div class="form-group">
                     <label for="price">Price</label>
                     <input id="price"
@@ -75,9 +29,7 @@
                          th:errors="*{price}"
                          class="error-msg"></div>
                 </div>
-            </div>
 
-            <div class="form-flex">
                 <div class="form-group">
                     <label for="mileage">Mileage</label>
                     <input id="mileage"
@@ -89,7 +41,9 @@
                          class="error-msg">
                     </div>
                 </div>
+            </div>
 
+            <div class="form-flex">
                 <div class="form-group">
                     <label for="engine">Engine</label>
                     <select id="engine" th:field="*{engine}">
@@ -104,9 +58,7 @@
                          th:errors="*{engine}"
                          class="error-msg"></div>
                 </div>
-            </div>
 
-            <div class="form-flex">
                 <div class="form-group">
                     <label for="transmission">Transmission</label>
                     <select id="transmission" th:field="*{transmission}">
@@ -120,6 +72,9 @@
                             th:errors="*{transmission}"
                             class="error-msg"></div>
                 </div>
+            </div>
+
+            <div class="form-flex">
 
                 <div class="form-group">
                     <label for="year">Model Year</label>
@@ -129,9 +84,7 @@
                             th:errors="*{year}"
                             class="error-msg"></div>
                 </div>
-            </div>
 
-            <div class="form-flex">
                 <div class="form-group">
                     <label for="condition">Condition</label>
                     <select id="condition" th:field="*{condition}">
@@ -143,8 +96,10 @@
                             th:errors="*{condition}"
                             class="error-msg"></div>
                 </div>
+            </div>
 
-                <div class="form-group">
+            <div class="form-flex color">
+                <div class="form-group" style="flex: 0.5;">
                     <label for="color">Color</label>
                     <select id="color" th:field="*{color}">
                         <option value="">- Select color -</option>
@@ -160,9 +115,12 @@
             <div class="form-flex">
                 <div class="form-group">
                     <label for="country">Country</label>
-                    <select id="country" th:field="*{country}">
-                        <option value="">-- Select a country --</option>
-                        <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+                    <select id="country"
+                            th:field="*{country}">
+                        <option value="">-- Select country --</option>
+                        <option th:each="c : ${countries}"
+                                th:value="${c}"
+                                th:text="${c}"></option>
                     </select>
                     <div th:if="${#fields.hasErrors('country')}"
                          th:errors="*{country}"
@@ -172,8 +130,10 @@
 
                 <div class="form-group">
                     <label for="city">City</label>
-                    <select id="city" th:field="*{city}">
-                        <option value="">-- Select a city --</option>
+                    <select id="city"
+                            th:field="*{city}"
+                            th:attr="data-selected-city=*{city}">
+                        <option value="">-- Select city --</option>
                     </select>
                     <div th:if="${#fields.hasErrors('city')}"
                          th:errors="*{city}"
