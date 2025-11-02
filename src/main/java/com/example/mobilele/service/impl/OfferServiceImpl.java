@@ -280,7 +280,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 1
       OfferEntity offer1 = buildOffer(
               1L, EngineEnum.Gasoline, TransmissionType.AUTOMATIC, ConditionEnum.USED,
-              ColorEnum.GRAY, 22500.30, BigDecimal.valueOf(14300),
+              ColorEnum.GRAY, 22500.00, BigDecimal.valueOf(14300),
               "Used, but well serviced and in good condition.",
               "admin", CountryEnum.SPAIN, CityEnum.BARCELONA, createPicture("m1", "cars-offers/m1_eicofs",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
@@ -295,7 +295,7 @@ public class OfferServiceImpl implements OfferService {
       // Offer 3
       OfferEntity offer3 = buildOffer(
               3L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.DAMAGED
-              , ColorEnum.BLUE, 10000.40, BigDecimal.valueOf(31000),
+              , ColorEnum.BLUE, 10000.00, BigDecimal.valueOf(31000),
               "The SUV is a bit damaged in the back, but this can be fixed easily!",
               "user", CountryEnum.BULGARIA, CityEnum.VARNA, createPicture("rav4", "cars-offers/rav4_j72ktc",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923264/mobilele/cars-offers/rav4_j72ktc.jpg"));
