@@ -9,7 +9,6 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -381,10 +380,6 @@ public class OffersController {
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("message", "✅ Your offer was successfully deleted.");
       redirectAttributes.addFlashAttribute("messageType", "success");
-
-      if (true) { // simulate failure
-        throw new ObjectNotFoundException("Simulated delete failure");
-      }
 
       return "redirect:/";
     } catch (Exception e) {
