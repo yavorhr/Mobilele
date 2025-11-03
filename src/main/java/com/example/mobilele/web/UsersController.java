@@ -27,12 +27,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UsersController {
   private final UserService userService;
   private final ModelMapper modelMapper;
-  private final OfferService offerService;
 
-  public UsersController(UserService userService, ModelMapper modelMapper, OfferService offerService) {
+  public UsersController(UserService userService, ModelMapper modelMapper) {
     this.userService = userService;
     this.modelMapper = modelMapper;
-    this.offerService = offerService;
   }
 
   @ModelAttribute("userRegisterBindingModel")
@@ -108,15 +106,6 @@ public class UsersController {
     UserViewModel updatedUser = userService.updateUserProfile(userId, bindingModel);
 
     return ResponseEntity.ok(updatedUser);
-  }
-
-  @GetMapping("/my-offers")
-  public String showPrincipalsOffers(@AuthenticationPrincipal MobileleUser principal, Model model) {
-
-    Long userId = principal.getId();
-
-    model.addAttribute("offers", this.offerService.findOffersByUserId(userId));
-    return "offers";
   }
 
   @DeleteMapping("/delete")
