@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -372,21 +373,19 @@ public class OffersController {
   // 5. Delete offer
 //  @PreAuthorize("@offerServiceImpl.ownerOrIsAdmin(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
-  public String deleteOfferById(@PathVariable Long id,
-                                Principal principal,
-                                RedirectAttributes redirectAttributes) {
-
+  public String deleteOffer(@PathVariable Long id,
+                            RedirectAttributes redirectAttributes,
+                            Principal principal) {
     try {
       offerService.deleteById(id);
-      redirectAttributes.addFlashAttribute("message", "✅ Your offer was successfully deleted.");
-      redirectAttributes.addFlashAttribute("messageType", "success");
+      redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
+      redirectAttributes.addFlashAttribute("flashType", "success");
 
       return "redirect:/";
-    } catch (Exception e) {
-      redirectAttributes.addFlashAttribute("message", "❌ Offer can't be deleted.");
-      redirectAttributes.addFlashAttribute("messageType", "error");
 
-      return "redirect:/offers/details" + id;
+      //@ControllerAdvice handling
+    } catch (Exception e) {
+      throw e;
     }
   }
 }
