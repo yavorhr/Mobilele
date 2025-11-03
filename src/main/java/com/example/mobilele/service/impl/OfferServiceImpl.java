@@ -22,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -72,7 +71,15 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public void deleteById(Long id) {
-    this.offerRepository.deleteById(id);
+    OfferEntity offer = this.offerRepository
+            .findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + id + " was not found!"));
+
+    for (Picture picture : offer.getPictures()) {
+      cloudinaryService.delete(picture.getPublicId());
+    }
+
+    this.offerRepository.delete(offer);
   }
 
   @Override
@@ -253,11 +260,10 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferBaseViewModel> findOffersByUserId(Long userId) {
-    return this.offerRepository.findAllBySeller_Id(userId)
-            .stream()
-            .map(this::mapToOfferBaseViewModel)
-            .collect(Collectors.toList());
+  public Page<OfferBaseViewModel> findOffersByUserId(String username, Pageable pageable) {
+    return offerRepository
+            .findAllBySeller_Username(username, pageable)
+            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
   }
 
   @Override

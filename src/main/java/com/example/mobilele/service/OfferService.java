@@ -41,5 +41,5 @@ public interface OfferService {
 
   List<OfferBaseViewModel> findOffersByBrand(String toUpperCase);
 
-  List<OfferBaseViewModel> findOffersByUserId(Long userId);
+  Page<OfferBaseViewModel> findOffersByUserId(String username, Pageable pageable);
 }
