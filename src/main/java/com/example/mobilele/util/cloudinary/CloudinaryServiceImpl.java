@@ -54,7 +54,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     try {
       cloudinary.uploader().destroy(publicId, Map.of());
     } catch (IOException e) {
-      return false;
+      throw new RuntimeException("Failed to delete image from Cloudinary: " + publicId, e);
     }
     return true;
   }
