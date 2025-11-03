@@ -28,7 +28,7 @@ public class OfferEntity extends BaseEntity {
   public OfferEntity() {
   }
 
-  @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+  @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   public List<Picture> getPictures() {
     return pictures;
   }
