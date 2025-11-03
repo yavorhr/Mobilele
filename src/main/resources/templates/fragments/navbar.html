@@ -4,7 +4,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" th:href="@{/css/fragments/navbar.css}">
-
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top "
          th:fragment='navbar'>
         <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
@@ -12,7 +11,6 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto col-12 justify-content-end">
                 <li class="nav-item"
@@ -73,7 +71,6 @@
                         }
                     });
                 </script>
-
                 <!-- Logout  -->
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <div class="form-inline my-2 my-lg-0 px-3">
@@ -106,22 +103,5 @@
                     </form>
                 </li>
             </ul>
-            <div th:if="${message}"
-                 th:text="${message}"
-                 th:classappend="${messageType == 'success'} ? ' alert alert-success' : ' alert alert-danger'"
-                 class="alert"></div>
-        </div>
     </nav>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const alert = document.querySelector(".alert");
-        if (alert) {
-            setTimeout(() => {
-                alert.style.opacity = "0";
-                setTimeout(() => alert.remove(), 500);
-            }, 4000); // hides after 4 seconds
-        }
-    });
-</script>
 </html>
