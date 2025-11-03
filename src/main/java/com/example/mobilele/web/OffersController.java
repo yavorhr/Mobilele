@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +48,6 @@ public class OffersController {
     this.modelMapper = modelMapper;
     this.modelService = modelService;
   }
-
 
   @ModelAttribute("offerBindingModel")
   public OfferAddBindingModel offerBindingModel() {
@@ -303,6 +303,33 @@ public class OffersController {
     return "redirect:/offers/details/" + serviceModel.getId();
   }
 
+  @GetMapping("/offers/my-offers")
+  public String showMyOffers(
+          Principal principal,
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "5") int size,
+          Model model) {
+
+    String username = principal.getName();
+
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
+    Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "my");
+
+    return "offers";
+  }
+
   // 4.1 Update offer - GET
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
@@ -346,9 +373,25 @@ public class OffersController {
   // 5. Delete offer
 //  @PreAuthorize("@offerServiceImpl.ownerOrIsAdmin(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
-  public String deleteOfferById(@PathVariable Long id, Principal principal) {
-    this.offerService.deleteById(id);
+  public String deleteOfferById(@PathVariable Long id,
+                                Principal principal,
+                                RedirectAttributes redirectAttributes) {
 
-    return "redirect:/offers/all";
+    try {
+      offerService.deleteById(id);
+      redirectAttributes.addFlashAttribute("message", "✅ Your offer was successfully deleted.");
+      redirectAttributes.addFlashAttribute("messageType", "success");
+
+      if (true) { // simulate failure
+        throw new ObjectNotFoundException("Simulated delete failure");
+      }
+
+      return "redirect:/";
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("message", "❌ Offer can't be deleted.");
+      redirectAttributes.addFlashAttribute("messageType", "error");
+
+      return "redirect:/offers/details" + id;
+    }
   }
 }
