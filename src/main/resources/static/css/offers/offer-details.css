@@ -25,7 +25,7 @@
     background-color: #fff;
     border-radius: 12px;
     padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .main-image-container {
@@ -48,7 +48,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,0.8);
+    background: rgba(255, 255, 255, 0.8);
     border: none;
     padding: 8px 12px;
     border-radius: 50%;
@@ -58,11 +58,16 @@
 }
 
 .nav-btn:hover {
-    background: rgba(255,255,255,1);
+    background: rgba(255, 255, 255, 1);
 }
 
-.nav-btn.left { left: 10px; }
-.nav-btn.right { right: 10px; }
+.nav-btn.left {
+    left: 10px;
+}
+
+.nav-btn.right {
+    right: 10px;
+}
 
 .thumbnail-container {
     display: flex;
@@ -91,7 +96,7 @@
     background-color: #fff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -137,7 +142,8 @@
     margin-right: 10px;
 }
 
-.delete-btn {
+.delete-btn,
+.delete-offer-btn {
     background-color: #dc3545;
     color: white;
 }
@@ -220,7 +226,7 @@
     background-color: #fff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .details-grid {
@@ -249,7 +255,7 @@
     background-color: #fff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .description-section p {
