@@ -106,19 +106,23 @@
                         page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
                     (${context == 'brand'} ?
                         @{/offers/brands/{brand}(brand=${brand}, page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
-                        @{/my-offers(page=${currentPage - 1}, sort=${sort}, dir=${dir})})"
+                        @{/offers/my-offers(page=${currentPage - 1}, sort=${sort}, dir=${dir})})"
            class="pagination-btn">&laquo; Prev</a>
 
         <!-- Page Numbers -->
         <div class="pagination-numbers">
             <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-               th:href="${context == 'model'} ?
-                        @{/offers/{vehicleType}/{brand}/{modelName}(
-                            vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
-                            page=${i}, sort=${sort}, dir=${dir})} :
-                        (${context == 'brand'} ?
-                            @{/offers/brands/{brand}(brand=${brand}, page=${i}, sort=${sort}, dir=${dir})} :
-                            @{/my-offers(page=${i}, sort=${sort}, dir=${dir})})"
+               th:href="${
+            context == 'model' ?
+                @{/offers/{vehicleType}/{brand}/{modelName}(
+                    vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
+                    page=${i}, sort=${sort}, dir=${dir})} :
+            (context == 'brand' ?
+                @{/offers/brands/{brand}(brand=${brand}, page=${i}, sort=${sort}, dir=${dir})} :
+            (context == 'my' ?
+                @{/offers/my-offers(page=${i}, sort=${sort}, dir=${dir})} :
+                @{/offers/all(page=${i}, sort=${sort}, dir=${dir})})
+            )}"
                th:text="${i + 1}"
                th:classappend="${i == currentPage} ? 'active' : ''"
                class="pagination-number">
@@ -127,20 +131,23 @@
 
         <!-- Next -->
         <a th:if="${currentPage + 1 < totalPages}"
-           th:href="${context == 'model'} ?
-                    @{/offers/{vehicleType}/{brand}/{modelName}(
-                        vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
-                        page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-                    (${context == 'brand'} ?
-                        @{/offers/brands/{brand}(brand=${brand}, page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-                        @{/my-offers(page=${currentPage + 1}, sort=${sort}, dir=${dir})})"
+           th:href="${
+        context == 'model' ?
+            @{/offers/{vehicleType}/{brand}/{modelName}(
+                vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
+                page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
+        (context == 'brand' ?
+            @{/offers/brands/{brand}(brand=${brand}, page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
+        (context == 'my' ?
+            @{/offers/my-offers(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
+            @{/offers/all(page=${currentPage + 1}, sort=${sort}, dir=${dir})})
+        )}"
            class="pagination-btn">Next &raquo;</a>
-    </div>
 
-    <!-- Page indicator -->
-    <p class="text-white text-center mt-2"
-       th:if="${totalPages > 1}"
-       th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}"></p>
+        <!-- Page indicator -->
+        <p class="text-white text-center mt-2"
+           th:if="${totalPages > 1}"
+           th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}"></p>
 
 </div>
 
