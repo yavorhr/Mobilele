@@ -8,14 +8,6 @@
 <header th:replace="fragments/navbar"></header>
 
 <main>
-    <div th:if="${flashMessage}" class="alert-toast alert-success">
-        <span class="alert-icon">
-            <img src="/images/car-travel-delete.svg" alt="icon">
-        </span>
-        <span th:text="${flashMessage}"></span>
-    </div>
-    </div>
-
     <section class="hero-section">
         <div class="hero-content">
             <h1>Welcome to <span class="brand-name">Mobilele</span></h1>
@@ -23,6 +15,25 @@
                 sellers.</p>
             <a th:href="@{/offers/find}" class="cta-btn">Find Your Offer Now 🚗</a>
         </div>
+    </section>
+
+    <div th:if="${flashMessage}" class="alert-toast alert-success">
+        <span class="alert-icon">
+            <img src="/images/car-travel-delete.svg" alt="icon">
+        </span>
+        <span th:text="${flashMessage}"></span>
+    </div>
+
+
+    <section class="quick-search">
+        <h2>Quick Search</h2>
+        <p>Find the right car instantly — filter by brand, price, or year.</p>
+        <form th:action="@{/offers/find}" method="get" class="search-form">
+            <input type="text" name="brand" placeholder="Brand (e.g. BMW)"/>
+            <input type="number" name="maxPrice" placeholder="Max Price (BGN)"/>
+            <input type="number" name="year" placeholder="Min Year"/>
+            <button type="submit">Search 🚗</button>
+        </form>
     </section>
 
     <section class="recent-offers-section">
@@ -51,6 +62,11 @@
                 <p>No recent offers available.</p>
             </div>
         </div>
+
+        <div class="show-all-container">
+            <a th:href="@{/offers/all}" class="btn-show-all">Show All Offers →</a>
+        </div>
+
     </section>
 
     <div class="vehicle-grid">
@@ -126,10 +142,36 @@
             <h3>Kia</h3>
         </a>
     </div>
+
+    <section class="why-choose-us">
+        <h2 class="section-title">Why Choose <span class="brand-name">Mobilele</span>?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <i class="fa fa-shield"></i>
+                <h3>Verified Sellers</h3>
+                <p>Every seller is verified for authenticity and trustworthiness.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-car"></i>
+                <h3>Wide Selection</h3>
+                <p>Thousands of offers from top brands and private owners.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-clock-o"></i>
+                <h3>Fast & Easy</h3>
+                <p>Filter, compare, and contact sellers — all in under a minute.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-money"></i>
+                <h3>Transparent Prices</h3>
+                <p>No hidden fees. See clear, real-time offers you can trust.</p>
+            </div>
+        </div>
+    </section>
 </main>
 
 <footer></footer>
-</div>
+
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
