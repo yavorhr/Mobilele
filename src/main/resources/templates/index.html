@@ -3,35 +3,30 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head"></head>
-
+<head th:replace="fragments/head :: head(additionalCss='/css/index.css')"></head>
 <body>
-
 <header th:replace="fragments/navbar"></header>
 
 <div class="container-fluid">
-    <div>
-
-        <h5 class="text-center text-white mt-5">
-        <span th:text="#{greeting}" >Welcome to MobiLeLeLe,
+    <div th:if="${flashMessage}" class="alert-toast alert-success">
+        <span class="alert-icon">
+            <img src="/images/car-travel-delete.svg" alt="icon">
         </span>
-            <span
-                  sec:authorize="isAuthenticated()"
-                  sec:authentication="name">
-            Name of the logged in user.
-        </span>
-            <span
-                    sec:authorize="!isAuthenticated()">
-            Anonymous
-        </span>
-            <span>!</span>
-        </h5>
+        <span th:text="${flashMessage}"></span>
     </div>
 </div>
-
-<div>
     <footer></footer>
 </div>
-
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toast = document.querySelector(".alert-toast");
+        if (toast) {
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 4500); // 4.5s visible
+        }
+    });
+</script>
 </html>
