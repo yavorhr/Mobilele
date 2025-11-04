@@ -7,15 +7,92 @@
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<div class="container-fluid">
-    <div th:if="${flashMessage}" class="alert-toast alert-success">
+<main>
+    <div class="container-fluid">
+        <div th:if="${flashMessage}" class="alert-toast alert-success">
         <span class="alert-icon">
             <img src="/images/car-travel-delete.svg" alt="icon">
         </span>
-        <span th:text="${flashMessage}"></span>
+            <span th:text="${flashMessage}"></span>
+        </div>
     </div>
-</div>
-    <footer></footer>
+
+    <div class="vehicle-grid">
+        <!-- BMW -->
+        <a th:href="@{/offers/brands/{brand}(brand='bmw')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/bmw/999999" alt="BMW" class="brand-icon">
+            <h3>BMW</h3>
+        </a>
+
+        <!-- Audi -->
+        <a th:href="@{/offers/brands/{brand}(brand='audi')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/audi/999999" alt="Audi" class="brand-icon">
+            <h3>Audi</h3>
+        </a>
+
+        <!-- Toyota -->
+        <a th:href="@{/offers/brands/{brand}(brand='toyota')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/toyota/999999" alt="Toyota" class="brand-icon">
+            <h3>Toyota</h3>
+        </a>
+
+        <!-- Mercedes -->
+        <a th:href="@{/offers/brands/{brand}(brand='mercedes')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/mercedes-benz/999999" alt="Mercedes" class="brand-icon">
+            <h3>Mercedes</h3>
+        </a>
+
+        <!-- Volkswagen -->
+        <a th:href="@{/offers/brands/{brand}(brand='volkswagen')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/volkswagen/999999" alt="Volkswagen" class="brand-icon">
+            <h3>Volkswagen</h3>
+        </a>
+
+        <!-- Dacia -->
+        <a th:href="@{/offers/brands/{brand}(brand='dacia')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/dacia/999999" alt="Dacia" class="brand-icon">
+            <h3>Dacia</h3>
+        </a>
+
+        <!-- Tesla -->
+        <a th:href="@{/offers/brands/{brand}(brand='tesla')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/tesla/999999" alt="Tesla" class="brand-icon">
+            <h3>Tesla</h3>
+        </a>
+
+        <!-- Honda -->
+        <a th:href="@{/offers/brands/{brand}(brand='honda')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/honda/999999" alt="Honda" class="brand-icon">
+            <h3>Honda</h3>
+        </a>
+
+        <!-- Ford -->
+        <a th:href="@{/offers/brands/{brand}(brand='ford')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/ford/999999" alt="Ford" class="brand-icon">
+            <h3>Ford</h3>
+        </a>
+
+        <!-- Nissan -->
+        <a th:href="@{/offers/brands/{brand}(brand='nissan')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/nissan/999999" alt="Nissan" class="brand-icon">
+            <h3>Nissan</h3>
+        </a>
+
+        <!-- Hyundai -->
+        <a th:href="@{/offers/brands/{brand}(brand='hyundai')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/hyundai/999999" alt="Hyundai" class="brand-icon">
+            <h3>Hyundai</h3>
+        </a>
+
+        <!-- Kia -->
+        <a th:href="@{/offers/brands/{brand}(brand='kia')}" class="vehicle-card">
+            <img src="https://cdn.simpleicons.org/kia/999999" alt="Kia" class="brand-icon">
+            <h3>Kia</h3>
+        </a>
+    </div>
+</main>
+
+<footer></footer>
 </div>
 </body>
 <script>
