@@ -68,6 +68,176 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+/* === HERO SECTION === */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 75px;
+    padding: 3rem 1rem 1rem;
+
+    text-align: center;
+    background: linear-gradient(180deg, rgba(20, 20, 20, 1) 0%, rgba(30, 30, 30, 0.8) 60%, rgba(18, 18, 18, 1) 100%);
+    color: #fff;
+}
+
+.hero-section .brand-name {
+    color: #4CAF50;
+    font-weight: 700;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    color: #bbb;
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+/* CTA Button */
+.cta-btn {
+    display: inline-block;
+    padding: 0.8rem 1.6rem;
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.cta-btn:hover {
+    background: linear-gradient(135deg, #43a047, #81c784);
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+/* Optional stat strip */
+.stats-strip {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    color: #ccc;
+}
+
+.stats-strip div {
+    text-align: center;
+    font-size: 1rem;
+}
+
+.stats-strip span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4CAF50;
+}
+
+/* === RECENT OFFERS SECTION === */
+.recent-offers-section {
+    margin-top: 4rem;
+    text-align: center;
+    padding: 3rem 1rem 6rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* === OFFER GRID === */
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+/* === OFFER CARD === */
+.offer-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.offer-card-link {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.offer-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 16px rgba(255,255,255,0.1);
+}
+
+/* === IMAGE === */
+.offer-image img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+/* === INFO === */
+.offer-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.offer-info h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.offer-meta {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+.offer-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4CAF50;
+}
+
+.offer-year {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* === NO OFFERS === */
+.no-offers {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #bbb;
+    font-size: 1.1rem;
+}
+
+
+
 /* --- GRID LAYOUT --- */
 .vehicle-grid {
     display: grid;

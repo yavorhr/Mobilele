@@ -8,14 +8,50 @@
 <header th:replace="fragments/navbar"></header>
 
 <main>
-    <div class="container-fluid">
-        <div th:if="${flashMessage}" class="alert-toast alert-success">
+    <div th:if="${flashMessage}" class="alert-toast alert-success">
         <span class="alert-icon">
             <img src="/images/car-travel-delete.svg" alt="icon">
         </span>
-            <span th:text="${flashMessage}"></span>
-        </div>
+        <span th:text="${flashMessage}"></span>
     </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to <span class="brand-name">Mobilele</span></h1>
+            <p>Find your next car with ease — explore trusted offers, compare prices, and connect with verified
+                sellers.</p>
+            <a th:href="@{/offers/find}" class="cta-btn">Find Your Offer Now 🚗</a>
+        </div>
+    </section>
+
+    <section class="recent-offers-section">
+        <h2 class="section-title">Recent Offers</h2>
+
+        <div class="offers-grid">
+            <div th:each="offer : ${latestOffers}" class="offer-card">
+                <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
+                    <div class="offer-image">
+                        <img th:src="${offer.profileImage}" alt="Car image">
+                    </div>
+                    <div class="offer-info">
+                        <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
+                        <p class="offer-meta">
+                            <span th:text="${offer.engine}"></span> ·
+                            <span th:text="${offer.transmission}"></span> ·
+                            <span th:text="${offer.mileage + ' km'}"></span>
+                        </p>
+                        <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
+                        <p class="offer-year" th:text="${offer.modelYear}"></p>
+                    </div>
+                </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(latestOffers)}" class="no-offers">
+                <p>No recent offers available.</p>
+            </div>
+        </div>
+    </section>
 
     <div class="vehicle-grid">
         <!-- BMW -->
