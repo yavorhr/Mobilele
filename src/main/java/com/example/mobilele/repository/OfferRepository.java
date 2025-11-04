@@ -23,4 +23,6 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
           Pageable pageable);
 
   Page<OfferEntity> findAllBySeller_Username(String username, Pageable pageable);
+
+  List<OfferEntity> findAllByOrderByCreatedDesc(Pageable pageable);
 }

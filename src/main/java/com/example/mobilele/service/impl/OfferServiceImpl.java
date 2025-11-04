@@ -18,6 +18,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -264,6 +265,14 @@ public class OfferServiceImpl implements OfferService {
     return offerRepository
             .findAllBySeller_Username(username, pageable)
             .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
+  }
+
+  @Override
+  public List<OfferBaseViewModel> findLatestOffers(int count) {
+      return offerRepository.findAllByOrderByCreatedDesc(PageRequest.of(0, count))
+              .stream()
+              .map(this::mapToOfferBaseViewModel)
+              .toList();
   }
 
   @Override
