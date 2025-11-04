@@ -50,11 +50,10 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferViewModel> findAllOffers() {
+  public Page<OfferBaseViewModel> findAllOffers(Pageable pageable) {
     return this.offerRepository
-            .findAll()
-            .stream().map(o -> this.modelMapper.map(o, OfferViewModel.class))
-            .collect(Collectors.toList());
+            .findAll(pageable)
+            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
   }
 
   @Override

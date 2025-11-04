@@ -19,7 +19,7 @@ public interface OfferService {
 
   void initOffers();
 
-  List<OfferViewModel> findAllOffers();
+  Page<OfferBaseViewModel> findAllOffers(Pageable pageable);
 
   OfferViewModel findOfferById(String name, Long id);
 

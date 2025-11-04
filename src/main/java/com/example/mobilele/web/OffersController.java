@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
@@ -148,7 +147,7 @@ public class OffersController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size,
+          @RequestParam(defaultValue = "1") int size,
           Model model) {
 
     VehicleCategoryEnum categoryEnum = null;
@@ -254,7 +253,8 @@ public class OffersController {
 
   // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
-  public String getOffersDetailsPage(@PathVariable Long id, Model model, Principal principal) {
+  public String getOffersDetailsPage(@PathVariable Long id, Model model,
+                                     Principal principal) {
     OfferViewModel viewModel =
             this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
 
@@ -303,13 +303,14 @@ public class OffersController {
     return "redirect:/offers/details/" + serviceModel.getId();
   }
 
+
   @GetMapping("/offers/my-offers")
   public String showMyOffers(
           Principal principal,
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size,
+          @RequestParam(defaultValue = "1") int size,
           Model model) {
 
     String username = principal.getName();
@@ -326,6 +327,30 @@ public class OffersController {
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("context", "my");
+
+    return "offers";
+  }
+
+  @GetMapping("/offers/all")
+  public String showAllOffers(
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "2") int size,
+          Model model) {
+
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
+    Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "all");
 
     return "offers";
   }
