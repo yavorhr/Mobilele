@@ -2,10 +2,10 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "offers")
@@ -32,6 +32,7 @@ public class OfferEntity extends BaseEntity {
   public List<Picture> getPictures() {
     return pictures;
   }
+
 
   @ManyToOne
   public ModelEntity getModel() {
