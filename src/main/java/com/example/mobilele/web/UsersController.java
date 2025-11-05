@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/users")
@@ -95,6 +100,33 @@ public class UsersController {
     model.addAttribute("user", this.userService.findUserViewModelById(principal.getId()));
 
     return "profile";
+  }
+
+  @PostMapping("/favorites/{offerId}/toggle")
+  @ResponseBody
+  public ResponseEntity<Map<String, Object>> toggleFavorite(
+          @PathVariable Long offerId,
+          Principal principal) {
+
+    Map<String, Object> response = new HashMap<>();
+
+    try {
+      boolean added = userService.toggleFavorite(principal.getName(), offerId);
+
+      response.put("success", true);
+      response.put("message", added
+              ? "Offer added to favorites!"
+              : "Offer removed from favorites!");
+
+      return ResponseEntity.ok(response);
+
+    } catch (RuntimeException e) {
+      response.put("success", false);
+      response.put("message", e.getMessage() != null
+              ? e.getMessage()
+              : "Unexpected error occurred.");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
   }
 
   @PatchMapping("/profile")

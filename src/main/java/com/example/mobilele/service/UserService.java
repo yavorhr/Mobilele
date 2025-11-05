@@ -39,4 +39,6 @@ public interface UserService {
   boolean isEmailAvailable(String email);
 
   boolean isPhoneNumberAvailable(String phoneNumber);
+
+  boolean toggleFavorite(String name, Long offerId);
 }

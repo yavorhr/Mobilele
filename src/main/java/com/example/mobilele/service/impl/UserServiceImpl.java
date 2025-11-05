@@ -1,16 +1,19 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
+import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.view.user.UserViewModel;
+import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,13 +28,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final OfferRepository offerRepository;
   private final UserRoleService roleService;
   private final MobileleUserServiceImpl mobileleUserService;
   private final ModelMapper modelMapper;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, OfferRepository offerRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
+    this.offerRepository = offerRepository;
     this.roleService = roleService;
     this.mobileleUserService = mobileleUserService;
     this.modelMapper = modelMapper;
@@ -137,6 +142,31 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isPhoneNumberAvailable(String phoneNumber) {
     return userRepository.findByPhoneNumberIgnoreCase(phoneNumber).isEmpty();
+  }
+
+  @Override
+  @Transactional
+  public boolean toggleFavorite(String username, Long offerId) {
+    UserEntity user = userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    OfferEntity offer = offerRepository
+            .findById(offerId)
+            .orElseThrow(() -> new RuntimeException("Offer not found"));
+
+    boolean added;
+
+    if (user.getFavorites().contains(offer)) {
+      user.getFavorites().remove(offer);
+      added = false;
+    } else {
+      user.getFavorites().add(offer);
+      added = true;
+    }
+
+    userRepository.save(user);
+    return added;
   }
 
   @Override
