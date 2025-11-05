@@ -54,8 +54,19 @@
                 <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
             </div>
 
-            <button class="btn save-btn">💖 Save to Favorites</button>
+            <div class="favorite-container">
+                <div id="favorite-message" class="favorite-message"></div>
 
+                <button
+                        type="button"
+                        class="btn save-btn"
+                        th:data-offer-id="*{id}"
+                        th:classappend="${addedToFavorites} ? 'added' : ''">
+                    <span class="heart-icon">💖</span>
+                    <span class="btn-text"
+                          th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
+                </button>
+            </div>
             <div class="modify-buttons" th:if="*{canModify}">
                 <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
                 <form th:action="@{/offers/{id}(id=${offer.id})}"
@@ -111,6 +122,7 @@
 <script src="/js/offer/gallery.js"></script>
 <script src="/js/offer/uploadImage.js"></script>
 <script src="/js/offer/deletePicture.js"></script>
+<script src="/js/offer/add-to-favorites.js"></script>
 </body>
 </html>
 
