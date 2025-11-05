@@ -2,7 +2,9 @@ package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -14,14 +16,25 @@ public class UserEntity extends BaseEntity {
   private String phoneNumber;
   private String firstName;
   private String lastName;
+  private Set<OfferEntity> favorites;
   // Account lock properties
   private Integer failedLoginAttempts;
   private boolean accountLocked;
   private LocalDateTime lockTime;
 
   public UserEntity() {
+    this.favorites = new HashSet<>();
     this.accountLocked = false;
     this.failedLoginAttempts = 0;
+  }
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+          name = "users_favorites",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "offer_id"))
+  public Set<OfferEntity> getFavorites() {
+    return favorites;
   }
 
   @Column(unique = true, nullable = false)
@@ -83,6 +96,11 @@ public class UserEntity extends BaseEntity {
 
   public UserEntity setFirstName(String firstName) {
     this.firstName = firstName;
+    return this;
+  }
+
+  public UserEntity setFavorites(Set<OfferEntity> favorites) {
+    this.favorites = favorites;
     return this;
   }
 
