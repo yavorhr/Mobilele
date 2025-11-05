@@ -259,6 +259,7 @@ public class OffersController {
             this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
 
     model.addAttribute("offer", viewModel);
+    model.addAttribute("isFavorite", this.offerService.doesOfferExistInUsersFavorites(id, principal.getName()));
 
     return "details";
   }
@@ -302,7 +303,6 @@ public class OffersController {
 
     return "redirect:/offers/details/" + serviceModel.getId();
   }
-
 
   @GetMapping("/offers/my-offers")
   public String showMyOffers(

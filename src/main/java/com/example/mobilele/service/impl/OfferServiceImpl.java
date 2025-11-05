@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -268,10 +269,24 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public List<OfferBaseViewModel> findLatestOffers(int count) {
-      return offerRepository.findAllByOrderByCreatedDesc(PageRequest.of(0, count))
-              .stream()
-              .map(this::mapToOfferBaseViewModel)
-              .toList();
+    return offerRepository.findAllByOrderByCreatedDesc(PageRequest.of(0, count))
+            .stream()
+            .map(this::mapToOfferBaseViewModel)
+            .toList();
+  }
+
+  @Override
+  @Transactional
+  public boolean doesOfferExistInUsersFavorites(Long id, String username) {
+    UserEntity user = this.userService.findByUsername(username);
+
+    OfferEntity offer = this.offerRepository
+            .findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Offer with id: " + id + " does not exist!"));
+
+    return user.getFavorites()
+            .stream()
+            .anyMatch(o -> o.getId().equals(offer.getId()));
   }
 
   @Override
