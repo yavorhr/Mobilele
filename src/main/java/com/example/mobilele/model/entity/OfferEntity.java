@@ -25,7 +25,6 @@ public class OfferEntity extends BaseEntity {
   private ColorEnum color;
   private Instant created;
   private Instant modified;
-  @ManyToMany(mappedBy = "favorites")
   private Set<UserEntity> favoritedBy;
 
   public OfferEntity() {
