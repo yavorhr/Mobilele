@@ -331,6 +331,33 @@ public class OffersController {
     return "offers";
   }
 
+  @GetMapping("/offers/favorites")
+  public String showFavoriteOffers(
+          Principal principal,
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "1") int size,
+          Model model) {
+
+    String username = principal.getName();
+
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
+    Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "favorites");
+
+    return "offers";
+  }
+
   @GetMapping("/offers/all")
   public String showAllOffers(
           @RequestParam(defaultValue = "creationDate") String sort,

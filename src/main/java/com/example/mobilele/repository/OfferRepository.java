@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -25,4 +27,7 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
   Page<OfferEntity> findAllBySeller_Username(String username, Pageable pageable);
 
   List<OfferEntity> findAllByOrderByCreatedDesc(Pageable pageable);
+
+  @Query("SELECT o FROM OfferEntity o JOIN o.favoritedBy u WHERE u.username = :username")
+  Page<OfferEntity> findFavoritesByUsername(@Param("username") String username, Pageable pageable);
 }

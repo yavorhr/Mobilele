@@ -18,12 +18,12 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -287,6 +287,13 @@ public class OfferServiceImpl implements OfferService {
     return user.getFavorites()
             .stream()
             .anyMatch(o -> o.getId().equals(offer.getId()));
+  }
+
+  @Override
+  public Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable) {
+    return offerRepository
+            .findFavoritesByUsername(username, pageable)
+            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
   }
 
   @Override

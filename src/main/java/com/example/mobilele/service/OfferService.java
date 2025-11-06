@@ -46,4 +46,6 @@ public interface OfferService {
   List<OfferBaseViewModel> findLatestOffers(int number);
 
   boolean doesOfferExistInUsersFavorites(Long id, String name);
+
+  Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable);
 }
