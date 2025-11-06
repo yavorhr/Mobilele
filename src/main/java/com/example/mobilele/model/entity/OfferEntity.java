@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +25,11 @@ public class OfferEntity extends BaseEntity {
   private ColorEnum color;
   private Instant created;
   private Instant modified;
+  @ManyToMany(mappedBy = "favorites")
+  private Set<UserEntity> favoritedBy;
 
   public OfferEntity() {
+    favoritedBy = new HashSet<>();
   }
 
   @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -33,6 +37,10 @@ public class OfferEntity extends BaseEntity {
     return pictures;
   }
 
+  @ManyToMany(mappedBy = "favorites")
+  public Set<UserEntity> getFavoritedBy() {
+    return favoritedBy;
+  }
 
   @ManyToOne
   public ModelEntity getModel() {
@@ -118,6 +126,11 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setCountry(CountryEnum country) {
     this.country = country;
+    return this;
+  }
+
+  public OfferEntity setFavoritedBy(Set<UserEntity> favoritedBy) {
+    this.favoritedBy = favoritedBy;
     return this;
   }
 
