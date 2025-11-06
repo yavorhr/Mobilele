@@ -61,7 +61,7 @@
                         type="button"
                         class="btn save-btn"
                         th:data-offer-id="*{id}"
-                        th:classappend="${addedToFavorites} ? 'added' : ''">
+                        th:classappend="${isFavorite} ? 'added' : ''">
                     <span class="heart-icon">💖</span>
                     <span class="btn-text"
                           th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
