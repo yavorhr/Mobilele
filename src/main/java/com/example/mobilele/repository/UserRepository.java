@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
   @Query("SELECT u FROM UserEntity u Where u.accountLocked")
   List<UserEntity> findAllLockedUsers();
+
+
 }
