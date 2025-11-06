@@ -344,8 +344,24 @@ public class OfferServiceImpl implements OfferService {
               "user", CountryEnum.BULGARIA, CityEnum.SOFIA, createPicture("q5", "cars-offers/q5_bd67cg",
                       "https://res.cloudinary.com/yavorhr/image/upload/v1759923265/mobilele/cars-offers/q5_bd67cg.jpg"));
 
+      // BMW M1 - 2
+      OfferEntity offer5 = buildOffer(
+              1L, EngineEnum.Hybrid, TransmissionType.AUTOMATIC, ConditionEnum.DAMAGED
+              , ColorEnum.GREEN, 99999.00, BigDecimal.valueOf(1000),
+              "The car is damaged, but it can be fixed!",
+              "admin", CountryEnum.SPAIN, CityEnum.BARCELONA, createPicture("m1", "cars-offers/m1_eicofs",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
+
+      // BMW M1 - 3
+      OfferEntity offer6 = buildOffer(
+              1L, EngineEnum.Hybrid, TransmissionType.MANUAL, ConditionEnum.NEW
+              , ColorEnum.GREEN, 50.00, BigDecimal.valueOf(1000),
+              "The bmw is brand new!",
+              "admin", CountryEnum.BULGARIA, CityEnum.VARNA, createPicture("m1", "cars-offers/m1_eicofs",
+                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
+
       // Save all offers with pictures (cascade persists pictures too)
-      offerRepository.saveAll(List.of(offer1, offer2, offer3, offer4));
+      offerRepository.saveAll(List.of(offer1, offer2, offer3, offer4, offer5, offer6));
     }
   }
 
@@ -358,6 +374,7 @@ public class OfferServiceImpl implements OfferService {
     UserEntity seller = userService.findByUsername(username);
 
     OfferEntity offer = new OfferEntity();
+
     offer.setModel(modelService.findById(modelId)
             .orElseThrow(() -> new ObjectNotFoundException("Model with id: " + modelId + " does not exist!")));
 
