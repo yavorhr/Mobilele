@@ -95,63 +95,118 @@
     </div>
 
     <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
-         th:if="${true}">
+         th:if="${totalPages > 1}">
 
         <!-- Prev -->
-        <a th:if="${currentPage > 0}"
-           th:href="${
-        context == 'model' ?
-            @{/offers/{vehicleType}/{brand}/{modelName}(
-                vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
-                page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
-        (context == 'brand' ?
-            @{/offers/brands/{brand}(brand=${brand}, page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
-        (context == 'my' ?
-            @{/offers/my-offers(page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
-        (context == 'favorites' ?
-            @{/offers/favorites(page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
-            @{/offers/all(page=${currentPage - 1}, sort=${sort}, dir=${dir})})
-        ))}"
-           class="pagination-btn">&laquo; Prev</a>
+        <th:block th:if="${currentPage > 0}">
+            <th:block th:switch="${context}">
+                <a th:case="'model'"
+                   th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                   vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
+                   page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">&laquo; Prev</a>
+
+                <a th:case="'brand'"
+                   th:href="@{/offers/brands/{brand}(
+                   brand=${brand},
+                   page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">&laquo; Prev</a>
+
+                <a th:case="'my'"
+                   th:href="@{/offers/my-offers(
+                   page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">&laquo; Prev</a>
+
+                <a th:case="'favorites'"
+                   th:href="@{/offers/favorites(
+                   page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">&laquo; Prev</a>
+
+                <!-- default → all -->
+                <a th:case="*"
+                   th:href="@{/offers/all(
+                   page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">&laquo; Prev</a>
+            </th:block>
+        </th:block>
 
         <!-- Page Numbers -->
         <div class="pagination-numbers">
-            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-               th:href="${
-            context == 'model' ?
-                @{/offers/{vehicleType}/{brand}/{modelName}(
-                    vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
-                    page=${i}, sort=${sort}, dir=${dir})} :
-            (context == 'brand' ?
-                @{/offers/brands/{brand}(brand=${brand}, page=${i}, sort=${sort}, dir=${dir})} :
-            (context == 'my' ?
-                @{/offers/my-offers(page=${i}, sort=${sort}, dir=${dir})} :
-            (context == 'favorites' ?
-                @{/offers/favorites(page=${i}, sort=${sort}, dir=${dir})} :
-                @{/offers/all(page=${i}, sort=${sort}, dir=${dir})})
-            ))}"
-               th:text="${i + 1}"
-               th:classappend="${i == currentPage} ? 'active' : ''"
-               class="pagination-number">
-            </a>
+            <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <th:block th:switch="${context}">
+                    <a th:case="'model'"
+                       th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                     vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
+                     page=${i}, sort=${sort}, dir=${dir})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number"></a>
+
+                    <a th:case="'brand'"
+                       th:href="@{/offers/brands/{brand}(
+                     brand=${brand},
+                     page=${i}, sort=${sort}, dir=${dir})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number"></a>
+
+                    <a th:case="'my'"
+                       th:href="@{/offers/my-offers(
+                     page=${i}, sort=${sort}, dir=${dir})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number"></a>
+
+                    <a th:case="'favorites'"
+                       th:href="@{/offers/favorites(
+                     page=${i}, sort=${sort}, dir=${dir})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number"></a>
+
+                    <!-- default → all -->
+                    <a th:case="*"
+                       th:href="@{/offers/all(
+                     page=${i}, sort=${sort}, dir=${dir})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number"></a>
+                </th:block>
+            </th:block>
         </div>
 
         <!-- Next -->
-        <a th:if="${currentPage + 1 < totalPages}"
-           th:href="${
-        context == 'model' ?
-            @{/offers/{vehicleType}/{brand}/{modelName}(
-                vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
-                page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-        (context == 'brand' ?
-            @{/offers/brands/{brand}(brand=${brand}, page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-        (context == 'my' ?
-            @{/offers/my-offers(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-        (context == 'favorites' ?
-            @{/offers/favorites(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
-            @{/offers/all(page=${currentPage + 1}, sort=${sort}, dir=${dir})})
-        ))}"
-           class="pagination-btn">Next &raquo;</a>
+        <th:block th:if="${currentPage + 1 < totalPages}">
+            <th:block th:switch="${context}">
+                <a th:case="'model'"
+                   th:href="@{/offers/{vehicleType}/{brand}/{modelName}(
+                   vehicleType=${vehicleType}, brand=${brand}, modelName=${model},
+                   page=${currentPage + 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">Next &raquo;</a>
+
+                <a th:case="'brand'"
+                   th:href="@{/offers/brands/{brand}(
+                   brand=${brand},
+                   page=${currentPage + 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">Next &raquo;</a>
+
+                <a th:case="'my'"
+                   th:href="@{/offers/my-offers(
+                   page=${currentPage + 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">Next &raquo;</a>
+
+                <a th:case="'favorites'"
+                   th:href="@{/offers/favorites(
+                   page=${currentPage + 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">Next &raquo;</a>
+
+                <!-- default → all -->
+                <a th:case="*"
+                   th:href="@{/offers/all(
+                   page=${currentPage + 1}, sort=${sort}, dir=${dir})}"
+                   class="pagination-btn">Next &raquo;</a>
+            </th:block>
+        </th:block>
 
         <!-- Page indicator -->
         <p class="text-white text-center mt-2"
