@@ -21,11 +21,17 @@ public class UserEntity extends BaseEntity {
   private Integer failedLoginAttempts;
   private boolean accountLocked;
   private LocalDateTime lockTime;
+  private Set<OfferEntity> offers;
 
   public UserEntity() {
     this.favorites = new HashSet<>();
     this.accountLocked = false;
     this.failedLoginAttempts = 0;
+  }
+
+  @OneToMany(mappedBy = "seller")
+  public Set<OfferEntity> getOffers() {
+    return offers;
   }
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -106,6 +112,11 @@ public class UserEntity extends BaseEntity {
 
   public UserEntity setLastName(String lastName) {
     this.lastName = lastName;
+    return this;
+  }
+
+  public UserEntity setOffers(Set<OfferEntity> offers) {
+    this.offers = offers;
     return this;
   }
 
