@@ -159,9 +159,11 @@ public class UserServiceImpl implements UserService {
 
     if (user.getFavorites().contains(offer)) {
       user.getFavorites().remove(offer);
+      offer.getFavoritedBy().remove(user);
       added = false;
     } else {
       user.getFavorites().add(offer);
+      offer.getFavoritedBy().add(user);
       added = true;
     }
 
