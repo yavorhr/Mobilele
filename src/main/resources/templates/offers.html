@@ -95,7 +95,7 @@
     </div>
 
     <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
-         th:if="${totalPages > 1}">
+         th:if="${true}">
 
         <!-- Prev -->
         <a th:if="${currentPage > 0}"
@@ -109,7 +109,7 @@
         (context == 'my' ?
             @{/offers/my-offers(page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
         (context == 'favorites' ?
-            @{/users/favorites(page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
+            @{/offers/favorites(page=${currentPage - 1}, sort=${sort}, dir=${dir})} :
             @{/offers/all(page=${currentPage - 1}, sort=${sort}, dir=${dir})})
         ))}"
            class="pagination-btn">&laquo; Prev</a>
@@ -127,7 +127,7 @@
             (context == 'my' ?
                 @{/offers/my-offers(page=${i}, sort=${sort}, dir=${dir})} :
             (context == 'favorites' ?
-                @{/users/favorites(page=${i}, sort=${sort}, dir=${dir})} :
+                @{/offers/favorites(page=${i}, sort=${sort}, dir=${dir})} :
                 @{/offers/all(page=${i}, sort=${sort}, dir=${dir})})
             ))}"
                th:text="${i + 1}"
@@ -148,7 +148,7 @@
         (context == 'my' ?
             @{/offers/my-offers(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
         (context == 'favorites' ?
-            @{/users/favorites(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
+            @{/offers/favorites(page=${currentPage + 1}, sort=${sort}, dir=${dir})} :
             @{/offers/all(page=${currentPage + 1}, sort=${sort}, dir=${dir})})
         ))}"
            class="pagination-btn">Next &raquo;</a>
