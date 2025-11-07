@@ -28,6 +28,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -398,7 +399,9 @@ public class OffersController {
 
   // 4.2 Update offer -PATCH
   @PatchMapping("/offers/update/{id}")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.name, #id )")
   public String updateOffer(@PathVariable Long id,
+                            Principal principal,
                             @Valid OfferUpdateBindingForm offerBindingModel,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
@@ -422,11 +425,11 @@ public class OffersController {
   }
 
   // 5. Delete offer
-//  @PreAuthorize("@offerServiceImpl.ownerOrIsAdmin(#principal.name, #id)")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.name, #id)")
   @DeleteMapping("/offers/{id}")
-  public String deleteOffer(@PathVariable Long id,
-                            RedirectAttributes redirectAttributes,
-                            Principal principal) {
+  public String deleteOffer(Principal principal,
+                            @PathVariable Long id,
+                            RedirectAttributes redirectAttributes) {
     try {
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
