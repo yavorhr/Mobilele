@@ -35,8 +35,6 @@ public interface OfferService {
 
   Page<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum category, String brand, String modelName, Pageable pageable);
 
-  boolean isOwnerOrIsAdmin(String userName, Long id);
-
   OfferEntity findById(long id);
 
   List<OfferBaseViewModel> findOffersByBrand(String toUpperCase);

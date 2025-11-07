@@ -16,9 +16,9 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,9 +29,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class OfferServiceImpl implements OfferService {
   private final OfferRepository offerRepository;
@@ -65,19 +65,26 @@ public class OfferServiceImpl implements OfferService {
                     .orElseThrow(() -> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
 
     OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
-    model.setCanModify(isOwnerOrIsAdmin(name, offer.getId()));
+    model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
 
     return model;
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     OfferEntity offer = this.offerRepository
             .findById(id)
             .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + id + " was not found!"));
 
+    userService.deleteOfferFromFavorites(id);
+
     for (Picture picture : offer.getPictures()) {
-      cloudinaryService.delete(picture.getPublicId());
+      try {
+        cloudinaryService.delete(picture.getPublicId());
+      } catch (Exception e) {
+        log.warn("Cloudinary deletion failed for {}", picture.getPublicId(), e);
+      }
     }
 
     this.offerRepository.delete(offer);
@@ -227,29 +234,12 @@ public class OfferServiceImpl implements OfferService {
             .map(this::mapToOfferBaseViewModel);
   }
 
-  public boolean isOwnerOrIsAdmin(String username, Long id) {
-    Optional<OfferEntity> offerOpt = offerRepository.
-            findById(id);
-
-    UserEntity caller = this.userService.
-            findByUsername(username);
-
-    if (offerOpt.isEmpty()) {
-      return false;
-    } else {
-      OfferEntity offerEntity = offerOpt.get();
-
-      return isAdmin(caller) ||
-              offerEntity.getSeller().getUsername().equals(username);
-    }
-  }
 
   @Override
   public OfferEntity findById(long id) {
     return this.offerRepository
             .findById(id)
-            .orElseThrow(()
-                    -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
+            .orElseThrow(() -> new ObjectNotFoundException("Offer with id" + id + " was not found!"));
   }
 
   @Override
