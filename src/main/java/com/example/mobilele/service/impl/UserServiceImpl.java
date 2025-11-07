@@ -14,6 +14,7 @@ import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,9 +22,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
@@ -169,6 +172,54 @@ public class UserServiceImpl implements UserService {
 
     userRepository.save(user);
     return added;
+  }
+
+  @Override
+  public boolean isOwnerOrIsAdmin(String username, Long offerId) {
+    return isOwner(username, offerId) || isAdmin(username);
+  }
+
+  @Override
+  public boolean isNotOwnerOrIsAdmin(String username, Long offerId) {
+    return !isOwner(username, offerId) || isAdmin(username);
+  }
+
+  protected boolean isAdmin(String username) {
+    var user = userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new ObjectNotFoundException("User with username -> " + username + " was not found!"));
+
+    return user.
+            getRoles().
+            stream().
+            map(UserRoleEntity::getRole).
+            anyMatch(r -> r == UserRoleEnum.ADMIN);
+  }
+
+  public boolean isOwner(String username, Long offerId) {
+
+    boolean result = offerRepository
+            .findById(offerId)
+            .stream()
+            .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
+
+    if (!result) {
+      log.warn("Unauthorized  modify attempt for user {}", username);
+    }
+    return result;
+  }
+
+  @Override
+  @Transactional
+  public void deleteOfferFromFavorites(Long offerId) {
+    List<UserEntity> users = userRepository.findAll();
+
+    for (UserEntity user : users) {
+      boolean modified = user.getFavorites().removeIf(o -> o.getId().equals(offerId));
+      if (modified) {
+        userRepository.save(user);
+      }
+    }
   }
 
   @Override

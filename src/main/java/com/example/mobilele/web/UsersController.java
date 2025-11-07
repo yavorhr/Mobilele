@@ -2,7 +2,9 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
+import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
@@ -16,6 +18,7 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,6 +105,7 @@ public class UsersController {
     return "profile";
   }
 
+  @PreAuthorize("@userServiceImpl.isNotOwnerOrIsAdmin(#principal.name,#offerId)")
   @PostMapping("/favorites/{offerId}/toggle")
   @ResponseBody
   public ResponseEntity<Map<String, Object>> toggleFavorite(
@@ -152,5 +156,15 @@ public class UsersController {
     request.logout();
 
     return "redirect:/";
+  }
+
+  protected boolean isAdmin(String username) {
+    var user = userService.findByUsername(username);
+
+    return user.
+            getRoles().
+            stream().
+            map(UserRoleEntity::getRole).
+            anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
 }
