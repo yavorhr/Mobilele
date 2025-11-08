@@ -67,6 +67,7 @@ public class OfferServiceImpl implements OfferService {
     OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
 
     model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
+    model.setNotOwnerOrIsAdmin(userService.isNotOwnerOrIsAdmin(name, offer.getId()));
 
     return model;
   }

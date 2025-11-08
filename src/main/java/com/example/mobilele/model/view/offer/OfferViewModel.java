@@ -24,12 +24,17 @@ public class OfferViewModel {
   private Instant created;
   private Instant modified;
   private boolean canModify;
+  private boolean isNotOwnerOrIsAdmin;
   private List<PictureServiceModel> pictures;
   private ColorEnum color;
   private ConditionEnum condition;
   private UserViewModel seller;
 
   public OfferViewModel() {
+  }
+
+  public boolean isNotOwnerOrIsAdmin() {
+    return isNotOwnerOrIsAdmin;
   }
 
   public String getModelVehicleType() {
@@ -107,6 +112,11 @@ public class OfferViewModel {
 
   public OfferViewModel setCountry(CountryEnum country) {
     this.country = country;
+    return this;
+  }
+
+  public OfferViewModel setNotOwnerOrIsAdmin(boolean notOwnerOrIsAdmin) {
+    isNotOwnerOrIsAdmin = notOwnerOrIsAdmin;
     return this;
   }
 
