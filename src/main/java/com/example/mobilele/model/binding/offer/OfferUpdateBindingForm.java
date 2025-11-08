@@ -44,11 +44,6 @@ public class OfferUpdateBindingForm {
     return year;
   }
 
-  public OfferUpdateBindingForm setId(Long id) {
-    this.id = id;
-    return this;
-  }
-
   public ConditionEnum getCondition() {
     return condition;
   }
@@ -91,6 +86,11 @@ public class OfferUpdateBindingForm {
 
   public OfferUpdateBindingForm setYear(Integer year) {
     this.year = year;
+    return this;
+  }
+
+  public OfferUpdateBindingForm setId(Long id) {
+    this.id = id;
     return this;
   }
 

@@ -7,7 +7,6 @@ import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import java.math.BigDecimal;
 
 public class OfferUpdateServiceModel {
-  private Long id;
   private String description;
   private EngineEnum engine;
   private String imageUrl;
@@ -15,18 +14,8 @@ public class OfferUpdateServiceModel {
   private BigDecimal price;
   private TransmissionType transmission;
   private Integer year;
-  private String model;
 
   public OfferUpdateServiceModel() {
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public OfferUpdateServiceModel setId(Long id) {
-    this.id = id;
-    return this;
   }
 
   public String getDescription() {
@@ -89,15 +78,6 @@ public class OfferUpdateServiceModel {
 
   public OfferUpdateServiceModel setYear(Integer year) {
     this.year = year;
-    return this;
-  }
-
-  public String getModel() {
-    return model;
-  }
-
-  public OfferUpdateServiceModel setModel(String model) {
-    this.model = model;
     return this;
   }
 }
