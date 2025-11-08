@@ -56,44 +56,46 @@
 
             <div class="favorite-container">
                 <div id="favorite-message" class="favorite-message"></div>
-
-                <button
-                        type="button"
-                        class="btn save-btn"
-                        th:data-offer-id="*{id}"
-                        th:classappend="${isFavorite} ? 'added' : ''">
-                    <span class="heart-icon">💖</span>
-                    <span class="btn-text"
-                          th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
-                </button>
+                <th:block th:if="*{isNotOwnerOrIsAdmin}">
+                    <button
+                            type="button"
+                            class="btn save-btn"
+                            th:data-offer-id="*{id}"
+                            th:classappend="${isFavorite} ? 'added' : ''">
+                        <span class="heart-icon">💖</span>
+                        <span class="btn-text"
+                              th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
+                    </button>
+                    <th:block th:if="*{canModify}">
             </div>
-            <div class="modify-buttons" th:if="*{canModify}">
-                <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
-                <form th:action="@{/offers/{id}(id=${offer.id})}"
-                      th:method="delete"
-                      class="d-inline">
-                    <button type="submit" class="btn delete-btn">Delete</button>
-                </form>
-                <!--                <th:block th:if="*{canModify}">-->
-                <form id="picture-upload-form"
-                      th:action="@{/pictures}"
-                      th:method="POST"
-                      enctype="multipart/form-data">
+            <th:block th:if="*{canModify}">
+                <div class="modify-buttons">
+                    <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
+                    <form th:action="@{/offers/{id}(id=${offer.id})}"
+                          th:method="delete"
+                          class="d-inline">
+                        <button type="submit" class="btn delete-btn">Delete</button>
+                    </form>
 
-                    <input type="hidden" name="offerId" th:value="*{id}"/>
-                    <input type="hidden" name="modelVehicleType" th:value="*{modelVehicleType}"/>
+                    <form id="picture-upload-form"
+                          th:action="@{/pictures}"
+                          th:method="POST"
+                          enctype="multipart/form-data">
 
-                    <div class="upload-container">
-                        <input id="picture-upload" type="file" name="pictures" multiple/>
-                        <label for="picture-upload">
-                            <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
-                            <div id="uploadSuccess" class="upload-success">Picture added</div>
-                            <div id="uploadFail" class="upload-fail">Picture can't be added</div>
-                        </label>
-                    </div>
-                </form>
-                <!--                </th:block>-->
-            </div>
+                        <input type="hidden" name="offerId" th:value="*{id}"/>
+                        <input type="hidden" name="modelVehicleType" th:value="*{modelVehicleType}"/>
+
+                        <div class="upload-container">
+                            <input id="picture-upload" type="file" name="pictures" multiple/>
+                            <label for="picture-upload">
+                                <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
+                                <div id="uploadSuccess" class="upload-success">Picture added</div>
+                                <div id="uploadFail" class="upload-fail">Picture can't be added</div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </th:block>
         </aside>
     </div>
 
