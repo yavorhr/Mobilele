@@ -29,7 +29,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -385,7 +384,7 @@ public class OffersController {
   }
 
    //4.1 Update offer - GET
-//  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
                                    @AuthenticationPrincipal MobileleUser principal,
@@ -401,7 +400,7 @@ public class OffersController {
   }
 
   // 4.2 Update offer -PATCH
-//  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
                             @AuthenticationPrincipal MobileleUser principal,
