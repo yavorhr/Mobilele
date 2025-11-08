@@ -68,6 +68,7 @@ public class OfferServiceImpl implements OfferService {
 
     model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
     model.setNotOwnerOrIsAdmin(userService.isNotOwnerOrIsAdmin(name, offer.getId()));
+    model.setReserved(offer.isReserved());
 
     return model;
   }
@@ -286,6 +287,18 @@ public class OfferServiceImpl implements OfferService {
     return offerRepository
             .findFavoritesByUsername(username, pageable)
             .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
+  }
+
+  @Transactional
+  @Override
+  public boolean toggleReservation(Long id, String username) {
+    OfferEntity offer = offerRepository.findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Offer not found"));
+
+    offer.setReserved(!offer.isReserved());
+    offerRepository.save(offer);
+
+    return offer.isReserved();
   }
 
   @Override

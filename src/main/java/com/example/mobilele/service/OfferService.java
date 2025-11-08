@@ -46,4 +46,6 @@ public interface OfferService {
   boolean doesOfferExistInUsersFavorites(Long id, String name);
 
   Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable);
+
+  boolean toggleReservation(Long id, String username);
 }

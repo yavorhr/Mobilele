@@ -440,6 +440,15 @@ public class OffersController {
 
     return "redirect:/";
   }
+
+  @PatchMapping("/offers/{id}/toggle-reservation")
+  @ResponseBody
+  public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
+                                                                @AuthenticationPrincipal MobileleUser principal) {
+
+    boolean newStatus = offerService.toggleReservation(id, principal.getUsername());
+    return ResponseEntity.ok(Map.of("reserved", newStatus));
+  }
 }
 
 
