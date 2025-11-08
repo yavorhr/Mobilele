@@ -26,6 +26,7 @@ public class OfferEntity extends BaseEntity {
   private Instant created;
   private Instant modified;
   private Set<UserEntity> favoritedBy;
+  private boolean isReserved;
 
   public OfferEntity() {
     favoritedBy = new HashSet<>();
@@ -113,6 +114,10 @@ public class OfferEntity extends BaseEntity {
     return modified;
   }
 
+  public boolean isReserved() {
+    return isReserved;
+  }
+
   public OfferEntity setColor(ColorEnum color) {
     this.color = color;
     return this;
@@ -183,6 +188,11 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setSeller(UserEntity seller) {
     this.seller = seller;
+    return this;
+  }
+
+  public OfferEntity setReserved(boolean reserved) {
+    isReserved = reserved;
     return this;
   }
 
