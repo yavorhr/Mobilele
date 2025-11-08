@@ -3,32 +3,36 @@ package com.example.mobilele.model.view.offer;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.service.PictureServiceModel;
 import com.example.mobilele.model.view.user.UserViewModel;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
 public class OfferViewModel {
   private Long id;
+  private UserViewModel seller;
+  private List<PictureServiceModel> pictures;
+
   private BigDecimal price;
   private String description;
   private String modelBrandName;
   private String modelVehicleType;
-  private EngineEnum engine;
-  private CountryEnum country;
   private CityEnum city;
   private Double mileage;
-  private TransmissionType transmission;
   private Integer modelYear;
   private String modelName;
+
+  private ColorEnum color;
+  private EngineEnum engine;
+  private CountryEnum country;
+  private ConditionEnum condition;
+  private TransmissionType transmission;
+
   private Instant created;
   private Instant modified;
+
   private boolean canModify;
   private boolean isNotOwnerOrIsAdmin;
-  private List<PictureServiceModel> pictures;
-  private ColorEnum color;
-  private ConditionEnum condition;
-  private UserViewModel seller;
+  boolean isReserved;
 
   public OfferViewModel() {
   }
@@ -36,6 +40,11 @@ public class OfferViewModel {
   public boolean isNotOwnerOrIsAdmin() {
     return isNotOwnerOrIsAdmin;
   }
+
+  public boolean isReserved() {
+    return isReserved;
+  }
+
 
   public String getModelVehicleType() {
     return modelVehicleType;
@@ -155,6 +164,11 @@ public class OfferViewModel {
 
   public OfferViewModel setCondition(ConditionEnum condition) {
     this.condition = condition;
+    return this;
+  }
+
+  public OfferViewModel setReserved(boolean reserved) {
+    isReserved = reserved;
     return this;
   }
 
