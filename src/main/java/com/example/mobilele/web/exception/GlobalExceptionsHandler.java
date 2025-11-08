@@ -10,17 +10,6 @@ import java.nio.file.AccessDeniedException;
 @ControllerAdvice
 public class GlobalExceptionsHandler {
 
-  @ExceptionHandler(AccessDeniedException.class)
-  public ModelAndView handleAccessDeniedException(AccessDeniedException e) {
-    ModelAndView modelAndView = new ModelAndView();
-
-    modelAndView.addObject("message", e.getMessage());
-    modelAndView.setViewName("error/403");
-    modelAndView.setStatus(HttpStatus.FORBIDDEN);
-
-    return modelAndView;
-  }
-
   @ExceptionHandler(ObjectNotFoundException.class)
   public ModelAndView handleObjectNotFoundException(ObjectNotFoundException e) {
     ModelAndView modelAndView = new ModelAndView();
@@ -36,9 +25,15 @@ public class GlobalExceptionsHandler {
   public ModelAndView handleServerError(Exception e) {
     ModelAndView modelAndView = new ModelAndView();
 
-    modelAndView.setViewName("error/500");
-    modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-
+    if (e instanceof AccessDeniedException
+            || e instanceof org.springframework.security.authorization.AuthorizationDeniedException) {
+      modelAndView.addObject("message", e.getMessage());
+      modelAndView.setViewName("error/403");
+      modelAndView.setStatus(HttpStatus.FORBIDDEN);
+    } else {
+      modelAndView.setViewName("error/500");
+      modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     return modelAndView;
   }
 }
