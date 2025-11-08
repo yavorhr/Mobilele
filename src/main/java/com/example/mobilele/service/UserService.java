@@ -49,4 +49,5 @@ public interface UserService {
   boolean isOwner(String authorEmail, Long routeId);
 
   void deleteOfferFromFavorites(Long id);
+
 }
