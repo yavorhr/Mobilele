@@ -441,6 +441,7 @@ public class OffersController {
     return "redirect:/";
   }
 
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/{id}/toggle-reservation")
   @ResponseBody
   public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
