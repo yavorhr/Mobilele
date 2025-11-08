@@ -194,6 +194,69 @@
     background: linear-gradient(135deg, rgba(76, 75, 75, 0.89), #999595);
 }
 
+.reserve-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.reserve-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.reserve-btn.reserved {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: white;
+}
+
+.reserve-btn.reserved:hover {
+    background-color: #e0a800;
+}
+
+.main-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Reserved banner */
+.reserved-banner {
+    position: absolute;
+    top: 15px;
+    left: -45px;
+    width: 200px;
+    z-index: 9999;
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    transform: rotate(-45deg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    pointer-events: none; /* So you can still click the buttons underneath */
+}
+
+.reserved-banner span {
+    display: block;
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-image-container.reserved img {
+    opacity: 0.9; /* optional subtle fade */
+    filter: grayscale(10%); /* optional slight visual cue */
+}
+
 @keyframes pulseHeart {
     0%   { transform: scale(1); }
     30%  { transform: scale(1.3); }
