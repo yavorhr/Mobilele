@@ -8,11 +8,11 @@ import com.example.mobilele.util.cloudinary.CloudinaryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
 
 @Controller
@@ -27,7 +27,7 @@ public class PicturesController {
     this.pictureService = pictureService;
   }
 
-  // Add @Preauthrorize check
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #bindingModel.offerId)")
   @PostMapping("/pictures")
   public String addOfferPictures(PicturesAddBindingModel bindingModel,
                                  @AuthenticationPrincipal MobileleUser principal) throws IOException {
@@ -40,10 +40,11 @@ public class PicturesController {
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
 
-  // Add @Preauthrorize check
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #publicId)")
   @DeleteMapping("/pictures")
   @ResponseBody
-  public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId) {
+  public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId,
+                                            @AuthenticationPrincipal MobileleUser principal) {
 
     boolean cloudinaryDeleted = this.cloudinaryService.delete(publicId);
 
