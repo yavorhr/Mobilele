@@ -65,6 +65,7 @@ public class OfferServiceImpl implements OfferService {
                     .orElseThrow(() -> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
 
     OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
+
     model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
 
     return model;
@@ -137,13 +138,13 @@ public class OfferServiceImpl implements OfferService {
             .collect(Collectors.toList());
   }
 
+  @Transactional
   @Override
-  public void updateOffer(OfferUpdateServiceModel serviceModel) {
+  public void updateOffer(OfferUpdateServiceModel serviceModel, Long id) {
 
     OfferEntity offerEntity =
-            offerRepository.findById(serviceModel.
-                    getId()).orElseThrow(() ->
-                    new ObjectNotFoundException("Offer with id " + serviceModel.getId() + " not found!"));
+            offerRepository.findById(id)
+                    .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + id + " not found!"));
 
     this.modelMapper.map(serviceModel, offerEntity);
 

@@ -185,15 +185,11 @@ public class UserServiceImpl implements UserService {
   }
 
   protected boolean isAdmin(String username) {
-    var user = userRepository
+    return userRepository
             .findByUsername(username)
-            .orElseThrow(() -> new ObjectNotFoundException("User with username -> " + username + " was not found!"));
-
-    return user.
-            getRoles().
-            stream().
-            map(UserRoleEntity::getRole).
-            anyMatch(r -> r == UserRoleEnum.ADMIN);
+            .map(user -> user.getRoles().stream()
+                    .anyMatch(r -> r.getRole() == UserRoleEnum.ADMIN))
+            .orElse(false);
   }
 
   public boolean isOwner(String username, Long offerId) {
@@ -204,7 +200,7 @@ public class UserServiceImpl implements UserService {
             .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
 
     if (!result) {
-      log.warn("Unauthorized  modify attempt for user {}", username);
+      log.warn("Unauthorized  modify attempt for user with username: {}", username);
     }
     return result;
   }
@@ -215,7 +211,9 @@ public class UserServiceImpl implements UserService {
     List<UserEntity> users = userRepository.findAll();
 
     for (UserEntity user : users) {
-      boolean modified = user.getFavorites().removeIf(o -> o.getId().equals(offerId));
+      boolean modified = user.getFavorites()
+              .removeIf(o -> o.getId().equals(offerId));
+
       if (modified) {
         userRepository.save(user);
       }

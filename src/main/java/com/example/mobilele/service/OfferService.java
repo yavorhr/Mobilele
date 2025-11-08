@@ -29,7 +29,7 @@ public interface OfferService {
 
   Collection<OfferViewModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType);
 
-  void updateOffer(OfferUpdateServiceModel serviceModel);
+  void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 
   Page<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel offersFindServiceModel, VehicleCategoryEnum vehicleCategory, Pageable pageable);
 

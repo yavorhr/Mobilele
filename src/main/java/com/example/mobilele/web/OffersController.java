@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,7 @@ import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 public class OffersController {
   private final OfferService offerService;
@@ -382,15 +384,16 @@ public class OffersController {
     return "offers";
   }
 
-  // 4.1 Update offer - GET
+   //4.1 Update offer - GET
+//  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
-                                   @AuthenticationPrincipal MobileleUser currentUser,
+                                   @AuthenticationPrincipal MobileleUser principal,
                                    Model model) {
 
     OfferUpdateBindingForm offerBindingModel =
             this.modelMapper.map(this.offerService
-                    .findOfferById(currentUser.getUsername(), id), OfferUpdateBindingForm.class);
+                    .findOfferById(principal.getUsername(), id), OfferUpdateBindingForm.class);
 
     model.addAttribute("offerBindingModel", offerBindingModel);
 
@@ -398,10 +401,10 @@ public class OffersController {
   }
 
   // 4.2 Update offer -PATCH
+//  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/update/{id}")
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.name, #id )")
   public String updateOffer(@PathVariable Long id,
-                            Principal principal,
+                            @AuthenticationPrincipal MobileleUser principal,
                             @Valid OfferUpdateBindingForm offerBindingModel,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
@@ -414,7 +417,7 @@ public class OffersController {
       return "redirect:/offers/update/errors/" + id;
     }
 
-    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class));
+    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), id);
 
     return "redirect:/offers/details/" + id;
   }
@@ -425,21 +428,19 @@ public class OffersController {
   }
 
   // 5. Delete offer
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.name, #id)")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @DeleteMapping("/offers/{id}")
-  public String deleteOffer(Principal principal,
+  public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
                             @PathVariable Long id,
                             RedirectAttributes redirectAttributes) {
-    try {
-      offerService.deleteById(id);
-      redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
-      redirectAttributes.addFlashAttribute("flashType", "success");
 
-      return "redirect:/";
+    offerService.deleteById(id);
 
-      //@ControllerAdvice handling
-    } catch (Exception e) {
-      throw e;
-    }
+    redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
+    redirectAttributes.addFlashAttribute("flashType", "success");
+
+    return "redirect:/";
   }
 }
+
+
