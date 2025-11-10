@@ -6,11 +6,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "brands")
+@Table(name = "feedbacks")
 public class Feedback extends BaseEntity {
   private String review;
   private UserEntity user;
-  private int rating;
+  private Integer rating;
 
   public Feedback() {
 
