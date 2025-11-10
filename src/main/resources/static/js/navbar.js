@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rating = document.querySelector(".star.selected")?.dataset.value;
         const comment = document.getElementById("feedbackComment").value;
 
-        const res = await fetch("/users/leave-feedback", {
+        const res = await fetch("/users/submit-feedback", {
             method: "POST",
             headers: {[csrfHeader]: csrfToken},
             body: new URLSearchParams({rating, comment})
