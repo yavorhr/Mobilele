@@ -92,23 +92,30 @@
         </ul>
     </div>
 </nav>
-<div id="feedbackModal" class="modal">
-    <div class="modal-content">
-        <h3>Rate your experience</h3>
+<div id="feedbackModal" class="feedback-modal">
+    <div class="feedback-content">
+        <button class="close-btn" id="closeFeedback">&times;</button>
+        <h2 class="modal-title">Leave Feedback</h2>
 
-        <div class="stars">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
+        <form id="feedbackForm">
+            <div class="stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
 
-        <textarea id="feedbackComment" placeholder="Write your feedback..."></textarea>
+            <textarea id="feedbackComment" placeholder="Write your feedback..." maxlength="500" required></textarea>
 
-        <button id="submitFeedback" class="btn btn-primary">Submit</button>
-        <p id="feedbackMessage" class="text-success"></p>
+            <div class="button-holder">
+                <button type="submit" class="btn-submit">Submit Feedback</button>
+            </div>
+
+            <p id="feedbackMessage" class="feedback-message"></p>
+        </form>
     </div>
 </div>
+
 <script src="/js/navbar.js"></script>
 </html>
