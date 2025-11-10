@@ -43,7 +43,7 @@ public class FeedbackServiceImpl implements FeedbackService {
   }
 
   @Override
-  public List<FeedbackViewModel> findLatestReviews(int count) {
+  public List<FeedbackViewModel> findRecentFeedbacks(int count) {
     return this.feedbackRepository
             .findAllByOrderByCreatedDesc((PageRequest.of(0, count)))
             .stream()

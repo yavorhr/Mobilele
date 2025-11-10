@@ -7,7 +7,7 @@ import java.util.List;
 public interface FeedbackService {
   void leaveFeedback(String username, int rating, String comment);
 
-  List<FeedbackViewModel> findLatestReviews(int i);
+  List<FeedbackViewModel> findRecentFeedbacks(int i);
 
   void initFeedbacks();
 }
