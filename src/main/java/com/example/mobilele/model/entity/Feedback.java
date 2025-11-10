@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "feedbacks")
 public class Feedback extends BaseEntity {
-  private String review;
+  private String comment;
   private UserEntity user;
   private Integer rating;
 
@@ -17,8 +17,8 @@ public class Feedback extends BaseEntity {
   }
 
   @Column(nullable = false, length = 500)
-  public String getReview() {
-    return review;
+  public String getComment() {
+    return comment;
   }
 
   @ManyToOne(optional = false)
@@ -31,8 +31,8 @@ public class Feedback extends BaseEntity {
     return rating;
   }
 
-  public Feedback setReview(String review) {
-    this.review = review;
+  public Feedback setComment(String comment) {
+    this.comment = comment;
     return this;
   }
 
