@@ -157,14 +157,4 @@ public class UsersController {
 
     return "redirect:/";
   }
-
-  protected boolean isAdmin(String username) {
-    var user = userService.findByUsername(username);
-
-    return user.
-            getRoles().
-            stream().
-            map(UserRoleEntity::getRole).
-            anyMatch(r -> r == UserRoleEnum.ADMIN);
-  }
 }
