@@ -2,13 +2,10 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
-import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
-import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
-import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
-import com.example.mobilele.service.OfferService;
+import com.example.mobilele.service.FeedbackService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.servlet.ServletException;
@@ -35,10 +32,12 @@ import java.util.Map;
 public class UsersController {
   private final UserService userService;
   private final ModelMapper modelMapper;
+  private final FeedbackService feedbackService;
 
-  public UsersController(UserService userService, ModelMapper modelMapper) {
+  public UsersController(UserService userService, ModelMapper modelMapper, FeedbackService feedbackService) {
     this.userService = userService;
     this.modelMapper = modelMapper;
+    this.feedbackService = feedbackService;
   }
 
   @ModelAttribute("userRegisterBindingModel")
@@ -156,5 +155,26 @@ public class UsersController {
     request.logout();
 
     return "redirect:/";
+  }
+
+  @PostMapping("/submit-feedback")
+  @ResponseBody
+  public ResponseEntity<Map<String, Object>> submitFeedback(
+          @RequestParam int rating,
+          @RequestParam String comment,
+          @AuthenticationPrincipal MobileleUser principal) {
+
+    Map<String, Object> response = new HashMap<>();
+
+    try {
+      feedbackService.leaveFeedback(principal.getUsername(), rating, comment);
+      response.put("success", true);
+      response.put("message", "Thank you for your feedback!");
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      response.put("success", false);
+      response.put("message", e.getMessage());
+      return ResponseEntity.badRequest().body(response);
+    }
   }
 }

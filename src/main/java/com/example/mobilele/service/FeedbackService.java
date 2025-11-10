@@ -1,7 +1,5 @@
 package com.example.mobilele.service;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public interface FeedbackService {
+  void leaveFeedback(String username, int rating, String comment);
 }
