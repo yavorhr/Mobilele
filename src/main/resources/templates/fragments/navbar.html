@@ -4,103 +4,111 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" th:href="@{/css/fragments/navbar.css}">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top "
-         th:fragment='navbar'>
-        <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto col-12 justify-content-end">
-                <li class="nav-item"
-                    sec:authorize="isAuthenticated()"
-                    th:if="${currentPage != 'find'}">
-                    <a class="nav-link" th:href="@{/offers/find}">Find offers</a>
-                </li>
-                <li class="nav-item"
-                    sec:authorize="isAuthenticated()"
-                    th:if="${currentPage != 'add'}">
-                    <a class="nav-link" th:href="@{/offers}">Add Offer</a>
-                </li>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top "
+     th:fragment='navbar'>
+    <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto col-12 justify-content-end">
+            <li class="nav-item"
+                sec:authorize="isAuthenticated()"
+                th:if="${currentPage != 'find'}">
+                <a class="nav-link" th:href="@{/offers/find}">Find offers</a>
+            </li>
+            <li class="nav-item"
+                sec:authorize="isAuthenticated()"
+                th:if="${currentPage != 'add'}">
+                <a class="nav-link" th:href="@{/offers}">Add Offer</a>
+            </li>
 
-                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Admin
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/statistics}">Statistics</a>
-                    </div>
-                </li>
+            <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Admin
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/statistics}">Statistics</a>
+                </div>
+            </li>
 
-                <!-- Profile  -->
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        My Profile
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item" th:href="@{/users/profile}">Details</a>
-                        <a class="dropdown-item" th:href="@{/offers/favorites}">Favorites</a>
-                        <a class="dropdown-item" th:href="@{/offers/my-offers}">My Offers</a>
-                        <div class="dropdown-divider"></div>
+            <!-- Profile  -->
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Profile
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" th:href="@{/users/profile}">Details</a>
+                    <a class="dropdown-item" th:href="@{/offers/favorites}">Favorites</a>
+                    <a class="dropdown-item" th:href="@{/offers/my-offers}">My Offers</a>
+                    <button class="dropdown-item"
+                            id="feedbackBtn">⭐ Rate us
+                    </button>
 
-                        <form id="deleteForm" th:action="@{/users/delete}"
-                              th:method="post" style="display:none;">
-                            <input type="hidden" name="_method" value="delete"/>
-                        </form>
+                    <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item text-danger" href="#" id="deleteAccountLink">Delete Account</a>
-                    </div>
-                </li>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const deleteLink = document.getElementById("deleteAccountLink");
-                        const deleteForm = document.getElementById("deleteForm");
-
-                        if (deleteLink && deleteForm) {
-                            deleteLink.addEventListener("click", e => {
-                                e.preventDefault();
-                                if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-                                    deleteForm.submit();
-                                }
-                            });
-                        }
-                    });
-                </script>
-                <!-- Logout  -->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <div class="form-inline my-2 my-lg-0 px-3">
-                        <div class="text-white">Welcome,
-                            <th:block sec:authentication="name"></th:block>
-                            !
-                        </div>
-                        <form th:action="@{/users/logout}"
-                              th:method="post">
-                            <input class="btn btn-link nav-link" type="submit" value="Logout">
-                        </form>
-                    </div>
-                </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/users/register}">Register</a>
-                </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" href="users/login">Login</a>
-                </li>
-                <li class="language-item">
-                    <form th:method="get">
-                        <select
-                                onchange="this.form.submit()"
-                                id="lang"
-                                name="lang">
-                            <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
-                            <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">Deutsch</option>
-                            <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
-                        </select>
+                    <form id="deleteForm" th:action="@{/users/delete}"
+                          th:method="post" style="display:none;">
+                        <input type="hidden" name="_method" value="delete"/>
                     </form>
-                </li>
-            </ul>
-    </nav>
+
+                    <a class="dropdown-item text-danger" href="#" id="deleteAccountLink">Delete Account</a>
+                </div>
+            </li>
+            <!-- Logout  -->
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <div class="form-inline my-2 my-lg-0 px-3">
+                    <div class="text-white">Welcome,
+                        <th:block sec:authentication="name"></th:block>
+                        !
+                    </div>
+                    <form th:action="@{/users/logout}"
+                          th:method="post">
+                        <input class="btn btn-link nav-link" type="submit" value="Logout">
+                    </form>
+                </div>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/users/register}">Register</a>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="users/login">Login</a>
+            </li>
+            <li class="language-item">
+                <form th:method="get">
+                    <select
+                            onchange="this.form.submit()"
+                            id="lang"
+                            name="lang">
+                        <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                        <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">Deutsch</option>
+                        <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
+                    </select>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <h3>Rate your experience</h3>
+
+        <div class="stars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+
+        <textarea id="feedbackComment" placeholder="Write your feedback..."></textarea>
+
+        <button id="submitFeedback" class="btn btn-primary">Submit</button>
+        <p id="feedbackMessage" class="text-success"></p>
+    </div>
+</div>
+<script src="/js/navbar.js"></script>
 </html>
