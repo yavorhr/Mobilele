@@ -168,6 +168,36 @@
             </div>
         </div>
     </section>
+
+    <section class="reviews-section">
+        <h2 class="section-title">What Our Users Say ⭐</h2>
+
+        <div class="reviews-marquee">
+            <div class="reviews-track">
+
+                <div class="review-card" th:each="feed : ${feedbacks}">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <span class="review-name" th:text="${feed.userFirstName + ' ' + feed.userLastName}">John Doe</span>
+                            <span class="review-date"
+                                  th:text="${#temporals.format(feed.created, 'dd MMM yyyy')}">10 Nov 2025</span>
+                        </div>
+
+                        <!-- Stars -->
+                        <div class="review-stars">
+                            <i class="fa fa-star"
+                               th:each="i : ${#numbers.sequence(1,5)}"
+                               th:classappend="${i <= feed.rating} ? 'filled' : ''"></i>
+                        </div>
+                    </div>
+
+                    <p class="review-comment" th:text="${feed.comment}">
+                        Great experience! Easy to find my dream car.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <footer></footer>

@@ -450,6 +450,130 @@ body {
     color: #fff;
 }
 
+/* === REVIEWS SECTION === */
+.reviews-section {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.reviews-section .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    color: #4CAF50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* === MARQUEE === */
+.reviews-marquee {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.review-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.review-date {
+    color: #aaa;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+.reviews-track {
+    display: flex;
+    gap: 2rem;
+    animation: scrollReviews 40s linear infinite;
+}
+
+.review-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    min-width: 280px;
+    max-width: 300px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* === Header === */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.review-name {
+    font-weight: 600;
+    color: #fff;
+}
+
+.review-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.review-stars .fa-star {
+    font-size: 1rem;
+    color: #555; /* default gray */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.review-stars .fa-star.filled {
+    color: #ffc107; /* gold for filled stars */
+}
+
+.review-stars .fa-star:hover {
+    transform: scale(1.2);
+}
+
+/* === Comment === */
+.review-comment {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+/* === Animation === */
+@keyframes scrollReviews {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Responsive: pause animation on hover */
+.reviews-marquee:hover .reviews-track {
+    animation-play-state: paused;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    .reviews-track {
+        animation-duration: 60s;
+    }
+
+    .review-card {
+        min-width: 240px;
+        padding: 1rem 1.5rem;
+    }
+}
+
+
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 992px) {
     .vehicle-grid {
