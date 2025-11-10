@@ -9,36 +9,128 @@
     align-items: center;
 }
 
-.stars {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-.star {
-    font-size: 2rem;
-    cursor: pointer;
-    color: #ccc;
-    transition: color 0.2s ease;
-}
-.star:hover,
-.star.selected {
-    color: #ffcc00;
-}
-.modal {
+/* === Feedback Modal Overlay === */
+.feedback-modal {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 15, 0.85);
     display: none;
-    background: rgba(0,0,0,0.6);
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 3000;
 }
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 350px;
+
+/* === Modal Card === */
+.feedback-content {
+    background-color: #343a40;
+    border-radius: 15px;
+    padding: 2.5rem 3rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    position: relative;
+    color: #f8f9fa;
     text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* === Close Button === */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+/* === Title === */
+.modal-title {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* === Stars === */
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+}
+.star {
+    font-size: 2.2rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+.star:hover {
+    transform: scale(1.15);
+}
+
+/* Selected & filled stars */
+.star.selected,
+.star.filled {
+    color: #ffc107;
+    text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+/* === Textarea === */
+#feedbackComment {
+    width: 100%;
+    height: 100px;
+    background-color: #495057;
+    border: 1px solid #666;
+    border-radius: 8px;
+    padding: 0.8rem;
+    color: #fff;
+    resize: none;
+    margin-bottom: 1.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+}
+#feedbackComment:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 5px #17a2b8;
+    outline: none;
+}
+
+/* === Button === */
+.btn-submit {
+    background-color: #17a2b8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-submit:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}
+
+/* === Message === */
+.feedback-message {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #ffc107;
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
