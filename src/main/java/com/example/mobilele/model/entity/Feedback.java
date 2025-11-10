@@ -1,9 +1,8 @@
 package com.example.mobilele.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "feedbacks")
@@ -11,9 +10,14 @@ public class Feedback extends BaseEntity {
   private String comment;
   private UserEntity user;
   private Integer rating;
+  private Instant created;
 
   public Feedback() {
+  }
 
+  @Column
+  public Instant getCreated() {
+    return created;
   }
 
   @Column(nullable = false, length = 500)
@@ -44,5 +48,20 @@ public class Feedback extends BaseEntity {
   public Feedback setRating(int rating) {
     this.rating = rating;
     return this;
+  }
+
+  public Feedback setRating(Integer rating) {
+    this.rating = rating;
+    return this;
+  }
+
+  public Feedback setCreated(Instant created) {
+    this.created = created;
+    return this;
+  }
+
+  @PrePersist
+  private void preCreate() {
+    setCreated(Instant.now());
   }
 }
