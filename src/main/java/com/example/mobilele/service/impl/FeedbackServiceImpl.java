@@ -2,7 +2,8 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.Feedback;
 import com.example.mobilele.model.entity.UserEntity;
-import com.example.mobilele.model.view.FeedbackViewModel;
+import com.example.mobilele.model.view.feedback.FeedbackSummaryViewModel;
+import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.repository.FeedbackRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.FeedbackService;
@@ -10,9 +11,7 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,6 +71,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 
       feedbackRepository.saveAll(List.of(feedback, feedback2, feedback3, feedback4, feedback5));
     }
+  }
+
+  @Override
+  public FeedbackSummaryViewModel getFeedbackSummary() {
+    double avgRating = this.feedbackRepository.findAverageRating().orElse(0.0);
+    long count = this.feedbackRepository.count();
+
+    return new FeedbackSummaryViewModel(avgRating,count);
   }
 
   private Feedback createFeedback(UserEntity userEntity, String comment, int rating, Instant created) {

@@ -340,7 +340,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -540,6 +540,43 @@ body {
 
 .review-stars .fa-star:hover {
     transform: scale(1.2);
+}
+
+/* --- Rating Feature --- */
+.rating-feature {
+    text-align: center;
+}
+
+.rating-info {
+    margin-top: 1rem;
+}
+
+.rating-info .stars {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 0.4rem;
+}
+
+.rating-info .fa-star {
+    font-size: 1.2rem;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.rating-info .fa-star.filled {
+    color: #ffc107;
+}
+
+.rating-average {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4CAF50;
+}
+
+.rating-count {
+    color: #bbb;
+    font-size: 0.9rem;
 }
 
 /* === Comment === */

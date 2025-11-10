@@ -21,6 +21,7 @@ public class HomeController {
   public String index(Model model) {
     model.addAttribute("latestOffers", offerService.findLatestOffers(6));
     model.addAttribute("feedbacks", feedbackService.findRecentFeedbacks(10));
+    model.addAttribute("summary", feedbackService.getFeedbackSummary());
 
     return "index";
   }

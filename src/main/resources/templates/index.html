@@ -146,11 +146,31 @@
     <section class="why-choose-us">
         <h2 class="section-title">Why Choose <span class="brand-name">Mobilele</span>?</h2>
         <div class="features-grid">
+            <div class="feature rating-feature">
+                <i class="fa fa-star"></i>
+                <h3>Our Community Rating</h3>
+
+                <div class="rating-info">
+                    <div class="stars">
+                        <i class="fa fa-star"
+                           th:each="i : ${#numbers.sequence(1,5)}"
+                           th:classappend="${i <= summary.rating} ? 'filled' : ''"></i>
+                    </div>
+                    <p class="rating-average">
+                        <span th:text="${#numbers.formatDecimal(summary.rating, 1, 1)}">4.8</span> / 5
+                    </p>
+                    <p class="rating-count">
+                        Based on <span th:text="${summary.count}">124</span> reviews
+                    </p>
+                </div>
+            </div>
+
             <div class="feature">
                 <i class="fa fa-shield"></i>
                 <h3>Verified Sellers</h3>
                 <p>Every seller is verified for authenticity and trustworthiness.</p>
             </div>
+
             <div class="feature">
                 <i class="fa fa-car"></i>
                 <h3>Wide Selection</h3>

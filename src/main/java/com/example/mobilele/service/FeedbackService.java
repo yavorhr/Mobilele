@@ -1,6 +1,7 @@
 package com.example.mobilele.service;
 
-import com.example.mobilele.model.view.FeedbackViewModel;
+import com.example.mobilele.model.view.feedback.FeedbackSummaryViewModel;
+import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ public interface FeedbackService {
   List<FeedbackViewModel> findRecentFeedbacks(int i);
 
   void initFeedbacks();
+
+  FeedbackSummaryViewModel getFeedbackSummary();
 }
