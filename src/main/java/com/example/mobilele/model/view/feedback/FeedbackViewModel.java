@@ -1,4 +1,4 @@
-package com.example.mobilele.model.view;
+package com.example.mobilele.model.view.feedback;
 
 import java.time.Instant;
 
