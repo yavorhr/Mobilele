@@ -51,6 +51,16 @@ public class FeedbackServiceImpl implements FeedbackService {
   }
 
   @Override
+  public FeedbackSummaryViewModel getFeedbackSummary() {
+    double avgRating = this.feedbackRepository.findAverageRating().orElse(0.0);
+    long count = this.feedbackRepository.count();
+
+    return new FeedbackSummaryViewModel(avgRating,count);
+  }
+
+  // DB Init + helpers
+
+  @Override
   public void initFeedbacks() {
     if (feedbackRepository.count() == 0) {
 
@@ -71,14 +81,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
       feedbackRepository.saveAll(List.of(feedback, feedback2, feedback3, feedback4, feedback5));
     }
-  }
-
-  @Override
-  public FeedbackSummaryViewModel getFeedbackSummary() {
-    double avgRating = this.feedbackRepository.findAverageRating().orElse(0.0);
-    long count = this.feedbackRepository.count();
-
-    return new FeedbackSummaryViewModel(avgRating,count);
   }
 
   private Feedback createFeedback(UserEntity userEntity, String comment, int rating, Instant created) {
