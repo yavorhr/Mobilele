@@ -192,6 +192,7 @@ public class UserServiceImpl implements UserService {
             .orElse(false);
   }
 
+  @Transactional
   public boolean isOwner(String username, Long offerId) {
 
     boolean result = offerRepository
@@ -199,8 +200,10 @@ public class UserServiceImpl implements UserService {
             .stream()
             .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
 
-    if (!result) {
-      log.warn("Unauthorized  modify attempt for user with username: {}", username);
+    if (result) {
+      log.debug("User {} is the owner of offer {}", username, offerId);
+    } else {
+      log.debug("User {} is NOT the owner of offer {}", username, offerId);
     }
     return result;
   }
