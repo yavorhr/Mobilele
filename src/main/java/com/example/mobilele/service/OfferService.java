@@ -8,10 +8,12 @@ import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,4 +50,6 @@ public interface OfferService {
   Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable);
 
   boolean toggleReservation(Long id, String username);
+
+  void incrementViewsIfEligible(Long id, HttpServletRequest request, Principal principal);
 }

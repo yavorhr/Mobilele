@@ -2,6 +2,7 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
@@ -27,9 +28,11 @@ public class OfferEntity extends BaseEntity {
   private Instant modified;
   private Set<UserEntity> favoritedBy;
   private boolean isReserved;
+  private long views;
 
   public OfferEntity() {
     favoritedBy = new HashSet<>();
+    views = 0;
   }
 
   @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -87,6 +90,10 @@ public class OfferEntity extends BaseEntity {
     return engine;
   }
 
+  @Column(nullable = false)
+  public long getViews() {
+    return views;
+  }
 
   @Column(name = "mileage", nullable = false)
   public Double getMileage() {
@@ -140,6 +147,11 @@ public class OfferEntity extends BaseEntity {
 
   public OfferEntity setCity(CityEnum city) {
     this.city = city;
+    return this;
+  }
+
+  public OfferEntity setViews(long views) {
+    this.views = views;
     return this;
   }
 

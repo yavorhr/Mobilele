@@ -15,6 +15,8 @@ import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -26,9 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.security.Principal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -299,6 +300,32 @@ public class OfferServiceImpl implements OfferService {
     offerRepository.save(offer);
 
     return offer.isReserved();
+  }
+
+  @Override
+  public void incrementViewsIfEligible(Long offerId, HttpServletRequest request, Principal principal) {
+    if (principal != null) {
+      if (userService.isOwner(principal.getName(), offerId)) {
+        return;
+      }
+    }
+
+    // Throttle by session (once per 30 minutes per offer)
+    HttpSession session = request.getSession(true);
+    @SuppressWarnings("unchecked")
+    Map<Long, Long> lastViews = (Map<Long, Long>) session.getAttribute("offerViewTimestamps");
+    if (lastViews == null) {
+      lastViews = new HashMap<>();
+      session.setAttribute("offerViewTimestamps", lastViews);
+    }
+
+    long now = System.currentTimeMillis();
+    long windowMs = 30 * 60 * 1000L; // 30 minutes
+    Long last = lastViews.get(offerId);
+    if (last != null && (now - last) < windowMs) return;
+
+    offerRepository.incrementViews(offerId);
+    lastViews.put(offerId, now);
   }
 
   @Override

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,4 +31,9 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
 
   @Query("SELECT o FROM OfferEntity o JOIN o.favoritedBy u WHERE u.username = :username")
   Page<OfferEntity> findFavoritesByUsername(@Param("username") String username, Pageable pageable);
+
+
+  @Modifying(clearAutomatically = true, flushAutomatically = true)
+  @Query("update OfferEntity o set o.views = o.views + 1 where o.id = :id")
+  int incrementViews(@Param("id") Long id);
 }

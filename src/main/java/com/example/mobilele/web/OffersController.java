@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -255,9 +256,15 @@ public class OffersController {
   // 2.2 Get Offers - By Id
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model,
+                                     HttpServletRequest request,
                                      Principal principal) {
+
+    offerService.incrementViewsIfEligible(id, request, principal);
+
     OfferViewModel viewModel =
-            this.modelMapper.map(this.offerService.findOfferById(principal.getName(), id), OfferViewModel.class);
+            this.modelMapper.map(this.offerService
+                    .findOfferById(principal.getName(), id),
+                    OfferViewModel.class);
 
     model.addAttribute("offer", viewModel);
     model.addAttribute("isFavorite", this.offerService.doesOfferExistInUsersFavorites(id, principal.getName()));
