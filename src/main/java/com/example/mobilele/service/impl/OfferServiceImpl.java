@@ -302,6 +302,7 @@ public class OfferServiceImpl implements OfferService {
     return offer.isReserved();
   }
 
+  @Transactional
   @Override
   public void incrementViewsIfEligible(Long offerId, HttpServletRequest request, Principal principal) {
     if (principal != null) {
@@ -327,6 +328,7 @@ public class OfferServiceImpl implements OfferService {
     offerRepository.incrementViews(offerId);
     lastViews.put(offerId, now);
   }
+
 
   @Override
   public Page<OfferBaseViewModel> findByTypeBrandAndModel(
