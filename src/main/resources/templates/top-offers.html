@@ -25,11 +25,7 @@
         <div class="views-badge">
           👁️ <span th:text="*{views}">0</span>
         </div>
-        <div class="rank-badge"
-             th:text="${iter.count == 1} ? '🥇' :
-                              (${iter.count == 2} ? '🥈' :
-                              (${iter.count == 3} ? '🥉' : '#' + iter.count))">
-        </div>
+        <div class="rank-number" th:text="${iter.count}"></div>
         <div class="offer-header">
           <span th:text="*{modelBrandName} + ' ' + *{modelName}"></span>
           <span class="offer-year" th:text="*{modelYear}"></span>

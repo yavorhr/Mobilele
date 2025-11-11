@@ -69,41 +69,47 @@ body {
     font-weight: 500;
 }
 
-.rank-badge {
+/* === RANK NUMBER === */
+.rank-number {
     position: absolute;
     top: 8px;
     right: 8px;
-    background: rgba(0, 0, 0, 0.65);
-    color: #fff;
-    font-size: 0.9rem;
-    padding: 4px 10px;
-    border-radius: 999px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 1.1rem;
     font-weight: 700;
-    line-height: 1;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(2px);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid rgba(255,255,255,0.25);
+    box-shadow: 0 0 6px rgba(0,191,255,0.3);
+    backdrop-filter: blur(3px);
+    transform-origin: center;
+    transition: transform 0.25s ease, background-color 0.25s ease;
 }
 
-/* top-3 special colors */
-.offer-card[data-rank="1"] .rank-badge {
-    background: linear-gradient(135deg, #ffcf33, #ffb300);
-    color: #1a1a1a;
+/* Shake + subtle scale on hover */
+@keyframes numberShake {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    20% { transform: scale(1.1) rotate(-5deg); }
+    40% { transform: scale(1.1) rotate(5deg); }
+    60% { transform: scale(1.1) rotate(-3deg); }
+    80% { transform: scale(1.1) rotate(3deg); }
 }
 
-.offer-card[data-rank="2"] .rank-badge {
-    background: linear-gradient(135deg, #e6e6e6, #cfcfcf);
-    color: #1a1a1a;
-}
-
-.offer-card[data-rank="3"] .rank-badge {
-    background: linear-gradient(135deg, #f2a65a, #d9893c);
-    color: #1a1a1a;
+/* Activate shake on hover */
+.offer-card:hover .rank-number {
+    background: rgba(0,191,255,0.2);
+    animation: numberShake 0.4s ease;
 }
 
 /* === HEADER BAR === */
 .offer-header {
-    position: absolute;
     text-align: center;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
