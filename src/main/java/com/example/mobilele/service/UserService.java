@@ -42,11 +42,11 @@ public interface UserService {
 
   boolean toggleFavorite(String name, Long offerId);
 
-  boolean isOwnerOrIsAdmin(String authorEmail, Long routeId);
+  boolean isOwnerOrIsAdmin(String username, Long routeId);
 
-  boolean isNotOwnerOrIsAdmin(String authorEmail, Long routeId);
+  boolean isNotOwnerOrIsAdmin(String username, Long routeId);
 
-  boolean isOwner(String authorEmail, Long routeId);
+  boolean isOwner(String username, Long routeId);
 
   void deleteOfferFromFavorites(Long id);
 
