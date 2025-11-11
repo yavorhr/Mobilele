@@ -32,8 +32,7 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
   @Query("SELECT o FROM OfferEntity o JOIN o.favoritedBy u WHERE u.username = :username")
   Page<OfferEntity> findFavoritesByUsername(@Param("username") String username, Pageable pageable);
 
-
   @Modifying(clearAutomatically = true, flushAutomatically = true)
-  @Query("update OfferEntity o set o.views = o.views + 1 where o.id = :id")
-  int incrementViews(@Param("id") Long id);
+  @Query("UPDATE OfferEntity o SET o.views = o.views + 1 WHERE o.id = :offerId")
+  int incrementViews(@Param("offerId") Long offerId);
 }
