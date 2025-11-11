@@ -17,8 +17,13 @@ public class OfferBaseViewModel {
   private String profileImage;
   private String modelYear;
   private Instant created;
+  private Long views;
 
   public OfferBaseViewModel() {
+  }
+
+  public Long getViews() {
+    return views;
   }
 
   public Instant getCreated() {
@@ -93,6 +98,11 @@ public class OfferBaseViewModel {
 
   public OfferBaseViewModel setTransmission(TransmissionType transmission) {
     this.transmission = transmission;
+    return this;
+  }
+
+  public OfferBaseViewModel setViews(Long views) {
+    this.views = views;
     return this;
   }
 

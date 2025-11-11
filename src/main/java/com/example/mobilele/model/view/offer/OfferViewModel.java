@@ -12,6 +12,7 @@ public class OfferViewModel {
   private UserViewModel seller;
   private List<PictureServiceModel> pictures;
 
+  private Long views;
   private BigDecimal price;
   private String description;
   private String modelBrandName;
@@ -35,6 +36,10 @@ public class OfferViewModel {
   boolean isReserved;
 
   public OfferViewModel() {
+  }
+
+  public Long getViews() {
+    return views;
   }
 
   public boolean isNotOwnerOrIsAdmin() {
@@ -144,6 +149,11 @@ public class OfferViewModel {
 
   public OfferViewModel setModelVehicleType(String modelVehicleType) {
     this.modelVehicleType = modelVehicleType;
+    return this;
+  }
+
+  public OfferViewModel setViews(Long views) {
+    this.views = views;
     return this;
   }
 
