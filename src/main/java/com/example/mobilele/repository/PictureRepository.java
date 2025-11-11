@@ -18,4 +18,5 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
   @Modifying
   @Query("DELETE FROM Picture p WHERE p.publicId = :publicId")
   void deleteByPublicId(@Param("publicId") String publicId);
+
 }
