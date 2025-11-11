@@ -29,10 +29,12 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
 
   List<OfferEntity> findAllByOrderByCreatedDesc(Pageable pageable);
 
+  List<OfferEntity> findAllByOrderByViewsDesc(Pageable pageable);
+
   @Query("SELECT o FROM OfferEntity o JOIN o.favoritedBy u WHERE u.username = :username")
   Page<OfferEntity> findFavoritesByUsername(@Param("username") String username, Pageable pageable);
 
   @Modifying(clearAutomatically = true, flushAutomatically = true)
   @Query("UPDATE OfferEntity o SET o.views = o.views + 1 WHERE o.id = :offerId")
-  int incrementViews(@Param("offerId") Long offerId);
+  void incrementViews(@Param("offerId") Long offerId);
 }
