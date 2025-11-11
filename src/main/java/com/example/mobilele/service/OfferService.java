@@ -55,4 +55,6 @@ public interface OfferService {
   boolean toggleReservation(Long id, String username);
 
   void incrementViewsIfEligible(Long id, HttpServletRequest request, Principal principal);
+
+  List<OfferBaseViewModel> findTopOffersByViews();
 }

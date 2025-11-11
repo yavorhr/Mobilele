@@ -4,7 +4,6 @@ import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
-import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
@@ -339,6 +338,14 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
+  public List<OfferBaseViewModel> findTopOffersByViews() {
+    return offerRepository.findTop20ByOrderByViewsDesc()
+            .stream()
+            .map(this::mapToOfferBaseViewModel)
+            .toList();
+  }
+
+  @Override
   public Page<OfferBaseViewModel> findByTypeBrandAndModel(
           VehicleCategoryEnum vehicleCategory,
           String brand,
@@ -447,14 +454,6 @@ public class OfferServiceImpl implements OfferService {
     picture.setPublicId(publicId);
     picture.setUrl(url);
     return picture;
-  }
-
-  private boolean isAdmin(UserEntity user) {
-    return user.
-            getRoles().
-            stream().
-            map(UserRoleEntity::getRole).
-            anyMatch(r -> r == UserRoleEnum.ADMIN);
   }
 
   private OfferBaseViewModel mapToOfferBaseViewModel(OfferEntity e) {

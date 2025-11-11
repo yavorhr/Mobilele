@@ -37,4 +37,6 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
   @Modifying(clearAutomatically = true, flushAutomatically = true)
   @Query("UPDATE OfferEntity o SET o.views = o.views + 1 WHERE o.id = :offerId")
   void incrementViews(@Param("offerId") Long offerId);
+
+  List<OfferEntity> findTop20ByOrderByViewsDesc();
 }

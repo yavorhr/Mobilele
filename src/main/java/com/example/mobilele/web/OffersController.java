@@ -30,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -263,7 +264,7 @@ public class OffersController {
 
     OfferViewModel viewModel =
             this.modelMapper.map(this.offerService
-                    .findOfferById(principal.getName(), id),
+                            .findOfferById(principal.getName(), id),
                     OfferViewModel.class);
 
     model.addAttribute("offer", viewModel);
@@ -366,6 +367,14 @@ public class OffersController {
     return "offers";
   }
 
+  @GetMapping("/offers/top-offers")
+  public String showTop20ByViewsCount(Model model) {
+    List<OfferBaseViewModel> topOffers = offerService.findTopOffersByViews();
+
+    model.addAttribute("offers", topOffers);
+
+    return "top-offers";  }
+
   @GetMapping("/offers/all")
   public String showAllOffers(
           @RequestParam(defaultValue = "creationDate") String sort,
@@ -390,7 +399,7 @@ public class OffersController {
     return "offers";
   }
 
-   //4.1 Update offer - GET
+  //4.1 Update offer - GET
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
