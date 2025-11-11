@@ -14,6 +14,25 @@
     align-items: start;
 }
 
+.views-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #444;
+    background: #f3f3f3;
+    padding: 6px 12px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.views-counter .eye-icon {
+    font-size: 1.2rem;
+}
+
 @media (max-width: 992px) {
     .main-section {
         grid-template-columns: 1fr;
