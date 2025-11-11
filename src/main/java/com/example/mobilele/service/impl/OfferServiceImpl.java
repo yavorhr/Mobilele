@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
+import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
@@ -270,6 +271,14 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
+  public List<OfferBaseViewModel> findMostViewedOffers(int count) {
+    return offerRepository.findAllByOrderByViewsDesc(PageRequest.of(0, count))
+            .stream()
+            .map(this::mapToOfferBaseViewModel)
+            .toList();
+  }
+
+  @Override
   @Transactional
   public boolean doesOfferExistInUsersFavorites(Long id, String username) {
     UserEntity user = this.userService.findByUsername(username);
@@ -328,7 +337,6 @@ public class OfferServiceImpl implements OfferService {
     offerRepository.incrementViews(offerId);
     lastViews.put(offerId, now);
   }
-
 
   @Override
   public Page<OfferBaseViewModel> findByTypeBrandAndModel(

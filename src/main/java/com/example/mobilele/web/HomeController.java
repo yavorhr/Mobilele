@@ -20,6 +20,7 @@ public class HomeController {
   @GetMapping("/")
   public String index(Model model) {
     model.addAttribute("latestOffers", offerService.findLatestOffers(6));
+    model.addAttribute("mostViewedOffers", offerService.findMostViewedOffers(6));
     model.addAttribute("feedbacks", feedbackService.findRecentFeedbacks(10));
     model.addAttribute("summary", feedbackService.getFeedbackSummary());
 

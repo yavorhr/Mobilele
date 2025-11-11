@@ -6,6 +6,7 @@ import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
+import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +44,9 @@ public interface OfferService {
 
   Page<OfferBaseViewModel> findOffersByUserId(String username, Pageable pageable);
 
-  List<OfferBaseViewModel> findLatestOffers(int number);
+  List<OfferBaseViewModel> findLatestOffers(int count);
+
+  List<OfferBaseViewModel> findMostViewedOffers(int count);
 
   boolean doesOfferExistInUsersFavorites(Long id, String name);
 
