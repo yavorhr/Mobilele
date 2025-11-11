@@ -23,8 +23,6 @@ public class AccountUnlockScheduler {
 
     LocalDateTime now = LocalDateTime.now();
 
-    System.out.println("yes");
-
     for (UserEntity user : lockedUsers) {
       if (user.getLockTime() != null && user.getLockTime().isBefore(now)) {
         user.setAccountLocked(false);
