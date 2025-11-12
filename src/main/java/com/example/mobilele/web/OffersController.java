@@ -189,30 +189,7 @@ public class OffersController {
     return "offers";
   }
 
-
-  @GetMapping("/offers/quick-search")
-  public String quickSearch(@ModelAttribute("offersQuickSearchBindingModel") OffersQuickSearchBindingModel quickSearchModel,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
-
-    if (quickSearchModel.getVehicleType() == null || quickSearchModel.getBrand() == null || quickSearchModel.getBrand().isBlank()) {
-      redirectAttributes.addFlashAttribute("error", "Please select at least a vehicle type and brand!");
-      return "redirect:/";
-    }
-
-    // Prepare redirect URL to the detailed offers page
-    String vehicleType = quickSearchModel.getVehicleType().name().toLowerCase(Locale.ROOT);
-    String brand = quickSearchModel.getBrand();
-
-    // Build redirect parameters for filtering
-    redirectAttributes.addFlashAttribute("filters", quickSearchModel);
-
-    return "redirect:/offers/" + vehicleType + "/" + brand + "/all";
-  }
-
-  // 2. Get Offers - All
-
-
+  // 5. Sort offers - from Main Search
   @GetMapping("/offers/brands/{brand}/sort")
   public String showOffersByBrandSorted(
           @PathVariable String brand,
@@ -238,7 +215,6 @@ public class OffersController {
   private List<OfferBaseViewModel> sortOffers(@RequestParam(defaultValue = "creationDate")
                                                       String sort, @RequestParam(defaultValue = "desc")
                                                       String dir, List<OfferBaseViewModel> offers) {
-
     offers = new ArrayList<>(offers);
 
     Comparator<OfferBaseViewModel> comparator = switch (sort) {
@@ -252,11 +228,8 @@ public class OffersController {
     return offers;
   }
 
-  // 2. Get Offers - All
-  @GetMapping("/offers/brands")
-  public String getAllOffersPage() {
-    return "offers-brands";
-  }
+  // Find offers - By brands
+
 
   @GetMapping("/offers/brands/{brand}")
   public String getOffersByBrand(@PathVariable String brand, Model model) {
@@ -500,6 +473,28 @@ public class OffersController {
 
     return ResponseEntity.ok(cities);
   }
+
+
+  @GetMapping("/offers/quick-search")
+  public String quickSearch(@ModelAttribute("offersQuickSearchBindingModel") OffersQuickSearchBindingModel quickSearchModel,
+                            Model model,
+                            RedirectAttributes redirectAttributes) {
+
+    if (quickSearchModel.getVehicleType() == null || quickSearchModel.getBrand() == null || quickSearchModel.getBrand().isBlank()) {
+      redirectAttributes.addFlashAttribute("error", "Please select at least a vehicle type and brand!");
+      return "redirect:/";
+    }
+
+    // Prepare redirect URL to the detailed offers page
+    String vehicleType = quickSearchModel.getVehicleType().name().toLowerCase(Locale.ROOT);
+    String brand = quickSearchModel.getBrand();
+
+    // Build redirect parameters for filtering
+    redirectAttributes.addFlashAttribute("filters", quickSearchModel);
+
+    return "redirect:/offers/" + vehicleType + "/" + brand + "/all";
+  }
+
 }
 
 
