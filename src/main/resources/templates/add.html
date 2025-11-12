@@ -18,10 +18,10 @@
                 class="offer-form">
 
             <div class="form-flex">
-
                 <div class="form-group">
                     <label for="vehicleType">Vehicle Type</label>
-                    <select id="vehicleType" th:field="*{vehicleType}">
+                    <select id="vehicleType"
+                            th:field="*{vehicleType}">
                         <option value="">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
                                 th:value="${c}"
