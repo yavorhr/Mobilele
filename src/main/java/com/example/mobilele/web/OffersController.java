@@ -3,6 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
+import com.example.mobilele.model.binding.offer.OffersQuickSearchBindingModel;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
@@ -91,15 +92,15 @@ public class OffersController {
     return CountryEnum.values();
   }
 
-  // I. Offers - GET
-  // 1 Find offers
+  // I. Find offers - Main search
+  // 1. GET offers/find -> offers/find/vehicleType
   @GetMapping("/offers/find")
   public String getFindOffersView(Model model) {
     model.addAttribute("currentPage", "find");
     return "offers-categories";
   }
 
-  // 2. Find offers by categories
+  // 2. GET offers/find/vehicleType -> POST offers/find/vehicleType
   @GetMapping("/offers/find/{vehicleType}")
   public String getSearchFormByCategory(@PathVariable String vehicleType,
                                         Model model) {
@@ -111,8 +112,7 @@ public class OffersController {
     return "offers-find";
   }
 
-  // II. Offers - POST
-  // 1 Submit offers Search form
+  // 3. POST-REDIRECT-GET - offers/find/vehicleType -> offers/{vehicleType}/{brand}/{modelName}")
   @PostMapping("/offers/find/{vehicleType}")
   public String submitFindOffersForm(
           @PathVariable String vehicleType,
@@ -135,13 +135,12 @@ public class OffersController {
       return "redirect:/offers/find/" + vehicleType;
     }
 
-    // pass to @Get
     redirectAttributes.addFlashAttribute("filters", offersFindBindingModel);
 
     return "redirect:/offers/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
   }
 
-  // 2. Get Offers - All
+  // 4. GET - Show filtered offers
   @GetMapping("/offers/{vehicleType}/{brand}/{modelName}")
   public String showOffersByModel(
           @PathVariable String brand,
@@ -190,6 +189,30 @@ public class OffersController {
     return "offers";
   }
 
+
+  @GetMapping("/offers/quick-search")
+  public String quickSearch(@ModelAttribute("offersQuickSearchBindingModel") OffersQuickSearchBindingModel quickSearchModel,
+                            Model model,
+                            RedirectAttributes redirectAttributes) {
+
+    if (quickSearchModel.getVehicleType() == null || quickSearchModel.getBrand() == null || quickSearchModel.getBrand().isBlank()) {
+      redirectAttributes.addFlashAttribute("error", "Please select at least a vehicle type and brand!");
+      return "redirect:/";
+    }
+
+    // Prepare redirect URL to the detailed offers page
+    String vehicleType = quickSearchModel.getVehicleType().name().toLowerCase(Locale.ROOT);
+    String brand = quickSearchModel.getBrand();
+
+    // Build redirect parameters for filtering
+    redirectAttributes.addFlashAttribute("filters", quickSearchModel);
+
+    return "redirect:/offers/" + vehicleType + "/" + brand + "/all";
+  }
+
+  // 2. Get Offers - All
+
+
   @GetMapping("/offers/brands/{brand}/sort")
   public String showOffersByBrandSorted(
           @PathVariable String brand,
@@ -229,17 +252,6 @@ public class OffersController {
     return offers;
   }
 
-  @ResponseBody
-  @GetMapping("/locations/cities")
-  public ResponseEntity<List<String>> getCities(@RequestParam("country") CountryEnum country) {
-    List<String> cities = Arrays.stream(CityEnum.values())
-            .filter(city -> city.getCountry().equals(country))
-            .map(Enum::name)
-            .toList();
-
-    return ResponseEntity.ok(cities);
-  }
-
   // 2. Get Offers - All
   @GetMapping("/offers/brands")
   public String getAllOffersPage() {
@@ -273,14 +285,17 @@ public class OffersController {
     return "details";
   }
 
-  // 3.1 Add Offer - GET
+  // 3, Add Offer
+  // 3.1 GET
   @GetMapping("/offers")
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("currentPage", "add");
+
     return "add";
   }
 
+  // 3.2 POST
   @PostMapping("/offers")
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
@@ -313,6 +328,8 @@ public class OffersController {
     return "redirect:/offers/details/" + serviceModel.getId();
   }
 
+  // 4. Offers - Get all offers based on criteria
+  // 4.1 My offers
   @GetMapping("/offers/my-offers")
   public String showMyOffers(
           Principal principal,
@@ -340,6 +357,7 @@ public class OffersController {
     return "offers";
   }
 
+  // 4.1 Favorites
   @GetMapping("/offers/favorites")
   public String showFavoriteOffers(
           Principal principal,
@@ -367,6 +385,7 @@ public class OffersController {
     return "offers";
   }
 
+  // 4.2 Top 20 offers
   @GetMapping("/offers/top-offers")
   public String showTop20ByViewsCount(Model model) {
     List<OfferBaseViewModel> topOffers = offerService.findTopOffersByViews();
@@ -375,6 +394,7 @@ public class OffersController {
 
     return "top-offers";  }
 
+  // 4.3 Get all offers
   @GetMapping("/offers/all")
   public String showAllOffers(
           @RequestParam(defaultValue = "creationDate") String sort,
@@ -457,6 +477,7 @@ public class OffersController {
     return "redirect:/";
   }
 
+  // 6. Offer Reservation
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/{id}/toggle-reservation")
   @ResponseBody
@@ -465,6 +486,19 @@ public class OffersController {
 
     boolean newStatus = offerService.toggleReservation(id, principal.getUsername());
     return ResponseEntity.ok(Map.of("reserved", newStatus));
+  }
+
+  // 7. Frontend API
+  // 7.1 Fetch cities
+  @ResponseBody
+  @GetMapping("/locations/cities")
+  public ResponseEntity<List<String>> getCities(@RequestParam("country") CountryEnum country) {
+    List<String> cities = Arrays.stream(CityEnum.values())
+            .filter(city -> city.getCountry().equals(country))
+            .map(Enum::name)
+            .toList();
+
+    return ResponseEntity.ok(cities);
   }
 }
 
