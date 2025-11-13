@@ -24,18 +24,97 @@
         <span th:text="${flashMessage}"></span>
     </div>
 
-
     <section class="quick-search">
         <h2>Quick Search</h2>
         <p>Find the right car instantly — filter by brand, price, or year.</p>
-        <form th:action="@{/offers/find}" method="get" class="search-form">
-            <input type="text" name="brand" placeholder="Brand (e.g. BMW)"/>
-            <input type="number" name="maxPrice" placeholder="Max Price (BGN)"/>
-            <input type="number" name="year" placeholder="Min Year"/>
-            <button type="submit">Search 🚗</button>
+
+        <form th:action="@{/offers/quick-search}"
+              th:object="${offersFindBindingModel}"
+              method="post"
+              class="search-form">
+
+            <!-- Vehicle type -->
+            <div class="form-group">
+                <label for="vehicleType">Vehicle Type</label>
+                <select name="vehicleType"
+                        id="vehicleType"
+                        class="form-control">
+                    <option value="">- Select vehicle category -</option>
+                    <option th:each="c : ${categories}"
+                            th:value="${c.name().toLowerCase()}"
+                            th:text="${c}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Brand -->
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <select th:field="*{brand}"
+                        id="brand"
+                        class="form-control">
+                    <option value="">- Select brand -</option>
+                    <option th:each="b : ${brands}"
+                            th:value="${b.name}"
+                            th:text="${b.name}">
+                    </option>
+                </select>
+                <div th:if="${#fields.hasErrors('brand')}"
+                     th:errors="*{brand}"
+                     class="error-msg"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Model</label>
+                <select id="model"
+                        class="form-control"
+                        th:name="model"
+                        th:errorclass="is-invalid"
+                        th:selected="${model} == *{model}">
+                    <option value="" selected disabled>- Select model -</option>
+                    <optgroup label="Model name">
+                        <option
+                                th:each="model : ${models}"
+                                th:text="${model}"
+                                th:value="${model}"
+                                th:selected="${model} == *{model}">
+                        </option>
+                    </optgroup>
+                </select>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Vehicle model is required.
+                </p>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group">
+                <label for="price">Price</label>
+                <select th:field="*{priceComparison}" id="priceComparison" class="form-control">
+                    <option value="under">Under</option>
+                    <option value="between">Between</option>
+                    <option value="above">Above</option>
+                </select>
+                <input id="price" type="number" min="0" th:field="*{price}" placeholder="Suggested price" class="form-control"/>
+                <input id="priceMax" type="number" th:field="*{priceMax}" placeholder="Max price" style="display:none;" class="form-control"/>
+            </div>
+
+            <!-- Year -->
+            <div class="form-group">
+                <label for="year">Year</label>
+                <select th:field="*{yearComparison}"
+                        id="yearComparison"
+                        class="form-control">
+                    <option value="under">Before</option>
+                    <option value="between">Between</option>
+                    <option value="above">After</option>
+                </select>
+                <input id="year" type="number" step="1" th:field="*{year}" placeholder="Manufacturing year" class="form-control"/>
+                <input id="yearMax" type="number" th:field="*{yearMax}" placeholder="To year" style="display:none;" class="form-control"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-2">Search 🚗</button>
         </form>
     </section>
-
     <section class="recent-offers-section">
         <h2 class="section-title">Recent Offers</h2>
         <div class="offers-grid">
@@ -232,7 +311,8 @@
                 <div class="review-card" th:each="feed : ${feedbacks}">
                     <div class="review-header">
                         <div class="review-info">
-                            <span class="review-name" th:text="${feed.userFirstName + ' ' + feed.userLastName}">John Doe</span>
+                            <span class="review-name"
+                                  th:text="${feed.userFirstName + ' ' + feed.userLastName}">John Doe</span>
                             <span class="review-date"
                                   th:text="${#temporals.format(feed.created, 'dd MMM yyyy')}">10 Nov 2025</span>
                         </div>
@@ -257,6 +337,11 @@
 <footer></footer>
 
 </body>
+
+<script th:src="@{/js/loadModels.js}"></script>
+<script th:src="@{/js/toggleSearchInputs.js}"></script>
+
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const toast = document.querySelector(".alert-toast");
