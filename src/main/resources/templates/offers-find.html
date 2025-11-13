@@ -65,7 +65,7 @@
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="price" class="text-white font-weight-bold">Price</label>
-                    <select th:field="*{priceComparison}" id="priceComparison" onchange="toggleMaxInput('price')">
+                    <select th:field="*{priceComparison}" id="priceComparison" >
                         <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
                         </option>
                         <option value="between" th:selected="${offersFindBindingModel.priceComparison == 'between'}">
@@ -92,7 +92,7 @@
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                    <select th:field="*{mileageComparison}" id="mileageComparison" onchange="toggleMaxInput('mileage')">
+                    <select th:field="*{mileageComparison}" id="mileageComparison" >
                         <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
                             Under
                         </option>
@@ -162,7 +162,7 @@
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="year" class="text-white font-weight-bold">Year</label>
-                    <select th:field="*{yearComparison}" id="yearComparison" onchange="toggleMaxInput('year')">
+                    <select th:field="*{yearComparison}" id="yearComparison">
                         <option value="under" th:selected="${offersFindBindingModel.yearComparison == 'under'}">
                             Before
                         </option>
@@ -256,7 +256,6 @@
                         Condition is required.
                     </p>
                 </div>
-
 
                 <div class="col col-md-4">
                     <div class="button-holder d-flex">
