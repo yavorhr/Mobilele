@@ -1,42 +1,44 @@
+document.addEventListener("DOMContentLoaded", () => {
+    // Find any <select> whose id ends with "Comparison"
+    const comparisonSelects = document.querySelectorAll("select[id$='Comparison']");
 
-    function toggleMaxInput(field) {
-        const select = document.getElementById(field + 'Comparison');
-        const maxInput = document.getElementById(field + 'Max');
+    comparisonSelects.forEach(select => {
+        const field = select.id.replace("Comparison", "");
+
+        const maxInput = document.getElementById(field + "Max");
         const mainInput = document.getElementById(field);
 
-        if (select.value === 'between') {
-            maxInput.style.display = 'inline-block';
+        // If the matching elements don't exist → skip
+        if (!select || !maxInput || !mainInput) {
+            return;
+        }
 
-            switch (field) {
-                case 'price':
-                    mainInput.placeholder = 'Start Price';
-                    maxInput.placeholder = 'Max Price';
-                    break;
-                case 'mileage':
-                    mainInput.placeholder = 'Min Mileage';
-                    maxInput.placeholder = 'Max Mileage';
-                    break;
-                case 'year':
-                    mainInput.placeholder = 'From Year';
-                    maxInput.placeholder = 'To Year';
-                    break;
-            }
-        } else {
-            maxInput.style.display = 'none';
+        function toggle() {
+            if (select.value === "between") {
+                maxInput.style.display = "inline-block";
 
-            switch (field) {
-                case 'price':
-                    mainInput.placeholder = 'Suggested price';
-                    break;
-                case 'mileage':
-                    mainInput.placeholder = 'Mileage in km';
-                    break;
-                case 'year':
-                    mainInput.placeholder = 'Manufacturing year';
-                    break;
+                if (field === "price") {
+                    mainInput.placeholder = "Start Price";
+                    maxInput.placeholder = "Max Price";
+                }
+                if (field === "year") {
+                    mainInput.placeholder = "From Year";
+                    maxInput.placeholder = "To Year";
+                }
+            } else {
+                maxInput.style.display = "none";
+
+                if (field === "price") {
+                    mainInput.placeholder = "Suggested Price";
+                }
+                if (field === "year") {
+                    mainInput.placeholder = "Manufacturing Year";
+                }
             }
         }
-    }
-        ['price', 'mileage', 'year'].forEach(field => toggleMaxInput(field));
 
-
+        // Bind behavior + run once
+        select.addEventListener("change", toggle);
+        toggle();
+    });
+});
