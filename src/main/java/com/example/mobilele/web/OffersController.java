@@ -123,7 +123,9 @@ public class OffersController {
     VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
 
     // ignore city field (fetched with AJAX)
-    boolean hasRelevantErrors = bindingResult.getFieldErrors().stream()
+    boolean hasRelevantErrors = bindingResult
+            .getFieldErrors()
+            .stream()
             .anyMatch(e -> !"city".equals(e.getField()));
 
     if (hasRelevantErrors) {
@@ -228,9 +230,30 @@ public class OffersController {
     return offers;
   }
 
-  // Find offers - By brands
+  // II. Quick search ->
+  @PostMapping("/offers/quick-search")
+  public String submitQuickSearch(
+          @Valid @ModelAttribute("offersFindBindingModel") OffersFindBindingModel form,
+          BindingResult bindingResult,
+          @RequestParam String vehicleType,
+          RedirectAttributes redirectAttributes) {
 
+    if (bindingResult.hasErrors()) {
+      redirectAttributes.addFlashAttribute("offersFindBindingModel", form);
+      redirectAttributes.addFlashAttribute(
+              "org.springframework.validation.BindingResult.offersFindBindingModel",
+              bindingResult);
+      return "redirect:/";
+    }
 
+    redirectAttributes.addFlashAttribute("filters", form);
+
+    return "redirect:/offers/" + vehicleType.toLowerCase()
+            + "/" + form.getBrand().toLowerCase()
+            + "/" + form.getModel().toLowerCase();
+  }
+
+  // II. Find offers - By brands
   @GetMapping("/offers/brands/{brand}")
   public String getOffersByBrand(@PathVariable String brand, Model model) {
     model.addAttribute("brand", brand);
@@ -239,7 +262,7 @@ public class OffersController {
     return "offers";
   }
 
-  // 2.2 Get Offers - By Id
+  // III. Offer Details
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model,
                                      HttpServletRequest request,
@@ -258,8 +281,8 @@ public class OffersController {
     return "details";
   }
 
-  // 3, Add Offer
-  // 3.1 GET
+  // IV. Offer Add
+  // 1. GET "add" view
   @GetMapping("/offers")
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
@@ -268,7 +291,7 @@ public class OffersController {
     return "add";
   }
 
-  // 3.2 POST
+  // 2. Submit "Add" form -> :/offers/details/
   @PostMapping("/offers")
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
@@ -301,8 +324,92 @@ public class OffersController {
     return "redirect:/offers/details/" + serviceModel.getId();
   }
 
-  // 4. Offers - Get all offers based on criteria
-  // 4.1 My offers
+  // V. Update offer
+  // 1. Get "update" view
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
+  @GetMapping("/offers/update/{id}")
+  public String getOfferUpdatePage(@PathVariable Long id,
+                                   @AuthenticationPrincipal MobileleUser principal,
+                                   Model model) {
+
+    OfferUpdateBindingForm offerBindingModel =
+            this.modelMapper.map(this.offerService
+                    .findOfferById(principal.getUsername(), id), OfferUpdateBindingForm.class);
+
+    model.addAttribute("offerBindingModel", offerBindingModel);
+
+    return "update";
+  }
+
+  // 2. Submit PATCH Update form -> /offers/details/id"
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PatchMapping("/offers/update/{id}")
+  public String updateOffer(@PathVariable Long id,
+                            @AuthenticationPrincipal MobileleUser principal,
+                            @Valid OfferUpdateBindingForm offerBindingModel,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+
+    if (bindingResult.hasErrors()) {
+      redirectAttributes
+              .addFlashAttribute("offerBindingModel", offerBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
+
+      return "redirect:/offers/update/errors/" + id;
+    }
+
+    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), id);
+
+    return "redirect:/offers/details/" + id;
+  }
+
+  @GetMapping("/offers/update/errors/{id}")
+  public String editOfferErrors(@PathVariable Long id) {
+    return "update";
+  }
+
+  // VI. Delete offer
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @DeleteMapping("/offers/{id}")
+  public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
+                            @PathVariable Long id,
+                            RedirectAttributes redirectAttributes) {
+
+    offerService.deleteById(id);
+
+    redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
+    redirectAttributes.addFlashAttribute("flashType", "success");
+
+    return "redirect:/";
+  }
+
+  // VII. Show Offers cards - different cases -> "/offers/..."
+  // 1. Get all offers
+  @GetMapping("/offers/all")
+  public String showAllOffers(
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "2") int size,
+          Model model) {
+
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
+    Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "all");
+
+    return "offers";
+  }
+
+  // 2. Offers by user
   @GetMapping("/offers/my-offers")
   public String showMyOffers(
           Principal principal,
@@ -330,7 +437,7 @@ public class OffersController {
     return "offers";
   }
 
-  // 4.1 Favorites
+  // 3. User's Favorites
   @GetMapping("/offers/favorites")
   public String showFavoriteOffers(
           Principal principal,
@@ -358,7 +465,7 @@ public class OffersController {
     return "offers";
   }
 
-  // 4.2 Top 20 offers
+  // 4. Top 20 offers
   @GetMapping("/offers/top-offers")
   public String showTop20ByViewsCount(Model model) {
     List<OfferBaseViewModel> topOffers = offerService.findTopOffersByViews();
@@ -367,102 +474,8 @@ public class OffersController {
 
     return "top-offers";  }
 
-  // 4.3 Get all offers
-  @GetMapping("/offers/all")
-  public String showAllOffers(
-          @RequestParam(defaultValue = "creationDate") String sort,
-          @RequestParam(defaultValue = "desc") String dir,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "2") int size,
-          Model model) {
-
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
-
-    Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
-
-    model.addAttribute("offers", offersPage.getContent());
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-    model.addAttribute("currentPage", offersPage.getNumber());
-    model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "all");
-
-    return "offers";
-  }
-
-  //4.1 Update offer - GET
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
-  @GetMapping("/offers/update/{id}")
-  public String getOfferUpdatePage(@PathVariable Long id,
-                                   @AuthenticationPrincipal MobileleUser principal,
-                                   Model model) {
-
-    OfferUpdateBindingForm offerBindingModel =
-            this.modelMapper.map(this.offerService
-                    .findOfferById(principal.getUsername(), id), OfferUpdateBindingForm.class);
-
-    model.addAttribute("offerBindingModel", offerBindingModel);
-
-    return "update";
-  }
-
-  // 4.2 Update offer -PATCH
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
-  @PatchMapping("/offers/update/{id}")
-  public String updateOffer(@PathVariable Long id,
-                            @AuthenticationPrincipal MobileleUser principal,
-                            @Valid OfferUpdateBindingForm offerBindingModel,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes) {
-
-    if (bindingResult.hasErrors()) {
-      redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
-
-      return "redirect:/offers/update/errors/" + id;
-    }
-
-    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), id);
-
-    return "redirect:/offers/details/" + id;
-  }
-
-  @GetMapping("/offers/update/errors/{id}")
-  public String editOfferErrors(@PathVariable Long id) {
-    return "update";
-  }
-
-  // 5. Delete offer
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
-  @DeleteMapping("/offers/{id}")
-  public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
-                            @PathVariable Long id,
-                            RedirectAttributes redirectAttributes) {
-
-    offerService.deleteById(id);
-
-    redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
-    redirectAttributes.addFlashAttribute("flashType", "success");
-
-    return "redirect:/";
-  }
-
-  // 6. Offer Reservation
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
-  @PatchMapping("/offers/{id}/toggle-reservation")
-  @ResponseBody
-  public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
-                                                                @AuthenticationPrincipal MobileleUser principal) {
-
-    boolean newStatus = offerService.toggleReservation(id, principal.getUsername());
-    return ResponseEntity.ok(Map.of("reserved", newStatus));
-  }
-
-  // 7. Frontend API
-  // 7.1 Fetch cities
+  // === VII. FRONTEND API ====
+  // 1. Fetch cities
   @ResponseBody
   @GetMapping("/locations/cities")
   public ResponseEntity<List<String>> getCities(@RequestParam("country") CountryEnum country) {
@@ -474,27 +487,16 @@ public class OffersController {
     return ResponseEntity.ok(cities);
   }
 
+  // 2. Offer Reservation
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PatchMapping("/offers/{id}/toggle-reservation")
+  @ResponseBody
+  public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
+                                                                @AuthenticationPrincipal MobileleUser principal) {
 
-  @GetMapping("/offers/quick-search")
-  public String quickSearch(@ModelAttribute("offersQuickSearchBindingModel") OffersQuickSearchBindingModel quickSearchModel,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
-
-    if (quickSearchModel.getVehicleType() == null || quickSearchModel.getBrand() == null || quickSearchModel.getBrand().isBlank()) {
-      redirectAttributes.addFlashAttribute("error", "Please select at least a vehicle type and brand!");
-      return "redirect:/";
-    }
-
-    // Prepare redirect URL to the detailed offers page
-    String vehicleType = quickSearchModel.getVehicleType().name().toLowerCase(Locale.ROOT);
-    String brand = quickSearchModel.getBrand();
-
-    // Build redirect parameters for filtering
-    redirectAttributes.addFlashAttribute("filters", quickSearchModel);
-
-    return "redirect:/offers/" + vehicleType + "/" + brand + "/all";
+    boolean newStatus = offerService.toggleReservation(id, principal.getUsername());
+    return ResponseEntity.ok(Map.of("reserved", newStatus));
   }
-
 }
 
 
