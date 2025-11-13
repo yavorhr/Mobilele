@@ -115,9 +115,11 @@ body {
 }
 
 .cta-btn:hover {
-    background: linear-gradient(135deg, #43a047, #81c784);
+    background: linear-gradient(135deg, #43a047, #81c784) ;
     text-decoration: none;
     transform: scale(1.05);
+    cursor: pointer;
+    color: #0056b3;
 }
 
 /* Optional stat strip */
@@ -268,7 +270,7 @@ body {
     padding: 3rem 2rem;
     margin: 4rem auto;
     border-radius: 12px;
-    max-width: 900px;
+    max-width: 1300px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.3);
 }
 
@@ -283,7 +285,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.search-form {
+.quick-search-fields{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -303,22 +305,6 @@ body {
 
 .search-form input::placeholder {
     color: #bbb;
-}
-
-.search-form button {
-    background: linear-gradient(135deg, #2196F3, #21CBF3);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.8rem 1.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-form button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(33, 203, 243, 0.4);
 }
 
 /* === WHY CHOOSE US === */
