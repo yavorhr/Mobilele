@@ -50,4 +50,14 @@ public class AdminController {
 
     return ResponseEntity.ok(statusResponse);
   }
+
+  @DeleteMapping("/api/remove-user/{id}")
+  @ResponseBody
+  public ResponseEntity<?> deleteUser(@PathVariable Long id,
+                                      @AuthenticationPrincipal UserDetails principal) {
+
+    this.userService.deleteProfileById(id);
+
+    return ResponseEntity.ok("User deleted successfully!");
+  }
 }

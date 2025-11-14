@@ -18,6 +18,7 @@ public class UserEntity extends BaseEntity {
   private String lastName;
   private Set<OfferEntity> favorites;
   private Set<OfferEntity> offers;
+  private Set<Feedback> feedbacks;
   // Account lock properties
   private Integer failedLoginAttempts;
   private boolean accountLocked;
@@ -30,7 +31,12 @@ public class UserEntity extends BaseEntity {
     this.failedLoginAttempts = 0;
   }
 
-  @OneToMany(mappedBy = "seller")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+  public Set<Feedback> getFeedbacks() {
+    return feedbacks;
+  }
+
+  @OneToMany(mappedBy = "seller", cascade = CascadeType.REMOVE)
   public Set<OfferEntity> getOffers() {
     return offers;
   }
@@ -102,6 +108,11 @@ public class UserEntity extends BaseEntity {
 
   public UserEntity setUsername(String username) {
     this.username = username;
+    return this;
+  }
+
+  public UserEntity setFeedbacks(Set<Feedback> feedbacks) {
+    this.feedbacks = feedbacks;
     return this;
   }
 

@@ -141,6 +141,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void deleteProfileById(Long userId) {
+    UserEntity userEntity = this.userRepository
+            .findById(userId)
+            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
+
+    userEntity.getRoles().clear();
+    this.userRepository.save(userEntity);
     this.userRepository.deleteById(userId);
   }
 
