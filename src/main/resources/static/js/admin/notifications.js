@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    console.log('sssssssssssssssssssss')
     const enableButtons = document.querySelectorAll(".enable-btn");
     const lockButtons = document.querySelectorAll(".lock-btn");
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
@@ -166,9 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const clickedButton = e.currentTarget;
 
             const tr = clickedButton.closest("tr");
-            const email = tr.querySelector('.email').textContent.trim();
+            const username = tr.querySelector('.username').textContent.trim();
 
-            fetch(`/admin/api/change-user-access/${email}`, {
+            fetch(`/admin/api/change-user-access/${username}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -183,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(data => {
                         const isEnabled = data.enabled;
                         const status = tr.querySelector(".status");
-                        const disabledTime = tr.querySelector(".disabled_time");
 
                         if (isEnabled) {
                             status.classList.add("active");
@@ -192,7 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             clickedButton.classList.add("inactive")
                             clickedButton.classList.remove("active")
                             clickedButton.textContent = "Disable user"
-                            disabledTime.textContent = "N/A";
                         } else {
                             status.classList.add("inactive");
                             status.classList.remove("active");
@@ -200,9 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             clickedButton.classList.add("active")
                             clickedButton.classList.remove("inactive")
                             clickedButton.textContent = "Enable user"
-
-                            const disabledDate = new Date(data.disabledTime);
-                            disabledTime.textContent = disabledDate.toLocaleString();
                         }
                     }
                 )
