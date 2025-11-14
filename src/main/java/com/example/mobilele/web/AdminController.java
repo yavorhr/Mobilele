@@ -41,12 +41,12 @@ public class AdminController {
     return "/admin/notifications";
   }
 
-  @PutMapping("/api/change-user-access/{email}")
+  @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
-  public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String email,
+  public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String username,
                                                                    @AuthenticationPrincipal UserDetails principal) {
 
-    UserUpdateStatusResponse statusResponse = this.userService.changeAccess(email);
+    UserUpdateStatusResponse statusResponse = this.userService.changeAccess(username);
 
     return ResponseEntity.ok(statusResponse);
   }
