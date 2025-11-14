@@ -132,14 +132,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Delete user by email
+    // Delete user by ud
     deleteButtons.forEach(button => {
         button.addEventListener("click", (event) => {
 
-            const emailElement = event.target.closest("tr").querySelector(".email");
-            const email = emailElement.textContent;
+            const idElement = event.target.closest("tr").querySelector(".user-id");
+            const id = idElement.value;
 
-            fetch(`/admin/api/remove-user/${encodeURIComponent(email)}`, {
+            fetch(`/admin/api/remove-user/${encodeURIComponent(id)}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
