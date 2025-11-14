@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity,Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   Optional<UserEntity> findByUsername(String username);
 
@@ -22,5 +22,5 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
   @Query("SELECT u FROM UserEntity u Where u.accountLocked")
   List<UserEntity> findAllLockedUsers();
 
-
+  List<UserEntity> findAllByEmailContainingIgnoreCase(String email);
 }

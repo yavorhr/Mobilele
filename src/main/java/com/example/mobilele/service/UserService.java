@@ -3,6 +3,7 @@ package com.example.mobilele.service;
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 
 import java.util.List;
@@ -49,4 +50,6 @@ public interface UserService {
   boolean isOwner(String username, Long routeId);
 
   void deleteOfferFromFavorites(Long id);
+
+  List<UserAdministrationViewModel> findUsersPerEmailInputIgnoreCase(String email);
 }

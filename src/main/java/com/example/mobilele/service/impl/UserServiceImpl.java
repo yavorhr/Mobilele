@@ -6,6 +6,7 @@ import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.UserRepository;
@@ -22,8 +23,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -220,6 +224,23 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
       }
     }
+  }
+
+  @Override
+  public List<UserAdministrationViewModel> findUsersPerEmailInputIgnoreCase(String email) {
+    return this.userRepository.findAllByEmailContainingIgnoreCase(email)
+            .stream()
+            .map(u -> {
+              UserAdministrationViewModel vm = modelMapper.map(u, UserAdministrationViewModel.class);
+
+              Set<UserRoleEnum> roleEnums = u.getRoles().stream()
+                      .map(UserRoleEntity::getRole)
+                      .collect(Collectors.toSet());
+
+              vm.setRoles(roleEnums);
+              return vm;
+            })
+            .toList();
   }
 
   @Override
