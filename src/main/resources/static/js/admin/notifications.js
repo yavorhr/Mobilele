@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log('sssssssssssssssssssss')
     const enableButtons = document.querySelectorAll(".enable-btn");
     const lockButtons = document.querySelectorAll(".lock-btn");
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
