@@ -7,12 +7,17 @@ import java.util.Set;
 
 public class UserUpdateStatusResponse {
   private String email;
+  private String username;
   private boolean isEnabled;
   private Set<UserRoleEnum> roles;
   private LocalDateTime disabledTime;
   private boolean accountLocked;
 
   public UserUpdateStatusResponse() {
+  }
+
+  public String getUsername() {
+    return username;
   }
 
   public LocalDateTime getDisabledTime() {
@@ -57,6 +62,11 @@ public class UserUpdateStatusResponse {
 
   public UserUpdateStatusResponse setAccountLocked(boolean accountLocked) {
     this.accountLocked = accountLocked;
+    return this;
+  }
+
+  public UserUpdateStatusResponse setUsername(String username) {
+    this.username = username;
     return this;
   }
 }
