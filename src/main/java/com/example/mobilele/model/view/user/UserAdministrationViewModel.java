@@ -17,6 +17,10 @@ public class UserAdministrationViewModel {
   public UserAdministrationViewModel() {
   }
 
+  public Set<UserRoleEnum> getRoles() {
+    return roles;
+  }
+
   public boolean isAccountLocked() {
     return accountLocked;
   }
@@ -77,11 +81,6 @@ public class UserAdministrationViewModel {
 
   public UserAdministrationViewModel setAccountLocked(boolean accountLocked) {
     this.accountLocked = accountLocked;
-    return this;
-  }
-
-  public UserAdministrationViewModel setDisabledTime(LocalDateTime disabledTime) {
-    this.disabledTime = disabledTime;
     return this;
   }
 
