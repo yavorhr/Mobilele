@@ -1,9 +1,11 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
-import com.example.mobilele.service.AdminService;
+import com.example.mobilele.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-  private final AdminService adminService;
+  private final UserService userService;
 
-  public AdminController(AdminService adminService) {
-    this.adminService = adminService;
+  public AdminController(UserService userService) {
+    this.userService = userService;
   }
 
   @GetMapping("/notifications")
@@ -27,7 +29,7 @@ public class AdminController {
           Model model,
           @AuthenticationPrincipal UserDetails principal) {
 
-    Page<UserAdministrationViewModel> usersPage = this.adminService.searchPaginatedUsersPerEmail(query, PageRequest.of(page, size));
+    Page<UserAdministrationViewModel> usersPage = this.userService.searchPaginatedUsersPerEmail(query, PageRequest.of(page, size));
 
     model.addAttribute("usersPage", usersPage);
     model.addAttribute("users", usersPage.getContent());
@@ -37,5 +39,15 @@ public class AdminController {
     model.addAttribute("totalPages", usersPage.getTotalPages());
 
     return "/admin/notifications";
+  }
+
+  @PutMapping("/api/change-user-access/{email}")
+  @ResponseBody
+  public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String email,
+                                                                   @AuthenticationPrincipal UserDetails principal) {
+
+    UserUpdateStatusResponse statusResponse = this.userService.changeAccess(email);
+
+    return ResponseEntity.ok(statusResponse);
   }
 }
