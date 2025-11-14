@@ -5,6 +5,8 @@ import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -51,5 +53,6 @@ public interface UserService {
 
   void deleteOfferFromFavorites(Long id);
 
-  List<UserAdministrationViewModel> findUsersPerEmailInputIgnoreCase(String email);
+  Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String emailQuery, Pageable pageable);
+
 }
