@@ -3,6 +3,7 @@ package com.example.mobilele.service;
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,7 @@ public interface UserService {
   void deleteOfferFromFavorites(Long id);
 
   Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String emailQuery, Pageable pageable);
+
+  UserUpdateStatusResponse changeAccess(String username);
 
 }

@@ -6,6 +6,7 @@ import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.OfferRepository;
@@ -227,6 +228,24 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
       }
     }
+  }
+
+  @Override
+  public UserUpdateStatusResponse changeAccess(String username) {
+    UserEntity userEntity =
+            this.userRepository
+                    .findByUsername(username)
+                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
+
+    if (userEntity.isEnabled()) {
+      userEntity.setEnabled(false);
+    } else {
+      userEntity.setEnabled(true);
+    }
+
+    this.userRepository.save(userEntity);
+
+    return this.modelMapper.map(userEntity, UserUpdateStatusResponse.class);
   }
 
   @Override
