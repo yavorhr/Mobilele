@@ -17,11 +17,12 @@ public class UserEntity extends BaseEntity {
   private String firstName;
   private String lastName;
   private Set<OfferEntity> favorites;
+  private Set<OfferEntity> offers;
   // Account lock properties
   private Integer failedLoginAttempts;
   private boolean accountLocked;
   private LocalDateTime lockTime;
-  private Set<OfferEntity> offers;
+  private boolean enabled;
 
   public UserEntity() {
     this.favorites = new HashSet<>();
@@ -66,6 +67,10 @@ public class UserEntity extends BaseEntity {
   )
   public List<UserRoleEntity> getRoles() {
     return roles;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
   }
 
   @Column(nullable = false)
@@ -137,6 +142,11 @@ public class UserEntity extends BaseEntity {
 
   public UserEntity setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+    return this;
+  }
+
+  public UserEntity setEnabled(boolean enabled) {
+    this.enabled = enabled;
     return this;
   }
 
