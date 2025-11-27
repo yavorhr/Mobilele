@@ -58,7 +58,9 @@ public interface UserService {
 
   UserUpdateStatusResponse changeAccess(String username);
 
-  UserUpdateStatusResponse modifyLockStatus(String email);
+  UserUpdateStatusResponse modifyLockStatus(String username);
 
   void updateUserRoles(String username, String[] roles);
+
+  boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser);
 }

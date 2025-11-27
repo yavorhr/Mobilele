@@ -253,11 +253,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserUpdateStatusResponse modifyLockStatus(String email) {
+  public UserUpdateStatusResponse modifyLockStatus(String username) {
     UserEntity userEntity =
             this.userRepository
-                    .findByEmailIgnoreCase(email)
-                    .orElseThrow(() -> new ObjectNotFoundException("User with the email " + email + " was not found!"));
+                    .findByUsername(username)
+                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
 
     if (userEntity.isAccountLocked()) {
       userEntity.setAccountLocked(false);
@@ -268,6 +268,12 @@ public class UserServiceImpl implements UserService {
     this.userRepository.save(userEntity);
 
     return this.modelMapper.map(userEntity, UserUpdateStatusResponse.class);
+  }
+
+  @Override
+  public boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser) {
+    return !loggedInUser.equals(targetUser);
+
   }
 
   @Override
