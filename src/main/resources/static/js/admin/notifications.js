@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Disable buttons for logged in user
     document.querySelectorAll("tr").forEach(tr => {
-        if (tr.contains(tr.querySelector(".email"))) {
-            const userEmail = tr.querySelector(".email").textContent.trim();
+        if (tr.contains(tr.querySelector(".username"))) {
+            const username = tr.querySelector(".username").textContent.trim();
 
             const lockBtn = tr.querySelector(".lock-btn");
             const enableBtn = tr.querySelector(".enable-btn");
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const emailBtn = tr.querySelector(".send-email-btn");
             const changeRolesBtn = tr.querySelector(".change-role-btn");
 
-            if (userEmail === loggedInUserEmail) {
+            if (username === loggedInUsername) {
                 enableBtn.disabled = true;
                 enableBtn.classList.add("btn-disabled");
                 enableBtn.classList.remove("active", "inactive");
@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const changeRoleBtn = wrapper.querySelector(".change-role-btn");
 
         const tr = wrapper.closest("tr");
-        const email = tr.querySelector(".email").textContent;
+        const username = tr.querySelector(".username").textContent;
 
-        if (email === loggedInUserEmail) {
+        if (username === loggedInUsername) {
             checkboxes.forEach(checkbox => checkbox.disabled = true);
             changeRoleBtn.disabled = true;
             changeRoleBtn.classList.add("btn-disabled");
@@ -92,15 +92,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.value);
 
-            updateRoles(email, selectedRoles, checkboxes, changeRoleBtn, tr);
-
+            updateRoles(username, selectedRoles, checkboxes, changeRoleBtn, tr);
         });
 
         changeRoleBtn.disabled = true;
     });
 
     //Update Roles
-    function updateRoles(email, selectedRoles, checkboxes, changeRoleBtn, tr) {
+    function updateRoles(username, selectedRoles, checkboxes, changeRoleBtn, tr) {
         fetch("/admin/api/update-roles", {
             method: "PATCH",
             headers: {
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             },
             body: JSON.stringify({
-                email: email,
+                username: username,
                 roles: selectedRoles,
             }),
         })
