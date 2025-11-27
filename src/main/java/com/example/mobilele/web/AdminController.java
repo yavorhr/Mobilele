@@ -6,6 +6,7 @@ import com.example.mobilele.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -59,5 +60,14 @@ public class AdminController {
     this.userService.deleteProfileById(id);
 
     return ResponseEntity.ok("User deleted successfully!");
+  }
+
+  @PutMapping("/api/change-user-lock-status/{email}")
+  @ResponseBody
+  public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String email,
+                                                                       @AuthenticationPrincipal UserDetails principal) {
+    UserUpdateStatusResponse statusResponse = this.userService.modifyLockStatus(email);
+
+    return ResponseEntity.ok(statusResponse);
   }
 }

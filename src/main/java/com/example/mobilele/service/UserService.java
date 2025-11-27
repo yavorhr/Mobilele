@@ -58,4 +58,5 @@ public interface UserService {
 
   UserUpdateStatusResponse changeAccess(String username);
 
+  UserUpdateStatusResponse modifyLockStatus(String email);
 }

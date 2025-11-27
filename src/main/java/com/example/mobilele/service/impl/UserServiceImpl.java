@@ -27,7 +27,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -247,6 +246,24 @@ public class UserServiceImpl implements UserService {
       userEntity.setEnabled(false);
     } else {
       userEntity.setEnabled(true);
+    }
+
+    this.userRepository.save(userEntity);
+
+    return this.modelMapper.map(userEntity, UserUpdateStatusResponse.class);
+  }
+
+  @Override
+  public UserUpdateStatusResponse modifyLockStatus(String email) {
+    UserEntity userEntity =
+            this.userRepository
+                    .findByEmailIgnoreCase(email)
+                    .orElseThrow(() -> new ObjectNotFoundException("User with the email " + email + " was not found!"));
+
+    if (userEntity.isAccountLocked()) {
+      userEntity.setAccountLocked(false);
+    } else {
+      userEntity.setAccountLocked(true);
     }
 
     this.userRepository.save(userEntity);
