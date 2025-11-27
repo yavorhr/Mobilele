@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRoleRepository;
 import com.example.mobilele.service.UserRoleService;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class UserRoleServiceImpl implements UserRoleService {
 
   @Override
   public UserRoleEntity findUserRole(UserRoleEnum userRole) {
-    return this.userRoleRepository.findByRole(userRole);
+    return this.userRoleRepository.findByRole(userRole)
+            .orElseThrow(() -> new ObjectNotFoundException("Role with name " + userRole + " was not found!"));
   }
 
   @Override

@@ -7,4 +7,5 @@ public interface UserRoleService {
   void initRoles();
 
   UserRoleEntity findUserRole(UserRoleEnum userRole);
+  ;
 }

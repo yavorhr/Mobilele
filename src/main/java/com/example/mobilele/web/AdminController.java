@@ -1,5 +1,6 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.binding.RoleUpdateRequest;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.service.UserService;
@@ -34,7 +35,7 @@ public class AdminController {
 
     model.addAttribute("usersPage", usersPage);
     model.addAttribute("users", usersPage.getContent());
-    model.addAttribute("loggedInUserEmail", principal.getUsername());
+    model.addAttribute("loggedInUsername", principal.getUsername());
     model.addAttribute("query", query);
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", usersPage.getTotalPages());
@@ -66,8 +67,19 @@ public class AdminController {
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String email,
                                                                        @AuthenticationPrincipal UserDetails principal) {
+
     UserUpdateStatusResponse statusResponse = this.userService.modifyLockStatus(email);
 
     return ResponseEntity.ok(statusResponse);
+  }
+
+  @PatchMapping("/api/update-roles")
+  @ResponseBody
+  public ResponseEntity<?> updateRoles(@RequestBody RoleUpdateRequest request,
+                                       @AuthenticationPrincipal UserDetails principal) {
+
+    this.userService.updateUserRoles(request.getUsername(), request.getRoles());
+
+    return ResponseEntity.ok("Roles updated successfully");
   }
 }

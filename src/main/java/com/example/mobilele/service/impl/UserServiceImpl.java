@@ -28,8 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -269,6 +268,24 @@ public class UserServiceImpl implements UserService {
     this.userRepository.save(userEntity);
 
     return this.modelMapper.map(userEntity, UserUpdateStatusResponse.class);
+  }
+
+  @Override
+  public void updateUserRoles(String username, String[] roles) {
+    UserEntity userEntity =
+            this.userRepository
+                    .findByUsername(username)
+                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
+
+    List<UserRoleEntity> userRoles = new ArrayList<>();
+
+    Arrays.stream(roles).forEach(r -> {
+      UserRoleEntity roleEntity = this.roleService.findUserRole(UserRoleEnum.valueOf(r));
+      userRoles.add(roleEntity);
+    });
+
+    userEntity.setRoles(userRoles);
+    this.userRepository.save(userEntity);
   }
 
   @Override
