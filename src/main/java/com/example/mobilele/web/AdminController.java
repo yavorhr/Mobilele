@@ -54,13 +54,13 @@ public class AdminController {
     return ResponseEntity.ok(statusResponse);
   }
 
-  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#id, #principal.username)")
-  @DeleteMapping("/api/remove-user/{id}")
+  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
+  @DeleteMapping("/api/remove-user/{username}")
   @ResponseBody
-  public ResponseEntity<?> deleteUser(@PathVariable Long id,
+  public ResponseEntity<?> deleteUser(@PathVariable String username,
                                       @AuthenticationPrincipal UserDetails principal) {
 
-    this.userService.deleteProfileById(id);
+    this.userService.deleteUser(username);
 
     return ResponseEntity.ok("User deleted successfully!");
   }

@@ -149,6 +149,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void deleteUser(String username) {
+    UserEntity userEntity = this.userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + username + " does not exist!"));
+
+    userEntity.getRoles().clear();
+    this.userRepository.save(userEntity);
+    this.userRepository.delete(userEntity);
+  }
+
+  @Override
   public boolean isEmailAvailable(String email) {
     return userRepository.findByEmailIgnoreCase(email).isEmpty();
   }

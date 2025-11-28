@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll(".delete-btn");
     const emailButtons = document.querySelectorAll(".send-email-btn");
 
-    // Disable buttons for logged in user
+   // Disable buttons for logged in user
     document.querySelectorAll("tr").forEach(tr => {
         if (tr.contains(tr.querySelector(".username"))) {
             const username = tr.querySelector(".username").textContent.trim();
@@ -133,12 +133,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Delete user by ud
     deleteButtons.forEach(button => {
-        button.addEventListener("click", (event) => {
+        button.addEventListener("click", (e) => {
+            const clickedButton = e.currentTarget;
 
-            const idElement = event.target.closest("tr").querySelector(".user-id");
-            const id = idElement.value;
+            const tr = clickedButton.closest("tr");
+            const username = tr.querySelector('.username').textContent.trim();
 
-            fetch(`/admin/api/remove-user/${encodeURIComponent(id)}`, {
+            fetch(`/admin/api/remove-user/${username}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -210,9 +211,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const clickedButton = e.currentTarget;
 
             const tr = clickedButton.closest("tr");
-            const email = tr.querySelector('.email').textContent.trim();
+            const username = tr.querySelector('.username').textContent.trim();
 
-            fetch(`/admin/api/change-user-lock-status/${email}`, {
+            fetch(`/admin/api/change-user-lock-status/${username}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
