@@ -13,7 +13,6 @@ public class WebConfiguration implements WebMvcConfigurer {
   private final StatsInterceptor statsInterceptor;
   private final LocaleChangeInterceptor changeInterceptor;
 
-
   public WebConfiguration(StatsInterceptor statsInterceptor, LocaleChangeInterceptor changeInterceptor) {
     this.statsInterceptor = statsInterceptor;
     this.changeInterceptor = changeInterceptor;
