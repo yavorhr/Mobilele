@@ -1,8 +1,15 @@
 package com.example.mobilele.service;
 
-import com.example.mobilele.model.view.StatsView;
+import com.example.mobilele.model.view.StatsViewModel;
 
 public interface StatsService {
-  void onRequest();
-  StatsView getStats();
+  void onRequest(String path,
+                 String username,
+                 boolean authenticated,
+                 int status,
+                 long durationMs);
+
+  StatsViewModel getStats();
+
+  void resetStats();
 }
