@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
-import com.example.mobilele.model.entity.EndpointStats;
-import com.example.mobilele.model.entity.UserStats;
+import com.example.mobilele.model.inMemory.EndpointStats;
+import com.example.mobilele.model.inMemory.UserStats;
 import com.example.mobilele.model.view.EndpointStatsViewModel;
 import com.example.mobilele.model.view.StatsViewModel;
 import com.example.mobilele.model.view.UserStatsViewModel;
