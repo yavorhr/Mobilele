@@ -20,7 +20,16 @@ public class WebConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(statsInterceptor);
+    registry.addInterceptor(statsInterceptor)
+            .addPathPatterns("/**")  // track everything...
+            .excludePathPatterns(    // ...except static stuff
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/webjars/**",
+                    "/favicon.ico"
+            );
+    
     registry.addInterceptor(changeInterceptor);
   }
 
