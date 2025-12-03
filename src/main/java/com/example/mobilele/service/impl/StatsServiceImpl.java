@@ -82,7 +82,11 @@ public class StatsServiceImpl implements StatsService {
 
   @Override
   public void resetStats() {
+    anonymousRequests.set(0);
+    authRequests.set(0);
 
+    endpointStats.clear();
+    userStats.clear();
   }
 
   @Override
