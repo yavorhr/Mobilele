@@ -12,7 +12,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class StatsInterceptor implements HandlerInterceptor {
   private static final String START_TIME_ATTR = "statsStartTime";
-
   private final StatsService statsService;
 
   public StatsInterceptor(StatsService statsService) {
@@ -45,6 +44,7 @@ public class StatsInterceptor implements HandlerInterceptor {
     int status = response.getStatus();
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
     String username = "ANONYMOUS";
     boolean authenticated = false;
 
