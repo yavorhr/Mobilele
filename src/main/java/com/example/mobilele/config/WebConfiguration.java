@@ -29,7 +29,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                     "/webjars/**",
                     "/favicon.ico"
             );
-    
+
     registry.addInterceptor(changeInterceptor);
   }
 
