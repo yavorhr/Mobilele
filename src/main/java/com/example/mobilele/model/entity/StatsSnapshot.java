@@ -1,9 +1,12 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import java.time.LocalDateTime;
 
+@Entity
 public class StatsSnapshot extends BaseEntity {
   private LocalDateTime timestamp;
   private long totalRequests;
@@ -15,18 +18,22 @@ public class StatsSnapshot extends BaseEntity {
   public StatsSnapshot() {
   }
 
+  @Column
   public LocalDateTime getTimestamp() {
     return timestamp;
   }
 
+  @Column
   public long getTotalRequests() {
     return totalRequests;
   }
 
+  @Column
   public long getAnonRequests() {
     return anonRequests;
   }
 
+  @Column
   public long getAuthRequests() {
     return authRequests;
   }
