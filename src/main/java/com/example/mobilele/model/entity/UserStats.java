@@ -1,4 +1,4 @@
-package com.example.mobilele.model.entity.enums;
+package com.example.mobilele.model.entity;
 
 import java.util.concurrent.atomic.AtomicLong;
 
