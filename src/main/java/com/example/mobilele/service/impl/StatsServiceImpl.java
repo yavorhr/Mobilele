@@ -1,7 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.EndpointStats;
-import com.example.mobilele.model.entity.enums.UserStats;
+import com.example.mobilele.model.entity.UserStats;
 import com.example.mobilele.model.view.EndpointStatsViewModel;
 import com.example.mobilele.model.view.StatsViewModel;
 import com.example.mobilele.model.view.UserStatsViewModel;
@@ -19,7 +19,6 @@ public class StatsServiceImpl implements StatsService {
 
   private final ConcurrentHashMap<String, EndpointStats> endpointStats = new ConcurrentHashMap<>();
   private final ConcurrentHashMap<String, UserStats> userStats = new ConcurrentHashMap<>();
-
 
   @Override
   public void onRequest(String path, String username, boolean authenticated, int status, long durationMs) {
@@ -46,7 +45,6 @@ public class StatsServiceImpl implements StatsService {
     long anon = anonymousRequests.get();
     long total = auth + anon;
 
-    // build DTOs for view
     List<EndpointStatsViewModel> endpointViews = endpointStats.values()
             .stream()
             .sorted((a, b) -> Long.compare(b.getTotalRequests(), a.getTotalRequests())) // most viewed first
