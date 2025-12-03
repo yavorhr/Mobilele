@@ -34,6 +34,7 @@ public class StatsInterceptor implements HandlerInterceptor {
                               Exception ex) {
 
     Long startTime = (Long) request.getAttribute(START_TIME_ATTR);
+
     if (startTime == null) {
       return;
     }
