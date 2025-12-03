@@ -1,4 +1,4 @@
-package com.example.mobilele.model.entity;
+package com.example.mobilele.model.inMemory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
