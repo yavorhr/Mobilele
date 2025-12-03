@@ -8,64 +8,75 @@
 <header th:replace="fragments/navbar"></header>
 
 <div class="container-fluid">
-  <h1 class="text-center text-white mt-5">Welcome to Stats!</h1>
 
-  <h3 class="text-center text-white mt-3">
-    Total requests:
-    <th:block th:text="${stats.totalRequests}"></th:block>
-  </h3>
-  <h3 class="text-center text-white mt-3">
-    Anonymous requests:
-    <th:block th:text="${stats.anonRequests}"></th:block>
-  </h3>
-  <h3 class="text-center text-white mt-3">
-    Authorized requests:
-    <th:block th:text="${stats.authRequests}"></th:block>
-  </h3>
+    <div class="mt-4 text-center">
+        <form
+                th:action="@{/admin/statistics}"
+                th:method="POST">
+            <button type="submit" class="btn btn-warning">
+                Save snapshot &amp; reset stats
+            </button>
+        </form>
+    </div>
 
-  <!-- Most viewed pages / per-endpoint stats -->
-  <div class="mt-5">
-    <h2 class="text-center text-white">Most viewed pages</h2>
-    <table class="table table-dark table-striped mt-3">
-      <thead>
-      <tr>
-        <th>Path</th>
-        <th>Total Requests</th>
-        <th>Avg Response Time (ms)</th>
-        <th>4xx Errors</th>
-        <th>5xx Errors</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="ep : ${stats.endpointStats}">
-        <td th:text="${ep.path}"></td>
-        <td th:text="${ep.totalRequests}"></td>
-        <td th:text="${#numbers.formatDecimal(ep.avgResponseTimeMs, 1, 2)}"></td>
-        <td th:text="${ep.error4xx}"></td>
-        <td th:text="${ep.error5xx}"></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <h1 class="text-center text-white mt-5">Welcome to Stats!</h1>
 
-  <!-- Most active users -->
-  <div class="mt-5">
-    <h2 class="text-center text-white">Most active users</h2>
-    <table class="table table-dark table-striped mt-3">
-      <thead>
-      <tr>
-        <th>Username</th>
-        <th>Requests</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="u : ${stats.userStats}">
-        <td th:text="${u.username}"></td>
-        <td th:text="${u.requests}"></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <h3 class="text-center text-white mt-3">
+        Total requests:
+        <th:block th:text="${stats.totalRequests}"></th:block>
+    </h3>
+    <h3 class="text-center text-white mt-3">
+        Anonymous requests:
+        <th:block th:text="${stats.anonRequests}"></th:block>
+    </h3>
+    <h3 class="text-center text-white mt-3">
+        Authorized requests:
+        <th:block th:text="${stats.authRequests}"></th:block>
+    </h3>
+
+    <!-- Most viewed pages / per-endpoint stats -->
+    <div class="mt-5">
+        <h2 class="text-center text-white">Most viewed pages</h2>
+        <table class="table table-dark table-striped mt-3">
+            <thead>
+            <tr>
+                <th>Path</th>
+                <th>Total Requests</th>
+                <th>Avg Response Time (ms)</th>
+                <th>4xx Errors</th>
+                <th>5xx Errors</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ep : ${stats.endpointStats}">
+                <td th:text="${ep.path}"></td>
+                <td th:text="${ep.totalRequests}"></td>
+                <td th:text="${#numbers.formatDecimal(ep.avgResponseTimeMs, 1, 2)}"></td>
+                <td th:text="${ep.error4xx}"></td>
+                <td th:text="${ep.error5xx}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Most active users -->
+    <div class="mt-5">
+        <h2 class="text-center text-white">Most active users</h2>
+        <table class="table table-dark table-striped mt-3">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Requests</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${stats.userStats}">
+                <td th:text="${u.username}"></td>
+                <td th:text="${u.requests}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <footer></footer>

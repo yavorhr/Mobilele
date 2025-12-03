@@ -12,4 +12,6 @@ public interface StatsService {
   StatsViewModel getStats();
 
   void resetStats();
+
+  void saveSnapshot(StatsViewModel stats);
 }
