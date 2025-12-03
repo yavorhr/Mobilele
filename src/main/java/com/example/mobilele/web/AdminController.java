@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.RoleUpdateRequest;
+import com.example.mobilele.model.view.StatsViewModel;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.service.StatsService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
@@ -49,9 +51,22 @@ public class AdminController {
 
   @GetMapping("/statistics")
   public ModelAndView statistics() {
-    ModelAndView modelAndView = new ModelAndView("stats");
+    ModelAndView modelAndView = new ModelAndView();
     modelAndView.addObject("stats", statsService.getStats());
+    modelAndView.setViewName("stats");
+
     return modelAndView;
+  }
+
+  @PostMapping("/statistics")
+  public String saveStatsSnapshot(RedirectAttributes redirectAttributes) {
+    StatsViewModel stats = statsService.getStats();
+
+    statsService.saveSnapshot(stats);
+    statsService.resetStats();
+
+    redirectAttributes.addFlashAttribute("message", "Stats snapshot saved and counters reset.");
+    return "redirect:/admin/statistics";
   }
 
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
