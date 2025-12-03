@@ -3,6 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.binding.RoleUpdateRequest;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
+import com.example.mobilele.service.StatsService;
 import com.example.mobilele.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,14 +14,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
   private final UserService userService;
+  private final StatsService statsService;
 
-  public AdminController(UserService userService) {
+  public AdminController(UserService userService, StatsService statsService) {
     this.userService = userService;
+    this.statsService = statsService;
   }
 
   @GetMapping("/notifications")
@@ -41,6 +45,13 @@ public class AdminController {
     model.addAttribute("totalPages", usersPage.getTotalPages());
 
     return "/admin/notifications";
+  }
+
+  @GetMapping("/statistics")
+  public ModelAndView statistics() {
+    ModelAndView modelAndView = new ModelAndView("stats");
+    modelAndView.addObject("stats", statsService.getStats());
+    return modelAndView;
   }
 
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
