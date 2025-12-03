@@ -10,6 +10,12 @@
 <div class="container-fluid">
 
     <div class="mt-4 text-center">
+
+        <div th:if="${message}"
+             class="alert alert-success flash-message"
+             th:text="${message}">
+        </div>
+
         <form
                 th:action="@{/admin/statistics}"
                 th:method="POST">
@@ -80,5 +86,11 @@
 </div>
 
 <footer></footer>
+<script>
+    setTimeout(() => {
+        const msg = document.querySelector(".flash-message");
+        if (msg) msg.style.display = "none";
+    }, 4000);
+</script>
 </body>
 </html>
