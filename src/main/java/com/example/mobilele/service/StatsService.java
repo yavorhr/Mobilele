@@ -1,6 +1,6 @@
 package com.example.mobilele.service;
 
-import com.example.mobilele.model.view.StatsViewModel;
+import com.example.mobilele.model.view.admin.StatsViewModel;
 
 public interface StatsService {
   void onRequest(String path,

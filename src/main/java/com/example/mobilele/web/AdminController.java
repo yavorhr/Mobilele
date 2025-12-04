@@ -1,7 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.RoleUpdateRequest;
-import com.example.mobilele.model.view.StatsViewModel;
+import com.example.mobilele.model.view.admin.StatsViewModel;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.service.StatsService;

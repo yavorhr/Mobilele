@@ -1,4 +1,4 @@
-package com.example.mobilele.model.view;
+package com.example.mobilele.model.view.admin;
 
 import java.util.List;
 
