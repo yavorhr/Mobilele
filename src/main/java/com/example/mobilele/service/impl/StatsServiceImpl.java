@@ -9,8 +9,10 @@ import com.example.mobilele.model.view.admin.UserStatsViewModel;
 import com.example.mobilele.repository.StatsRepository;
 import com.example.mobilele.service.StatsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,13 +20,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class StatsServiceImpl implements StatsService {
-  private final ObjectMapper objectMapper;
-  private final StatsRepository statsRepository;
   private final AtomicLong anonymousRequests = new AtomicLong(0);
   private final AtomicLong authRequests = new AtomicLong(0);
-
   private final ConcurrentHashMap<String, EndpointStats> endpointStats = new ConcurrentHashMap<>();
   private final ConcurrentHashMap<String, UserStats> userStats = new ConcurrentHashMap<>();
+
+  private final StatsRepository statsRepository;
+  private final ObjectMapper objectMapper;
 
   public StatsServiceImpl(ObjectMapper objectMapper, StatsRepository statsRepository) {
     this.objectMapper = objectMapper;
@@ -50,6 +52,7 @@ public class StatsServiceImpl implements StatsService {
     }
   }
 
+  // Show Live stats
   @Override
   public StatsViewModel getStats() {
     long auth = authRequests.get();
@@ -58,7 +61,8 @@ public class StatsServiceImpl implements StatsService {
 
     List<EndpointStatsViewModel> endpointViews = endpointStats.values()
             .stream()
-            .sorted((a, b) -> Long.compare(b.getTotalRequests(), a.getTotalRequests())) // most viewed first
+            .sorted((a, b) -> Long.compare(b.getTotalRequests(), a.getTotalRequests()))
+            .limit(50)
             .map(e -> new EndpointStatsViewModel(
                     e.getPath(),
                     e.getTotalRequests(),
@@ -112,4 +116,47 @@ public class StatsServiceImpl implements StatsService {
     }
   }
 
+  @Override
+  public List<StatsViewModel> getAllSnapshots() {
+    return statsRepository
+            .findAll()
+            .stream()
+            .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
+            .map(this::convertSnapshotToView)
+            .toList();
+  }
+
+  private StatsViewModel convertSnapshotToView(StatsSnapshot snapshot) {
+    try {
+      List<EndpointStatsViewModel> endpointList =
+              objectMapper.readValue(
+                      snapshot.getEndpointStatsJson(),
+                      new TypeReference<List<EndpointStatsViewModel>>() {
+                      }
+              );
+
+      List<UserStatsViewModel> userList =
+              objectMapper.readValue(
+                      snapshot.getUserStatsJson(),
+                      new TypeReference<List<UserStatsViewModel>>() {
+                      }
+              );
+
+      var vwm = new StatsViewModel(
+              snapshot.getTotalRequests(),
+              snapshot.getAnonRequests(),
+              snapshot.getAuthRequests(),
+              endpointList,
+              userList);
+
+      vwm.setId(snapshot.getId());
+
+      return vwm;
+
+    } catch (Exception e) {
+      throw new RuntimeException("Cannot convert snapshot #" + snapshot.getId() + " to StatsViewModel", e);
+    }
+  }
 }
+
+

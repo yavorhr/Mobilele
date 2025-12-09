@@ -3,11 +3,12 @@ package com.example.mobilele.model.view.admin;
 import java.util.List;
 
 public class StatsViewModel {
-  private final long totalRequests;
-  private final long anonRequests;
-  private final long authRequests;
-  private final List<EndpointStatsViewModel> endpointStats;
-  private final List<UserStatsViewModel> userStats;
+  private Long id;
+  private long totalRequests;
+  private long anonRequests;
+  private long authRequests;
+  private List<EndpointStatsViewModel> endpointStats;
+  private List<UserStatsViewModel> userStats;
 
   public StatsViewModel(long totalRequests,
                         long anonRequests,
@@ -19,6 +20,10 @@ public class StatsViewModel {
     this.authRequests = authRequests;
     this.endpointStats = endpointStats;
     this.userStats = userStats;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public long getTotalRequests() {
@@ -39,5 +44,10 @@ public class StatsViewModel {
 
   public List<UserStatsViewModel> getUserStats() {
     return userStats;
+  }
+
+  public StatsViewModel setId(Long id) {
+    this.id = id;
+    return this;
   }
 }

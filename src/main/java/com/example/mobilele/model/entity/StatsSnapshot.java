@@ -2,7 +2,6 @@ package com.example.mobilele.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import java.time.LocalDateTime;
 
@@ -43,6 +42,7 @@ public class StatsSnapshot extends BaseEntity {
   public String getEndpointStatsJson() {
     return endpointStatsJson;
   }
+
   @Lob
   @Column(columnDefinition = "TEXT")
   public String getUserStatsJson() {

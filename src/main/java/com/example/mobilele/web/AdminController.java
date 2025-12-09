@@ -69,6 +69,12 @@ public class AdminController {
     return "redirect:/admin/statistics";
   }
 
+  @GetMapping("/history")
+  public String statsHistory(Model model) {
+    model.addAttribute("snapshots", statsService.getAllSnapshots());
+    return "/admin/history";
+  }
+
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
