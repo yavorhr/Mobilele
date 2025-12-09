@@ -5,9 +5,9 @@ import com.example.mobilele.service.StatsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -20,12 +20,9 @@ public class StatsController {
   }
 
   @GetMapping("/statistics")
-  public ModelAndView statistics() {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("stats", statsService.getStats());
-    modelAndView.setViewName("stats");
-
-    return modelAndView;
+  public String statistics(Model model) {
+    model.addAttribute("stats", statsService.getStats());
+    return "admin/live-stats";
   }
 
   @PostMapping("/statistics")
@@ -43,5 +40,13 @@ public class StatsController {
   public String statsHistory(Model model) {
     model.addAttribute("snapshots", statsService.getAllSnapshots());
     return "/admin/history";
+  }
+
+
+  @GetMapping("/history/{id}")
+  public String showSnapshotDetails(@PathVariable Long id, Model model) {
+    StatsViewModel stats = statsService.getSnapshotViewById(id);
+    model.addAttribute("stats", stats);
+    return "admin/snapshot-details";
   }
 }
