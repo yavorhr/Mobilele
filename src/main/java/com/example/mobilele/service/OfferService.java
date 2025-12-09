@@ -57,4 +57,6 @@ public interface OfferService {
   void incrementViewsIfEligible(Long id, HttpServletRequest request, Principal principal);
 
   List<OfferBaseViewModel> findTopOffersByViews();
+
+  void saveSoldOffer(Long id);
 }

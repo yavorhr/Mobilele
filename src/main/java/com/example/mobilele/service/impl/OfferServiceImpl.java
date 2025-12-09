@@ -8,6 +8,7 @@ import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.repository.OfferRepository;
+import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.service.*;
 import com.example.mobilele.util.ProjectHelpers;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
@@ -26,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -36,14 +38,16 @@ import java.util.stream.Collectors;
 @Service
 public class OfferServiceImpl implements OfferService {
   private final OfferRepository offerRepository;
+  private final SoldOfferRepository soldOfferRepository;
   private final ModelService modelService;
   private final ModelMapper modelMapper;
   private final UserService userService;
   private final BrandService brandService;
   private final CloudinaryService cloudinaryService;
 
-  public OfferServiceImpl(OfferRepository offerRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService) {
+  public OfferServiceImpl(OfferRepository offerRepository, SoldOfferRepository soldOfferRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService) {
     this.offerRepository = offerRepository;
+    this.soldOfferRepository = soldOfferRepository;
     this.modelService = modelService;
     this.modelMapper = modelMapper;
     this.userService = userService;
@@ -343,6 +347,19 @@ public class OfferServiceImpl implements OfferService {
             .stream()
             .map(this::mapToOfferBaseViewModel)
             .toList();
+  }
+
+  @Override
+  public void saveSoldOffer(Long id) {
+    var offerEntity =
+            this.offerRepository
+                    .findById(id)
+                    .orElseThrow(() ->
+                            new ObjectNotFoundException("Offer with id " + id + "was not found!"));
+
+    var soldOffer = this.modelMapper.map(offerEntity, SoldOfferEntity.class);
+
+    this.soldOfferRepository.save(soldOffer);
   }
 
   @Override

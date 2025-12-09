@@ -373,11 +373,20 @@ public class OffersController {
   @DeleteMapping("/offers/{id}")
   public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
                             @PathVariable Long id,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes,
+                            boolean soldOffer) {
 
-    offerService.deleteById(id);
+    if (soldOffer) {
+      offerService.saveSoldOffer(id);
+      offerService.deleteById(id);
+      redirectAttributes.addFlashAttribute("flashMessage",
+              "✅ Offer deleted and marked as sold via Mobilele. Thank you!");
+    } else {
+      offerService.deleteById(id);
+      redirectAttributes.addFlashAttribute("flashMessage",
+              "✅ Offer deleted successfully!");
+    }
 
-    redirectAttributes.addFlashAttribute("flashMessage", "✅ Offer deleted successfully!");
     redirectAttributes.addFlashAttribute("flashType", "success");
 
     return "redirect:/";
