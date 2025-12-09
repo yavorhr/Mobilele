@@ -23,12 +23,12 @@
             <tbody>
             <tr th:each="s : ${snapshots}">
                 <td th:text="${s.id}"></td>
-                <td th:text="${s.timeStamp}"></td>
+                <td th:text="${#temporals.format(s.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${s.totalRequests}"></td>
                 <td th:text="${s.authRequests}"></td>
                 <td th:text="${s.anonRequests}"></td>
                 <td>
-                    <a th:href="@{'/admin/statistics/history/' + ${s.id}}"
+                    <a th:href="@{'/admin/history/' + ${s.id}}"
                        class="btn btn-sm btn-primary">
                         Open
                     </a>
