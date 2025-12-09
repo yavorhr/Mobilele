@@ -24,7 +24,6 @@ public class StatsServiceImpl implements StatsService {
   private final AtomicLong authRequests = new AtomicLong(0);
   private final ConcurrentHashMap<String, EndpointStats> endpointStats = new ConcurrentHashMap<>();
   private final ConcurrentHashMap<String, UserStats> userStats = new ConcurrentHashMap<>();
-
   private final StatsRepository statsRepository;
   private final ObjectMapper objectMapper;
 
@@ -150,6 +149,7 @@ public class StatsServiceImpl implements StatsService {
               userList);
 
       vwm.setId(snapshot.getId());
+      vwm.setTimeStamp(snapshot.getTimestamp());
 
       return vwm;
 

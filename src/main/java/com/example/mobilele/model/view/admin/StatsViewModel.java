@@ -1,5 +1,6 @@
 package com.example.mobilele.model.view.admin;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class StatsViewModel {
@@ -7,6 +8,7 @@ public class StatsViewModel {
   private long totalRequests;
   private long anonRequests;
   private long authRequests;
+  private LocalDateTime timeStamp;
   private List<EndpointStatsViewModel> endpointStats;
   private List<UserStatsViewModel> userStats;
 
@@ -18,12 +20,17 @@ public class StatsViewModel {
     this.totalRequests = totalRequests;
     this.anonRequests = anonRequests;
     this.authRequests = authRequests;
+
     this.endpointStats = endpointStats;
     this.userStats = userStats;
   }
 
   public Long getId() {
     return id;
+  }
+
+  public LocalDateTime getTimeStamp() {
+    return timeStamp;
   }
 
   public long getTotalRequests() {
@@ -48,6 +55,16 @@ public class StatsViewModel {
 
   public StatsViewModel setId(Long id) {
     this.id = id;
+    return this;
+  }
+
+  public StatsViewModel setTotalRequests(long totalRequests) {
+    this.totalRequests = totalRequests;
+    return this;
+  }
+
+  public StatsViewModel setTimeStamp(LocalDateTime timeStamp) {
+    this.timeStamp = timeStamp;
     return this;
   }
 }
