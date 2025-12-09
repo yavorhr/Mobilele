@@ -2,7 +2,6 @@ package com.example.mobilele.model.entity;
 
 import com.example.mobilele.model.entity.enums.*;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
