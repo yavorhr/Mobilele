@@ -15,18 +15,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class NotificationsController {
   private final UserService userService;
-  private final StatsService statsService;
 
-  public AdminController(UserService userService, StatsService statsService) {
+  public NotificationsController(UserService userService) {
     this.userService = userService;
-    this.statsService = statsService;
   }
 
   @GetMapping("/notifications")
@@ -49,32 +45,6 @@ public class AdminController {
     return "/admin/notifications";
   }
 
-  @GetMapping("/statistics")
-  public ModelAndView statistics() {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("stats", statsService.getStats());
-    modelAndView.setViewName("stats");
-
-    return modelAndView;
-  }
-
-  @PostMapping("/statistics")
-  public String saveStatsSnapshot(RedirectAttributes redirectAttributes) {
-    StatsViewModel stats = statsService.getStats();
-
-    statsService.saveSnapshot(stats);
-    statsService.resetStats();
-
-    redirectAttributes.addFlashAttribute("message", "Stats snapshot saved and counters reset.");
-    return "redirect:/admin/statistics";
-  }
-
-  @GetMapping("/history")
-  public String statsHistory(Model model) {
-    model.addAttribute("snapshots", statsService.getAllSnapshots());
-    return "/admin/history";
-  }
-
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
@@ -84,13 +54,6 @@ public class AdminController {
     UserUpdateStatusResponse statusResponse = this.userService.changeAccess(username);
 
     return ResponseEntity.ok(statusResponse);
-  }
-
-  @GetMapping("/history/{id}")
-  public String showSnapshotDetails(@PathVariable Long id, Model model) {
-    StatsViewModel stats = statsService.getSnapshotViewById(id);
-    model.addAttribute("stats", stats);
-    return "admin/snapshot-details";
   }
 
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
