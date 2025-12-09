@@ -1,121 +1,133 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Statistics Snapshot</title>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head(additionalCss='/css/admin/details.css')"></head>
+
 <body>
+<header th:replace="fragments/navbar"></header>
 
-<div class="container mt-4">
+<main class="offer-container">
 
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Statistics Snapshot</h2>
-    <a th:href="@{/admin/statistics}" class="btn btn-secondary btn-sm">Back to history</a>
-  </div>
+    <div class="container mt-4">
 
-  <!-- Snapshot info -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title mb-3">
-        Snapshot
-        <span class="text-muted" th:text="${stats.id != null ? '(ID: ' + stats.id + ')' : ''}"></span>
-      </h5>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 style="color:#17a2b8;">Statistics Snapshot</h2>
 
-      <p class="mb-1">
-        <strong>Timestamp:</strong>
-        <span th:text="${#temporals.format(stats.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span>
-      </p>
-
-      <div class="row mt-3">
-        <div class="col-md-4">
-          <div class="border rounded p-2">
-            <strong>Total Requests</strong>
-            <div th:text="${stats.totalRequests}"></div>
-          </div>
+            <a th:href="@{/admin/statistics}" class="btn btn-secondary btn-sm">Back</a>
         </div>
-        <div class="col-md-4 mt-2 mt-md-0">
-          <div class="border rounded p-2">
-            <strong>Anonymous Requests</strong>
-            <div th:text="${stats.anonRequests}"></div>
-          </div>
+
+        <div class="stats-card">
+            <h5>Snapshot Info</h5>
+            <p>
+                <strong>ID:</strong>
+                <span th:text="${stats.id}"></span>
+            </p>
+
+            <p>
+                <strong>Timestamp:</strong>
+                <span th:text="${#temporals.format(stats.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </p>
+
+            <div class="row mt-3">
+
+                <div class="col-md-4 mb-3">
+                    <div class="stats-box">
+                        <strong>Total Requests</strong>
+                        <div th:text="${stats.totalRequests}"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="stats-box">
+                        <strong>Anonymous</strong>
+                        <div th:text="${stats.anonRequests}"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="stats-box">
+                        <strong>Authenticated</strong>
+                        <div th:text="${stats.authRequests}"></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="col-md-4 mt-2 mt-md-0">
-          <div class="border rounded p-2">
-            <strong>Authenticated Requests</strong>
-            <div th:text="${stats.authRequests}"></div>
-          </div>
+
+        <!-- Endpoint Stats -->
+        <div class="stats-card">
+            <h5>Endpoint Statistics</h5>
+
+            <div th:if="${#lists.isEmpty(stats.endpointStats)}">
+                <p class="text-muted">No endpoint statistics available.</p>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(stats.endpointStats)}" class="table-responsive">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th class="text-end">Requests</th>
+                        <th class="text-end">Avg (ms)</th>
+                        <th class="text-end">4xx</th>
+                        <th class="text-end">5xx</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="e : ${stats.endpointStats}">
+                        <td th:text="${e.path}"></td>
+                        <td class="text-end" th:text="${e.totalRequests}"></td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(e.avgResponseTimeMs,1,2)}"></td>
+                        <td class="text-end" th:text="${e.error4xx}"></td>
+                        <td class="text-end" th:text="${e.error5xx}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
+
+        <!-- User Stats -->
+        <div class="card mb-4 stats-card">
+            <div class="card-body">
+
+                <h5 class="card-title" style="color:#17a2b8; border-bottom:2px solid #17a2b8; padding-bottom:0.4rem;">
+                    User Statistics
+                </h5>
+
+                <!-- User Stats -->
+                <div>
+
+                    <!-- No User Stats -->
+                    <div th:if="${#lists.isEmpty(stats.userStats)}">
+                        <p class="text-muted mb-0">No user data available.</p>
+                    </div>
+
+                    <!-- User Statistics Table -->
+                    <div class="table-responsive" th:if="${!#lists.isEmpty(stats.userStats)}">
+                        <table class="table table-striped table-sm mb-0">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th class="text-end">Requests</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="u : ${stats.userStats}">
+                                <td th:text="${u.username}"></td>
+                                <td class="text-end" th:text="${u.requests}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div>
+</main>
 
-  <!-- Endpoint stats -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Endpoint Statistics</h5>
+<footer></footer>
 
-      <div th:if="${#lists.isEmpty(stats.endpointStats)}">
-        <p class="text-muted mb-0">No endpoint data available.</p>
-      </div>
-
-      <div class="table-responsive" th:if="${!#lists.isEmpty(stats.endpointStats)}">
-        <table class="table table-striped table-sm mb-0">
-          <thead>
-          <tr>
-            <th>Path</th>
-            <th class="text-end">Total Requests</th>
-            <th class="text-end">Avg Response Time (ms)</th>
-            <th class="text-end">4xx Errors</th>
-            <th class="text-end">5xx Errors</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="e : ${stats.endpointStats}">
-            <td th:text="${e.path}"></td>
-            <td class="text-end" th:text="${e.totalRequests}"></td>
-            <td class="text-end"
-                th:text="${#numbers.formatDecimal(e.avgResponseTimeMs, 1, 2)}"></td>
-            <td class="text-end" th:text="${e.error4xx}"></td>
-            <td class="text-end" th:text="${e.error5xx}"></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- User stats -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title">User Statistics</h5>
-
-      <div th:if="${#lists.isEmpty(stats.userStats)}">
-        <p class="text-muted mb-0">No user data available.</p>
-      </div>
-
-      <div class="table-responsive" th:if="${!#lists.isEmpty(stats.userStats)}">
-        <table class="table table-striped table-sm mb-0">
-          <thead>
-          <tr>
-            <th>Username</th>
-            <th class="text-end">Requests</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="u : ${stats.userStats}">
-            <td th:text="${u.username}"></td>
-            <td class="text-end" th:text="${u.requests}"></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

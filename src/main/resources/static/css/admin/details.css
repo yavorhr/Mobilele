@@ -1,0 +1,94 @@
+/* === Dark Global Theme === */
+body {
+    background-color: #222;
+    color: #f8f9fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === Card Style (same concept as profile-card) === */
+.stats-card {
+    background-color: #343a40;
+    border-radius: 15px;
+    padding: 1.8rem 2.2rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+    margin-bottom: 2rem;
+}
+
+/* Card headers */
+.stats-card h5 {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+/* === Snapshot Summary Boxes === */
+.stats-box {
+    background-color: #495057;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #666;
+}
+
+.stats-box strong {
+    color: #ffc107;
+    font-size: 1.1rem;
+}
+
+.stats-box div {
+    margin-top: 0.4rem;
+    font-size: 1.2rem;
+}
+
+/* === Tables === */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead th {
+    background-color: #495057;
+    color: #ffc107;
+    border-bottom: 2px solid #17a2b8;
+    padding: 0.6rem;
+}
+
+table tbody tr {
+    background-color: #3b4147;
+    border-bottom: 1px solid #555;
+}
+
+table tbody tr:hover {
+    background-color: #4a5056;
+}
+
+table td {
+    padding: 0.6rem;
+    color: #f8f9fa;
+}
+
+/* === Back Button & Actions === */
+.btn {
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
