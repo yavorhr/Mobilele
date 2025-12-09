@@ -8,12 +8,17 @@ import com.example.mobilele.model.view.admin.StatsViewModel;
 import com.example.mobilele.model.view.admin.UserStatsViewModel;
 import com.example.mobilele.repository.StatsRepository;
 import com.example.mobilele.service.StatsService;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -123,6 +128,51 @@ public class StatsServiceImpl implements StatsService {
             .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
             .map(this::convertSnapshotToView)
             .toList();
+  }
+
+  @Override
+  public StatsViewModel getSnapshotViewById(Long id) {
+    StatsSnapshot snapshot = statsRepository.findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Stats snapshot not found: " + id));
+
+    List<EndpointStatsViewModel> endpointStats = parseEndpointStats(snapshot.getEndpointStatsJson());
+    List<UserStatsViewModel> userStats = parseUserStats(snapshot.getUserStatsJson());
+
+    StatsViewModel vm = new StatsViewModel(
+            snapshot.getTotalRequests(),
+            snapshot.getAnonRequests(),
+            snapshot.getAuthRequests(),
+            endpointStats,
+            userStats
+    );
+
+    vm.setId(snapshot.getId()).setTimeStamp(snapshot.getTimestamp());
+
+    return vm;
+  }
+
+  private List<EndpointStatsViewModel> parseEndpointStats(String json) {
+    if (json == null || json.isBlank()) {
+      return Collections.emptyList();
+    }
+    try {
+      return objectMapper.readValue(json,
+              new TypeReference<List<EndpointStatsViewModel>>() {});
+    } catch (IOException e) {
+      return Collections.emptyList();
+    }
+  }
+
+  private List<UserStatsViewModel> parseUserStats(String json) {
+    if (json == null || json.isBlank()) {
+      return Collections.emptyList();
+    }
+    try {
+      return objectMapper.readValue(json,
+              new TypeReference<List<UserStatsViewModel>>() {});
+    } catch (IOException e) {
+      return Collections.emptyList();
+    }
   }
 
   private StatsViewModel convertSnapshotToView(StatsSnapshot snapshot) {

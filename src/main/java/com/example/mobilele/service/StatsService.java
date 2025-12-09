@@ -18,4 +18,6 @@ public interface StatsService {
   void saveSnapshot(StatsViewModel stats);
 
   List<StatsViewModel> getAllSnapshots();
+
+  StatsViewModel getSnapshotViewById(Long id);
 }

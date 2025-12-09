@@ -86,6 +86,13 @@ public class AdminController {
     return ResponseEntity.ok(statusResponse);
   }
 
+  @GetMapping("/history/{id}")
+  public String showSnapshotDetails(@PathVariable Long id, Model model) {
+    StatsViewModel stats = statsService.getSnapshotViewById(id);
+    model.addAttribute("stats", stats);
+    return "admin/snapshot-details";
+  }
+
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
   @DeleteMapping("/api/remove-user/{username}")
   @ResponseBody
