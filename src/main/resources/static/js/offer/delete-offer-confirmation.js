@@ -1,22 +1,31 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
+
+    const deleteBtn = document.getElementById('delete-offer-btn');
     const deleteForm = document.getElementById('delete-offer-form');
     const soldInput = document.getElementById('soldOffer');
 
-    if (!deleteForm || !soldInput) {
-        return;
-    }
+    const overlay = document.getElementById('delete-confirm-box');
+    const yesBtn = document.getElementById('confirm-yes');
+    const noBtn = document.getElementById('confirm-no');
+    const cancelBtn = document.getElementById('confirm-cancel');
 
-    deleteForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    deleteBtn.addEventListener('click', () => {
+        overlay.classList.remove('hidden');
+    });
 
-        const didSell = window.confirm('Did you manage to sell your car in Mobilele?');
+    cancelBtn.addEventListener('click', () => {
+        overlay.classList.add('hidden');
+    });
 
-        if (didSell) {
-            soldInput.value = 'true';
-        } else {
-            soldInput.value = 'false';
-        }
+    noBtn.addEventListener('click', () => {
+        soldInput.value = 'false';
+        overlay.classList.add('hidden');
+        deleteForm.submit();
+    });
 
+    yesBtn.addEventListener('click', () => {
+        soldInput.value = 'true';
+        overlay.classList.add('hidden');
         deleteForm.submit();
     });
 });
