@@ -90,10 +90,13 @@
                         </button>
 
                         <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
-                        <form th:action="@{/offers/{id}(id=${offer.id})}"
+                        <form
+                              th:action="@{/offers/{id}(id=${offer.id})}"
                               th:method="delete"
+                              id="delete-offer-form"
                               class="d-inline">
-                            <button type="submit" class="btn delete-btn">Delete</button>
+                            <input type="hidden" name="soldOffer" id="soldOffer" value="false"/>
+                            <button type="button" id="delete-offer-btn" class="btn delete-btn">Delete</button>
                         </form>
 
                         <form id="picture-upload-form"
@@ -139,13 +142,27 @@
     </section>
 </div>
 
+<div id="delete-confirm-box" class="delete-confirm-overlay hidden">
+    <div class="delete-confirm-window">
+        <h4>Delete Offer</h4>
+        <p>Did you manage to sell your car in Mobilele?</p>
+
+        <div class="confirm-buttons">
+            <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+            <button id="confirm-no" class="btn btn-warning">No, just delete</button>
+            <button id="confirm-yes" class="btn btn-success">Yes, I sold it</button>
+        </div>
+    </div>
+</div>
+
 <!--<footer th:replace="fragments/footer"></footer>-->
+</body>
 <script src="/js/offer/gallery.js"></script>
 <script src="/js/offer/uploadImage.js"></script>
 <script src="/js/offer/deletePicture.js"></script>
 <script src="/js/offer/add-to-favorites.js"></script>
 <script src="/js/offer/reserve-offer.js"></script>
-</body>
+<script src="/js/offer/delete-offer-confirmation.js"></script>
 </html>
 
 
