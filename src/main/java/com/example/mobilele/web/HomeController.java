@@ -11,6 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.time.Instant;
+import java.time.Year;
+import java.time.ZoneId;
+
 @Controller
 public class HomeController {
   private final OfferService offerService;
@@ -35,11 +39,15 @@ public class HomeController {
 
   @GetMapping("/")
   public String index(Model model) {
+//    int currentYear = Year.now(ZoneId.systemDefault()).getValue();
+    int startYear = 2025;
     model.addAttribute("latestOffers", offerService.findLatestOffers(6));
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("mostViewedOffers", offerService.findMostViewedOffers(6));
     model.addAttribute("feedbacks", feedbackService.findRecentFeedbacks(10));
     model.addAttribute("summary", feedbackService.getFeedbackSummary());
+    model.addAttribute("startYear", startYear);
+    model.addAttribute("soldCount", offerService.getSoldVehiclesCount());
 
     return "index";
   }

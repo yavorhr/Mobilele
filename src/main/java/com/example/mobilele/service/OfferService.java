@@ -59,4 +59,6 @@ public interface OfferService {
   List<OfferBaseViewModel> findTopOffersByViews();
 
   void saveSoldOffer(Long id);
+
+  long getSoldVehiclesCount();
 }

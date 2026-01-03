@@ -289,12 +289,23 @@
                 <i class="fa fa-shield"></i>
                 <h3>Verified Sellers</h3>
                 <p>Every seller is verified for authenticity and trustworthiness.</p>
+                <p class="feature-link">
+                    <a th:href="@{/sellers/top}" class="text-link">
+                        View our top sellers →
+                    </a>
+                </p>
             </div>
 
             <div class="feature">
                 <i class="fa fa-car"></i>
                 <h3>Wide Selection</h3>
-                <p>Thousands of offers from top brands and private owners.</p>
+                <p>Thousands of offers from top brands and private owners. </p>
+                <p>
+                    Successfully sold
+                    <span th:text="${soldCount}"></span>
+                    vehicles since
+                    <span th:text="${startYear}"></span>.
+                </p>
             </div>
             <div class="feature">
                 <i class="fa fa-clock-o"></i>
