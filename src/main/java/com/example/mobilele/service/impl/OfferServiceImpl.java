@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -358,6 +359,7 @@ public class OfferServiceImpl implements OfferService {
                             new ObjectNotFoundException("Offer with id " + id + "was not found!"));
 
     var soldOffer = this.modelMapper.map(offerEntity, SoldOfferEntity.class);
+    soldOffer.setSaleTime(Instant.now());
 
     this.soldOfferRepository.save(soldOffer);
   }
