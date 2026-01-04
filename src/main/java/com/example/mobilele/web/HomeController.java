@@ -39,8 +39,8 @@ public class HomeController {
 
   @GetMapping("/")
   public String index(Model model) {
-//    int currentYear = Year.now(ZoneId.systemDefault()).getValue();
     int startYear = 2025;
+
     model.addAttribute("latestOffers", offerService.findLatestOffers(6));
     model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("mostViewedOffers", offerService.findMostViewedOffers(6));
@@ -50,5 +50,13 @@ public class HomeController {
     model.addAttribute("soldCount", offerService.getSoldVehiclesCount());
 
     return "index";
+  }
+
+  @GetMapping("/sellers/top")
+  public String topSellers(Model model) {
+
+    model.addAttribute("topSellers", offerService.getTop20Sellers());
+
+    return "top-sellers";
   }
 }

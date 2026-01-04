@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.model.view.user.TopSellerViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,4 +62,6 @@ public interface OfferService {
   void saveSoldOffer(Long id);
 
   long getSoldVehiclesCount();
+
+  List<TopSellerViewModel> getTop20Sellers();
 }

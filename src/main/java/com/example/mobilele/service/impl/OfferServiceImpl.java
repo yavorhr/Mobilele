@@ -7,6 +7,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.service.*;
@@ -369,6 +370,12 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public long getSoldVehiclesCount() {
     return soldOfferRepository.count();
+  }
+
+  @Override
+  public List<TopSellerViewModel> getTop20Sellers() {
+    return soldOfferRepository
+            .findTop20Sellers(PageRequest.of(0, 20));
   }
 
   @Override
