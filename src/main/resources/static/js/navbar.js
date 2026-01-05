@@ -24,22 +24,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Submit feedback form
+    // 2. Submit feedback
     let selectedRating = 0;
 
-    // Open modal
+    // 2.1 Open/ Close modal
     openBtn?.addEventListener("click", () => {
         modal.style.display = "flex";
     });
 
-    // Close modal (X or outside click)
     closeBtn.addEventListener("click", () => modal.style.display = "none");
 
     window.addEventListener("click", e => {
         if (e.target === modal) modal.style.display = "none";
     });
 
-    // Select stars
+    // 2.2 Select stars
     stars.forEach(star => {
         star.addEventListener("click", e => {
             selectedRating = parseInt(e.target.dataset.value);
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Submit feedback
+    // 2.3 Submit feedback
     feedbackForm.addEventListener("submit", async e => {
         e.preventDefault();
 
@@ -73,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 comment: comment
             })
         });
+
         const data = await res.json();
         messageBox.textContent = data.message;
         messageBox.style.color = data.success ? "#4CAF50" : "#ff6b6b";
@@ -86,5 +86,62 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1800);
         }
     });
-});
 
+    // 3. Admin Stats submenu
+    const adminDropdownMenu = document.querySelector("[data-admin-dropdown]");
+    const statsToggle = document.querySelector(".stats-toggle");
+
+    if (statsToggle && adminDropdownMenu) {
+
+        // 3.1 Toggle Stats submenu (keep Admin open)
+        statsToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const submenu = statsToggle.closest(".dropdown-submenu");
+            submenu.classList.toggle("open");
+        });
+
+        // Close submenu when clicking a real link
+        adminDropdownMenu
+            .querySelectorAll("a.dropdown-item:not(.stats-toggle)")
+            .forEach(link => {
+                link.addEventListener("click", () => {
+                    adminDropdownMenu
+                        .querySelector(".dropdown-submenu.open")
+                        ?.classList.remove("open");
+                });
+            });
+
+        // Close submenu on outside click
+        document.addEventListener("click", (e) => {
+            if (!adminDropdownMenu.contains(e.target)) {
+                adminDropdownMenu
+                    .querySelector(".dropdown-submenu.open")
+                    ?.classList.remove("open");
+            }
+        });
+    }
+
+// 3.2 Reset Stats submenu when navbar collapses (MOBILE)
+    const navbarCollapse = document.getElementById("navbarSupportedContent");
+
+    if (navbarCollapse) {
+        navbarCollapse.addEventListener("hidden.bs.collapse", () => {
+            document
+                .querySelector(".dropdown-submenu.open")
+                ?.classList.remove("open");
+        });
+    }
+
+// 3.3 Reset Stats submenu when Admin dropdown closes
+    const adminDropdownToggle = document.getElementById("adminDropdown");
+
+    if (adminDropdownToggle) {
+        adminDropdownToggle.addEventListener("hidden.bs.dropdown", () => {
+            document
+                .querySelector(".dropdown-submenu.open")
+                ?.classList.remove("open");
+        });
+    }
+});
