@@ -25,14 +25,47 @@
             </li>
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle"
+                   href="#"
+                   id="adminDropdown"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false">
                     Admin
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" th:href="@{/admin/notifications}">Notifications</a>
-                    <a class="dropdown-item" th:href="@{/admin/statistics}">Live stats</a>
-                    <a class="dropdown-item" th:href="@{/admin/history}">Stats history</a>
+
+                <div class="dropdown-menu"
+                     aria-labelledby="adminDropdown"
+                     data-admin-dropdown>
+
+                    <a class="dropdown-item" th:href="@{/admin/notifications}">
+                        Notifications
+                    </a>
+
+                    <!-- Stats submenu (CLICKABLE) -->
+                    <div class="dropdown-submenu">
+                        <a class="dropdown-item stats-toggle"
+                           href="#"
+                           role="button">
+                            Stats
+                            <span class="arrow">▸</span>
+                        </a>
+
+                        <div class="dropdown-menu stats-menu">
+                            <a class="dropdown-item" th:href="@{/admin/statistics}">
+                                Live stats
+                            </a>
+                            <a class="dropdown-item" th:href="@{/admin/history}">
+                                Stats history
+                            </a>
+                        </div>
+                    </div>
+
+                    <a class="dropdown-item" th:href="@{/admin/sellers-performance}">
+                        Sellers performance
+                    </a>
+
                 </div>
             </li>
 
