@@ -479,7 +479,6 @@ body {
     position: relative;
     overflow: hidden;
     width: 100%;
-    justify-content: center;
 }
 
 .review-info {
@@ -499,6 +498,8 @@ body {
     display: flex;
     gap: 2rem;
     animation: scrollReviews 40s linear infinite;
+    justify-content: center;
+    animation-direction: reverse
 }
 
 .review-card {
