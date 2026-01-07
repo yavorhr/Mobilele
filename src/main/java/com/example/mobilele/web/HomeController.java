@@ -1,7 +1,6 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
-import com.example.mobilele.model.binding.offer.OffersQuickSearchBindingModel;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.FeedbackService;
@@ -10,10 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.time.Instant;
-import java.time.Year;
-import java.time.ZoneId;
 
 @Controller
 public class HomeController {
@@ -54,9 +49,9 @@ public class HomeController {
 
   @GetMapping("/sellers/top")
   public String topSellers(Model model) {
-
     model.addAttribute("topSellers", offerService.getTop20Sellers());
-
     return "top-sellers";
   }
 }
+
+

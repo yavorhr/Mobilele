@@ -372,11 +372,11 @@ public class OfferServiceImpl implements OfferService {
     return soldOfferRepository.count();
   }
 
-//  @Override
-//  public List<TopSellerViewModel> getTop20Sellers() {
-//    return soldOfferRepository
-//            .findTop20Sellers(PageRequest.of(0, 20));
-//  }
+  @Override
+  public List<TopSellerViewModel> getTop20Sellers() {
+    return soldOfferRepository
+            .findTop20Sellers(PageRequest.of(0, 20));
+  }
 
   @Override
   public List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top) {
@@ -393,18 +393,6 @@ public class OfferServiceImpl implements OfferService {
 
     List<TopSellerViewModel> results =
             soldOfferRepository.findSellerPerformanceByPeriod(start, end);
-
-    System.out.println("Results count: " + results.size());
-
-    if (!results.isEmpty()) {
-      TopSellerViewModel first = results.get(0);
-      System.out.println(
-              first.getFirstName() + " " +
-                      first.getLastName() + " | " +
-                      first.getEmail() + " | sold=" +
-                      first.getSoldCount()
-      );
-    }
 
     if (top != null && top > 0 && results.size() > top) {
       return results.subList(0, top);

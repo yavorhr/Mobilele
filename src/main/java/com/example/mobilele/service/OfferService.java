@@ -61,4 +61,6 @@ public interface OfferService {
   long getSoldVehiclesCount();
 
   List<TopSellerViewModel> getTop20Sellers();
+
+  List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top);
 }
