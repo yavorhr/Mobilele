@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.Year;
 import java.util.Comparator;
 import java.util.List;
@@ -60,8 +59,7 @@ public class StatsController {
   public String getTopSellersByYear(
           @RequestParam(required = false) Integer year,
           @RequestParam(required = false) Integer top,
-          Model model
-  ) {
+          Model model) {
 
     int selectedYear = (year != null) ? year : Year.now().getValue();
     int topN = (top != null) ? top : 20;

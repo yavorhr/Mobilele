@@ -390,7 +390,6 @@ public class OfferServiceImpl implements OfferService {
             .atStartOfDay(zone)
             .toInstant();
 
-
     List<TopSellerViewModel> results =
             soldOfferRepository.findSellerPerformanceByPeriod(start, end);
 
