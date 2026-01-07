@@ -1,0 +1,105 @@
+/* === FOOTER === */
+.site-footer {
+    background: rgba(18, 18, 18, 0.98);
+    color: #bbb;
+    padding: 2rem 2rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+    max-width: 1400px;
+    margin: 1rem auto;
+}
+
+/* --- Brand --- */
+.footer-brand {
+    max-width: 320px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer-logo:hover h3 {
+    color: #4CAF50;
+}
+
+.footer-logo:hover img {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.footer-logo img {
+    width: 42px;
+    height: auto;
+}
+
+.footer-logo h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.footer-brand p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #aaa;
+}
+
+/* --- Links --- */
+.footer-links h4 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-links a {
+    display: block;
+    text-decoration: none;
+    color: #bbb;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #4CAF50;
+    transform: translateX(3px);
+}
+
+/* --- Bottom Bar --- */
+.footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .site-footer {
+        text-align: center;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+
+    .footer-links a {
+        margin-bottom: 0.8rem;
+    }
+}
