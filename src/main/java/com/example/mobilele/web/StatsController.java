@@ -1,22 +1,28 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.admin.StatsViewModel;
+import com.example.mobilele.model.view.user.TopSellerViewModel;
+import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.StatsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.Year;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/admin")
 public class StatsController {
   private final StatsService statsService;
+  private final OfferService offerService;
 
-  public StatsController(StatsService statsService) {
+  public StatsController(StatsService statsService, OfferService offerService) {
     this.statsService = statsService;
+    this.offerService = offerService;
   }
 
   @GetMapping("/statistics")
@@ -48,5 +54,34 @@ public class StatsController {
     StatsViewModel stats = statsService.getSnapshotViewById(id);
     model.addAttribute("stats", stats);
     return "admin/snapshot-details";
+  }
+
+  @GetMapping("/sellers-performance")
+  public String getTopSellersByYear(
+          @RequestParam(required = false) Integer year,
+          @RequestParam(required = false) Integer top,
+          Model model
+  ) {
+
+    int selectedYear = (year != null) ? year : Year.now().getValue();
+    int topN = (top != null) ? top : 20;
+
+    List<TopSellerViewModel> sellers =
+            offerService.getSellerPerformanceByYear(selectedYear, topN);
+
+    model.addAttribute("selectedYear", selectedYear);
+    model.addAttribute("top", topN);
+    model.addAttribute("sellers", sellers);
+
+    int currentYear = Year.now().getValue();
+
+    model.addAttribute("years",
+            IntStream.rangeClosed(currentYear - 4, currentYear)
+                    .boxed()
+                    .sorted(Comparator.reverseOrder())
+                    .toList()
+    );
+
+    return "admin/sellers-performance";
   }
 }

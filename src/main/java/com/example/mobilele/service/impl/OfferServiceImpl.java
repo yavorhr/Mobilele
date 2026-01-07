@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -369,10 +372,45 @@ public class OfferServiceImpl implements OfferService {
     return soldOfferRepository.count();
   }
 
+//  @Override
+//  public List<TopSellerViewModel> getTop20Sellers() {
+//    return soldOfferRepository
+//            .findTop20Sellers(PageRequest.of(0, 20));
+//  }
+
   @Override
-  public List<TopSellerViewModel> getTop20Sellers() {
-    return soldOfferRepository
-            .findTop20Sellers(PageRequest.of(0, 20));
+  public List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top) {
+    ZoneId zone = ZoneId.systemDefault();
+
+    Instant start = LocalDate.of(year, 1, 1)
+            .atStartOfDay(zone)
+            .toInstant();
+
+    Instant end = LocalDate.of(year + 1, 1, 1)
+            .atStartOfDay(zone)
+            .toInstant();
+
+
+    List<TopSellerViewModel> results =
+            soldOfferRepository.findSellerPerformanceByPeriod(start, end);
+
+    System.out.println("Results count: " + results.size());
+
+    if (!results.isEmpty()) {
+      TopSellerViewModel first = results.get(0);
+      System.out.println(
+              first.getFirstName() + " " +
+                      first.getLastName() + " | " +
+                      first.getEmail() + " | sold=" +
+                      first.getSoldCount()
+      );
+    }
+
+    if (top != null && top > 0 && results.size() > top) {
+      return results.subList(0, top);
+    }
+
+    return results;
   }
 
   @Override
