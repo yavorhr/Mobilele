@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head :: head(additionalCss='/css/admin/sellers-performance.css')"></head>
+
+<header th:replace="fragments/navbar"></header>
+
+<body>
+<main class="admin-container">
+
+  <h1 class="admin-title">📊 Seller Performance by Year</h1>
+
+  <form method="get" class="filters">
+    <label>
+      Year:
+      <select name="year" onchange=" this.form.submit()">
+        <option th:each="y : ${years}"
+                th:value="${y}"
+                th:text="${y}"
+                th:selected="${y == selectedYear}">
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Top:
+      <select name="top" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="10" th:selected="${top == 10}">Top 10</option>
+        <option value="20" th:selected="${top == 20}">Top 20</option>
+      </select>
+    </label>
+
+  </form>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table class="stats-table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Seller</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Sold Cars</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="row, stat : ${sellers}">
+        <td th:text="${stat.index + 1}"></td>
+        <td th:text="${row.firstName + ' ' + row.lastName}"></td>
+        <td th:text="${row.email}"></td>
+        <td th:text="${row.phoneNumber}"></td>
+        <td class="sold-count" th:text="${row.soldCount}"></td>
+      </tr>
+
+      <tr th:if="${#lists.isEmpty(sellers)}">
+        <td colspan="5">No data for this year.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</body>
+</html>

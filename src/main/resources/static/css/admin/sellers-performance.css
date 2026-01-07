@@ -1,0 +1,81 @@
+/* === Admin container === */
+.admin-container {
+    padding: 120px 40px 40px;
+    color: #f8f9fa;
+    background-color: #1c1f23;
+    min-height: 100vh;
+}
+
+/* === Title === */
+.admin-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #17a2b8;
+}
+
+/* === Filters === */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.filters label {
+    font-weight: bold;
+}
+
+.filters select {
+    margin-left: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    background-color: #343a40;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* === Table === */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2a2e33;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.stats-table thead {
+    background-color: #343a40;
+}
+
+.stats-table th,
+.stats-table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.stats-table th {
+    color: #17a2b8;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.stats-table tr:hover {
+    background-color: #3a3f45;
+}
+
+.sold-count {
+    font-weight: bold;
+    color: #ffc107;
+}
+
+/* === Empty state === */
+.stats-table td[colspan] {
+    text-align: center;
+    padding: 2rem;
+    color: #bbb;
+}
