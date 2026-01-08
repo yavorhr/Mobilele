@@ -1,3 +1,11 @@
+/* Comon */
+
+.ui-transition{
+    transition: background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 /* Toast container */
 .alert-toast {
     position: fixed;
@@ -176,7 +184,6 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
@@ -338,7 +345,6 @@ body {
     padding: 2rem 1.5rem;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .feature:hover {
@@ -380,8 +386,6 @@ body {
     font-weight: 600;
     font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.85);
-
-    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .views-counter:hover {
@@ -423,7 +427,6 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
 .vehicle-card:hover {

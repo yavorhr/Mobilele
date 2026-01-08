@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<div class="offer-card" th:fragment="offerCard(offer, showViews)">
+<div class="offer-card ui-transition"  th:fragment="offerCard(offer, showViews)">
 
   <a th:href="@{/offers/details/{id}(id=${offer.id})}"
      class="offer-card-link">
@@ -24,7 +24,7 @@
       <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
 
       <!-- Views (optional) -->
-      <div class="views-counter"
+      <div class="views-counter ui-transition"
            th:if="${showViews}">
         <span class="eye-icon">👁️</span>
         <span th:text="'Views: ' + ${offer.views}"></span>
