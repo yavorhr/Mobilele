@@ -13,7 +13,6 @@
 
     <div class="offer-info">
       <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
-
       <p class="offer-meta">
         <span th:text="${'Engine : ' + offer.engine}"></span>
         <span th:text="${'Transmission : ' + offer.transmission}"></span>
@@ -22,9 +21,7 @@
          th:text="${'Year :' + offer.modelYear}"></p>
       </p>
 
-      <p class="offer-price"
-         th:text="${offer.price + ' BGN'}"></p>
-
+      <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
 
       <!-- Views (optional) -->
       <div class="views-counter"
@@ -35,5 +32,4 @@
     </div>
   </a>
 </div>
-
 </html>
