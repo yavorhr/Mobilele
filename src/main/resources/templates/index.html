@@ -125,23 +125,9 @@
     <section class="recent-offers-section">
         <h2 class="section-title">Recent Offers</h2>
         <div class="offers-grid">
-            <div th:each="offer : ${latestOffers}" class="offer-card">
-                <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
-                    <div class="offer-image">
-                        <img th:src="${offer.profileImage}" alt="Car image">
-                    </div>
-                    <div class="offer-info">
-                        <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
-                        <p class="offer-meta">
-                            <span th:text="${offer.engine}"></span> ·
-                            <span th:text="${offer.transmission}"></span> ·
-                            <span th:text="${offer.mileage + ' km'}"></span>
-                        </p>
-                        <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
-                        <p class="offer-year" th:text="${offer.modelYear}"></p>
-                    </div>
-                </a>
-            </div>
+            <th:block th:each="offer : ${latestOffers}">
+                <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
+            </th:block>
 
             <div th:if="${#lists.isEmpty(latestOffers)}" class="no-offers">
                 <p>No recent offers available.</p>
@@ -156,27 +142,9 @@
     <section class="recent-offers-section">
         <h2 class="section-title">Most viewed offers</h2>
         <div class="offers-grid">
-            <div th:each="offer : ${mostViewedOffers}" class="offer-card">
-                <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
-                    <div class="offer-image">
-                        <img th:src="${offer.profileImage}" alt="Car image">
-                        <div class="views-counter">
-                            <span class="eye-icon">👁️</span>
-                            <span th:text="'Views: ' + ${offer.views}"></span>
-                        </div>
-                    </div>
-                    <div class="offer-info">
-                        <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
-                        <p class="offer-meta">
-                            <span th:text="${offer.engine}"></span> ·
-                            <span th:text="${offer.transmission}"></span> ·
-                            <span th:text="${offer.mileage + ' km'}"></span>
-                        </p>
-                        <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
-                        <p class="offer-year" th:text="${offer.modelYear}"></p>
-                    </div>
-                </a>
-            </div>
+            <th:block th:each="offer : ${mostViewedOffers}">
+                <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
+            </th:block>
 
             <div th:if="${#lists.isEmpty(mostViewedOffers)}" class="no-offers">
                 <p>No most viewed offers available.</p>
@@ -187,7 +155,6 @@
             <a th:href="@{/offers/top-offers}" class="btn-show-all">Show top offers →</a>
         </div>
     </section>
-
 
     <div class="vehicle-grid">
         <!-- BMW -->

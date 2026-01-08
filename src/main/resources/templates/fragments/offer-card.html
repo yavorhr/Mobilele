@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="offer-card" th:fragment="offerCard(offer, showViews)">
+
+  <a th:href="@{/offers/details/{id}(id=${offer.id})}"
+     class="offer-card-link">
+
+    <div class="offer-image">
+      <img th:src="${offer.profileImage}" alt="Car image" loading="lazy">
+
+      <!-- Views (optional) -->
+      <div class="views-counter"
+           th:if="${showViews}">
+        <span class="eye-icon">👁️</span>
+        <span th:text="'Views: ' + ${offer.views}"></span>
+      </div>
+    </div>
+
+    <div class="offer-info">
+      <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
+
+      <p class="offer-meta">
+        <span th:text="${offer.engine}"></span> ·
+        <span th:text="${offer.transmission}"></span> ·
+        <span th:text="${offer.mileage + ' km'}"></span>
+      </p>
+
+      <p class="offer-price"
+         th:text="${offer.price + ' BGN'}"></p>
+
+      <p class="offer-year"
+         th:text="${offer.modelYear}"></p>
+    </div>
+  </a>
+</div>
+
+</html>
