@@ -4,10 +4,10 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
-<footer class="site-footer" th:fragment="footer">
+
+<footer class="site-footer" th:fragment='footer'>
     <div class="footer-container">
 
-        <!-- Brand / About -->
         <div class="footer-brand">
             <a href="/" class="footer-logo">
                 <img src="/images/car.png" alt="Mobilele logo">
@@ -19,7 +19,6 @@
             </p>
         </div>
 
-        <!-- Explore -->
         <div class="footer-links">
             <h4>Explore</h4>
             <a th:href="@{/offers/find}">Find Offers</a>
@@ -28,7 +27,6 @@
             <a th:href="@{/sellers/top}">Top Sellers</a>
         </div>
 
-        <!-- Account -->
         <div class="footer-links">
             <h4>My Account</h4>
             <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
@@ -39,7 +37,6 @@
             <a sec:authorize="!isAuthenticated()" th:href="@{/users/login}">Login</a>
         </div>
 
-        <!-- Admin -->
         <div class="footer-links" sec:authorize="hasRole('ADMIN')">
             <h4>Admin</h4>
             <a th:href="@{/admin/notifications}">Notifications</a>
@@ -48,20 +45,15 @@
             <a th:href="@{/admin/sellers-performance}">Seller Performance</a>
         </div>
 
-        <!-- Support -->
         <div class="footer-links">
             <h4>Support</h4>
             <a href="mailto:support@mobilele.com">Contact Us</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
         </div>
-
     </div>
-
     <div class="footer-bottom">
         <p>© <span th:text="${#dates.year(#dates.createNow())}"></span> Mobilele. All rights reserved.</p>
     </div>
-
 </footer>
-
 </html>
