@@ -124,7 +124,7 @@
     </section>
 
     <section class="section">
-        <h2 class="section-title">Recent Offers</h2>
+        <h2 class="section-title">Recent offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${latestOffers}">
                 <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
