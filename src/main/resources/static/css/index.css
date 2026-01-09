@@ -1,34 +1,33 @@
 .section {
-    padding: var(--section-padding);
-    text-align: center;
+    padding: 4rem 2rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
     background: rgba(255, 255, 255, 0.03);
     border-radius: 12px;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-}
 
+    text-align: center;
+}
 
 /* =====================
    HERO
 ===================== */
 
-.hero-section {
+.hero {
     margin-top: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 3rem 1rem 2rem;
 }
 
-.hero-section .brand-name {
+.hero .brand-name {
     color: var(--color-primary);
     font-weight: 700;
 }
 
-.hero-section p {
+.hero p {
     max-width: 600px;
     margin: 0 auto 2rem;
-    font-size: 1.4rem;
+    font-size: var(--font-size-p-large)
 }
 
 /* =====================
@@ -40,18 +39,16 @@
     margin: 4rem auto;
     max-width: 1300px;
     border-radius: 12px;
-
 }
 
 .quick-search h2 {
-    color: #fff;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--margin-btm-small);
 }
 
 .quick-search p {
-    color: #aaa;
-    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+    font-style: var(--font-size-p-large);
+    margin-bottom: var(--margin-btm-large);
 }
 
 .quick-search-fields {
