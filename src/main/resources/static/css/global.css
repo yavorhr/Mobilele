@@ -76,7 +76,8 @@ p {
     font-size: 1rem;
 }
 
-.text-centered {
+.section {
+    padding: var(--section-padding);
     text-align: center;
 }
 
@@ -89,11 +90,6 @@ p {
     transform 0.3s ease,
     box-shadow 0.3s ease,
     color 0.3s ease;
-}
-
-.section {
-    padding: var(--section-padding);
-    text-align: center;
 }
 
 .section-title {

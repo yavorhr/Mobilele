@@ -8,7 +8,7 @@
 <header th:replace="fragments/navbar"></header>
 
 <main>
-    <section class="hero-section text-centered">
+    <section class="hero-section section">
         <div>
             <h1>Welcome to <span class="brand-name">Mobilele</span></h1>
             <p>Find your next car with ease — explore trusted offers, compare prices, and connect with verified
@@ -24,7 +24,7 @@
         <span th:text="${flashMessage}"></span>
     </div>
 
-    <section class="quick-search">
+    <section class="quick-search section">
         <h2>Quick Search</h2>
         <p>Find the right car instantly — filter by brand, price, or year.</p>
 
@@ -122,7 +122,8 @@
             <button type="submit" class="cta-btn">Search</button>
         </form>
     </section>
-    <section class="recent-offers-section">
+
+    <section class="recent-offers-section section">
         <h2 class="section-title">Recent Offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${latestOffers}">
@@ -139,7 +140,7 @@
         </div>
     </section>
 
-    <section class="recent-offers-section">
+    <section class="recent-offers-section section">
         <h2 class="section-title">Most viewed offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${mostViewedOffers}">
@@ -156,7 +157,7 @@
         </div>
     </section>
 
-    <div class="vehicle-grid">
+    <secion class="vehicle-grid section">
         <th:block
                 th:replace="fragments/brand-card :: vehicleCard('bmw','BMW','https://cdn.simpleicons.org/bmw/999999')"/>
         <th:block
@@ -181,9 +182,9 @@
                 th:replace="fragments/brand-card :: vehicleCard('hyundai','Hyundai','https://cdn.simpleicons.org/hyundai/999999')"/>
         <th:block
                 th:replace="fragments/brand-card :: vehicleCard('kia','Kia','https://cdn.simpleicons.org/kia/999999')"/>
-    </div>
+    </secion>
 
-    <section class="why-choose-us">
+    <section class="why-choose-us section">
         <h2 class="section-title">Why Choose <span class="brand-name">Mobilele</span>?</h2>
         <div class="features-grid">
             <div class="feature rating-feature ui-transition">
@@ -240,7 +241,7 @@
         </div>
     </section>
 
-    <section class="reviews-section">
+    <section class="reviews-section section">
         <h2 class="section-title">What Our Users Say ⭐</h2>
 
         <div class="reviews-marquee">
@@ -272,13 +273,10 @@
 </main>
 
 <footer th:replace="fragments/footer"></footer>
-
 </body>
 
 <script th:src="@{/js/loadModels.js}"></script>
 <script th:src="@{/js/toggleSearchInputs.js}"></script>
-
-
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const toast = document.querySelector(".alert-toast");
