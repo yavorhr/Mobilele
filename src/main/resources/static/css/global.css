@@ -25,9 +25,10 @@
 
     --font-size-p-large: 1.4rem;
 
-    --margin-btm-small: 0.5rem;
-    --margin-btm-medium: 1rem;
-    --margin-btm-large: 1.5rem;
+    --margin-btm-0_5: 0.5rem;
+    --margin-btm-1: 1rem;
+    --margin-btm-1_5: 1.5rem;
+    --margin-btm-2: 2rem;
 
     --container-width: 1300px;
 }
@@ -93,8 +94,9 @@ p {
 }
 
 .section-title {
-    text-transform: uppercase;
-    margin-bottom: 3rem;
+    color: var(--white);
+    margin-bottom: var(--margin-btm-2);
+    letter-spacing: 2.2px;
 }
 
 /* =====================

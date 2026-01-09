@@ -30,25 +30,23 @@
     font-size: var(--font-size-p-large)
 }
 
-/* =====================
+/* ====================
    QUICK SEARCH
 ===================== */
 
-/* === QUICK SEARCH SECTION === */
 .quick-search {
     margin: 4rem auto;
     max-width: 1300px;
-    border-radius: 12px;
 }
 
 .quick-search h2 {
-    margin-bottom: var(--margin-btm-small);
+    margin-bottom: var(--margin-btm-0_5);
 }
 
 .quick-search p {
     color: var(--color-text-muted);
     font-style: var(--font-size-p-large);
-    margin-bottom: var(--margin-btm-large);
+    margin-bottom: var(--margin-btm-1_5);
 }
 
 .quick-search-fields {
@@ -64,15 +62,20 @@
     border-radius: 8px;
     outline: none;
     width: 200px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 1rem;
+    background-color: var(--color-bg-soft);
 }
 
 .search-form input::placeholder {
-    color: #bbb;
+    color: var(--white)
 }
 
+/* ====================
+   RECENT OFFERS
+===================== */
+
+.recent-offers {
+    margin-top: 4rem;
+}
 
 /* Toast container */
 .alert-toast {
@@ -166,25 +169,6 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: #4CAF50;
-}
-
-/* === RECENT OFFERS SECTION === */
-.recent-offers-section {
-    margin-top: 4rem;
-    text-align: center;
-    padding: 3rem 1rem 6rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-}
-
-.section-title {
-    font-size: 2.2rem;
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 /* === OFFER GRID === */

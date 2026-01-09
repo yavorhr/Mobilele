@@ -10,7 +10,7 @@
 <main>
     <section class="hero section">
         <div>
-            <h1>Welcome to <span class="brand-name">Mobilele</span></h1>
+            <h1 class="section-title">Welcome to <span class="brand-name">Mobilele</span></h1>
             <p>Find your next car with ease — explore trusted offers, compare prices, and connect with verified
                 sellers.</p>
             <a th:href="@{/offers/find}" class="cta-btn">Find Your Offer Now 🚗</a>
@@ -123,7 +123,7 @@
         </form>
     </section>
 
-    <section class="recent-offers-section section">
+    <section class="recent-offers section">
         <h2 class="section-title">Recent Offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${latestOffers}">
