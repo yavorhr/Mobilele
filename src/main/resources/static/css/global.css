@@ -120,6 +120,7 @@ p {
 .cta-btn:hover {
     background: linear-gradient(135deg, #43a047, #81c784);
     transform: scale(1.05);
+    text-decoration: none;
     color: #0056b3;
     cursor: pointer;
 }

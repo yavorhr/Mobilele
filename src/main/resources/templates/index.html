@@ -131,10 +131,9 @@
             </th:block>
 
             <div th:if="${#lists.isEmpty(latestOffers)}" class="no-offers">
-                <p>No recent offers available.</p>
+                <p>No offers available</p>
             </div>
         </div>
-
         <div class="show-all-container">
             <a th:href="@{/offers/all}" class="cta-btn">Show All Offers →</a>
         </div>
@@ -148,11 +147,10 @@
             </th:block>
 
             <div th:if="${#lists.isEmpty(mostViewedOffers)}" class="no-offers">
-                <p>No most viewed offers available.</p>
+                <p>No offers available</p>
             </div>
         </div>
-
-        <div class="show-all-container">
+        <div class="show-all">
             <a th:href="@{/offers/top-offers}" class="cta-btn">Show top offers →</a>
         </div>
     </section>
