@@ -135,7 +135,7 @@
         </div>
 
         <div class="show-all-container">
-            <a th:href="@{/offers/all}" class="btn-show-all">Show All Offers →</a>
+            <a th:href="@{/offers/all}" class="cta-btn">Show All Offers →</a>
         </div>
     </section>
 
@@ -152,23 +152,35 @@
         </div>
 
         <div class="show-all-container">
-            <a th:href="@{/offers/top-offers}" class="btn-show-all">Show top offers →</a>
+            <a th:href="@{/offers/top-offers}" class="cta-btn">Show top offers →</a>
         </div>
     </section>
 
     <div class="vehicle-grid">
-        <th:block th:replace="fragments/brand-card :: vehicleCard('bmw','BMW','https://cdn.simpleicons.org/bmw/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('audi','Audi','https://cdn.simpleicons.org/audi/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('toyota','Toyota','https://cdn.simpleicons.org/toyota/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('mercedes','Mercedes','https://cdn.simpleicons.org/mercedes-benz/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('volkswagen','Volkswagen','https://cdn.simpleicons.org/volkswagen/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('dacia','Dacia','https://cdn.simpleicons.org/dacia/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('tesla','Tesla','https://cdn.simpleicons.org/tesla/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('honda','Honda','https://cdn.simpleicons.org/honda/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('ford','Ford','https://cdn.simpleicons.org/ford/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('nissan','Nissan','https://cdn.simpleicons.org/nissan/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('hyundai','Hyundai','https://cdn.simpleicons.org/hyundai/999999')"/>
-        <th:block th:replace="fragments/brand-card :: vehicleCard('kia','Kia','https://cdn.simpleicons.org/kia/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('bmw','BMW','https://cdn.simpleicons.org/bmw/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('audi','Audi','https://cdn.simpleicons.org/audi/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('toyota','Toyota','https://cdn.simpleicons.org/toyota/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('mercedes','Mercedes','https://cdn.simpleicons.org/mercedes-benz/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('volkswagen','Volkswagen','https://cdn.simpleicons.org/volkswagen/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('dacia','Dacia','https://cdn.simpleicons.org/dacia/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('tesla','Tesla','https://cdn.simpleicons.org/tesla/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('honda','Honda','https://cdn.simpleicons.org/honda/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('ford','Ford','https://cdn.simpleicons.org/ford/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('nissan','Nissan','https://cdn.simpleicons.org/nissan/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('hyundai','Hyundai','https://cdn.simpleicons.org/hyundai/999999')"/>
+        <th:block
+                th:replace="fragments/brand-card :: vehicleCard('kia','Kia','https://cdn.simpleicons.org/kia/999999')"/>
     </div>
 
     <section class="why-choose-us">
@@ -233,7 +245,6 @@
 
         <div class="reviews-marquee">
             <div class="reviews-track">
-
                 <div class="review-card" th:each="feed : ${feedbacks}">
                     <div class="review-header">
                         <div class="review-info">

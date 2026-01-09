@@ -254,25 +254,6 @@ body {
     justify-content: center;
 }
 
-.btn-show-all {
-    background: linear-gradient(135deg, #4CAF50, #66bb6a);
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 0.9rem 2.2rem;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-}
-
-.btn-show-all:hover {
-    background: linear-gradient(135deg, #43a047, #81c784);
-    transform: scale(1.06);
-    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.3);
-}
-
 /* === QUICK SEARCH SECTION === */
 .quick-search {
     text-align: center;
