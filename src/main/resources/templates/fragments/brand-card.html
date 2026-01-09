@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="vehicleCard(brandKey, brandName, icon)">
+  <a th:href="@{/offers/brands/{brand}(brand=${brandKey})}"
+     class="vehicle-card ui-transition">
+    <img th:src="${icon}" th:alt="${brandName}" class="brand-icon">
+    <h3 th:text="${brandName}"></h3>
+  </a>
+</th:block>
+</body>
+</html>
