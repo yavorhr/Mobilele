@@ -19,9 +19,9 @@
     --radius-md: 12px;
     --radius-lg: 14px;
 
-    --shadow-sm: 0 3px 10px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 14px rgba(0,0,0,0.3);
-    --shadow-lg: 0 6px 20px rgba(0,0,0,0.3);
+    --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.3);
 
     --section-padding: 5rem 2rem;
     --container-width: 1300px;
@@ -58,19 +58,32 @@ h1, h2, h3 {
     margin: 0 0 0.8rem;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.2rem; }
-h3 { font-size: 1.2rem; }
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
 
 p {
     margin: 0 0 1rem;
     color: var(--color-text-muted);
-    font-size: 0.95rem;
+    font-size: 1rem;
+}
+
+.text-centered {
+    text-align: center;
 }
 
 /* =====================
    UTILITIES
 ===================== */
+
 .ui-transition {
     transition: background 0.3s ease,
     transform 0.3s ease,
@@ -95,7 +108,7 @@ p {
     display: inline-block;
     padding: 0.8rem 1.6rem;
     background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    color: #fff;
+    color: var(--color-text-main);
     font-weight: 600;
     border-radius: var(--radius-sm);
     text-decoration: none;
@@ -113,6 +126,7 @@ p {
 /* =====================
    CARDS (GENERIC)
 ===================== */
+
 .card {
     background: var(--color-bg-soft);
     border-radius: var(--radius-md);
@@ -130,6 +144,7 @@ p {
     padding-top: 90px;
 }
 
+/**/
 .bg-text {
     background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
@@ -181,7 +196,7 @@ form.main-form {
     border: 1px solid rgba(0, 0, 0, .125);
 }
 
-.error-text{
+.error-text {
     margin-top: 0.5rem;
     padding: 0.5rem 0.75rem;
     background: rgba(231, 76, 60, 0.52);
