@@ -4,8 +4,7 @@
 
 <div class="offer-card ui-transition"  th:fragment="offerCard(offer, showViews)">
 
-  <a th:href="@{/offers/details/{id}(id=${offer.id})}"
-     class="offer-card-link">
+  <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
 
     <div class="offer-image">
       <img th:src="${offer.profileImage}" alt="Car image" loading="lazy">
