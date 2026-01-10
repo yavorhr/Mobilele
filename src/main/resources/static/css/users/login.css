@@ -23,7 +23,6 @@
     color: var(--color-blue);
 }
 
-/* === Form === */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -70,7 +69,7 @@ label {
     font-weight: 500;
 }
 
-/* === Submit Button === */
+/* Submit Button */
 .button-holder {
     display: flex;
     justify-content: center;
@@ -94,7 +93,7 @@ label {
     transform: scale(1.03);
 }
 
-/* === Register Hint === */
+/* Register Link */
 .register-hint {
     color: var(--color-white-muted);
     font-size: 0.95rem;
@@ -111,7 +110,7 @@ label {
     color: var(--color-accent);
 }
 
-/* === Responsive === */
+/* Responsive design */
 @media (max-width: 768px) {
     .login-card {
         padding: 1.5rem;
