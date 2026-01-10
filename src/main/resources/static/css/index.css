@@ -201,7 +201,7 @@
 }
 
 .quick-search p {
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     font-style: var(--font-size-p-large);
     margin-bottom: var(--margin-btm-1_5);
 }
@@ -283,7 +283,7 @@
 .offer-meta {
     display: flex;
     flex-direction: column;
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     margin-bottom: var(--margin-btm-0_5)
 }
 
@@ -323,7 +323,7 @@
 .no-offers {
     grid-column: 1 / -1;
     text-align: center;
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     font-size: var(--font-size_1-5);
 }
 
@@ -395,7 +395,7 @@
 /* BRAND TEXT */
 .vehicle-card h3 {
     margin-top: 1rem;
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: color 0.3s ease;
@@ -438,7 +438,7 @@
 }
 
 .feature p {
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
 }
 
 /* ====================
@@ -468,7 +468,7 @@
 }
 
 .review-date {
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     font-style: italic;
     margin-top: 2px;
 }
@@ -560,13 +560,13 @@
 }
 
 .rating-count {
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     font-size: 0.9rem;
 }
 
 /* === Comment === */
 .review-comment {
-    color: var(--color-text-muted);
+    color: var(--color-white-muted);
     line-height: 1.4;
     font-style: italic;
 }
