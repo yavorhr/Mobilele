@@ -1,3 +1,104 @@
+
+/* ================
+   FLASH MESSAGE
+ ================ */
+.alert-toast {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    padding: 20px 36px;
+    min-width: 360px;
+    max-width: 600px;
+    width: auto;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+
+    color: var(--white);
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+
+    z-index: 3000;
+    transform: translateX(-50%) translateY(-20px);
+    transition: all 0.5s ease-in-out;
+}
+
+/* Show animation */
+.alert-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Icon  */
+.alert-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    flex-shrink: 0;
+
+    filter: grayscale(80%) brightness(1.2) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    animation: wiggle 0.9s ease-in-out;
+    transition: transform 0.2s ease;
+}
+
+.alert-toast:hover .alert-icon img {
+    transform: scale(1.05);
+}
+
+/*  animation */
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-8deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+    75% {
+        transform: rotate(-4deg);
+    }
+}
+
+/* Smooth fade-out*/
+.alert-toast:not(.show) {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-25px);
+}
+
+/* Optional stat strip */
+.stats-strip {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    color: var(--color-text-soft);
+}
+
+.stats-strip div {
+    text-align: center;
+    font-size: 1rem;
+}
+
+.stats-strip span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* ================
+    HERO SECTION
+ ================ */
+
 .section {
     padding: 4rem 2rem;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
@@ -6,10 +107,6 @@
 
     text-align: center;
 }
-
-/* =====================
-   HERO
-===================== */
 
 .hero {
     margin-top: 75px;
@@ -70,7 +167,7 @@
 }
 
 /* ====================
- OFFERS SECTION -
+ OFFERS SECTIONS -
  RECENT AND MOST VIEWED
 ===================== */
 
@@ -174,9 +271,9 @@
     margin-top: 3rem;
 }
 
-/* ==============
- VEHICLE GRID
-================= */
+/* ===================
+ VEHICLE GRID SECTION
+ ==================== */
 
 .vehicle-grid {
     display: grid;
@@ -247,9 +344,9 @@
     color: var(--white);
 }
 
-/* ==============
- WHY CHOOSE US
-================= */
+/* ====================
+ WHY CHOOSE US SECTION
+===================== */
 
 .features-grid {
     display: grid;
@@ -283,114 +380,20 @@
     color: var(--color-text-muted);
 }
 
-/* === REVIEWS SECTION === */
+/* ====================
+   REVIEWS SECTION
+===================== */
+
 .reviews {
     text-align: center;
     padding: 5rem 2rem;
-    color: #fff;
+    color: var(--white);
     background: rgba(255, 255, 255, 0.03);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
 }
 
-
-/* Toast container */
-.alert-toast {
-    position: fixed;
-    top: 120px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: 20px 36px;
-    min-width: 360px;
-    max-width: 600px;
-    width: auto;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #4CAF50, #66bb6a);
-
-    color: #fff;
-    font-weight: 600;
-    text-align: center;
-    z-index: 3000;
-    opacity: 0;
-    pointer-events: none;
-
-    transition: all 0.5s ease-in-out;
-}
-
-/* Show animation */
-.alert-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* Icon  */
-.alert-icon img {
-    width: 50px;
-    height: 50px;
-    flex-shrink: 0;
-    filter: grayscale(80%) brightness(1.2) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
-    animation: wiggle 0.9s ease-in-out;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-}
-
-/* subtle motion */
-.alert-toast:hover .alert-icon img {
-    transform: scale(1.05);
-}
-
-/*  animation */
-@keyframes wiggle {
-    0%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(-8deg);
-    }
-    50% {
-        transform: rotate(8deg);
-    }
-    75% {
-        transform: rotate(-4deg);
-    }
-}
-
-/* Smooth fade-out*/
-.alert-toast:not(.show) {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-25px);
-}
-
-
-/* Optional stat strip */
-.stats-strip {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin: 2rem 0;
-    color: #ccc;
-}
-
-.stats-strip div {
-    text-align: center;
-    font-size: 1rem;
-}
-
-.stats-strip span {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #4CAF50;
-}
-
-
-
-/* === MARQUEE === */
+/* MARQUEE */
 .reviews-marquee {
     position: relative;
     overflow: hidden;
@@ -404,28 +407,24 @@
 }
 
 .review-date {
-    color: #aaa;
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
     font-style: italic;
     margin-top: 2px;
 }
 
 .reviews-track {
     display: flex;
+    justify-content: center;
     gap: 2rem;
     animation: scrollReviews 40s linear infinite;
-    justify-content: center;
     animation-direction: reverse
 }
 
 .review-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
     padding: 1.5rem 2rem;
     min-width: 280px;
     max-width: 300px;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, background 0.3s ease;
 }
 
@@ -434,7 +433,7 @@
     background: rgba(255, 255, 255, 0.12);
 }
 
-/* === Header === */
+/*  Header */
 .review-header {
     display: flex;
     justify-content: space-between;
@@ -444,7 +443,7 @@
 
 .review-name {
     font-weight: 600;
-    color: #fff;
+    color: var(--white);
 }
 
 .review-stars {
@@ -454,7 +453,7 @@
 
 .review-stars .fa-star {
     font-size: 1rem;
-    color: #555; /* default gray */
+    color: var(--gray);
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -466,7 +465,7 @@
     transform: scale(1.2);
 }
 
-/* --- Rating Feature --- */
+/* Rating Feature */
 .rating-feature {
     text-align: center;
 }
@@ -478,40 +477,39 @@
 .rating-info .stars {
     display: flex;
     justify-content: center;
+    margin-bottom: var(--margin-btm-0_5);
     gap: 4px;
-    margin-bottom: 0.4rem;
 }
 
 .rating-info .fa-star {
     font-size: 1.2rem;
-    color: #555;
+    color: var(--gray);
     transition: color 0.3s ease;
 }
 
 .rating-info .fa-star.filled {
-    color: #ffc107;
+    color: var(--color-accent);
 }
 
 .rating-average {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #4CAF50;
+    color: var(--color-primary);
 }
 
 .rating-count {
-    color: #bbb;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
 }
 
 /* === Comment === */
 .review-comment {
-    color: #ccc;
-    font-size: 0.95rem;
+    color: var(--color-text-muted);
     line-height: 1.4;
     font-style: italic;
 }
 
-/* === Animation === */
+/* MARQUEE ANIMATION */
 @keyframes scrollReviews {
     0% {
         transform: translateX(0);
@@ -538,8 +536,10 @@
     }
 }
 
+/* ====================
+   RESPONSIVE DESIGN
+===================== */
 
-/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 992px) {
     .vehicle-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -557,3 +557,4 @@
         grid-template-columns: 1fr;
     }
 }
+
