@@ -144,4 +144,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 ?.classList.remove("open");
         });
     }
+
+    // 4. Close navbar when clicking outside of it (MOBILE)
+    const navbar = document.querySelector(".navbar");
+
+    document.addEventListener("click", (e) => {
+        if (!navbar || !navbarCollapse) return;
+
+        const isClickInsideNavbar = navbar.contains(e.target);
+        const isNavbarOpen = navbarCollapse.classList.contains("show");
+
+        if (!isClickInsideNavbar && isNavbarOpen) {
+            // Bootstrap collapse API (Bootstrap 4)
+            $(navbarCollapse).collapse("hide");
+        }
+    });
 });
