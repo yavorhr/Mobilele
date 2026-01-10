@@ -1,3 +1,7 @@
+#lang{
+    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+}
+
 .home-lang-wrapper{
     display: flex;
     align-content: center;
@@ -37,12 +41,6 @@
     cursor: pointer;
 }
 
-/* Globe icon */
-.lang-icon {
-    font-size: 1.5rem;
-    opacity: 0.85;
-}
-
 /* Select itself */
 .language-form select {
     background: transparent;
@@ -54,6 +52,10 @@
     outline: none;
 
     padding: 0.15rem 0.3rem;
+}
+
+#lang option{
+    font-size: clamp(0.4rem, 2vw, 1.2rem);
 }
 
 /* Remove default select styling */

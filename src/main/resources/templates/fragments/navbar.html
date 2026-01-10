@@ -10,14 +10,19 @@
         <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
         <div class="language-item language-inline">
             <form th:method="get"  class="language-form">
-                <span class="lang-icon">🌐</span>
                 <select
                         onchange="this.form.submit()"
                         id="lang"
                         name="lang">
-                    <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">EN</option>
-                    <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">DE</option>
-                    <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">BG</option>
+                    <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">
+                        🇬🇧 EN
+                    </option>
+                    <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">
+                        🇩🇪 DE
+                    </option>
+                    <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">
+                        🇧🇬 BG
+                    </option>
                 </select>
             </form>
         </div>
