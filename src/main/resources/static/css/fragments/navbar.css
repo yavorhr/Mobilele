@@ -24,6 +24,59 @@
     align-items: center;
 }
 
+/* Important destructive action */
+.delete-account {
+    background: linear-gradient(135deg, #ff4d4d, #e63946);
+    color: #fff !important;
+    font-weight: 700;
+
+    border-radius: 8px;
+    margin: 0.4rem auto;
+    padding: 0.6rem 0.9rem;
+
+    width: 90%;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    box-shadow: 0 3px 10px rgba(230, 57, 70, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+/* Hover effect */
+.delete-account:hover {
+    background: linear-gradient(135deg, #ff5c5c, #ff2e2e);
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(230, 57, 70, 0.45);
+}
+/* Active click feedback */
+
+.delete-account:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(230, 57, 70, 0.4);
+}
+
+@keyframes trashShake {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(-10deg); }
+    40%  { transform: rotate(10deg); }
+    60%  { transform: rotate(-6deg); }
+    80%  { transform: rotate(6deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.dropdown-menu.show .delete-account .delete-icon {
+    animation: trashShake 0.6s ease;
+}
+
+.dropdown-divider{
+    color: black;
+}
+
 .language-inline {
     margin-left: auto;
     margin-right: 0.75rem;

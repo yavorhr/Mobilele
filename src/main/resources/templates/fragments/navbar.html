@@ -9,7 +9,7 @@
     <div class="home-lang-wrapper">
         <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
         <div class="language-item language-inline">
-            <form th:method="get"  class="language-form">
+            <form th:method="get" class="language-form">
                 <select
                         onchange="this.form.submit()"
                         id="lang"
@@ -112,7 +112,10 @@
                         <input type="hidden" name="_method" value="delete"/>
                     </form>
 
-                    <a class="dropdown-item text-danger" href="#" id="deleteAccountLink">Delete Account</a>
+                    <a class="dropdown-item delete-account" href="#" id="deleteAccountLink">
+                        <span class="delete-icon">🗑</span>
+                        <span>Delete Account</span>
+                    </a>
                 </div>
             </li>
             <!-- Logout  -->
