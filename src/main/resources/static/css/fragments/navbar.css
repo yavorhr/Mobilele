@@ -61,7 +61,6 @@
 /* Remove default select styling */
 .language-form select option {
     color: #000;
-    cursor: pointer;
 }
 
 .language-form:hover {
@@ -207,7 +206,7 @@
 
 .dropdown-submenu .stats-menu {
     top: 0;
-    left: 100%;              /* 👉 move to the right */
+    left: 100%;
     margin-left: 0.1rem;
     display: none;
     position: absolute;
@@ -260,5 +259,27 @@
 
     .language-form select {
         font-size: 0.75rem;
+    }
+
+
+
+}
+
+@media (max-width: 992px) {
+    .dropdown-submenu .stats-menu {
+        position: static;     /* 👈 no more absolute positioning */
+        margin-left: 0;
+        margin-top: 0.3rem;
+        display: none;
+        width: 100%;
+    }
+
+    .dropdown-submenu.open > .stats-menu {
+        display: block;
+    }
+
+    .dropdown-submenu .stats-menu .dropdown-item {
+        padding-left: 2rem;  /* 👈 visual nesting */
+        font-size: 0.9rem;
     }
 }
