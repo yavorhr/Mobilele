@@ -134,7 +134,7 @@
                 <p>No offers available</p>
             </div>
         </div>
-        <div class="show-all-container">
+        <div class="show-all">
             <a th:href="@{/offers/all}" class="cta-btn">Show All Offers →</a>
         </div>
     </section>
@@ -155,8 +155,8 @@
         </div>
     </section>
 
-    <secion class="vehicle-grid section">
-        <th:block
+    <section class="vehicle-grid section">
+    <th:block
                 th:replace="fragments/brand-card :: vehicleCard('bmw','BMW','https://cdn.simpleicons.org/bmw/999999')"/>
         <th:block
                 th:replace="fragments/brand-card :: vehicleCard('audi','Audi','https://cdn.simpleicons.org/audi/999999')"/>
@@ -180,7 +180,7 @@
                 th:replace="fragments/brand-card :: vehicleCard('hyundai','Hyundai','https://cdn.simpleicons.org/hyundai/999999')"/>
         <th:block
                 th:replace="fragments/brand-card :: vehicleCard('kia','Kia','https://cdn.simpleicons.org/kia/999999')"/>
-    </secion>
+    </section>
 
     <section class="why-choose-us section">
         <h2 class="section-title">Why to choose <span class="brand-name">Mobilele</span>?</h2>
