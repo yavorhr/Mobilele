@@ -218,14 +218,11 @@
     transform: scale(1.05);
 }
 
-
-/* === Message === */
 .feedback-message {
     margin-top: 1rem;
     font-weight: bold;
     color: #ffc107;
 }
-
 
 /* === Animation === */
 @keyframes fadeIn {
@@ -239,14 +236,23 @@
     }
 }
 
-/* === Clickable Stats Submenu === */
-.dropdown-submenu {
-    position: relative;
-}
+/* ====================
+   DROPDOWN MENUS -
+   PROFILE & ADMIN
+===================== */
 
 .dropdown-menu {
     background-color: var(--color-text-soft);
     color: var(--color-white-main);
+}
+
+/* Rotate arrows Profile & Admin */
+.nav-item.show > .nav-link.dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.dropdown-submenu {
+    position: relative;
 }
 
 .dropdown-submenu .stats-menu {
@@ -261,29 +267,24 @@
     display: block;
 }
 
+/* Stats toggle */
 .stats-toggle {
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
+/* Arrows rotate for Submenus */
 .stats-toggle .arrow {
     transition: transform 0.2s ease;
 }
 
-/* Arrow points DOWN when open */
 .dropdown-submenu.open .arrow {
     transform: rotate(90deg);
 }
 
-/* Default arrow */
 .nav-link.dropdown-toggle::after {
     transition: transform 0.2s ease;
-}
-
-/* Rotate arrow when dropdown is open */
-.nav-item.show > .nav-link.dropdown-toggle::after {
-    transform: rotate(180deg);
 }
 
 .dropdown-menu .dropdown-divider {
@@ -339,21 +340,7 @@
         font-size: 0.8rem;
         padding: 0.1rem 0.2rem;
     }
-}
 
-@media (max-width: 480px) {
-    .language-form {
-        padding: 0.1rem 0.35rem;
-    }
-
-    .language-form select {
-        font-size: 0.75rem;
-    }
-
-
-}
-
-@media (max-width: 992px) {
     .dropdown-submenu .stats-menu {
         position: static; /* 👈 no more absolute positioning */
         margin-left: 0;
@@ -371,3 +358,14 @@
         font-size: 0.9rem;
     }
 }
+
+@media (max-width: 480px) {
+    .language-form {
+        padding: 0.1rem 0.35rem;
+    }
+
+    .language-form select {
+        font-size: 0.75rem;
+    }
+}
+
