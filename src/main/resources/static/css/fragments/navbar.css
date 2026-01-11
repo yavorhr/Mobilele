@@ -234,12 +234,58 @@
     transform: scale(1.05);
 }
 
+/* Default arrow */
+.nav-link.dropdown-toggle::after {
+    transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when dropdown is open */
+.nav-item.show > .nav-link.dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu .dropdown-divider {
+    margin: 0.4rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Remove Bootstrap blue for Stats submenu trigger */
+.stats-toggle {
+    color: black;
+    background: transparent !important;
+}
+
+/* On hover */
+.stats-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: inherit !important;
+}
+
+/* Kill Bootstrap active styles for Stats submenu trigger */
+.dropdown-menu .dropdown-item.stats-toggle:active,
+.dropdown-menu .dropdown-item.stats-toggle:focus,
+.dropdown-menu .dropdown-item.stats-toggle.active {
+    color: #000 !important;              /* or your menu text color */
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* On focus / active */
+.stats-toggle:focus,
+.stats-toggle:active {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
 /* === Message === */
 .feedback-message {
     margin-top: 1rem;
     font-weight: bold;
     color: #ffc107;
 }
+
+
 
 /* === Animation === */
 @keyframes fadeIn {
