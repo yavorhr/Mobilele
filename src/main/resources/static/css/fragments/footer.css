@@ -106,7 +106,7 @@
     color: #888;
 }
 
-/* --- Responsive --- */
+/* Responsive */
 @media (max-width: 768px) {
     .site-footer {
         text-align: center;
