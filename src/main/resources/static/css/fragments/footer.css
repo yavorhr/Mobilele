@@ -33,6 +33,10 @@
     color: var(--color-primary);
 }
 
+.footer-brand a {
+    text-decoration: none;
+}
+
 .footer-logo:hover img {
     transform: scale(1.05);
     transition: transform 0.2s ease;
