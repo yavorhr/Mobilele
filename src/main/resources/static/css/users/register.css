@@ -1,7 +1,3 @@
-/* ===========
-   REGISTER
-============== */
-
 .register-card {
     max-width: 750px;
 }
@@ -22,8 +18,7 @@
     flex: 0.5;
 }
 
-/* Responsive */
-
+/* Responsive design */
 @media (max-width: 768px) {
     .register-card .form-flex {
         flex-direction: column !important;
