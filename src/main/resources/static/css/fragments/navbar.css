@@ -218,12 +218,18 @@
     position: relative;
 }
 
+.dropdown-menu .dropdown-divider {
+    margin: 0.4rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Dropdown stats menu */
 .dropdown-submenu .stats-menu {
+    position: absolute;
     top: 0;
     left: 100%;
     margin-left: 0.1rem;
     display: none;
-    position: absolute;
 }
 
 .dropdown-submenu.open > .stats-menu {
@@ -250,44 +256,48 @@
     transition: transform 0.2s ease;
 }
 
-.dropdown-menu .dropdown-divider {
-    margin: 0.4rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-
 /* Remove Bootstrap blue for Stats submenu trigger */
 .stats-toggle {
-    color: black;
+    color: var(--color-bg-main);
     background: transparent !important;
 }
 
-/* On hover */
+/* Stats menu active/focus styling */
 .stats-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: inherit !important;
+    color: var(--color-bg-main);
+    text-decoration: none;
+    background-color:  var(--color-white-main) !important;
 }
 
-/* Kill Bootstrap active styles for Stats submenu trigger */
-.dropdown-menu .dropdown-item.stats-toggle:active,
-.dropdown-menu .dropdown-item.stats-toggle:focus,
-.dropdown-menu .dropdown-item.stats-toggle.active {
-    color: #000 !important; /* or your menu text color */
-    background-color: transparent !important;
-    box-shadow: none !important;
-}
-
-/* On focus / active */
-.stats-toggle:focus,
+/* Active (clicking) */
 .stats-toggle:active {
-    background: rgba(255, 255, 255, 0.12) !important;
-    color: inherit !important;
+    background: var(--color-bg-hover);
+    color: var(--color-bg-main) !important;
+    box-shadow: none;
+}
+
+/* Keyboard focus only */
+.stats-toggle:focus-visible {
+    outline: none;
+    background: var(--color-bg-hover);
+}
+
+/* Remove persistent focus after mouse/touch click */
+.stats-toggle:focus:not(:focus-visible) {
+    background: transparent;
+    box-shadow: none;
+}
+
+/* 🔥 Submenu open state must win */
+.dropdown-submenu.open > .stats-toggle {
+    background-color: var(--color-white-main) !important;
+    color: var(--color-bg-main) !important;
     box-shadow: none !important;
 }
 
 /* ===================
    DELETE BUTTON
 ===================== */
-
 .delete-account {
     display: flex;
     align-items: center;
@@ -340,7 +350,7 @@
     }
 
     .dropdown-submenu .stats-menu {
-        position: static; /* 👈 no more absolute positioning */
+        position: static;
         margin-left: 0;
         margin-top: 0.3rem;
         display: none;
@@ -352,7 +362,7 @@
     }
 
     .dropdown-submenu .stats-menu .dropdown-item {
-        padding-left: 2rem; /* 👈 visual nesting */
+        padding-left: 2rem;
         font-size: 0.9rem;
     }
 }
