@@ -1,80 +1,16 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
+/* ==============
+       LOGIN
+================*/
 
 .login-card {
     width: 100%;
     max-width: 450px;
-    background-color: var(--color-bg-dark-form);
-    border-radius: 15px;
-    padding: 2.5rem 3rem;
-    box-shadow:
-            0 0 20px rgba(0, 0, 0, 0.5),
-            0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-.login-card h2 {
-    padding-bottom: 0.5rem;
-    margin-bottom: 2var(--margin-btm-2);
-    border-bottom: 2px solid var(--color-turquoise);
-    color: var(--color-turquoise);
-    text-align: center;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-weight: bold;
-    color: var(--color-accent);
-    margin-bottom: var(--margin-btm-0_5);
-}
-
-.form-input {
-    background-color: #495057;
-    border: 1px solid var(--color-gray);
-    border-radius: 6px;
-    padding: 0.6rem 0.8rem;
-    color: var(--color-white-main);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-input:focus {
-    border-color: var(--color-turquoise);
-    outline: none;
-    box-shadow: 0 0 5px var(--color-turquoise);
-}
-
-.form-input:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(23, 162, 184, 0.4);
-}
-
-/* Error message */
 .error-container {
     text-align: center;
 }
 
-/* Submit Button */
-.button-holder {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-/* Register Link */
 .register-hint {
     color: var(--color-white-muted);
 }
