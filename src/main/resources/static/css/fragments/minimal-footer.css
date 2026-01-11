@@ -1,0 +1,119 @@
+
+/* Sticky footer */
+body {
+    min-height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+
+.site-footer--minimal {
+    background: var(--color-bg-main);
+    padding: 1.5rem 1rem 1rem;
+    border-top: 1px solid rgba(76, 175, 80, 0.25); /* soft brand green */
+    color: var(--color-text-soft);
+}
+
+/* Container */
+.site-footer--minimal .footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.site-footer--minimal .footer-brand {
+    max-width: none;
+}
+
+.site-footer--minimal .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.site-footer--minimal .footer-logo img {
+    width: 28px; /* ⬅ reduced size */
+    height: auto;
+    opacity: 0.9;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.site-footer--minimal .footer-logo h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-white-main);
+    letter-spacing: 0.3px;
+}
+
+.site-footer--minimal .footer-logo:hover img {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.site-footer--minimal .footer-logo:hover h3 {
+    color: var(--color-primary);
+}
+
+.site-footer--minimal .footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* Links */
+.site-footer--minimal .footer-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+    transition: color 0.2s ease;
+}
+
+.site-footer--minimal .footer-links a:hover {
+    color: var(--color-primary);
+}
+
+/* Bottom copyright */
+.site-footer--minimal .footer-bottom {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(76, 175, 80, 0.15);
+    text-align: center;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ===================
+   RESPONSIVE DESIGN
+====================== */
+
+@media (max-width: 480px) {
+    .site-footer--minimal {
+        padding: 1.25rem 0.75rem 0.75rem;
+    }
+
+    .site-footer--minimal .footer-links {
+        gap: 0.75rem;
+    }
+
+    .site-footer--minimal .footer-links a {
+        font-size: 0.8rem;
+    }
+}
