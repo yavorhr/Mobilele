@@ -117,6 +117,20 @@ p {
     -webkit-backdrop-filter: blur(6px);
 }
 
+.auth-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
 /* =====================
    BUTTONS / LINKS
 ===================== */
