@@ -8,8 +8,9 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top " th:fragment='navbar'>
     <div class="home-lang-wrapper">
         <a class="navbar-brand" href="/"><img alt="car picture" src="/images/car.png" class="logo"></a>
-        <div class="language-item language-inline">
-            <form th:method="get" class="language-form">
+        <div class="language-item">
+            <form th:method="get"
+                  class="language-form">
                 <select
                         onchange="this.form.submit()"
                         id="lang"
@@ -140,6 +141,7 @@
         </ul>
     </div>
 </nav>
+
 <div id="feedbackModal" class="feedback-modal">
     <div class="feedback-content">
         <button class="close-btn" id="closeFeedback">&times;</button>
