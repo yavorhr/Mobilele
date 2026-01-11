@@ -18,9 +18,9 @@
 .login-card h2 {
     padding-bottom: 0.5rem;
     margin-bottom: 2rem;
-    border-bottom: 2px solid var(--color-blue);
+    border-bottom: 2px solid var(--color-turquoise);
     text-align: center;
-    color: var(--color-blue);
+    color: var(--color-turquoise);
 }
 
 .login-form {
@@ -51,9 +51,9 @@ label {
 }
 
 .form-input:focus {
-    border-color: var(--color-blue);
+    border-color: var(--color-turquoise);
     outline: none;
-    box-shadow: 0 0 5px var(--color-blue);
+    box-shadow: 0 0 5px var(--color-turquoise);
 }
 
 /* === Error message === */
@@ -77,7 +77,7 @@ label {
 }
 
 .btn-submit {
-    background-color: var(--color-blue);
+    background-color: var(--color-turquoise);
     border: none;
     border-radius: 8px;
     color: var(--color-white-main);
@@ -100,7 +100,7 @@ label {
 }
 
 .register-link {
-    color: var(--color-blue);
+    color: var(--color-turquoise);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.3s ease;
