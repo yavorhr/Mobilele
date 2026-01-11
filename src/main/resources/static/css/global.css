@@ -159,8 +159,13 @@ p {
     background-color: var(--color-error);
     color: var(--white);
     padding: 0.6rem;
+    margin-top: 0.5rem;
     border-radius: 5px;
     font-weight: 500;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
 }
 
 /* Submit button */
