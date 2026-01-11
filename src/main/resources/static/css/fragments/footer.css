@@ -1,9 +1,9 @@
-/* === FOOTER === */
+
 .site-footer {
-    background: rgba(18, 18, 18, 0.98);
-    color: #bbb;
+    background: var(--color-bg-main);
     padding: 2rem 2rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--color-white-muted);
+    border-top: 1px solid var(--color-bg-soft);
 }
 
 .footer-container {
@@ -14,9 +14,10 @@
     margin: 1rem auto;
 }
 
-/* --- Brand --- */
+/* Home button */
 .footer-brand {
     max-width: 320px;
+    opacity: 1;
 }
 
 .footer-logo {
@@ -29,7 +30,7 @@
 }
 
 .footer-logo:hover h3 {
-    color: #4CAF50;
+    color: var(--color-primary);
 }
 
 .footer-logo:hover img {
@@ -43,49 +44,63 @@
 }
 
 .footer-logo h3 {
-    color: #fff;
+    color: var(--color-white-main);
+    margin: 0;
     font-size: 1.4rem;
     font-weight: 700;
-    margin: 0;
 }
 
 .footer-brand p {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: #aaa;
+    color: var(--color-text-soft);
 }
 
-/* --- Links --- */
+/* Links */
+.footer-links {
+    opacity: 0.9;
+}
+
 .footer-links h4 {
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: var(--margin-btm-1);
     text-transform: uppercase;
+    color: var(--color-white-main);
     letter-spacing: 0.5px;
 }
 
 .footer-links a {
     display: block;
+    margin-bottom: var(--margin-btm-0_5);
     text-decoration: none;
-    color: #bbb;
-    font-size: 0.95rem;
-    margin-bottom: 0.6rem;
+    line-height: 1.6;
+    color: var(--color-text-soft);
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .footer-links a:hover {
-    color: #4CAF50;
+    color: var(--color-primary);
     transform: translateX(3px);
 }
 
-/* --- Bottom Bar --- */
+.footer-links a.active {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.footer-links a:focus-visible {
+    outline: none;
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* Bottom bar */
 .footer-bottom {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(76, 175, 80, 0.35);
+    box-shadow: 0 -1px 6px rgba(76, 175, 80, 0.15);
+
     text-align: center;
-    font-size: 0.9rem;
     color: #888;
 }
 
@@ -101,5 +116,12 @@
 
     .footer-links a {
         margin-bottom: 0.8rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .footer-container > div:not(:last-child) {
+        border-right: 1px solid rgba(76, 175, 80, 0.35);
+        box-shadow: 1px 0 6px rgba(76, 175, 80, 0.15);
     }
 }
