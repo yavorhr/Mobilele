@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Close navbar when clicking outside of it (MOBILE)
+// 4. Close navbar when clicking outside of it (MOBILE)
     const navbar = document.querySelector(".navbar");
 
     document.addEventListener("click", (e) => {
