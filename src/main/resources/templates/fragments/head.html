@@ -14,9 +14,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <th:block th:if="${additionalCss != null}">
-        <link rel="stylesheet" th:each="css : ${additionalCss}" th:href="@{${css}}" />
-    </th:block>
-</head>
+    <link th:if="${additionalCss}" rel="stylesheet" th:href="@{${additionalCss}}"/>
+    <link th:if="${extraCss}" rel="stylesheet" th:href="@{${extraCss}}"/>
 
 </html>
