@@ -132,7 +132,8 @@ p {
 }
 
 /* =====================
-   BUTTONS / LINKS
+   BUTTONS / MESSAGES /
+   LINKS
 ===================== */
 .cta-btn {
     display: inline-block;
@@ -152,6 +153,32 @@ p {
     text-decoration: none;
     color: #0056b3;
     cursor: pointer;
+}
+
+.error-msg {
+    background-color: var(--color-error);
+    color: var(--white);
+    padding: 0.6rem;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+/* Submit button */
+.btn-submit {
+    background-color: var(--color-turquoise);
+    border: none;
+    border-radius: 8px;
+    color: var(--color-white-main);
+    padding: 0.7rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #138496;
+    transform: scale(1.03);
 }
 
 /* =====================

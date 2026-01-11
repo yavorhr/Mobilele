@@ -11,15 +11,17 @@
     background-color: var(--color-bg-dark-form);
     border-radius: 15px;
     padding: 2.5rem 3rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow:
+            0 0 20px rgba(0, 0, 0, 0.5),
+            0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .login-card h2 {
     padding-bottom: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2var(--margin-btm-2);
     border-bottom: 2px solid var(--color-turquoise);
-    text-align: center;
     color: var(--color-turquoise);
+    text-align: center;
 }
 
 .login-form {
@@ -44,7 +46,7 @@ label {
     border: 1px solid var(--color-gray);
     border-radius: 6px;
     padding: 0.6rem 0.8rem;
-    color: var(--white);
+    color: var(--color-white-main);
     font-size: 1rem;
     transition: all 0.3s ease;
 }
@@ -55,17 +57,14 @@ label {
     box-shadow: 0 0 5px var(--color-turquoise);
 }
 
-/* === Error message === */
-.error-container {
-    text-align: center;
+.form-input:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(23, 162, 184, 0.4);
 }
 
-.error-msg {
-    background-color: var(--color-error);
-    color: var(--white);
-    padding: 0.6rem;
-    border-radius: 5px;
-    font-weight: 500;
+/* Error message */
+.error-container {
+    text-align: center;
 }
 
 /* Submit Button */
@@ -75,27 +74,9 @@ label {
     margin-top: 1rem;
 }
 
-.btn-submit {
-    background-color: var(--color-turquoise);
-    border: none;
-    border-radius: 8px;
-    color: var(--color-white-main);
-    padding: 0.7rem 2rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-submit:hover {
-    background-color: #138496;
-    transform: scale(1.03);
-}
-
 /* Register Link */
 .register-hint {
     color: var(--color-white-muted);
-    font-size: 0.95rem;
 }
 
 .register-link {
@@ -107,6 +88,7 @@ label {
 
 .register-link:hover {
     color: var(--color-accent);
+    text-decoration: none;
 }
 
 /* Responsive design */
@@ -114,5 +96,11 @@ label {
     .login-card {
         padding: 1.5rem;
         max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-submit {
+        width: 100%;
     }
 }
