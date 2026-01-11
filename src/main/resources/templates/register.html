@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: head(additionalCss='/css/users/register.css')"></head>
+<head th:replace="fragments/head :: head(
+    additionalCss='/css/users/auth.css',
+    extraCss='/css/users/register.css'
+)"></head>
 
-<body>
+<body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<main class="register-container">
-    <div class="register-card">
+<main class="register-container auth-content">
+    <div class="auth-card register-card">
         <h2 class="text-center mb-4">Register User</h2>
 
-        <form th:method="POST"
+        <form class="auth-form"
+              th:method="POST"
               th:action="@{/users/register}"
-              th:object="${userRegisterBindingModel}"
-              class="register-form">
+              th:object="${userRegisterBindingModel}">
             <div class="form-flex">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
@@ -81,7 +84,6 @@
             </div>
 
 
-
             <div class="button-holder">
                 <input type="submit" class="btn-submit" value="Create Account">
             </div>
@@ -89,6 +91,7 @@
     </div>
 </main>
 
-<footer></footer>
+<footer th:replace="fragments/minimal-footer"></footer>
+
 </body>
 </html>

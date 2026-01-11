@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: head(additionalCss='/css/users/login.css')"></head>
+<head th:replace="fragments/head :: head(
+    additionalCss='/css/users/auth.css',
+    extraCss='/css/users/login.css'
+)"></head>
 
 <body class="auth-layout">
 
 <header th:replace="fragments/navbar"></header>
 
 <main class="login-container auth-content">
-    <div class="login-card">
+    <div class="auth-card login-card">
         <h2 class="text-center mb-4">Login</h2>
 
         <form th:method="POST"
               th:action="@{/users/login}"
-              class="login-form">
+              class="auth-form">
 
             <!-- Username -->
             <div class="form-group">
