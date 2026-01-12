@@ -1,22 +1,3 @@
-/* =================
-   REGISTER + LOGIN
-   COMMON
-=================== */
-
-.auth-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* Content grows to push footer down */
-.auth-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
 
 /* =====================
    AUTH CARD (COMMON)
