@@ -3,15 +3,18 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head :: head(additionalCss='/css/fragments/navbar.css')"></head>
+<head th:replace="fragments/head :: head(
+    additionalCss='/css/offers/offers-find.css')"></head>
 
-<body>
-<header th:replace="fragments/navbar :: navbar"></header>
+<body class="auth-layout">
+<header th:replace="fragments/navbar"></header>
 
-<main>
+<main class="auth-content">
     <div class="container">
-        <h2 class="text-center text-white"
-            th:text="'Search ' + ${vehicleType} + ' offers'">></h2>
+        <div class="text-center">
+            <h2 class="text-center section-title"
+                th:text="'Search ' + ${vehicleType} + ' offers'">></h2>
+        </div>
         <form
                 th:action="@{/offers/find/{vehicleType}(vehicleType=${vehicleType})}"
                 th:method="POST"
@@ -36,7 +39,7 @@
                             </option>
                         </optgroup>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Vehicle brand is required.
                     </p>
                 </div>
@@ -58,14 +61,14 @@
                             </option>
                         </optgroup>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Vehicle model is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="price" class="text-white font-weight-bold">Price</label>
-                    <select th:field="*{priceComparison}" id="priceComparison" >
+                    <select th:field="*{priceComparison}" id="priceComparison">
                         <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
                         </option>
                         <option value="between" th:selected="${offersFindBindingModel.priceComparison == 'between'}">
@@ -85,14 +88,14 @@
                     <input type="number" th:field="*{priceMax}" id="priceMax" placeholder="Max price"
                            th:value="${offersFindBindingModel.priceMax}"
                            th:style="${offersFindBindingModel.priceComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Suggested price is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                    <select th:field="*{mileageComparison}" id="mileageComparison" >
+                    <select th:field="*{mileageComparison}" id="mileageComparison">
                         <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
                             Under
                         </option>
@@ -116,7 +119,7 @@
                     <input type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
                            th:value="${offersFindBindingModel.mileageMax}"
                            th:style="${offersFindBindingModel.mileageComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Mileage in kilometers is required.
                     </p>
                 </div>
@@ -136,7 +139,7 @@
                             Engine type
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Engine type is required.
                     </p>
                 </div>
@@ -155,7 +158,7 @@
                                 th:selected="${t} == *{transmission}">Transmission type
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Transmission type is required.
                     </p>
                 </div>
@@ -183,7 +186,7 @@
                     <input type="number" th:field="*{yearMax}" id="yearMax" placeholder="To year"
                            th:value="${offersFindBindingModel.yearMax}"
                            th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback"
+                    <p class="errors alert alert-danger invalid-feedback error-msg"
                        th:if="${#fields.hasErrors('year')}"
                        th:errors="*{year}">
                         Year error message
@@ -204,7 +207,7 @@
                                 th:selected="${c} == *{color}">Color
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Color is required.
                     </p>
                 </div>
@@ -219,7 +222,7 @@
                                 th:value="${c}"
                                 th:text="${c}"></option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-text">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         Country is required
                     </p>
                 </div>
@@ -232,7 +235,7 @@
                             th:errorclass="is-invalid">
                         <option value="">-- Select a city --</option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-text">
+                    <p class="errors alert alert-danger invalid-feedback error-msg">
                         City is required
                     </p>
                 </div>
