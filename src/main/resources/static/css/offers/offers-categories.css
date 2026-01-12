@@ -1,29 +1,32 @@
-/* --- GRID LAYOUT --- */
+/* GRID LAYOUT */
 .vehicle-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2.5rem;
     justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     max-width: 1000px;
+    gap: 2.5rem;
     margin: 8rem auto;
     padding: 0 1rem;
 }
 
-/* --- VEHICLE CARD --- */
+/* VEHICLE CARD */
 .vehicle-card {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 1.5rem;
-    background: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(6px);
-    padding: 2rem;
-    width: 100%;
-    max-width: 300px;
-    min-height: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    max-width: 300px;
+    min-height: 240px;
+
+    background: var(--color-bg-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(6px);
+    padding: 2rem;
+    width: 100%;
+
     transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
     cursor: pointer;
     text-decoration: none !important;
@@ -31,12 +34,12 @@
 }
 
 .vehicle-card:hover {
-    transform: translateY(-10px);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--color-bg-white-hover);
+    transform: translateY(-10px);
 }
 
-/* --- ICON + TEXT --- */
+/* ICON + TEXT */
 .vehicle-card i {
     font-size: 7.5rem;
     color: #999;
@@ -48,7 +51,7 @@
     margin-top: 1rem;
     font-size: 1.4rem;
     font-weight: 700;
-    color: #333;
+    color: var(--color-bg-main);
     text-align: center;
 }
 
