@@ -19,11 +19,11 @@
                 th:action="@{/offers/find/{vehicleType}(vehicleType=${vehicleType})}"
                 th:method="POST"
                 th:object="${offersFindBindingModel}"
-                class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+                class="main-form mx-auto col-lg-8 p-4 p-md-5 rounded-4 shadow-lg bg-dark bg-opacity-75">
             <input type="hidden" id="vehicleType" th:value="${vehicleType}">
-            <div class="row">
+            <div class="row g-4">
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
+                    <label for="brand" class="form-label fw-semibold text-light">Brand</label>
                     <select
                             id="brand"
                             class="form-control"
@@ -39,13 +39,13 @@
                             </option>
                         </optgroup>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Vehicle brand is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="model">Model</label>
+                    <label for="model">Model</label>
                     <select id="model"
                             class="form-control"
                             th:name="model"
@@ -61,13 +61,13 @@
                             </option>
                         </optgroup>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Vehicle model is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="price" class="text-white font-weight-bold">Price</label>
+                    <label for="price">Price</label>
                     <select th:field="*{priceComparison}" id="priceComparison">
                         <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
                         </option>
@@ -88,13 +88,13 @@
                     <input type="number" th:field="*{priceMax}" id="priceMax" placeholder="Max price"
                            th:value="${offersFindBindingModel.priceMax}"
                            th:style="${offersFindBindingModel.priceComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Suggested price is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="mileage" class="text-white font-weight-bold">Mileage</label>
+                    <label for="mileage">Mileage</label>
                     <select th:field="*{mileageComparison}" id="mileageComparison">
                         <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
                             Under
@@ -119,13 +119,13 @@
                     <input type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
                            th:value="${offersFindBindingModel.mileageMax}"
                            th:style="${offersFindBindingModel.mileageComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Mileage in kilometers is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
+                    <label for="engine">Engine</label>
                     <select
                             id="engine"
                             class="form-control"
@@ -139,13 +139,13 @@
                             Engine type
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Engine type is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
+                    <label for="transmission">Transmission</label>
                     <select
                             name="transmission"
                             id="transmission"
@@ -158,13 +158,13 @@
                                 th:selected="${t} == *{transmission}">Transmission type
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Transmission type is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="year" class="text-white font-weight-bold">Year</label>
+                    <label for="year">Year</label>
                     <select th:field="*{yearComparison}" id="yearComparison">
                         <option value="under" th:selected="${offersFindBindingModel.yearComparison == 'under'}">
                             Before
@@ -186,7 +186,7 @@
                     <input type="number" th:field="*{yearMax}" id="yearMax" placeholder="To year"
                            th:value="${offersFindBindingModel.yearMax}"
                            th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
-                    <p class="errors alert alert-danger invalid-feedback error-msg"
+                    <p class="invalid-feedback error-msg"
                        th:if="${#fields.hasErrors('year')}"
                        th:errors="*{year}">
                         Year error message
@@ -194,7 +194,7 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="transmission">Color</label>
+                    <label for="transmission">Color</label>
                     <select
                             name="color"
                             id="color"
@@ -207,13 +207,13 @@
                                 th:selected="${c} == *{color}">Color
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Color is required.
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="country" class="text-white font-weight-bold">Country</label>
+                    <label for="country">Country</label>
                     <select id="country" name="country" class="form-control"
                             th:field="*{country}"
                             th:errorclass="is-invalid">
@@ -222,26 +222,26 @@
                                 th:value="${c}"
                                 th:text="${c}"></option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         Country is required
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="city" class="text-white font-weight-bold">City</label>
+                    <label for="city" >City</label>
                     <select id="city"
                             class="form-control"
                             th:field="*{city}"
                             th:errorclass="is-invalid">
                         <option value="">-- Select a city --</option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback error-msg">
+                    <p class="invalid-feedback error-msg">
                         City is required
                     </p>
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label class="text-center text-white font-weight-bold" for="engine">Condition</label>
+                    <label>Condition</label>
                     <select
                             id="condition"
                             class="form-control"
@@ -255,7 +255,7 @@
                             Condition
                         </option>
                     </select>
-                    <p class="errors alert alert-danger invalid-feedback">
+                    <p class="invalid-feedback error-msg">
                         Condition is required.
                     </p>
                 </div>
