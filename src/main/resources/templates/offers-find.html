@@ -22,8 +22,8 @@
                 class="main-form mx-auto col-lg-8 p-4 p-md-5 rounded-4 shadow-lg bg-dark bg-opacity-75">
             <input type="hidden" id="vehicleType" th:value="${vehicleType}">
             <div class="row g-4">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="brand" class="form-label fw-semibold text-light">Brand</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="brand" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Brand</label>
                     <select
                             id="brand"
                             class="form-control"
@@ -44,8 +44,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="model">Model</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="model" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Model</label>
                     <select id="model"
                             class="form-control"
                             th:name="model"
@@ -66,8 +66,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="price">Price</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="price" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Price</label>
                     <select th:field="*{priceComparison}" id="priceComparison">
                         <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
                         </option>
@@ -85,16 +85,18 @@
                             placeholder="Suggested price"
                             th:field="*{price}"
                             th:errorclass="is-invalid"/>
-                    <input type="number" th:field="*{priceMax}" id="priceMax" placeholder="Max price"
-                           th:value="${offersFindBindingModel.priceMax}"
-                           th:style="${offersFindBindingModel.priceComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
+                    <input
+                            class="form-control mt-2"
+                            type="number" th:field="*{priceMax}" id="priceMax" placeholder="Max price"
+                            th:value="${offersFindBindingModel.priceMax}"
+                            th:style="${offersFindBindingModel.priceComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
                     <p class="invalid-feedback error-msg">
                         Suggested price is required.
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="mileage">Mileage</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="mileage" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Mileage</label>
                     <select th:field="*{mileageComparison}" id="mileageComparison">
                         <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
                             Under
@@ -116,16 +118,18 @@
                             th:field="*{mileage}"
                             th:errorclass="is-invalid"
                     />
-                    <input type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
-                           th:value="${offersFindBindingModel.mileageMax}"
-                           th:style="${offersFindBindingModel.mileageComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
+                    <input
+                            class="form-control mt-2"
+                            type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
+                            th:value="${offersFindBindingModel.mileageMax}"
+                            th:style="${offersFindBindingModel.mileageComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
                     <p class="invalid-feedback error-msg">
                         Mileage in kilometers is required.
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="engine">Engine</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="engine" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Engine</label>
                     <select
                             id="engine"
                             class="form-control"
@@ -144,8 +148,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="transmission">Transmission</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="transmission" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Transmission</label>
                     <select
                             name="transmission"
                             id="transmission"
@@ -163,8 +167,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="year">Year</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="year" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Year</label>
                     <select th:field="*{yearComparison}" id="yearComparison">
                         <option value="under" th:selected="${offersFindBindingModel.yearComparison == 'under'}">
                             Before
@@ -183,9 +187,13 @@
                             placeholder="Manufacturing year"
                             th:field="*{year}"
                             th:errorclass="is-invalid"/>
-                    <input type="number" th:field="*{yearMax}" id="yearMax" placeholder="To year"
-                           th:value="${offersFindBindingModel.yearMax}"
-                           th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
+                    <input
+                            type="number" th:field="*{yearMax}"
+                            class="form-control mt-2"
+                            id="yearMax"
+                            placeholder="To year"
+                            th:value="${offersFindBindingModel.yearMax}"
+                            th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
                     <p class="invalid-feedback error-msg"
                        th:if="${#fields.hasErrors('year')}"
                        th:errors="*{year}">
@@ -194,7 +202,7 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="transmission">Color</label>
+                    <label for="color" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Color</label>
                     <select
                             name="color"
                             id="color"
@@ -212,8 +220,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="country">Country</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="country" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Country</label>
                     <select id="country" name="country" class="form-control"
                             th:field="*{country}"
                             th:errorclass="is-invalid">
@@ -227,8 +235,8 @@
                     </p>
                 </div>
 
-                <div class="form-group col-md-6 mb-3">
-                    <label for="city" >City</label>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="city" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">City</label>
                     <select id="city"
                             class="form-control"
                             th:field="*{city}"
@@ -241,7 +249,8 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label>Condition</label>
+                    <label for="condition"
+                           class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Condition</label>
                     <select
                             id="condition"
                             class="form-control"
@@ -260,11 +269,11 @@
                     </p>
                 </div>
 
-                <div class="col col-md-4">
-                    <div class="button-holder d-flex">
+                <div class="col-12 d-flex justify-content-center mt-4">
+                    <div>
                         <input
                                 type="submit"
-                                class="btn btn-info btn-lg" value="Search "/>
+                                class="btn-submit" value="Search "/>
                     </div>
                 </div>
             </div>
