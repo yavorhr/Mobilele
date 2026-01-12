@@ -166,26 +166,6 @@
     display: inline-block;
 }
 
-.section-title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-
-    width: 100%;
-    height: 3px;
-    background: var(--color-primary);
-    border-radius: 2px;
-
-    transform: scaleX(0.5);
-    transform-origin: center;
-    transition: transform 0.5s ease;
-}
-
-.section-title:hover::after {
-    transform: scaleX(1);
-}
-
 /* ====================
    QUICK SEARCH
 ===================== */
