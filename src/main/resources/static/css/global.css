@@ -6,6 +6,8 @@
     --color-bg-main: #121212;
     --color-bg-soft: rgba(255, 255, 255, 0.05);
     --color-bg-hover: rgba(255, 255, 255, 0.12);
+    --color-bg-white: rgba(255, 255, 255, 0.75);
+    --color-bg-white-hover: rgba(255, 255, 255, 0.95);
 
     --color-primary: #4CAF50;
     --color-primary-light: #66bb6a;
