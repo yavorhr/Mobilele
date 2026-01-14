@@ -4,10 +4,11 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/users/profile.css')"></head>
 
-<body>
 <header th:replace="fragments/navbar"></header>
 
-<main class="container profile-container mt-5" th:object="${user}">
+<body class="auth-layout">
+
+<main class="container profile-container auth-content" th:object="${user}">
     <div class="profile-card">
         <h2 class="text-center mb-4">My Profile</h2>
 
@@ -55,6 +56,10 @@
         </div>
     </div>
 </main>
+
+<footer th:replace="fragments/minimal-footer"></footer>
+
 </body>
+
 <script th:src="@{/js/editProfile.js}"></script>
 </html>
