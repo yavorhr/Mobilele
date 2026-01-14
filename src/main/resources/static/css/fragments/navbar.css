@@ -2,40 +2,73 @@
    LANGUAGE DROPDOWN
 ===================== */
 
-/* Parent elements */
 .home-lang-wrapper {
     display: flex;
-    align-content: center;
-    justify-content: center;
-    gap: 5px;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+/* Outer pill */
 .language-form {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
 
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    cursor: pointer;
-    border-radius: 20px;
-    padding: 0.2rem 0.5rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    overflow: hidden;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .language-form:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--color-bg-soft);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 .language-form select {
-    padding: 0.15rem 0.3rem;
+    appearance: none;
     background: transparent;
     border: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
     outline: none;
+    padding: 0.2rem 1.2rem 0.2rem 0.4rem;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+
     color: var(--color-white-main);
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    box-shadow: none;
+}
+
+/* Focus style – matches your inputs */
+.language-form:focus-within {
+    border-color: var(--color-turquoise);
+    box-shadow: 0 0 0 2px rgba(23, 162, 184, 0.35);
+}
+
+.language-form select option {
+    color: var(--color-bg-main);
+    cursor: pointer;
+}
+
+/* Positioning in navbar */
+.language-item {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 0.75rem;
+}
+
+/* Logo */
+.navbar .logo {
+    max-height: 50px;
 }
 
 /* Responsive attributes */
@@ -47,18 +80,7 @@
     font-size: clamp(0.4rem, 2vw, 1.2rem);
 }
 
-.language-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    margin-left: auto;
-    margin-right: 0.75rem;
-}
-
-.navbar .logo {
-    max-height: 50px;
-}
 
 /* ================
     "RATE US"
