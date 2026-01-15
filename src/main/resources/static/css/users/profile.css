@@ -5,29 +5,29 @@
 }
 
 .profile-card {
-    background-color: #343a40;
-    border-radius: 15px;
-    padding: 2rem 3rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-    width: 100%;
     max-width: 600px;
+    width: 100%;
+    padding: 2rem 3rem;
+    background-color: var(--color-bg-dark-form);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
 }
 
 .profile-card h2 {
-    color: #17a2b8;
-    border-bottom: 2px solid #17a2b8;
+    color: var(--color-turquoise);
+    border-bottom: 2px solid var(--color-turquoise);
     padding-bottom: 0.5rem;
 }
 
 .profile-info p {
-    font-size: 1.1rem;
-    border-bottom: 1px solid #555;
     padding: 0.5rem 0;
     margin: 0.3rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var( --color-gray);
 }
 
 .profile-info strong {
-    color: #ffc107;
+    color: var(--color-accent);
 }
 
 .actions {
@@ -36,27 +36,7 @@
     gap: 1rem;
 }
 
-.btn {
-    border-radius: 8px;
-    padding: 0.5rem 1.2rem;
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #bd2130;
-}
-
-.btn-submit {
-    padding: 0.5rem 1.3rem;
-}
-
-/* === Edit Profile === */
+/* Edit Profile */
 .hidden {
     display: none !important;
 }
@@ -64,12 +44,12 @@
 .editable-input,
 .readonly-input {
     width: 100%;
-    background-color: #495057;
-    border: 1px solid #666;
-    border-radius: 5px;
-    color: #fff;
     padding: 0.3rem 0.5rem;
     margin-top: 0.2rem;
+    background-color: #495057;
+    border-radius: 5px;
+    border: 1px solid #666;
+    color: var(--color-white-main);
 }
 
 .readonly-input {

@@ -186,23 +186,6 @@
     outline: none;
 }
 
-.btn-submit {
-    background-color: var(--color-turquoise);
-    color: var(--color-white-main);
-    border: none;
-    border-radius: 8px;
-    padding: 0.7rem 1.8rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-submit:hover {
-    background-color: var(--color-turquoise-hover);
-    transform: scale(1.05);
-}
-
 .feedback-message {
     margin-top: 1rem;
     font-weight: bold;
