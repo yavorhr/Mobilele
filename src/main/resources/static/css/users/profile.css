@@ -44,14 +44,6 @@
     transition: all 0.3s ease;
 }
 
-.btn-primary {
-    background-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0069d9;
-}
-
 .btn-danger {
     background-color: #dc3545;
 }
@@ -60,6 +52,9 @@
     background-color: #bd2130;
 }
 
+.btn-submit {
+    padding: 0.5rem 1.3rem;
+}
 
 /* === Edit Profile === */
 .hidden {

@@ -9,7 +9,7 @@
 <body class="auth-layout">
 
 <main class="container profile-container auth-content" th:object="${user}">
-    <div class="profile-card">
+    <section class="profile-card">
         <h2 class="text-center mb-4">My Profile</h2>
 
         <div class="profile-info">
@@ -50,11 +50,11 @@
         </div>
 
         <div class="actions mt-4">
-            <button id="edit-btn" class="btn btn-primary">Edit Profile</button>
+            <button id="edit-btn" class="btn-submit">Edit Profile</button>
             <button id="save-btn" class="btn btn-success hidden">Save</button>
             <button id="cancel-btn" class="btn btn-secondary hidden">Cancel</button>
         </div>
-    </div>
+    </section>
 </main>
 
 <footer th:replace="fragments/minimal-footer"></footer>
