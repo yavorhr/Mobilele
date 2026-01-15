@@ -303,7 +303,7 @@ public class OfferServiceImpl implements OfferService {
   public Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable) {
     return offerRepository
             .findFavoritesByUsername(username, pageable)
-            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
+            .map(this::mapToOfferBaseViewModel);
   }
 
   @Transactional
