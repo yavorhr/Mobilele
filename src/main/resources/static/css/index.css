@@ -213,66 +213,7 @@
  RECENT AND MOST VIEWED
 ===================== */
 
-/*  GRID */
-.offers-grid {
-    display: grid;
-    justify-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, 260px);
-    gap: 2rem;
-}
 
-/* OFFER CARD */
-.offer-card {
-    overflow: hidden;
-}
-
-.offer-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
-}
-
-.offer-card-link {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none !important;
-    height: 100%;
-}
-
-/* OFFER IMAGE  */
-.offer-image img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-/* OFFER INFO */
-.offer-info {
-    padding: 1rem;
-    text-align: left;
-}
-
-.offer-info h3 {
-    color: var(--white);
-    margin-bottom: var(--margin-btm-0_5);
-    text-align: center;
-}
-
-.offer-meta {
-    display: flex;
-    flex-direction: column;
-    color: var(--color-white-muted);
-    margin-bottom: var(--margin-btm-0_5)
-}
-
-.offer-price {
-    font-size: var(--font-size_1-5);
-    font-weight: 700;
-    color: var(--color-primary);
-    text-align: center;
-}
 
 /* OFFER VIEWS */
 .views-counter {
