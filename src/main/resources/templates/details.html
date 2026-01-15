@@ -4,79 +4,80 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/offers/offer-details.css')"></head>
 
-<body>
+<body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<div class="offer-page container mt-4"
-     th:object="${offer}">
-    <!-- === MAIN SECTION WITH GRID (70% : 30%) === -->
-    <div class="main-section">
-        <!-- === GALLERY SECTION === -->
-        <section class="gallery-section">
-            <div class="main-image-container">
-                <div class="reserved-banner" th:if="*{isReserved}">
-                    <span>Reserved</span>
-                </div>
-                <img id="modalImage"
-                     th:src="*{pictures[0].pictureUrl}"
-                     alt="Main Image"
-                     class="main-image"
-                     th:attr="data-public-id=*{pictures[0].picturePublicId}">
+<main class="main-content">
+    <div class="offer-page container mt-4"
+         th:object="${offer}">
 
-                <button id="prevBtn" class="nav-btn left">&lt;</button>
-                <button id="nextBtn" class="nav-btn right">&gt;</button>
+        <div class="main-section">
+            <!-- === GALLERY SECTION === -->
+            <section class="gallery-section">
+                <div class="main-image-container">
+                    <div class="reserved-banner" th:if="*{isReserved}">
+                        <span>Reserved</span>
+                    </div>
+                    <img id="modalImage"
+                         th:src="*{pictures[0].pictureUrl}"
+                         alt="Main Image"
+                         class="main-image"
+                         th:attr="data-public-id=*{pictures[0].picturePublicId}">
 
-                <button type="button" id="deleteBtn"
-                        data-offer-id="[[${offer.id}]]"
-                        class="btn btn-danger deletePictureBtn">
-                    Delete
-                </button>
-            </div>
+                    <button id="prevBtn" class="nav-btn left">&lt;</button>
+                    <button id="nextBtn" class="nav-btn right">&gt;</button>
 
-            <div class="thumbnail-container">
-                <img th:each="p, iterStat : *{pictures}"
-                     th:src="${p.pictureUrl}"
-                     th:attr="data-index=${iterStat.index}, data-public-id=${p.picturePublicId}"
-                     class="thumbnail"
-                     alt="Thumbnail">
-            </div>
-        </section>
-
-        <!-- === INFO SECTION === -->
-        <aside class="info-section">
-
-            <div class="views-counter">
-                <span class="eye-icon">👁️</span>
-                <span th:text="'Views: ' + *{views}"></span>
-            </div>
-
-            <h2 th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
-            <h4 th:text="'Year: ' + *{modelYear}"></h4>
-            <p class="price" th:text="*{price} + ' BGN'"></p>
-
-            <p class="price" th:text="*{country} + ', ' + *{city}"></p>
-
-            <div class="seller-info">
-                <h5>Seller Information</h5>
-                <p><i class="fa fa-user"></i> <span th:text="*{seller.getFullName()}"></span></p>
-                <p><i class="fa fa-envelope"></i> <span th:text="*{seller.getEmail()}"></span></p>
-                <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
-            </div>
-
-            <div class="favorite-container">
-                <div id="favorite-message" class="favorite-message"></div>
-                <th:block th:if="*{isNotOwnerOrIsAdmin}">
-                    <button
-                            type="button"
-                            class="btn save-btn"
-                            th:data-offer-id="*{id}"
-                            th:classappend="${isFavorite} ? 'added' : ''">
-                        <span class="heart-icon">💖</span>
-                        <span class="btn-text"
-                              th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
+                    <button type="button" id="deleteBtn"
+                            data-offer-id="[[${offer.id}]]"
+                            class="btn btn-danger deletePictureBtn">
+                        Delete
                     </button>
-                </th:block>
-            </div>
+                </div>
+
+                <div class="thumbnail-container">
+                    <img th:each="p, iterStat : *{pictures}"
+                         th:src="${p.pictureUrl}"
+                         th:attr="data-index=${iterStat.index}, data-public-id=${p.picturePublicId}"
+                         class="thumbnail"
+                         alt="Thumbnail">
+                </div>
+            </section>
+
+            <!-- === INFO SECTION === -->
+            <aside class="info-section">
+
+                <div class="views-counter">
+                    <span class="eye-icon">👁️</span>
+                    <span th:text="'Views: ' + *{views}"></span>
+                </div>
+
+                <h2 th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
+                <h4 th:text="'Year: ' + *{modelYear}"></h4>
+                <p class="price" th:text="*{price} + ' BGN'"></p>
+
+                <p class="price" th:text="*{country} + ', ' + *{city}"></p>
+
+                <div class="seller-info">
+                    <h5>Seller Information</h5>
+                    <p><i class="fa fa-user"></i> <span th:text="*{seller.getFullName()}"></span></p>
+                    <p><i class="fa fa-envelope"></i> <span th:text="*{seller.getEmail()}"></span></p>
+                    <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
+                </div>
+
+                <div class="favorite-container">
+                    <div id="favorite-message" class="favorite-message"></div>
+                    <th:block th:if="*{isNotOwnerOrIsAdmin}">
+                        <button
+                                type="button"
+                                class="btn save-btn"
+                                th:data-offer-id="*{id}"
+                                th:classappend="${isFavorite} ? 'added' : ''">
+                            <span class="heart-icon">💖</span>
+                            <span class="btn-text"
+                                  th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
+                        </button>
+                    </th:block>
+                </div>
                 <th:block th:if="*{canModify}">
                     <div class="modify-buttons">
                         <button
@@ -86,15 +87,16 @@
                                 th:data-reserved="*{isReserved}"
                                 th:classappend="${isReserved} ? 'reserved' : ''">
                             <span class="icon" th:text="${isReserved} ? '🔒' : '🟢'"></span>
-                            <span class="text" th:text="${isReserved} ? 'Cancel reservation' : 'Mark as reserved'"></span>
+                            <span class="text"
+                                  th:text="${isReserved} ? 'Cancel reservation' : 'Mark as reserved'"></span>
                         </button>
 
                         <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
                         <form
-                              th:action="@{/offers/{id}(id=${offer.id})}"
-                              th:method="delete"
-                              id="delete-offer-form"
-                              class="d-inline">
+                                th:action="@{/offers/{id}(id=${offer.id})}"
+                                th:method="delete"
+                                id="delete-offer-form"
+                                class="d-inline">
                             <input type="hidden" name="soldOffer" id="soldOffer" value="false"/>
                             <button type="button" id="delete-offer-btn" class="btn delete-btn">Delete</button>
                         </form>
@@ -118,45 +120,48 @@
                         </form>
                     </div>
                 </th:block>
-        </aside>
-    </div>
+            </aside>
+        </div>
 
-    <!-- === CAR DETAILS === -->
-    <section class="car-details">
-        <h4>Car Details</h4>
-        <div class="details-grid">
-            <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="*{engine}"></span></div>
-            <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="*{mileage} + ' km'"></span>
+        <!-- === CAR DETAILS === -->
+        <section class="car-details">
+            <h4>Car Details</h4>
+            <div class="details-grid">
+                <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="*{engine}"></span></div>
+                <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="*{mileage} + ' km'"></span>
+                </div>
+                <div class="detail-item"><i class="fa fa-road"></i> <span th:text="*{transmission}"></span></div>
+                <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
+                <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{condition}"></span></div>
+                <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="*{modelYear}"></span></div>
             </div>
-            <div class="detail-item"><i class="fa fa-road"></i> <span th:text="*{transmission}"></span></div>
-            <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
-            <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{condition}"></span></div>
-            <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="*{modelYear}"></span></div>
-        </div>
-    </section>
+        </section>
 
-    <!-- === DESCRIPTION === -->
-    <section class="description-section">
-        <h4>Description</h4>
-        <p th:text="*{description}"></p>
-    </section>
-</div>
+        <!-- === DESCRIPTION === -->
+        <section class="description-section">
+            <h4>Description</h4>
+            <p th:text="*{description}"></p>
+        </section>
+    </div>
 
-<div id="delete-confirm-box" class="delete-confirm-overlay hidden">
-    <div class="delete-confirm-window">
-        <h4>Delete Offer</h4>
-        <p>Did you manage to sell your car in Mobilele?</p>
+    <div id="delete-confirm-box" class="delete-confirm-overlay hidden">
+        <div class="delete-confirm-window">
+            <h4>Delete Offer</h4>
+            <p>Did you manage to sell your car in Mobilele?</p>
 
-        <div class="confirm-buttons">
-            <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
-            <button id="confirm-no" class="btn btn-warning">No, just delete</button>
-            <button id="confirm-yes" class="btn btn-success">Yes, I sold it</button>
+            <div class="confirm-buttons">
+                <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-no" class="btn btn-warning">No, just delete</button>
+                <button id="confirm-yes" class="btn btn-success">Yes, I sold it</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!--<footer th:replace="fragments/footer"></footer>-->
+</main>
+<footer th:replace="fragments/minimal-footer"></footer>
+
 </body>
+
 <script src="/js/offer/gallery.js"></script>
 <script src="/js/offer/uploadImage.js"></script>
 <script src="/js/offer/deletePicture.js"></script>
