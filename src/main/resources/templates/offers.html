@@ -47,7 +47,7 @@
                 <option value="desc" th:selected="${dir == 'desc'}">Descending</option>
             </select>
 
-            <button type="submit" class="btn btn-info">Sort</button>
+            <button type="submit" class="sort-btn">Sort</button>
         </form>
     </section>
 
@@ -101,7 +101,7 @@
                    th:href="@{/offers/brands/{brand}(
                    brand=${brand},
                    page=${currentPage - 1}, sort=${sort}, dir=${dir})}"
-                   class="pagination-btn">&laquo; Prev</a>
+                   class="btn">&laquo; Prev</a>
 
                 <a th:case="'my'"
                    th:href="@{/offers/my-offers(
