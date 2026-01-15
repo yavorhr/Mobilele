@@ -1,19 +1,10 @@
 
 /* Sticky footer */
 body {
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
-
-main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 1rem;
-}
-
 
 .site-footer--minimal {
     background: var(--color-bg-main);
