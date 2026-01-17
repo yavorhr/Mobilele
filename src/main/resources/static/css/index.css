@@ -157,7 +157,7 @@
 .hero p {
     max-width: 600px;
     margin: 0 auto 2rem;
-    font-size: var(--font-size-p-large)
+    font-size: var(--font-size_1-5)
 }
 
 /* SECTION TITLES */
@@ -182,7 +182,7 @@
 
 .quick-search p {
     color: var(--color-white-muted);
-    font-style: var(--font-size-p-large);
+    font-style: var(--font-size_1-5);
     margin-bottom: var(--margin-btm-1_5);
 }
 
