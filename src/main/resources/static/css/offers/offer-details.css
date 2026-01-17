@@ -32,15 +32,41 @@
       COMMON
 ===================== */
 
-.section{
+.section {
     background: var(--color-bg-soft);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     box-shadow: var(--shadow-md);
 }
 
+.section-heading {
+    position: relative;
+    margin-bottom: 1rem;
+    padding-left: 0.8rem;
+    font-size: var(--font-size_1-5);
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-white-main);
+}
+
+/* Accent bar */
+.section-heading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 4px;
+    border-radius: 4px;
+    background: linear-gradient(
+            to bottom,
+            var(--color-primary),
+            var(--color-primary-light)
+    );
+}
+
 /* =====================
-      GALLERY
+    GALLERY SECTION
 ===================== */
 
 .main-image-container {
@@ -71,19 +97,21 @@
 .nav-btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.55);
-    color: var(--color-white-main);
-    border: none;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-bg-main);
     border-radius: 50%;
-    font-size: 1.3rem;
     cursor: pointer;
+    border: none;
+
+    color: var(--color-white-main);
+    font-size: var(--font-size_1-2);
+
+    transform: translateY(-50%);
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .nav-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--color-gray);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -115,84 +143,60 @@
 }
 
 .thumbnail:hover {
-    transform: scale(1.05);
     opacity: 1;
     box-shadow: var(--shadow-sm);
+    transform: scale(1.05);
 }
 
-.views-counter {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--color-white-muted);
-    background: rgba(255, 255, 255, 0.06);
-    padding: 0.35rem 0.75rem;
-    border-radius: var(--radius-sm);
-}
+/* =====================
+    INFO SECTION
+===================== */
 
-.views-counter .eye-icon {
-    font-size: 1.2rem;
-}
 
-/* === INFO SECTION === */
 .info-section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.info-section h2 {
-    font-size: 1.6rem;
+/* Views and Favorites*/
+.views-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--color-bg-soft);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--font-size_1-2);
+    color: var(--color-white-muted);
+}
+
+.views-counter .eye-icon {
+    font-size: 1.2rem;
+}
+
+/* Offer meta data */
+.offer-title {
+    font-size: var(--font-size_2);
     color: var(--color-white-main);
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
 }
 
 .price {
-    font-size: 1.8rem;
+    font-size: var(--font-size_1-5);
     color: var(--color-primary);
     font-weight: 700;
 }
 
 .location {
-    font-size: 1.8rem;
-    color: var(--color-white-main);
-    font-weight: 700;
-}
-
-.offer-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: var(--color-white-main);
-    margin-bottom: 0.3rem;
-}
-
-.section-heading {
-    position: relative;
     font-size: var(--font-size_1-5);
-    font-weight: 700;
-    letter-spacing: 1px;
     color: var(--color-white-main);
-    margin-bottom: 1rem;
-    padding-left: 0.8rem;
+    font-weight: 700;
 }
 
-/* Accent bar */
-.section-heading::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 10%;
-    height: 80%;
-    width: 4px;
-    background: linear-gradient(
-            to bottom,
-            var(--color-primary),
-            var(--color-primary-light)
-    );
-    border-radius: 4px;
-}
 
 .seller-info h5 {
     margin-top: 10px;
