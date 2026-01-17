@@ -3,12 +3,13 @@
 ===================== */
 
 .offer-page {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 1.5rem;
 }
 
 .main-section {
@@ -28,6 +29,17 @@
 }
 
 /* =====================
+      COMMON
+===================== */
+
+.section{
+    background: var(--color-bg-soft);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+/* =====================
       GALLERY
 ===================== */
 
@@ -38,10 +50,6 @@
 }
 
 .gallery-section {
-    background: var(--color-bg-soft);
-    border-radius: var(--radius-lg);
-    padding: 1rem;
-    box-shadow: var(--shadow-md);
     backdrop-filter: blur(6px);
 }
 
@@ -130,10 +138,6 @@
 
 /* === INFO SECTION === */
 .info-section {
-    background: var(--color-bg-soft);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -523,13 +527,6 @@
 }
 
 /* === DESCRIPTION === */
-.description-section {
-    background: var(--color-bg-soft);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-}
-
 .description-section p {
     margin-top: 10px;
 }

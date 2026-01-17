@@ -13,7 +13,7 @@
 
         <div class="main-section">
             <!-- === GALLERY SECTION === -->
-            <section class="gallery-section">
+            <section class="gallery-section section">
                 <div class="main-image-container">
                     <div class="reserved-banner" th:if="*{isReserved}">
                         <span>Reserved</span>
@@ -48,7 +48,7 @@
             </section>
 
             <!-- === INFO SECTION === -->
-            <aside class="info-section">
+            <aside class="info-section section">
                 <div class="views-favorites-wrapper">
                     <div class="views-counter">
                         <span class="eye-icon">👁️</span>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- === CAR DETAILS === -->
-        <section class="car-details">
+        <section class="car-details section">
             <h4 class="section-heading">Car Details</h4>
             <div class="details-grid">
                 <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="*{engine}"></span></div>
@@ -147,7 +147,7 @@
         </section>
 
         <!-- === DESCRIPTION === -->
-        <section class="description-section">
+        <section class="description-section section">
             <h4 class="section-heading" >Description</h4>
             <p th:text="*{description}"></p>
         </section>
