@@ -215,10 +215,6 @@
     letter-spacing: 0.5px;
 }
 
-.update-btn {
-    background-color: #ffc107;
-    color: #333;
-}
 
 .delete-image-btn {
     position: absolute;
@@ -252,11 +248,6 @@
     transform: scale(1.1);
     background: #c82333; /* darker red */
     box-shadow: var(--shadow-md);
-}
-
-#delete-offer-btn {
-    background-color: #dc3545;
-    color: white;
 }
 
 .views-favorites-wrapper {
@@ -321,21 +312,44 @@
     background: linear-gradient(135deg, #666, #999);
 }
 
-.reserve-btn {
+.reserve-btn, .update-btn, .delete-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 1rem;
     border-radius: var(--radius-md);
     background: transparent;
-    border: 2px solid var(--color-turquoise);
-    color: var(--color-turquoise);
     font-weight: 600;
     transition: all 0.2s ease;
 }
 
+.reserve-btn {
+    border: 2px solid var(--color-turquoise);
+    color: var(--color-turquoise);
+}
+
 .reserve-btn:hover {
     background: var(--color-turquoise);
+    color: white;
+}
+
+.update-btn {
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+}
+
+.update-btn:hover {
+    background: var(--color-accent);
+    color: white;
+}
+
+.delete-btn {
+    border: 2px solid var(--color-close-button);
+    color: var(--color-close-button);
+}
+
+.delete-btn:hover {
+    background: var(--color-close-button);
     color: white;
 }
 
@@ -402,15 +416,12 @@
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
-    background: linear-gradient(
-            135deg,
-            var(--color-primary),
-            var(--color-primary-light)
-    );
-
+    border-radius: var(--radius-md);
+    background: transparent;
+);
+    border: 2px solid var(--color-primary);
     color: white;
-    
+
     cursor: pointer;
     box-shadow: var(--shadow-md);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -419,12 +430,12 @@
 .add-picture-btn:hover {
     transform: scale(1.1);
     box-shadow: var(--shadow-lg);
+    background: var(--color-primary);
+    color: white;
 }
 
-.add-picture-text {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--color-white-muted);
+.add-picture-btn span {
+    margin-left: 5px;
 }
 
 .upload-container {
