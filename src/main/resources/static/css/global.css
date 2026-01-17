@@ -31,13 +31,12 @@
     --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.3);
 
-    --font-size-p-large: 1.4rem;
-
     --margin-btm-0_5: 0.5rem;
     --margin-btm-1: 1rem;
     --margin-btm-1_5: 1.5rem;
     --margin-btm-2: 2rem;
 
+    --font-size_1-2: 1.2rem;
     --font-size_1-5: 1.5rem;
     --font-size_2: 2rem;
 
