@@ -163,16 +163,43 @@
 .update-btn {
     background-color: #ffc107;
     color: #333;
-    margin-right: 10px;
 }
 
-#deleteBtn {
+.delete-image-btn {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 12px;
+    right: 12px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--color-error);
+    color: white;
+
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    z-index: 10;
 }
 
-#deleteBtn, #delete-offer-btn {
+.delete-image-btn i {
+    font-size: 1.1rem;
+}
+
+.delete-image-btn:hover {
+    transform: scale(1.1);
+    background: #c82333; /* darker red */
+    box-shadow: var(--shadow-md);
+}
+
+#delete-offer-btn {
     background-color: #dc3545;
     color: white;
 }
@@ -204,6 +231,12 @@
 .favorite-message.show {
     opacity: 1;
     transform: translateX(-50%) translateY(-4px);
+}
+
+.modify-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* Button + Icon */

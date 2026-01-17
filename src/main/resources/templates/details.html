@@ -27,11 +27,15 @@
                     <button id="prevBtn" class="nav-btn left">&lt;</button>
                     <button id="nextBtn" class="nav-btn right">&gt;</button>
 
-                    <button type="button" id="deleteBtn"
-                            data-offer-id="[[${offer.id}]]"
-                            class="btn btn-danger deletePictureBtn">
-                        Delete
-                    </button>
+                    <th:block th:if="*{canModify}">
+                        <button type="button"
+                                id="deleteBtn"
+                                data-offer-id="[[${offer.id}]]"
+                                class="delete-image-btn"
+                                title="Delete image">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </th:block>
                 </div>
 
                 <div class="thumbnail-container">
@@ -104,25 +108,24 @@
                             <input type="hidden" name="soldOffer" id="soldOffer" value="false"/>
                             <button type="button" id="delete-offer-btn" class="btn delete-btn">Delete</button>
                         </form>
-
-                        <form id="picture-upload-form"
-                              th:action="@{/pictures}"
-                              th:method="POST"
-                              enctype="multipart/form-data">
-
-                            <input type="hidden" name="offerId" th:value="*{id}"/>
-                            <input type="hidden" name="modelVehicleType" th:value="*{modelVehicleType}"/>
-
-                            <div class="upload-container">
-                                <input id="picture-upload" type="file" name="pictures" multiple/>
-                                <label for="picture-upload">
-                                    <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
-                                    <div id="uploadSuccess" class="upload-success">Picture added</div>
-                                    <div id="uploadFail" class="upload-fail">Picture can't be added</div>
-                                </label>
-                            </div>
-                        </form>
                     </div>
+                    <form id="picture-upload-form"
+                          th:action="@{/pictures}"
+                          th:method="POST"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden" name="offerId" th:value="*{id}"/>
+                        <input type="hidden" name="modelVehicleType" th:value="*{modelVehicleType}"/>
+
+                        <div class="upload-container">
+                            <input id="picture-upload" type="file" name="pictures" multiple/>
+                            <label for="picture-upload">
+                                <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
+                                <div id="uploadSuccess" class="upload-success">Picture added</div>
+                                <div id="uploadFail" class="upload-fail">Picture can't be added</div>
+                            </label>
+                        </div>
+                    </form>
                 </th:block>
             </aside>
         </div>
