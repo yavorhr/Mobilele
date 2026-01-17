@@ -118,9 +118,11 @@
                         <input type="hidden" name="modelVehicleType" th:value="*{modelVehicleType}"/>
 
                         <div class="upload-container">
-                            <input id="picture-upload" type="file" name="pictures" multiple/>
+                            <input id="picture-upload" hidden type="file" name="pictures" multiple/>
                             <label for="picture-upload">
-                                <img src="/images/add-img.png" alt="Add picture" class="upload-img"/>
+                                <label for="picture-upload" class="add-picture-btn" title="Add picture">
+                                    <i class="fa fa-plus"><span>Add pictures</span></i>
+                                </label>
                                 <div id="uploadSuccess" class="upload-success">Picture added</div>
                                 <div id="uploadFail" class="upload-fail">Picture can't be added</div>
                             </label>
