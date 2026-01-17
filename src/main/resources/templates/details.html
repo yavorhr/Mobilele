@@ -7,7 +7,7 @@
 <body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<main class="main-content">
+<main class="main-content mt-">
     <div class="offer-page container mt-4"
          th:object="${offer}">
 
@@ -45,7 +45,6 @@
 
             <!-- === INFO SECTION === -->
             <aside class="info-section">
-
                 <div class="views-counter">
                     <span class="eye-icon">👁️</span>
                     <span th:text="'Views: ' + *{views}"></span>
