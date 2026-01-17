@@ -45,10 +45,27 @@
 
             <!-- === INFO SECTION === -->
             <aside class="info-section">
-                <div class="views-counter">
-                    <span class="eye-icon">👁️</span>
-                    <span th:text="'Views: ' + *{views}"></span>
+                <div class="views-favorites-wrapper">
+                    <div class="views-counter">
+                        <span class="eye-icon">👁️</span>
+                        <span th:text="'Views: ' + *{views}"></span>
+                    </div>
+                    <div class="favorite-container">
+                        <div id="favorite-message" class="favorite-message"></div>
+                        <th:block th:if="*{isNotOwnerOrIsAdmin}">
+                            <button
+                                    type="button"
+                                    class="btn save-btn"
+                                    th:data-offer-id="*{id}"
+                                    th:classappend="${isFavorite} ? 'added' : ''">
+                                <span class="heart-icon">💖</span>
+                                <span class="btn-text"
+                                      th:text="${isFavorite} ? 'Remove from Favorites' : 'Add to Favorites'"></span>
+                            </button>
+                        </th:block>
+                    </div>
                 </div>
+
 
                 <h2 th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
                 <h4 th:text="'Year: ' + *{modelYear}"></h4>
@@ -63,20 +80,7 @@
                     <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
                 </div>
 
-                <div class="favorite-container">
-                    <div id="favorite-message" class="favorite-message"></div>
-                    <th:block th:if="*{isNotOwnerOrIsAdmin}">
-                        <button
-                                type="button"
-                                class="btn save-btn"
-                                th:data-offer-id="*{id}"
-                                th:classappend="${isFavorite} ? 'added' : ''">
-                            <span class="heart-icon">💖</span>
-                            <span class="btn-text"
-                                  th:text="${isFavorite} ? 'Remove from Favorites' : 'Save to Favorites'"></span>
-                        </button>
-                    </th:block>
-                </div>
+
                 <th:block th:if="*{canModify}">
                     <div class="modify-buttons">
                         <button
@@ -91,6 +95,7 @@
                         </button>
 
                         <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
+
                         <form
                                 th:action="@{/offers/{id}(id=${offer.id})}"
                                 th:method="delete"
