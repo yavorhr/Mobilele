@@ -148,10 +148,43 @@
     transform: scale(1.05);
 }
 
+.delete-image-btn {
+    position: absolute;
+    top: 12px;
+
+    right: 12px;
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--color-error);
+    color: white;
+
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    z-index: 10;
+}
+
+.delete-image-btn i {
+    font-size: 1.1rem;
+}
+
+.delete-image-btn:hover {
+    transform: scale(1.1);
+    background: #c82333;
+    box-shadow: var(--shadow-md);
+}
+
 /* =====================
     INFO SECTION
 ===================== */
-
 
 .info-section {
     display: flex;
@@ -160,6 +193,12 @@
 }
 
 /* Views and Favorites*/
+.views-favorites-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .views-counter {
     display: inline-flex;
     align-items: center;
@@ -197,16 +236,12 @@
     font-weight: 700;
 }
 
-
-.seller-info h5 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
+/* Seller meta data */
 .seller-info p {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
     color: var(--color-white-muted);
     font-size: var(--font-size_1-2);
     letter-spacing: 0.5px;
@@ -214,54 +249,14 @@
 
 .seller-info i {
     color: var(--color-turquoise);
-    min-width: 18px;
+    min-width: 25px;
+    font-size: var(--font-size_1-5);
 }
 
 .description-section p {
     color: var(--color-white-muted);
     font-size: var(--font-size_1-2);
     letter-spacing: 0.5px;
-}
-
-
-.delete-image-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--color-error);
-    color: white;
-
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    z-index: 10;
-}
-
-.delete-image-btn i {
-    font-size: 1.1rem;
-}
-
-.delete-image-btn:hover {
-    transform: scale(1.1);
-    background: #c82333; /* darker red */
-    box-shadow: var(--shadow-md);
-}
-
-.views-favorites-wrapper {
-    display: flex;
-    align-items: start;
-    justify-content: space-around;
 }
 
 /* Floating message */
