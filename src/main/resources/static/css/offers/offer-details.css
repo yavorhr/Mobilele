@@ -93,6 +93,34 @@
     box-shadow: var(--shadow-lg);
 }
 
+/* Reserved banner */
+.reserved-banner {
+    position: absolute;
+    top: 14px;
+    left: -48px;
+    width: 200px;
+    background: var(--color-error);
+    box-shadow: var(--shadow-md);
+
+    color: var(--color-white-main);
+    text-align: center;
+    font-weight: 700;
+    font-size: var(--font-size_1);
+    transform: rotate(-45deg);
+}
+
+.reserved-banner span {
+    display: block;
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-image-container.reserved img {
+    opacity: 0.9;
+    filter: grayscale(10%);
+}
+
 /* Navigation buttons */
 .nav-btn {
     position: absolute;
@@ -392,7 +420,6 @@
 }
 
 /* Upload button */
-
 #picture-upload-form {
     display: flex;
     justify-content: center;
@@ -467,42 +494,55 @@
     transform: translateX(-50%) translateY(-4px);
 }
 
-/* Reserved banner */
-.reserved-banner {
-    position: absolute;
-    top: 14px;
-    left: -48px;
-    width: 200px;
-    background: var(--color-error);
-    box-shadow: var(--shadow-md);
+/* Delete pop up box confirmation */
+.delete-confirm-overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    color: var(--color-white-main);
-    text-align: center;
-    font-weight: 700;
-    font-size: var(--font-size_1);
-    transform: rotate(-45deg);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+
+    z-index: 2000;
 }
 
-.reserved-banner span {
-    display: block;
-    padding: 5px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.hidden {
+    display: none !important;
 }
 
-.main-image-container.reserved img {
-    opacity: 0.9;
-    filter: grayscale(10%);
-}
-
-/* === CAR DETAILS === */
-.car-details,
-.description-section {
-    background: var(--color-bg-soft);
+.delete-confirm-window {
+    width: 360px;
+    background: var(--color-bg-dark-form);
+    padding: 2rem;
     border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+
+    text-align: center;
+    color: var(--color-white-main);
 }
+
+.confirm-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1.5rem;
+}
+
+.confirm-buttons button {
+    width: 100%;
+}
+
+.delete-confirm-window h4 {
+    color: var(--color-turquoise);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--color-turquoise);
+    padding-bottom: .5rem;
+}
+
+/* =====================
+   CAR DETAILS SECTION
+===================== */
 
 .details-grid {
     display: grid;
@@ -515,9 +555,9 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-sm);
     padding: 0.6rem 0.8rem;
+    background: var(--color-bg-soft);
+    border-radius: var(--radius-sm);
 }
 
 .detail-item i {
@@ -525,52 +565,14 @@
     font-size: 33px;
 }
 
-/* === DESCRIPTION === */
+/* =====================
+   CAR DETAILS SECTION
+===================== */
+
 .description-section p {
     margin-top: 10px;
 }
 
-.delete-confirm-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.delete-confirm-window {
-    background: var(--color-bg-dark-form);
-    padding: 2rem;
-    border-radius: var(--radius-lg);
-    width: 360px;
-    text-align: center;
-    box-shadow: var(--shadow-lg);
-    color: var(--color-white-main);
-}
-
-.confirm-buttons {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-.confirm-buttons button {
-    width: 100%;
-}
-
-.delete-confirm-window h4 {
-    color: #17a2b8;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #17a2b8;
-    padding-bottom: .5rem;
-}
 
 
 
