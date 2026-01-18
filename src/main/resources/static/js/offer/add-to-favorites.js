@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.querySelector(".save-btn");
+    const btn = document.querySelector(".favorites-btn");
     const messageBox = document.getElementById("favorite-message");
     const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
     const csrfHeaderValue = document.querySelector('meta[name="_csrf"]').content;

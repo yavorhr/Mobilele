@@ -219,6 +219,33 @@
     position: relative;
 }
 
+/* Favorite button */
+.favorites-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(226, 27, 85, 0.9), #bb2557);
+    color: var(--color-white-main);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.favorites-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Heart animation */
+.favorites-btn.animated .heart-icon {
+    animation: pulseHeart 0.6s ease-in-out;
+}
+
+.favorites-btn.added {
+    background: linear-gradient(135deg, #666, #999);
+}
+
 .favorite-message {
     position: absolute;
     top: -45px;
@@ -289,6 +316,7 @@
     letter-spacing: 0.5px;
 }
 
+/* Modify buttons */
 .modify-buttons {
     display: flex;
     align-items: center;
@@ -296,32 +324,6 @@
 }
 
 /* Button + Icon */
-.save-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, rgba(226, 27, 85, 0.9), #bb2557);
-    color: white;
-    border-radius: var(--radius-md);
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    transition: all 0.25s ease;
-}
-
-.save-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-/* Heart animation */
-.save-btn.animated .heart-icon {
-    animation: pulseHeart 0.6s ease-in-out;
-}
-
-.save-btn.added {
-    background: linear-gradient(135deg, #666, #999);
-}
-
 .reserve-btn, .update-btn, .delete-btn {
     display: inline-flex;
     align-items: center;
@@ -373,7 +375,6 @@
     background: transparent;
     color: var(--color-turquoise);
 }
-
 
 /* Reserved banner */
 .reserved-banner {
