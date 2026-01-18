@@ -3,33 +3,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("picture-upload-form");
     const uploadSuccess = document.getElementById("uploadSuccess");
     const uploadFail = document.getElementById("uploadFail");
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+        "image/webp"
+    ];
 
     fileInput.addEventListener("change", () => {
         const files = fileInput.files;
         if (!files || files.length === 0) return;
 
+        hideMessages();
+
         for (const file of files) {
             if (!allowedTypes.includes(file.type)) {
-                showMessage(uploadFail, "Only image files are allowed");
+                show(uploadFail);
                 fileInput.value = "";
                 return;
             }
         }
 
-        setTimeout(() => form.submit(), 200);
+        show(uploadSuccess);
 
-        if (uploadSuccess) {
-            uploadSuccess.style.opacity = 1;
-            setTimeout(() => (uploadSuccess.style.opacity = 0), 2000);
-        }
+        setTimeout(() => {
+            form.submit();
+        }, 400);
     });
 
-    function showMessage(element, message) {
-        if (!element) return;
+    function show(el) {
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 2000);
+    }
 
-        element.textContent = message;
-        element.style.opacity = 1;
-        setTimeout(() => (element.style.opacity = 0), 2000);
+    function hideMessages() {
+        uploadSuccess.classList.remove("show");
+        uploadFail.classList.remove("show");
     }
 });
