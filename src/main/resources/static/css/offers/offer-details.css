@@ -215,9 +215,8 @@
     font-size: 1.2rem;
 }
 
-
 .favorite-container{
-    position: absolute;
+    position: relative;
 }
 
 .favorite-message {
@@ -365,13 +364,14 @@
 }
 
 .reserve-btn.reserved {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #222;
+    border: 2px solid var(--color-turquoise);
+    background: var(--color-turquoise);
+    color: var(--color-white-main);
 }
 
 .reserve-btn.reserved:hover {
-    background-color: #e0a800;
+    background: transparent;
+    color: var(--color-turquoise);
 }
 
 
