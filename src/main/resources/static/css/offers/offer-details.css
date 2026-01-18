@@ -424,12 +424,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
 }
 
 .upload-container {
     position: relative;
     display: inline-block;
-    margin-top: 1.5rem;
     text-align: center;
 }
 
@@ -465,19 +465,20 @@
 
 .upload-message {
     position: absolute;
-    top: -34px;
+    top: -40px;
     left: 50%;
-    transform: translateX(-50%);
 
+    min-width: 200px;
     padding: 6px 14px;
     border-radius: 8px;
 
-    font-size: 0.9rem;
+    font-size: var(--font-size_1);
     font-weight: 500;
-    color: white;
+    color: var(--color-white-main);
 
     opacity: 0;
     pointer-events: none;
+    transform: translateX(-50%);
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
