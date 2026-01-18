@@ -117,8 +117,8 @@ public class UsersController {
 
       response.put("success", true);
       response.put("message", added
-              ? "Offer added to favorites!"
-              : "Offer removed from favorites!");
+              ? "Offer added"
+              : "Offer removed");
 
       return ResponseEntity.ok(response);
 
