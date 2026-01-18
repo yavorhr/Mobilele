@@ -107,6 +107,7 @@
     font-weight: 700;
     font-size: var(--font-size_1);
     transform: rotate(-45deg);
+    z-index: 99999;
 }
 
 .reserved-banner span {
@@ -326,14 +327,15 @@
 }
 
 .price {
-    font-size: var(--font-size_1-5);
+    margin: 0.4rem 0;
+    font-size: 2rem;
+    font-weight: 800;
     color: var(--color-primary);
-    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .location {
     font-size: var(--font-size_1-5);
-    color: var(--color-white-main);
     font-weight: 700;
 }
 

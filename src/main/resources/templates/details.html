@@ -122,7 +122,7 @@
                                    hidden
                                    type="file"
                                    name="pictures"
-                                   multiple />
+                                   multiple/>
 
                             <label for="picture-upload"
                                    class="add-picture-btn"
@@ -148,19 +148,19 @@
         <section class="car-details section">
             <h4 class="section-heading">Car Details</h4>
             <div class="details-grid">
-                <div class="detail-item"><i class="fa fa-cogs"></i> <span th:text="*{engine}"></span></div>
-                <div class="detail-item"><i class="fa fa-tachometer"></i> <span th:text="*{mileage} + ' km'"></span>
-                </div>
-                <div class="detail-item"><i class="fa fa-road"></i> <span th:text="*{transmission}"></span></div>
+                <div class="detail-item"></i><i class="fa-solid fa-gears"></i><span th:text="*{engine}"></span></div>
+                <div class="detail-item"><i class="fa-solid fa-gas-pump"></i> <span th:text="*{mileage} + ' km'"></span></div>
+                <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{transmission}"></span></div>
                 <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
-                <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{condition}"></span></div>
-                <div class="detail-item"><i class="fa fa-calendar"></i> <span th:text="*{modelYear}"></span></div>
+                <div class="detail-item"><i class="fa-solid fa-wrench"></i> <span th:text="*{condition}"></span></div>
+                <div class="detail-item"><i class="fa-regular fa-calendar-days"></i> <span th:text="*{modelYear}"></span></div>
             </div>
         </section>
 
+
         <!-- === DESCRIPTION === -->
         <section class="description-section section">
-            <h4 class="section-heading" >Description</h4>
+            <h4 class="section-heading">Description</h4>
             <p th:text="*{description}"></p>
         </section>
     </div>
