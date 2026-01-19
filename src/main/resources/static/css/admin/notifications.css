@@ -33,10 +33,9 @@
     text-transform: uppercase;
 }
 
-
-/* ================
-   NOTIF TABLE
- ================ */
+/* ===================
+   NOTIFICATION TABLE
+ =================== */
 
 /* Main wrapper */
 .table-wrapper {
@@ -54,8 +53,8 @@
 
 /* Table */
 .notifications-table {
-    width: 950%;
     min-width: 1100px;
+    width: 100%;
     margin: 20px auto;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -78,6 +77,7 @@ th {
     letter-spacing: 1px;
 }
 
+/* Zebra effect */
 .notifications-table tbody tr:hover {
     background-color: var(--color-bg-white-hover);
     transform: scale(1.002);
@@ -114,7 +114,11 @@ th {
     color: var(--color-white-main);
 }
 
-/* Actions Container */
+/* ===========
+    BUTTONS
+ ============= */
+
+/* Container */
 .actions-container {
     display: flex;
     align-items: center;
@@ -225,8 +229,9 @@ th {
     cursor: pointer;
 }
 
-
-/* Pagination and search by email */
+/* ===========
+  PAGINATION
+ ============= */
 
 /* Pagination */
 .active-page {

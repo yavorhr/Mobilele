@@ -29,7 +29,7 @@ public class NotificationsController {
   public String viewNotifications(
           @RequestParam(defaultValue = "") String query,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size,
+          @RequestParam(defaultValue = "2") int size,
           Model model,
           @AuthenticationPrincipal UserDetails principal) {
 
