@@ -66,6 +66,25 @@ body {
     margin: 0;
 }
 
+.auth-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem 1rem;
+}
+
 /* =====================
    TYPOGRAPHY
 ===================== */
@@ -139,25 +158,6 @@ p {
     border-radius: 12px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-}
-
-.auth-layout {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.auth-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 1rem;
-}
-
-.main-content {
-    flex: 1;
-    padding: 2rem 1rem;
 }
 
 /* =====================
