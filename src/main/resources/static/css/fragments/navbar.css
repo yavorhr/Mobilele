@@ -2,6 +2,11 @@
    LANGUAGE DROPDOWN
 ===================== */
 
+.navbar {
+    width: 100%;
+    height: var(--navbar-height);
+}
+
 .home-lang-wrapper {
     display: flex;
     align-items: center;
@@ -79,8 +84,6 @@
 #lang option {
     font-size: clamp(0.4rem, 2vw, 1.2rem);
 }
-
-
 
 /* ================
     "RATE US"
@@ -271,7 +274,7 @@
 .stats-toggle:hover {
     color: var(--color-bg-main);
     text-decoration: none;
-    background-color:  var(--color-white-main) !important;
+    background-color: var(--color-white-main) !important;
 }
 
 /* Active (clicking) */
