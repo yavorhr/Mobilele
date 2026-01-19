@@ -12,10 +12,12 @@
         <!-- Dynamic Heading -->
         <h2 th:if="${offers.size() > 0}"
             th:text="${context == 'model'} ?
-              'All Offers for ' + brand + ' ' + model :
-              ((context == 'brand') ?
-                'All Offers for Brand: ' + brand :
-                'My Offers')"
+        'All Offers for ' + brand + ' ' + model :
+        (${context == 'brand'} ?
+            'All Offers for Brand: ' + brand :
+            (${context == 'favorites'} ?
+                'My favorites' :
+                'Added offers'))"
             class="section-title text-center mt-5">
         </h2>
 
