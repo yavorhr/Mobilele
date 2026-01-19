@@ -14,6 +14,7 @@
     position: relative;
     width: 100%;
     margin: 2rem 0 2rem 0;
+    padding: 0 1rem;
 }
 
 .admin-header {
@@ -26,7 +27,7 @@
     border-radius: 10px;
 
     color: var(--color-white-main);
-    font-size: var(--font-size_2_5);
+    font-size: clamp(1.4rem, 3vw, var(--font-size_2_5));
     font-weight: bold;
     text-align: center;
     letter-spacing: 2px;
@@ -308,4 +309,17 @@ th {
     .notifications-table {
         min-width: 900px;
     }
+
+    .admin-header {
+        padding: 1rem 1.5rem;
+        letter-spacing: 1.5px;
+    }
 }
+
+@media (max-width: 480px) {
+    .admin-header {
+        padding: 0.85rem 1.25rem;
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+        border-width: 2px;
+    }
