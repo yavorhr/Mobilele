@@ -96,15 +96,48 @@
             </table>
         </div>
 
-        <div id="pagination">
-            <div th:if="${totalPages > 1}">
-        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-            <a th:href="@{/admin/notifications(page=${i}, query=${query}, size=${usersPage.size})}"
-               th:text="${i + 1}"
-               th:class="${currentPage == i} ? 'active-page' : ''"></a>
-        </span>
+        <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
+             th:if="${totalPages > 1}">
+
+            <!-- Prev -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/admin/notifications(
+           page=${currentPage - 1},
+           query=${query},
+           size=${usersPage.size})}"
+               class="pagination-btn">
+                &laquo; Prev
+            </a>
+
+            <!-- Page numbers -->
+            <div class="pagination-numbers mx-2">
+                <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                   th:href="@{/admin/notifications(
+               page=${i},
+               query=${query},
+               size=${usersPage.size})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == currentPage} ? 'active' : ''"
+                   class="pagination-number">
+                </a>
             </div>
+
+            <!-- Next -->
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/admin/notifications(
+           page=${currentPage + 1},
+           query=${query},
+           size=${usersPage.size})}"
+               class="pagination-btn">
+                Next &raquo;
+            </a>
         </div>
+
+        <!-- Page indicator -->
+        <p class="text-white text-center mt-2"
+           th:if="${totalPages > 1}"
+           th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}">
+        </p>
 
     </section>
 </main>
