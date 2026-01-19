@@ -4,11 +4,11 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/offers/add-offer.css')"></head>
 
-<body>
+<body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<main class="offer-container">
-    <div class="offer-card">
+<main class="main-content">
+    <section>
         <h2 class="text-center mb-4">Update Offer</h2>
 
         <form
@@ -156,14 +156,14 @@
 
             <div class="button-holder">
                 <input type="submit"
-                       class="btn-submit"
+                       class="btn btn-submit"
                        value="Update Offer">
             </div>
         </form>
-    </div>
+    </section>
 </main>
 
-<footer></footer>
+<footer th:replace="fragments/minimal-footer"></footer>
 
 <script th:src="@{/js/loadModels.js}"></script>
 <script th:src="@{/js/loadCitiesPerCountry.js}"></script>
