@@ -4,164 +4,167 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/offers/add-offer.css')"></head>
 
-<body class="auth-layout">
+<body >
 <header th:replace="fragments/navbar"></header>
 
-<main class="main-content" role="main">
-    <section>
-        <h2 class="text-center">Update Offer</h2>
+<div class="auth-layout">
+    <main class="main-content" role="main">
+        <section>
+            <h2 class="text-center">Update Offer</h2>
 
-        <form
-                th:object="${offerBindingModel}"
-                th:action="@{/offers/update/{id}(id=${offerBindingModel.id})}"
-                th:method="PATCH"
-                enctype="multipart/form-data"
-                class="offer-form">
+            <form
+                    th:object="${offerBindingModel}"
+                    th:action="@{/offers/update/{id}(id=${offerBindingModel.id})}"
+                    th:method="PATCH"
+                    enctype="multipart/form-data"
+                    class="offer-form">
 
-            <div class="form-flex">
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input id="price"
-                           type="number"
-                           min="0" placeholder="Suggested price"
-                           th:field="*{price}"/>
-                    <div th:if="${#fields.hasErrors('price')}"
-                         th:errors="*{price}"
-                         class="error-msg"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="mileage">Mileage</label>
-                    <input id="mileage"
-                           type="number"
-                           min="0"
-                           placeholder="Mileage in kilometers"
-                           th:field="*{mileage}"/>
-                    <div th:if="${#fields.hasErrors('mileage')}"
-                         th:errors="*{mileage}"
-                         class="error-msg">
+                <div class="form-flex">
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input id="price"
+                               type="number"
+                               min="0" placeholder="Suggested price"
+                               th:field="*{price}"/>
+                        <div th:if="${#fields.hasErrors('price')}"
+                             th:errors="*{price}"
+                             class="error-msg"></div>
                     </div>
-                </div>
-            </div>
 
-            <div class="form-flex">
-                <div class="form-group">
-                    <label for="engine">Engine</label>
-                    <select id="engine" th:field="*{engine}">
-                        <option value="">- Select engine type -</option>
-                        <option
-                                th:each="e : ${engines}"
-                                th:value="${e}"
-                                th:text="${e}">
-                        </option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('engine')}"
-                         th:errors="*{engine}"
-                         class="error-msg"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="transmission">Transmission</label>
-                    <select id="transmission" th:field="*{transmission}">
-                        <option value="">- Select transmission type -</option>
-                        <option th:each="t : ${transmissions}"
-                                th:value="${t}"
-                                th:text="${t}"></option>
-                    </select>
-                    <div
-                            th:if="${#fields.hasErrors('transmission')}"
-                            th:errors="*{transmission}"
-                            class="error-msg"></div>
-                </div>
-            </div>
-
-            <div class="form-flex">
-
-                <div class="form-group">
-                    <label for="year">Model Year</label>
-                    <input id="year" type="number" placeholder="e.g. 2020" th:field="*{year}"/>
-                    <div
-                            th:if="${#fields.hasErrors('year')}"
-                            th:errors="*{year}"
-                            class="error-msg"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="condition">Condition</label>
-                    <select id="condition" th:field="*{condition}">
-                        <option value="">- Select condition -</option>
-                        <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
-                    </select>
-                    <div
-                            th:if="${#fields.hasErrors('condition')}"
-                            th:errors="*{condition}"
-                            class="error-msg"></div>
-                </div>
-            </div>
-
-            <div class="form-flex color">
-                <div class="form-group" style="flex: 0.5;">
-                    <label for="color">Color</label>
-                    <select id="color" th:field="*{color}">
-                        <option value="">- Select color -</option>
-                        <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
-                    </select>
-                    <div
-                            th:if="${#fields.hasErrors('color')}"
-                            th:errors="*{color}"
-                            class="error-msg"></div>
-                </div>
-            </div>
-
-            <div class="form-flex">
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <select id="country"
-                            th:field="*{country}">
-                        <option value="">-- Select country --</option>
-                        <option th:each="c : ${countries}"
-                                th:value="${c}"
-                                th:text="${c}"></option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('country')}"
-                         th:errors="*{country}"
-                         class="error-msg">
+                    <div class="form-group">
+                        <label for="mileage">Mileage</label>
+                        <input id="mileage"
+                               type="number"
+                               min="0"
+                               placeholder="Mileage in kilometers"
+                               th:field="*{mileage}"/>
+                        <div th:if="${#fields.hasErrors('mileage')}"
+                             th:errors="*{mileage}"
+                             class="error-msg">
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="city">City</label>
-                    <select id="city"
-                            th:field="*{city}"
-                            th:attr="data-selected-city=*{city}">
-                        <option value="">-- Select city --</option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('city')}"
-                         th:errors="*{city}"
-                         class="error-msg"></div>
-                </div>
-            </div>
+                <div class="form-flex">
+                    <div class="form-group">
+                        <label for="engine">Engine</label>
+                        <select id="engine" th:field="*{engine}">
+                            <option value="">- Select engine type -</option>
+                            <option
+                                    th:each="e : ${engines}"
+                                    th:value="${e}"
+                                    th:text="${e}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('engine')}"
+                             th:errors="*{engine}"
+                             class="error-msg"></div>
+                    </div>
 
-            <div class="form-group full-width">
-                <label for="description">Description</label>
-                <textarea id="description"
-                          rows="7"
-                          placeholder="Description"
-                          th:field="*{description}">
+                    <div class="form-group">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission" th:field="*{transmission}">
+                            <option value="">- Select transmission type -</option>
+                            <option th:each="t : ${transmissions}"
+                                    th:value="${t}"
+                                    th:text="${t}"></option>
+                        </select>
+                        <div
+                                th:if="${#fields.hasErrors('transmission')}"
+                                th:errors="*{transmission}"
+                                class="error-msg"></div>
+                    </div>
+                </div>
+
+                <div class="form-flex">
+
+                    <div class="form-group">
+                        <label for="year">Model Year</label>
+                        <input id="year" type="number" placeholder="e.g. 2020" th:field="*{year}"/>
+                        <div
+                                th:if="${#fields.hasErrors('year')}"
+                                th:errors="*{year}"
+                                class="error-msg"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="condition">Condition</label>
+                        <select id="condition" th:field="*{condition}">
+                            <option value="">- Select condition -</option>
+                            <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
+                        </select>
+                        <div
+                                th:if="${#fields.hasErrors('condition')}"
+                                th:errors="*{condition}"
+                                class="error-msg"></div>
+                    </div>
+                </div>
+
+                <div class="form-flex color">
+                    <div class="form-group" style="flex: 0.5;">
+                        <label for="color">Color</label>
+                        <select id="color" th:field="*{color}">
+                            <option value="">- Select color -</option>
+                            <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
+                        </select>
+                        <div
+                                th:if="${#fields.hasErrors('color')}"
+                                th:errors="*{color}"
+                                class="error-msg"></div>
+                    </div>
+                </div>
+
+                <div class="form-flex">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country"
+                                th:field="*{country}">
+                            <option value="">-- Select country --</option>
+                            <option th:each="c : ${countries}"
+                                    th:value="${c}"
+                                    th:text="${c}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('country')}"
+                             th:errors="*{country}"
+                             class="error-msg">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <select id="city"
+                                th:field="*{city}"
+                                th:attr="data-selected-city=*{city}">
+                            <option value="">-- Select city --</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('city')}"
+                             th:errors="*{city}"
+                             class="error-msg"></div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="description">Description</label>
+                    <textarea id="description"
+                              rows="7"
+                              placeholder="Description"
+                              th:field="*{description}">
                 </textarea>
-                <div th:if="${#fields.hasErrors('description')}"
-                     th:errors="*{description}"
-                     class="error-msg"></div>
-            </div>
+                    <div th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}"
+                         class="error-msg"></div>
+                </div>
 
-            <div class="button-holder">
-                <button class="btn btn-submit">Update offer</button>
-            </div>
-        </form>
-    </section>
-</main>
+                <div class="button-holder">
+                    <button class="btn btn-submit">Update offer</button>
+                </div>
+            </form>
+        </section>
+    </main>
 
-<footer th:replace="fragments/minimal-footer"></footer>
+    <footer th:replace="fragments/minimal-footer"></footer>
+</div>
+
 
 <script th:src="@{/js/loadModels.js}"></script>
 <script th:src="@{/js/loadCitiesPerCountry.js}"></script>
