@@ -4,145 +4,147 @@
 
 <header th:replace="fragments/navbar"></header>
 
-<body class="auth-layout" data-logged-in-username="${loggedInUsername}">
+<body  data-logged-in-username="${loggedInUsername}">
 
-<main class="main-content">
-    <section class="first-section">
-        <h1 class="admin-header">Admin Notifications</h1>
-    </section>
+<div class="auth-layout">
+    <main class="main-content">
+        <section class="first-section">
+            <h1 class="admin-header">Admin Notifications</h1>
+        </section>
 
-    <section class="second-section">
-        <form
-                th:method="GET"
-                class="search-container"
-                action="/admin/notifications">
-            <input type="text" id="searchInput"
-                   name="query"
-                   placeholder="Search users..."
-                   th:value="${query}">
-            <input type="hidden"
-                   name="size"
-                   th:value="${usersPage.size}">
-            <button class="btn-submit" type="submit">Search</button>
-        </form>
-        <div class="table-wrapper">
-            <table class="notifications-table">
-                <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Locked status</th>
-                    <th>Times Locked</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Created</th>
-                    <th>Roles</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody id="users-tbody">
-                <tr th:each="u :${users}" th:object="${u}">
-                    <input type="hidden" name="user-id" class="user-id" th:value="*{id}">
-                    <td class="status"
-                        th:classappend="${u.isEnabled} ? 'active' : 'inactive'"
-                        th:text="${u.isEnabled} ?'Active' : 'Inactive'"></td>
-                    <td class="locked-status"
-                        th:classappend="${u.accountLocked} ? 'inactive' : 'active'"
-                        th:text="${u.accountLocked} ?'Locked' : 'Not locked'"></td>
-                    <td th:text="*{timesLocked}"></td>
-                    <td class="username" th:text="*{username}">test2</td>
-                    <td class="email" th:text="*{email}">test@abv.bg</td>
-                    <td th:text="*{#temporals.format(registrationDate, 'yyyy-MM-dd HH:mm:ss')}">
-                        formatted date
-                    </td>
-                    <td>
-                        <div class="change-role-wrapper">
-                            <div class="role-action-container">
-                                <th:block
-                                        th:each="role : ${T(com.example.mobilele.model.entity.enums.UserRoleEnum).values()}">
-                                    <div class="role-wrapper">
-                                        <input type="checkbox" class="role-checkbox"
-                                               th:value="${role}"
-                                               th:checked="${u.roles.contains(role)}">
-                                        <span th:text="${role}"></span>
-                                    </div>
-                                </th:block>
+        <section class="second-section">
+            <form
+                    th:method="GET"
+                    class="search-container"
+                    action="/admin/notifications">
+                <input type="text" id="searchInput"
+                       name="query"
+                       placeholder="Search users..."
+                       th:value="${query}">
+                <input type="hidden"
+                       name="size"
+                       th:value="${usersPage.size}">
+                <button class="btn-submit" type="submit">Search</button>
+            </form>
+            <div class="table-wrapper">
+                <table class="notifications-table">
+                    <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Locked status</th>
+                        <th>Times Locked</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                    <tr th:each="u :${users}" th:object="${u}">
+                        <input type="hidden" name="user-id" class="user-id" th:value="*{id}">
+                        <td class="status"
+                            th:classappend="${u.isEnabled} ? 'active' : 'inactive'"
+                            th:text="${u.isEnabled} ?'Active' : 'Inactive'"></td>
+                        <td class="locked-status"
+                            th:classappend="${u.accountLocked} ? 'inactive' : 'active'"
+                            th:text="${u.accountLocked} ?'Locked' : 'Not locked'"></td>
+                        <td th:text="*{timesLocked}"></td>
+                        <td class="username" th:text="*{username}">test2</td>
+                        <td class="email" th:text="*{email}">test@abv.bg</td>
+                        <td th:text="*{#temporals.format(registrationDate, 'yyyy-MM-dd HH:mm:ss')}">
+                            formatted date
+                        </td>
+                        <td>
+                            <div class="change-role-wrapper">
+                                <div class="role-action-container">
+                                    <th:block
+                                            th:each="role : ${T(com.example.mobilele.model.entity.enums.UserRoleEnum).values()}">
+                                        <div class="role-wrapper">
+                                            <input type="checkbox" class="role-checkbox"
+                                                   th:value="${role}"
+                                                   th:checked="${u.roles.contains(role)}">
+                                            <span th:text="${role}"></span>
+                                        </div>
+                                    </th:block>
+                                </div>
+                                <button
+                                        class="change-role-btn disabled btn">Update Roles
+                                </button>
                             </div>
-                            <button
-                                    class="change-role-btn disabled btn">Update Roles
-                            </button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="actions-container">
-                            <button
-                                    class="delete-btn btn">Delete User
-                            </button>
-                            <button
-                                    class="enable-btn btn"
-                                    th:text="${u.isEnabled} ? 'Disable user' : 'Enable user'"
-                                    th:classappend="${u.isEnabled} ? 'inactive' : 'active'"> Enable/Disable User
-                            </button>
-                            <button
-                                    class="lock-btn btn"
-                                    th:text="${u.isAccountLocked} ? 'Unlock user' : 'Lock user'"
-                                    th:classappend="${u.isAccountLocked} ? 'active' : 'inactive'"> Lock/Unlock User
-                            </button>
-                            <button class="send-email-btn btn">Send Email</button>
-                        </div>
-                    </td>
-                </tr>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                        </td>
+                        <td>
+                            <div class="actions-container">
+                                <button
+                                        class="delete-btn btn">Delete User
+                                </button>
+                                <button
+                                        class="enable-btn btn"
+                                        th:text="${u.isEnabled} ? 'Disable user' : 'Enable user'"
+                                        th:classappend="${u.isEnabled} ? 'inactive' : 'active'"> Enable/Disable User
+                                </button>
+                                <button
+                                        class="lock-btn btn"
+                                        th:text="${u.isAccountLocked} ? 'Unlock user' : 'Lock user'"
+                                        th:classappend="${u.isAccountLocked} ? 'active' : 'inactive'"> Lock/Unlock User
+                                </button>
+                                <button class="send-email-btn btn">Send Email</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
-             th:if="${totalPages > 1}">
+            <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
+                 th:if="${totalPages > 1}">
 
-            <!-- Prev -->
-            <a th:if="${currentPage > 0}"
-               th:href="@{/admin/notifications(
+                <!-- Prev -->
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/admin/notifications(
            page=${currentPage - 1},
            query=${query},
            size=${usersPage.size})}"
-               class="pagination-btn">
-                &laquo; Prev
-            </a>
+                   class="pagination-btn">
+                    &laquo; Prev
+                </a>
 
-            <!-- Page numbers -->
-            <div class="pagination-numbers mx-2">
-                <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                   th:href="@{/admin/notifications(
+                <!-- Page numbers -->
+                <div class="pagination-numbers mx-2">
+                    <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                       th:href="@{/admin/notifications(
                page=${i},
                query=${query},
                size=${usersPage.size})}"
-                   th:text="${i + 1}"
-                   th:classappend="${i == currentPage} ? 'active' : ''"
-                   class="pagination-number">
-                </a>
-            </div>
+                       th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''"
+                       class="pagination-number">
+                    </a>
+                </div>
 
-            <!-- Next -->
-            <a th:if="${currentPage + 1 < totalPages}"
-               th:href="@{/admin/notifications(
+                <!-- Next -->
+                <a th:if="${currentPage + 1 < totalPages}"
+                   th:href="@{/admin/notifications(
            page=${currentPage + 1},
            query=${query},
            size=${usersPage.size})}"
-               class="pagination-btn">
-                Next &raquo;
-            </a>
-        </div>
+                   class="pagination-btn">
+                    Next &raquo;
+                </a>
+            </div>
 
-        <!-- Page indicator -->
-        <p class="text-white text-center mt-2"
-           th:if="${totalPages > 1}"
-           th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}">
-        </p>
+            <!-- Page indicator -->
+            <p class="text-white text-center mt-2"
+               th:if="${totalPages > 1}"
+               th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}">
+            </p>
 
-    </section>
-</main>
+        </section>
+    </main>
 
-<footer th:replace="fragments/minimal-footer"></footer>
+    <footer th:replace="fragments/minimal-footer"></footer>
+</div>
 
 </body>
 

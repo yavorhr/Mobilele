@@ -1,12 +1,6 @@
 
-/* Sticky footer */
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
 .site-footer--minimal {
+    margin-top: auto;
     background: var(--color-bg-main);
     padding: 1.5rem 1rem 1rem;
     border-top: 1px solid rgba(76, 175, 80, 0.25); /* soft brand green */

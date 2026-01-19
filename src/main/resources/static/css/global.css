@@ -73,6 +73,8 @@ body {
     min-height: calc(100vh - var(--navbar-height));
     display: flex;
     flex-direction: column;
+    margin-top: var(--navbar-height);
+
 }
 
 .auth-content {
