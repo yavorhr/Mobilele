@@ -7,7 +7,7 @@
 <body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<main class="main-content">
+<main class="main-content" role="main">
     <section>
         <h2 class="text-center mb-4">Update Offer</h2>
 
@@ -155,9 +155,10 @@
             </div>
 
             <div class="button-holder">
-                <input type="submit"
-                       class="btn btn-submit"
-                       value="Update Offer">
+                <button type="submit"
+                        class="btn btn-submit"
+                        value="Update Offer">
+                </button>
             </div>
         </form>
     </section>
