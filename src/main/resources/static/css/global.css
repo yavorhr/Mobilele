@@ -3,6 +3,7 @@
 ===================== */
 
 :root {
+    --navbar-height: 90px;
     --color-bg-main: #121212;
     --color-bg-soft: rgba(255, 255, 255, 0.05);
     --color-bg-hover: rgba(255, 255, 255, 0.12);
@@ -54,6 +55,7 @@
 }
 
 body {
+    padding-top: var(--navbar-height);
     background-image: url('/images/1.jpg');
     background-position: center center;
     background-repeat: no-repeat;
@@ -67,7 +69,7 @@ body {
 }
 
 .auth-layout {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--navbar-height));
     display: flex;
     flex-direction: column;
 }
