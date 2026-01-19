@@ -3,12 +3,13 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/offers/add-offer.css')"></head>
 
-<body>
+<body class="auth-layout">
+
 <header th:replace="fragments/navbar"></header>
 
-<main class="offer-container">
-    <div class="offer-card">
-        <h2 class="text-center mb-4">Add Offer</h2>
+<main class="main-content" role="main">
+    <section>
+        <h2 class="text-center">Add Offer</h2>
 
         <form
                 th:action="@{/offers}"
@@ -203,15 +204,14 @@
                      th:errors="*{pictures}"
                      class="error-msg"></div>
             </div>
-
             <div class="button-holder">
-                <input type="submit" class="btn-submit" value="Add Offer">
+                <button class="btn btn-submit">Add offer</button>
             </div>
         </form>
-    </div>
+    </section>
 </main>
 
-<footer></footer>
+<footer th:replace="fragments/minimal-footer"></footer>
 
 <script th:src="@{/js/loadModels.js}"></script>
 <script th:src="@{/js/loadCitiesPerCountry.js}"></script>
