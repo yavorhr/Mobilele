@@ -266,7 +266,7 @@ public class OfferServiceImpl implements OfferService {
   public Page<OfferBaseViewModel> findOffersByUserId(String username, Pageable pageable) {
     return offerRepository
             .findAllBySeller_Username(username, pageable)
-            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
+            .map(this::mapToOfferBaseViewModel);
   }
 
   @Override
