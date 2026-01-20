@@ -33,18 +33,23 @@ public class NotificationsController {
           Model model,
           @AuthenticationPrincipal UserDetails principal) {
 
-    Page<UserAdministrationViewModel> usersPage = this.userService.searchPaginatedUsersPerEmail(query, PageRequest.of(page, size));
+    page = Math.max(page, 0);
+    size = Math.min(Math.max(size, 1), 50);
+
+    PageRequest pageRequest = PageRequest.of(page, size);
+
+    Page<UserAdministrationViewModel> usersPage =
+            userService.searchPaginatedUsersPerEmail(query, pageRequest);
 
     model.addAttribute("usersPage", usersPage);
     model.addAttribute("users", usersPage.getContent());
     model.addAttribute("loggedInUsername", principal.getUsername());
     model.addAttribute("query", query);
-    model.addAttribute("currentPage", page);
+    model.addAttribute("currentPage", usersPage.getNumber());
     model.addAttribute("totalPages", usersPage.getTotalPages());
 
-    return "/admin/notifications";
+    return "admin/notifications"; // no leading slash
   }
-
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
