@@ -212,14 +212,135 @@
    PROFILE & ADMIN
 ===================== */
 
-.dropdown-menu {
-    background-color: var(--color-text-soft);
-    color: var(--color-white-main);
+/* Base nav links */
+.navbar .nav-link,
+.navbar .logout {
+    position: relative;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    font-size: clamp(1.3rem, 0.6rem + 0.6vw, 1.40rem);
+    padding: 0.5rem 0.9rem;
+    transition: color 0.25s ease, transform 0.2s ease;
+}
+
+/* Hover effect - default green */
+.navbar .nav-link:hover,
+.navbar .logout:hover {
+    color: var(--color-primary) !important;
+    transform: translateY(-1px);
+}
+
+/* Animated underline */
+.navbar .nav-link::before,
+.navbar .logout::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.25s ease, left 0.25s ease;
+}
+
+.navbar .nav-link:hover::before,
+.navbar .logout:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+.navbar .nav-link.active,
+.navbar .logout.active {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* Admin hover override */
+.navbar .admin-link:hover {
+    color: var(--color-accent) !important;
+}
+
+.navbar .admin-link::before {
+    background-color: var(--color-accent)
+}
+
+.navbar .admin-link.active {
+    color: var(--color-accent)
+}
+
+/* Profile hover override */
+.navbar .profile-link:hover {
+    color: var(--color-turquoise) !important;
+}
+
+.navbar .profile-link::before {
+    background-color: var(--color-turquoise);
+}
+
+.navbar .profile-link.active {
+    color: var(--color-turquoise);
+}
+
+.navbar .dropdown-menu {
+    background-color: #1f2125;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 0.4rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    animation: dropdownFade 0.2s ease;
+}
+
+/* Subtle dropdown entrance */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar .dropdown-item {
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.55rem 1.25rem;
+    font-size: 0.9rem;
+    position: relative;
+    transition: background-color 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+/* Hover */
+.navbar .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--color-primary);
+    padding-left: 1.6rem;
+}
+
+/* Accent bar on hover */
+.navbar .dropdown-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--color-primary);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.navbar .dropdown-item:hover::before {
+    opacity: 1;
 }
 
 /* Rotate arrows Profile & Admin */
 .nav-item.show > .nav-link.dropdown-toggle::after {
     transform: rotate(180deg);
+    transition: transform 0.25s ease;
 }
 
 .dropdown-submenu {
@@ -301,6 +422,46 @@
     background-color: var(--color-white-main) !important;
     color: var(--color-bg-main) !important;
     box-shadow: none !important;
+}
+
+#adminDropdown {
+    color: #ffb703;
+    font-weight: 600;
+}
+
+#adminDropdown:hover {
+    color: #ffd166;
+}
+
+#profileDropdown {
+    color: #8ecae6;
+}
+
+#profileDropdown:hover {
+    color: #90dbf4;
+}
+
+/* ===================
+   LOGOUT BUTTON
+===================== */
+
+.navbar .logout {
+    border: none;
+    background:none;
+    color: rgba(255, 255, 255, .5) !important;
+    cursor: pointer;
+}
+
+.navbar .logout:hover {
+    color: var(--color-close-button) !important;
+}
+
+.navbar .logout::before {
+    background-color: var(--color-close-button);
+}
+
+.navbar .logout.active {
+    color: var(--color-close-button);
 }
 
 /* ===================
@@ -385,3 +546,12 @@
     }
 }
 
+@media (hover: none) {
+    .navbar .nav-link::after {
+        display: none;
+    }
+
+    .navbar .nav-link:hover {
+        transform: none;
+    }
+}
