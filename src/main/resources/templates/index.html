@@ -12,7 +12,7 @@
         <div>
             <h1 class="hero-title">
                 Welcome to <span class="brand-name">Mobilele</span>
-                <span th:if="${#authentication != null and #authentication.name != 'anonymousUser'}">,<span class="welcome-message" th:text="${#authentication.name}"></span>
+                <span th:if="${#authentication != null and #authentication.name != 'anonymousUser'}"> ,<span class="welcome-message" th:text="${#authentication.name}"></span>
     </span>
             </h1>
             <p>Find your next car with ease — explore trusted offers, compare prices, and connect with verified
