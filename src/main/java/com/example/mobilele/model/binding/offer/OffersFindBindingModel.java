@@ -32,14 +32,12 @@ public class OffersFindBindingModel {
   public OffersFindBindingModel() {
   }
 
-  @NotNull
-  @NotEmpty
+  @NotEmpty(message = "Brand is required")
   public String getBrand() {
     return brand;
   }
 
-  @NotNull
-  @NotEmpty
+  @NotEmpty(message = "Model is required")
   public String getModel() {
     return model;
   }
