@@ -203,7 +203,7 @@
     color: var(--color-turquoise) !important;
 }
 
-/* Rotate arrows Profile & Admin */
+/* Rotate arrows - Profile & Admin */
 .nav-item.show > .nav-link.dropdown-toggle::after {
     transform: rotate(180deg);
     transition: transform 0.25s ease;
@@ -218,7 +218,11 @@
     border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Dropdown stats menu */
+/* ================
+   Submenus -
+   Profile and Admin
+=================== */
+
 .dropdown-submenu .stats-menu {
     position: absolute;
     top: 0;
@@ -227,15 +231,36 @@
     display: none;
 }
 
-.dropdown-submenu.open > .stats-menu {
-    display: block;
-}
-
-/* Stats toggle */
+/* Stats toggle button */
 .stats-toggle {
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    color: var(--color-bg-main);
+    background: transparent !important;
+}
+
+.stats-toggle:hover {
+    color: var(--color-bg-main);
+    text-decoration: none;
+    background-color: var(--color-bg-hover) !important;
+}
+
+/* Remove persistent focus after mouse/touch click */
+.stats-toggle:focus:not(:focus-visible) {
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Change styling when submenu opened */
+.dropdown-submenu.open > .stats-toggle {
+    background-color: #454545 !important;
+    color: var(--color-accent) !important;
+    box-shadow: none !important;
+}
+
+.dropdown-submenu.open > .stats-menu {
+    display: block;
 }
 
 /* Arrows rotate for Submenus */
@@ -251,52 +276,13 @@
     transition: transform 0.2s ease;
 }
 
-/* Remove Bootstrap blue for Stats submenu trigger */
-.stats-toggle {
-    color: var(--color-bg-main);
-    background: transparent !important;
-}
-
-/* Stats menu active/focus styling */
-.stats-toggle:hover {
-    color: var(--color-bg-main);
-    text-decoration: none;
-    background-color: var(--color-white-main) !important;
-}
-
-/* Active (clicking) */
-.stats-toggle:active {
-    background: var(--color-bg-hover);
-    color: var(--color-bg-main) !important;
-    box-shadow: none;
-}
-
-/* Keyboard focus only */
-.stats-toggle:focus-visible {
-    outline: none;
-    background: var(--color-bg-hover);
-}
-
-/* Remove persistent focus after mouse/touch click */
-.stats-toggle:focus:not(:focus-visible) {
-    background: transparent;
-    box-shadow: none;
-}
-
-/* 🔥 Submenu open state must win */
-.dropdown-submenu.open > .stats-toggle {
-    background-color: var(--color-white-main) !important;
-    color: var(--color-bg-main) !important;
-    box-shadow: none !important;
-}
-
 #adminDropdown {
-    color: #ffb703;
+    color: var(--color-accent);
     font-weight: 600;
 }
 
 #adminDropdown:hover {
-    color: #ffd166;
+    color: var(--color-accent-hover);
 }
 
 #profileDropdown {
