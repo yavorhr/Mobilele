@@ -210,8 +210,7 @@
 
 .disabled-btn {
     opacity: 0.5;
-    cursor: not-allowed;
-    background-color: var(--color-gray);
+    cursor: not-allowed !important;
 }
 
 /* ====================
