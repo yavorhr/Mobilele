@@ -194,21 +194,13 @@
 }
 
 /* Admin nav link - override */
-.navbar .admin-link .dropdown-item:hover {
+.navbar .dropdown-menu[data-admin-dropdown] .dropdown-item:hover {
     color: var(--color-accent) !important;
 }
 
-.navbar .admin-link.active {
-    color: var(--color-accent)
-}
-
 /* Profile nav link - override */
-.navbar .profile-link .dropdown-item:hover  {
+.navbar .dropdown-menu[aria-labelledby="profileDropdown"] .dropdown-item:hover {
     color: var(--color-turquoise) !important;
-}
-
-.navbar .profile-link.active {
-    color: var(--color-turquoise);
 }
 
 /* Rotate arrows Profile & Admin */
