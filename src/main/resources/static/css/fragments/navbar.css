@@ -214,7 +214,8 @@
 
 /* Base nav links */
 .navbar .nav-link,
-.navbar .logout {
+.navbar .logout
+{
     position: relative;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 500;
@@ -306,12 +307,16 @@
 .navbar .dropdown-item {
     color: rgba(255, 255, 255, 0.85);
     padding: 0.55rem 1.25rem;
-    font-size: 0.9rem;
+    font-size: clamp(1.3rem, 0.6rem + 0.6vw, 1.40rem);
     position: relative;
     transition: background-color 0.2s ease,
     color 0.2s ease,
     padding-left 0.2s ease;
 }
+
+/*.dropdown-submenu .stats-menu .dropdown-item{*/
+/*    font-size: clamp(1.3rem, 0.6rem + 0.6vw, 1.40rem);*/
+/*}*/
 
 /* Hover */
 .navbar .dropdown-item:hover {
@@ -590,7 +595,6 @@
 
     .dropdown-submenu .stats-menu .dropdown-item {
         padding-left: 2rem;
-        font-size: 0.9rem;
     }
 }
 
