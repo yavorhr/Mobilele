@@ -447,7 +447,7 @@
 
 .navbar .logout {
     border: none;
-    background:none;
+    background: none;
     color: rgba(255, 255, 255, .5) !important;
     cursor: pointer;
 }
@@ -505,6 +505,64 @@
 }
 
 @media (max-width: 992px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+        margin: 0;
+
+
+        transform: none;
+    }
+
+    .navbar-collapse.collapsing,
+    .navbar-collapse.show {
+        background-color: #1f2125;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+
+        padding: 0.5rem 0;
+
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        animation: dropdownFade 0.2s ease;
+    }
+
+    .navbar-collapse {
+        transition: none !important;
+    }
+
+    .navbar-collapse.show .nav-link,
+    .navbar-collapse.show .logout {
+        display: block;
+        width: 100%;
+
+        padding: 0.6rem 1.25rem;
+
+        color: rgba(255, 255, 255, 0.85);
+        background: transparent;
+
+        border-radius: 0;
+        transform: none;
+    }
+
+
+    /* Remove underline system entirely on mobile */
+    .navbar-collapse.show .nav-link::before,
+    .navbar-collapse.show .logout::before {
+        display: none;
+    }
+
+    .navbar-collapse.show .nav-item {
+        margin-bottom: 0.2rem;
+    }
+
+    .navbar-collapse.show .nav-item:last-child {
+        margin-bottom: 0;
+    }
+
     .language-form {
         padding: 0.15rem 0.4rem;
     }
