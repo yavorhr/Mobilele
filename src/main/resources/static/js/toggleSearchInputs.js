@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchBtn.addEventListener('click', (e) => {
         if (!isFormValid()) {
             e.preventDefault();
-            alert('Please select brand, vehicle type and model');
+            alert("Please select at least Brand, Vehicle type and Model")
         }
     });
 
