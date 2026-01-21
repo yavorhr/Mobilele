@@ -208,6 +208,12 @@
     color: var(--white)
 }
 
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-gray);
+}
+
 /* ====================
  OFFERS SECTIONS -
  RECENT AND MOST VIEWED
