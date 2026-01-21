@@ -403,7 +403,7 @@
     color: var(--color-accent);
 }
 
-/* === Animation === */
+/* Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -414,7 +414,6 @@
         transform: translateY(0);
     }
 }
-
 
 /* ===================
    LOGOUT BUTTON
@@ -490,6 +489,12 @@
 }
 
 @media (max-width: 992px) {
+    .navbar-collapse.show .delete-account {
+        width: calc(100% - 1rem);
+        justify-content: flex-start;
+        padding-left: 1.25rem;
+    }
+
     .navbar-collapse {
         position: absolute;
         top: 100%;
