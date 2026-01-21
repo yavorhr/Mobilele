@@ -583,6 +583,7 @@
 
     .dropdown-submenu .stats-menu {
         position: static;
+        background: var( --color-bg-dark-form);
         margin-left: 0;
         margin-top: 0.3rem;
         display: none;
