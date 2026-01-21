@@ -214,8 +214,7 @@
 
 /* Base nav links */
 .navbar .nav-link,
-.navbar .logout
-{
+.navbar .logout {
     position: relative;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 500;
@@ -451,10 +450,20 @@
 ===================== */
 
 .navbar .logout {
-    border: none;
-    background: none;
+    /* remove native button style */
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    outline: none !important;
     color: rgba(255, 255, 255, .5) !important;
     cursor: pointer;
+
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding: 0.5rem 0.9rem; /* keep nav spacing */
 }
 
 .navbar .logout:hover {
