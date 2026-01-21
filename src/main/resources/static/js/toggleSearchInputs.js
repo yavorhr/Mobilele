@@ -41,4 +41,41 @@ document.addEventListener("DOMContentLoaded", () => {
         select.addEventListener("change", toggle);
         toggle();
     });
+
+
+    const brand = document.getElementById('brand');
+    const vehicleType = document.getElementById('vehicleType');
+    const model = document.getElementById('model');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function isFormValid() {
+        return (
+            brand.value !== '' &&
+            vehicleType.value !== '' &&
+            model.value !== ''
+        );
+    }
+
+    function updateButtonState() {
+        if (isFormValid()) {
+            searchBtn.classList.remove('disabled-btn');
+        } else {
+            searchBtn.classList.add('disabled-btn');
+        }
+    }
+
+// Click handler (now it WILL fire)
+    searchBtn.addEventListener('click', (e) => {
+        if (!isFormValid()) {
+            e.preventDefault();
+            alert('Please select brand, vehicle type and model');
+        }
+    });
+
+    [brand, vehicleType, model].forEach(select => {
+        select.addEventListener('change', updateButtonState);
+    });
+
+// Initial state
+    updateButtonState();
 });
