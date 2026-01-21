@@ -3,14 +3,12 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
-import com.example.mobilele.model.binding.offer.OffersQuickSearchBindingModel;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
-import com.example.mobilele.model.view.user.TopSellerViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,10 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
-import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Slf4j
 @Controller
