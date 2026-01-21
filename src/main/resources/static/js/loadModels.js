@@ -5,11 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!brandEl || !modelSelect || !vehicleTypeEl) return;
 
+    function clearModelSelect() {
+        modelSelect.innerHTML = '';
+    }
+
+    function addSelectPlaceholder() {
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '-- Select a model --';
+        modelSelect.appendChild(placeholder);
+    }
+
     brandEl.addEventListener('change', () => {
         const brand = brandEl.value;
         const vehicleType = vehicleTypeEl.value;
 
-        modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+        clearModelSelect();
 
         if (brand && vehicleType) {
             fetch(`/models?vehicleType=${encodeURIComponent(vehicleType)}&brand=${encodeURIComponent(brand)}`)
@@ -18,9 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     return response.json();
                 })
                 .then(data => {
-                    modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+                    clearModelSelect();
 
                     if (Array.isArray(data) && data.length > 0) {
+                        addSelectPlaceholder();
+
                         data.forEach(model => {
                             const option = document.createElement('option');
                             option.value = model;
@@ -29,8 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     } else {
                         const option = document.createElement('option');
-                        option.value = "";
-                        option.textContent = "-- No models available --";
+                        option.textContent = '-- No models available --';
+                        option.disabled = true;
+                        option.selected = true;
                         modelSelect.appendChild(option);
                     }
                 })
@@ -41,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     vehicleTypeEl.addEventListener('change', () => {
-        brandEl.value = "";
-        modelSelect.innerHTML = '<option value="">-- Select a model --</option>';
+        clearModelSelect();
+        addSelectPlaceholder();
     });
 });
