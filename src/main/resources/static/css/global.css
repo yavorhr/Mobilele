@@ -71,11 +71,10 @@ body {
 }
 
 .auth-layout {
-    min-height: calc(100vh - var(--navbar-height));
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin-top: var(--navbar-height);
-
+    padding-top: var(--navbar-height);
 }
 
 .auth-content {
@@ -270,7 +269,7 @@ p {
 
 .cta-btn {
     display: inline-block;
-    padding: 0.8rem 1.6rem;
+    padding: 1.2rem 1.6rem;
     background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
     color: var(--color-white-main);
     font-weight: 600;
@@ -278,6 +277,7 @@ p {
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-md);
+    font-size: var(--font-size_1-2);
 }
 
 .cta-btn:hover {
