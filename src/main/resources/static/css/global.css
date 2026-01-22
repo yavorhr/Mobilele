@@ -165,6 +165,12 @@ p {
     -webkit-backdrop-filter: blur(6px);
 }
 
+.heading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* =====================
    RESET / BASE
 ===================== */
