@@ -271,6 +271,7 @@ p {
 
 .btn-submit:hover {
     background-color: var(--color-turquoise-hover);
+    color: var(--color-white-muted);
 }
 
 .cta-btn {
