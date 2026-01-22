@@ -4,13 +4,17 @@
 
 <header th:replace="fragments/navbar"></header>
 
-<body data-logged-in-username="${loggedInUsername}">
-<main>
-    <div class="container mt-4">
+<body class="auth-content" data-logged-in-username="${loggedInUsername}">
 
-        <h1 class="stats-history-title">Stats History</h1>
+<main class="main-content">
 
-        <div class="stats-history-card">
+    <div class="container-fluid mt-4">
+
+        <div class="heading-wrapper">
+            <h1 class="section-title">Stats History</h1>
+        </div>
+
+        <section class="stats-history-card">
 
             <table class="table stats-history-table">
                 <thead>
@@ -40,7 +44,7 @@
                 </tbody>
             </table>
 
-        </div>
+        </section>
 
         <div class="stats-history-back">
             <a th:href="@{/admin/statistics}" class="btn btn-secondary">Back to live stats</a>
@@ -48,6 +52,6 @@
 
     </div>
 </main>
-
+<footer th:replace="fragments/minimal-footer"></footer>
 </body>
 </html>
