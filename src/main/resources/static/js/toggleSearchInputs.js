@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggle();
     });
 
-
+    // Check if mandatory options are selected
     const brand = document.getElementById('brand');
     const vehicleType = document.getElementById('vehicleType');
     const model = document.getElementById('model');
@@ -63,8 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             searchBtn.classList.add('disabled-btn');
         }
     }
-
-// Click handler (now it WILL fire)
+    
     searchBtn.addEventListener('click', (e) => {
         if (!isFormValid()) {
             e.preventDefault();
