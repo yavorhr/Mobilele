@@ -6,3 +6,7 @@ main section {
     flex-direction: column;
     gap: 1rem;
 }
+
+.requests-content {
+    margin-top: 3rem;
+}
