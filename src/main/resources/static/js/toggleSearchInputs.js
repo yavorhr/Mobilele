@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             searchBtn.classList.add('disabled-btn');
         }
     }
-    
+
     searchBtn.addEventListener('click', (e) => {
         if (!isFormValid()) {
             e.preventDefault();
