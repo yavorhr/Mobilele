@@ -1,4 +1,8 @@
 
+.container-fluid{
+    max-width: 1400px;
+}
+
 /* Page title */
 .stats-history-title {
     color: #17a2b8;

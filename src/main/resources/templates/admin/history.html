@@ -4,11 +4,10 @@
 
 <header th:replace="fragments/navbar"></header>
 
-<body class="auth-content" data-logged-in-username="${loggedInUsername}">
+<body class="auth-layout" data-logged-in-username="${loggedInUsername}">
 
-<main class="main-content">
-
-    <div class="container-fluid mt-4">
+<main class="main-content mt-4">
+    <div class="container-fluid">
 
         <div class="heading-wrapper">
             <h1 class="section-title">Stats History</h1>
@@ -36,7 +35,7 @@
                     <td th:text="${s.anonRequests}"></td>
                     <td>
                         <a th:href="@{'/admin/history/' + ${s.id}}"
-                           class="btn btn-sm btn-primary">
+                           class="btn btn-submit">
                             Open
                         </a>
                     </td>
@@ -49,7 +48,6 @@
         <div class="stats-history-back">
             <a th:href="@{/admin/statistics}" class="btn btn-secondary">Back to live stats</a>
         </div>
-
     </div>
 </main>
 <footer th:replace="fragments/minimal-footer"></footer>
