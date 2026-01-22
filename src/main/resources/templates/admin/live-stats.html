@@ -2,95 +2,135 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head"></head>
+<head th:replace="fragments/head :: head(additionalCss='/css/admin/stats.css')"></head>
 
 <body>
 <header th:replace="fragments/navbar"></header>
 
-<div class="container-fluid">
+<main>
+    <section class="container-fluid">
 
-    <div class="mt-4 text-center">
-
-        <div th:if="${message}"
-             class="alert alert-success flash-message"
-             th:text="${message}">
+        <div class="mt-4 text-center">
+            <div th:if="${message}"
+                 class="alert alert-success flash-message"
+                 th:text="${message}">
+            </div>
         </div>
 
-        <form
-                th:action="@{/admin/statistics}"
-                th:method="POST">
-            <button type="submit" class="btn btn-warning">
-                Save snapshot &amp; reset stats
-            </button>
-        </form>
-    </div>
+        <div class="heading-wrapper">
+            <h1 class="section-title text-center text-white mt-5">Welcome to Stats!</h1>
+            <form
+                    th:action="@{/admin/statistics}"
+                    th:method="POST">
+                <button type="submit" class="btn cta-btn">
+                    Save and reset stats
+                </button>
+            </form>
+        </div>
 
-    <h1 class="text-center text-white mt-5">Welcome to Stats!</h1>
+        <section class="container mt-6">
+            <div class="row text-center g-3">
 
-    <h3 class="text-center text-white mt-3">
-        Total requests:
-        <th:block th:text="${stats.totalRequests}"></th:block>
-    </h3>
-    <h3 class="text-center text-white mt-3">
-        Anonymous requests:
-        <th:block th:text="${stats.anonRequests}"></th:block>
-    </h3>
-    <h3 class="text-center text-white mt-3">
-        Authorized requests:
-        <th:block th:text="${stats.authRequests}"></th:block>
-    </h3>
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-uppercase text-muted">Total Requests</h6>
+                            <h2 class="fw-bold" th:text="${stats.totalRequests}"></h2>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Most viewed pages / per-endpoint stats -->
-    <div class="mt-5">
-        <h2 class="text-center text-white">Most viewed pages</h2>
-        <table class="table table-dark table-striped mt-3">
-            <thead>
-            <tr>
-                <th>Path</th>
-                <th>Total Requests</th>
-                <th>Avg Response Time (ms)</th>
-                <th>4xx Errors</th>
-                <th>5xx Errors</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="ep : ${stats.endpointStats}">
-                <td th:text="${ep.path}"></td>
-                <td th:text="${ep.totalRequests}"></td>
-                <td th:text="${#numbers.formatDecimal(ep.avgResponseTimeMs, 1, 2)}"></td>
-                <td th:text="${ep.error4xx}"></td>
-                <td th:text="${ep.error5xx}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-uppercase text-muted">Anonymous Requests</h6>
+                            <h2 class="fw-bold" th:text="${stats.anonRequests}"></h2>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Most active users -->
-    <div class="mt-5">
-        <h2 class="text-center text-white">Most active users</h2>
-        <table class="table table-dark table-striped mt-3">
-            <thead>
-            <tr>
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-uppercase text-muted">Authorized Requests</h6>
+                            <h2 class="fw-bold" th:text="${stats.authRequests}"></h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="container mt-5 p-4 bg-dark rounded shadow">
+            <h2 class="text-center text-white fw-semibold mb-4">
+                Most Viewed Pages
+            </h2>
+
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead class="border-bottom border-secondary">
+                <tr class="text-uppercase text-secondary small">
+                    <th>Path</th>
+                    <th class="text-end">Requests</th>
+                    <th class="text-end">Avg Response (ms)</th>
+                    <th class="text-end">4xx</th>
+                    <th class="text-end">5xx</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="ep : ${stats.endpointStats}">
+                    <td class="text-break text-info fw-medium" th:text="${ep.path}"></td>
+
+                    <td class="text-end fw-semibold font-monospace"
+                        th:text="${ep.totalRequests}"></td>
+
+                    <td class="text-end font-monospace text-warning"
+                        th:text="${#numbers.formatDecimal(ep.avgResponseTimeMs, 1, 2)}"></td>
+
+                    <td class="text-end font-monospace text-warning"
+                        th:text="${ep.error4xx}"></td>
+
+                    <td class="text-end font-monospace text-danger"
+                        th:text="${ep.error5xx}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <<section class="container mt-5 p-4 bg-dark rounded shadow">
+        <h2 class="text-center text-white fw-semibold mb-4">
+            Most Active Users
+        </h2>
+
+        <table class="table table-dark table-hover align-middle mb-0">
+            <thead class="border-bottom border-secondary">
+            <tr class="text-uppercase text-secondary small">
                 <th>Username</th>
-                <th>Requests</th>
+                <th class="text-end">Requests</th>
             </tr>
             </thead>
+
             <tbody>
             <tr th:each="u : ${stats.userStats}">
-                <td th:text="${u.username}"></td>
-                <td th:text="${u.requests}"></td>
+                <td class="fw-medium text-info" th:text="${u.username}"></td>
+                <td class="text-end fw-semibold font-monospace"
+                    th:text="${u.requests}"></td>
             </tr>
             </tbody>
         </table>
-    </div>
-</div>
+    </section>
 
-<footer></footer>
+</main>
+
+<footer th:replace="fragments/minimal-footer"></footer>
+
 <script>
     setTimeout(() => {
         const msg = document.querySelector(".flash-message");
         if (msg) msg.style.display = "none";
     }, 4000);
 </script>
+
 </body>
 </html>
