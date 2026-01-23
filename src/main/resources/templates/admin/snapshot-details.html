@@ -3,10 +3,10 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/admin/details.css')"></head>
 
-<body>
+<body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
 
-<main class="offer-container">
+<main class="offer-container main-content">
     <div class="container mt-4">
 
         <!-- Heading -->
@@ -111,6 +111,7 @@
     </div>
 </main>
 
-<footer></footer>
+<footer th:replace="fragments/minimal-footer"></footer>
+
 </body>
 </html>
