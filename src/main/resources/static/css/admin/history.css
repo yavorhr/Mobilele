@@ -3,7 +3,6 @@
     max-width: 1400px;
 }
 
-
 .stats-history-card {
     background-color: var(--color-bg-dark-form);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
@@ -11,7 +10,6 @@
     padding: 1.8rem 2.2rem;
 }
 
-/* Table styling */
 .stats-history-table {
     margin-top: 1rem;
 }
@@ -36,7 +34,6 @@
     padding: 0.6rem;
     vertical-align: middle;
 }
-
 
 .btn-secondary {
     background-color: #6c757d;
