@@ -7,29 +7,25 @@
 <header th:replace="fragments/navbar"></header>
 
 <main class="offer-container">
-
     <div class="container mt-4">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Heading -->
+        <div class="heading-wrapper d-flex align-items-center justify-content-center mb-4">
             <h2 class="section-title">Snapshot Details</h2>
-
-            <a th:href="@{/admin/statistics}" class="btn btn-secondary btn-sm">Back</a>
+            <a th:href="@{/admin/statistics}" class="btn btn-secondary">Back</a>
         </div>
 
+        <!-- Snapshot Info -->
         <section class="stats-card">
-            <h5>Snapshot Info</h5>
-            <p>
-                <strong>ID:</strong>
-                <span th:text="${stats.id}"></span>
-            </p>
+            <h5 class="card-title mb-3">Snapshot Info</h5>
 
+            <p><strong>ID:</strong> <span th:text="${stats.id}"></span></p>
             <p>
                 <strong>Timestamp:</strong>
                 <span th:text="${#temporals.format(stats.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </p>
 
-            <div class="row mt-3">
-
+            <div class="row mt-4">
                 <div class="col-md-4 mb-3">
                     <div class="stats-box">
                         <strong>Total Requests</strong>
@@ -50,20 +46,19 @@
                         <div th:text="${stats.authRequests}"></div>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- Endpoint Stats -->
         <section class="stats-card">
-            <h5 class="card-title" >Visited endpoints</h5>
+            <h5 class="card-title mb-3">Visited Endpoints</h5>
 
             <div th:if="${#lists.isEmpty(stats.endpointStats)}">
-                <p class="text-muted">No endpoint statistics available.</p>
+                <p class="text-muted mb-0">No endpoint statistics available.</p>
             </div>
 
-            <div th:if="${!#lists.isEmpty(stats.endpointStats)}" class="table-responsive">
-                <table>
+            <div class="table-responsive" th:if="${!#lists.isEmpty(stats.endpointStats)}">
+                <table class="table table-dark table-hover table-bordered align-middle mb-0">
                     <thead>
                     <tr>
                         <th>Path</th>
@@ -75,11 +70,12 @@
                     </thead>
                     <tbody>
                     <tr th:each="e : ${stats.endpointStats}">
-                        <td th:text="${e.path}"></td>
-                        <td class="text-end" th:text="${e.totalRequests}"></td>
-                        <td class="text-end" th:text="${#numbers.formatDecimal(e.avgResponseTimeMs,1,2)}"></td>
-                        <td class="text-end" th:text="${e.error4xx}"></td>
-                        <td class="text-end" th:text="${e.error5xx}"></td>
+                        <td th:text="${e.path}" th:title="${e.path}"></td>
+                        <td class="text-end fw-semibold" th:text="${e.totalRequests}"></td>
+                        <td class="text-end"
+                            th:text="${#numbers.formatDecimal(e.avgResponseTimeMs,1,2)}"></td>
+                        <td class="text-end text-warning" th:text="${e.error4xx}"></td>
+                        <td class="text-end text-danger" th:text="${e.error5xx}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -87,45 +83,34 @@
         </section>
 
         <!-- User Stats -->
-        <section class="mb-4 stats-card">
-            <div>
-                <h5 class="card-title" style="color:#17a2b8; border-bottom:2px solid #17a2b8; padding-bottom:0.4rem;">
-                    Active users
-                </h5>
+        <section class="stats-card mb-4">
+            <h5 class="card-title mb-3">Active Users</h5>
 
-                <!-- User Stats -->
-                <div>
-                    <!-- No User Stats -->
-                    <div th:if="${#lists.isEmpty(stats.userStats)}">
-                        <p class="text-muted mb-0">No user data available.</p>
-                    </div>
+            <div th:if="${#lists.isEmpty(stats.userStats)}">
+                <p class="text-muted mb-0">No user data available.</p>
+            </div>
 
-                    <!-- User Statistics Table -->
-                    <div class="table-responsive" th:if="${!#lists.isEmpty(stats.userStats)}">
-                        <table class="table table-striped table-sm mb-0">
-                            <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th class="text-end">Requests</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="u : ${stats.userStats}">
-                                <td th:text="${u.username}"></td>
-                                <td class="text-end" th:text="${u.requests}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
+            <div class="table-responsive" th:if="${!#lists.isEmpty(stats.userStats)}">
+                <table class="table table-dark table-striped table-hover table-bordered table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th class="text-end">Requests</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="u : ${stats.userStats}">
+                        <td th:text="${u.username}"></td>
+                        <td class="text-end fw-semibold" th:text="${u.requests}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
+
     </div>
 </main>
 
 <footer></footer>
-
 </body>
 </html>

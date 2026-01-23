@@ -1,6 +1,12 @@
+.section-title {
+    margin-bottom: 0;
+}
 
+.heading-wrapper {
+    gap: 1rem;
+}
 
-/* === Card Style (same concept as profile-card) === */
+/* === Card Style === */
 .stats-card {
     background-color: #343a40;
     border-radius: 15px;
@@ -9,7 +15,11 @@
     margin-bottom: 2rem;
 }
 
-
+.card-title {
+    color: #17a2b8;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 0.4rem;
+}
 
 /* === Snapshot Summary Boxes === */
 .stats-box {
@@ -27,32 +37,42 @@
 
 .stats-box div {
     margin-top: 0.4rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 /* === Tables === */
-table {
-    width: 100%;
-    border-collapse: collapse;
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 0.95rem;
 }
 
-table thead th {
+.table thead th {
     background-color: #495057;
     color: #ffc107;
     border-bottom: 2px solid #17a2b8;
-    padding: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
-table tbody tr {
-    background-color: #3b4147;
-    border-bottom: 1px solid #555;
+.table tbody tr {
+    transition: background-color 0.15s ease-in-out;
 }
 
-table tbody tr:hover {
-    background-color: #4a5056;
+.table tbody tr:hover {
+    background-color: rgba(23, 162, 184, 0.15);
 }
 
-table td {
-    padding: 0.6rem;
-    color: #f8f9fa;
+.table td,
+.table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+/* === Endpoint Path UX === */
+.table td:first-child {
+    max-width: 420px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
