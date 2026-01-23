@@ -1,40 +1,48 @@
-/* === Admin container === */
-.admin-container {
-    padding: 120px 40px 40px;
-    color: #f8f9fa;
-    background-color: #1c1f23;
-    min-height: 100vh;
+
+main {
+    max-width: 1400px;
 }
 
-/* === Title === */
-.admin-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #17a2b8;
-}
-
-/* === Filters === */
+/* Filters */
 .filters {
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-bottom: 2rem;
+    max-width: fit-content;
+    padding: 1rem 1.2rem;
+    margin: 0 auto;
+    background-color: var(--color-bg-dark-form);
+    border-radius: 14px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
 }
 
 .filters label {
-    font-weight: bold;
+    font-weight: 600;
+    color: var(--color-white-main);
 }
 
 .filters select {
-    margin-left: 0.5rem;
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    background-color: #343a40;
-    color: #fff;
-    border: 1px solid #555;
+    margin-left: 0.6rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    background-color: #495057;
+    color: var(--color-white-main);
+    border: 1px solid #666;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
 }
 
-/* === Table === */
+.filters select:hover {
+    border-color: var(--color-turquoise);
+}
+
+.filters select:focus {
+    outline: none;
+    border-color: var(--color-turquoise);
+    box-shadow: 0 0 0 0.15rem rgba(23, 162, 184, 0.25);
+}
+
+/* Table */
 .table-wrapper {
     overflow-x: auto;
 }
@@ -48,7 +56,7 @@
 }
 
 .stats-table thead {
-    background-color: #343a40;
+    background-color: var(--color-bg-dark-form);
 }
 
 .stats-table th,
@@ -59,7 +67,7 @@
 }
 
 .stats-table th {
-    color: #17a2b8;
+    color: var(--color-turquoise);
     text-transform: uppercase;
     font-size: 0.85rem;
 }
@@ -70,12 +78,11 @@
 
 .sold-count {
     font-weight: bold;
-    color: #ffc107;
+    color: var(--color-accent);
 }
 
-/* === Empty state === */
 .stats-table td[colspan] {
-    text-align: center;
     padding: 2rem;
-    color: #bbb;
+    text-align: center;
+    color: var(--color-white-muted);
 }
