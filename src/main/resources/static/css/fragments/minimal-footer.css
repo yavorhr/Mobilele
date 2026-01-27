@@ -3,7 +3,7 @@
     margin-top: auto;
     background: var(--color-bg-main);
     padding: 1.5rem 1rem 1rem;
-    border-top: 1px solid rgba(76, 175, 80, 0.25); /* soft brand green */
+    border-top: 1px solid rgba(76, 175, 80, 0.25);
     color: var(--color-text-soft);
 }
 
@@ -19,6 +19,7 @@
     text-align: center;
 }
 
+/* Home Logo */
 .site-footer--minimal .footer-brand {
     max-width: none;
 }
@@ -32,7 +33,7 @@
 }
 
 .site-footer--minimal .footer-logo img {
-    width: 50px; /* ⬅ reduced size */
+    width: 50px;
     height: auto;
     opacity: 0.9;
     transition: transform 0.2s ease, opacity 0.2s ease;
@@ -55,6 +56,24 @@
     color: var(--color-primary);
 }
 
+/* Search */
+.footer-cta {
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--color-white-main);
+    background-color: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.35);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.footer-cta:hover {
+    background-color: rgba(76, 175, 80, 0.25);
+    transform: translateY(-1px);
+    color: var(--color-white-main);
+}
+
+/* Links - register, login */
 .site-footer--minimal .footer-links {
     display: flex;
     justify-content: center;
@@ -63,7 +82,6 @@
     flex-wrap: wrap;
 }
 
-/* Links */
 .site-footer--minimal .footer-links a {
     text-decoration: none;
     font-size: 1.1rem;
@@ -85,29 +103,12 @@
     color: #888;
 }
 
-/* === Utility section === */
+/* Utility section */
 .footer-links--utility {
     gap: 1.5rem;
 }
 
-/* Primary CTA */
-.footer-cta {
-    padding: 0.35rem 0.8rem;
-    border-radius: 20px;
-    font-weight: 600;
-    color: var(--color-white-main);
-    background-color: rgba(76, 175, 80, 0.15);
-    border: 1px solid rgba(76, 175, 80, 0.35);
-    transition: background-color 0.2s ease, transform 0.15s ease;
-}
-
-.footer-cta:hover {
-    background-color: rgba(76, 175, 80, 0.25);
-    transform: translateY(-1px);
-    color: var(--color-white-main);
-}
-
-/* Legal links slightly muted */
+/* Legal links  */
 .footer-links--legal a {
     opacity: 0.8;
     font-size: 0.8rem;

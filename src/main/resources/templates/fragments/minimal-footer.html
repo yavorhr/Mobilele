@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" th:href="@{/css/fragments/minimal-footer.css}">
 
 <footer th:fragment="minimal-footer"
         class="site-footer site-footer--minimal">
-
     <div class="footer-container footer-container--minimal">
-
-        <!-- Brand -->
-        <div class="footer-brand">
-            <a href="/" class="footer-logo">
-                <img src="/images/car.png" alt="Mobilele logo">
-                <h3>Mobilele</h3>
-            </a>
-        </div>
-
-        <!-- Utility navigation -->
         <div class="footer-links footer-links--utility">
+            <div class="footer-brand">
+                <a href="/" class="footer-logo">
+                    <img src="/images/car.png" alt="Mobilele logo">
+                    <h3>Mobilele</h3>
+                </a>
+            </div>
 
-            <!-- Core CTA -->
             <a th:href="@{/offers/find}" class="footer-cta">
                 🔍 Find Offers
             </a>
 
-            <!-- Auth-aware links -->
             <a sec:authorize="isAuthenticated()"
                th:href="@{/users/profile}">
                 My Profile
