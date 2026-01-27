@@ -8,9 +8,12 @@
 
 <link rel="stylesheet" th:href="@{/css/fragments/minimal-footer.css}">
 
-<footer th:fragment='minimal-footer'
+<footer th:fragment="minimal-footer"
         class="site-footer site-footer--minimal">
+
     <div class="footer-container footer-container--minimal">
+
+        <!-- Brand -->
         <div class="footer-brand">
             <a href="/" class="footer-logo">
                 <img src="/images/car.png" alt="Mobilele logo">
@@ -18,17 +21,47 @@
             </a>
         </div>
 
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+        <!-- Utility navigation -->
+        <div class="footer-links footer-links--utility">
+
+            <!-- Core CTA -->
+            <a th:href="@{/offers/find}" class="footer-cta">
+                🔍 Find Offers
+            </a>
+
+            <!-- Auth-aware links -->
+            <a sec:authorize="isAuthenticated()"
+               th:href="@{/users/profile}">
+                My Profile
+            </a>
+
+            <a sec:authorize="!isAuthenticated()"
+               th:href="@{/users/login}">
+                Login
+            </a>
+
+            <a sec:authorize="!isAuthenticated()"
+               th:href="@{/users/register}">
+                Register
+            </a>
+        </div>
+
+        <!-- Legal / Support -->
+        <div class="footer-links footer-links--legal">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
             <a href="mailto:support@mobilele.com">Contact</a>
         </div>
+
     </div>
 
     <div class="footer-bottom">
-        <p>© <span th:text="${#dates.year(#dates.createNow())}"></span> Mobilele</p>
+        <p>
+            © <span th:text="${#dates.year(#dates.createNow())}"></span> Mobilele. All rights reserved.
+        </p>
     </div>
 </footer>
+
 
 </body>
 </html>

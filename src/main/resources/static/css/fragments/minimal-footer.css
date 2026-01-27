@@ -32,14 +32,14 @@
 }
 
 .site-footer--minimal .footer-logo img {
-    width: 28px; /* ⬅ reduced size */
+    width: 50px; /* ⬅ reduced size */
     height: auto;
     opacity: 0.9;
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .site-footer--minimal .footer-logo h3 {
-    font-size: 1.05rem;
+    font-size: 1.45rem;
     font-weight: 600;
     margin: 0;
     color: var(--color-white-main);
@@ -66,7 +66,7 @@
 /* Links */
 .site-footer--minimal .footer-links a {
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 1.1rem;
     color: var(--color-text-soft);
     transition: color 0.2s ease;
 }
@@ -83,6 +83,34 @@
     text-align: center;
     font-size: 0.75rem;
     color: #888;
+}
+
+/* === Utility section === */
+.footer-links--utility {
+    gap: 1.5rem;
+}
+
+/* Primary CTA */
+.footer-cta {
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--color-white-main);
+    background-color: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.35);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.footer-cta:hover {
+    background-color: rgba(76, 175, 80, 0.25);
+    transform: translateY(-1px);
+    color: var(--color-white-main);
+}
+
+/* Legal links slightly muted */
+.footer-links--legal a {
+    opacity: 0.8;
+    font-size: 0.8rem;
 }
 
 /* ===================
