@@ -72,4 +72,10 @@ public class ModelEntity extends BaseEntity {
     this.year = year;
     return this;
   }
+
+  @PrePersist
+  @PreUpdate
+  void normalize() {
+    this.name = this.name.trim().toUpperCase();
+  }
 }
