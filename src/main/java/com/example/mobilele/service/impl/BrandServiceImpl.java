@@ -51,23 +51,30 @@ public class BrandServiceImpl implements BrandService {
 
   @Override
   public void initBrands() {
-    if (this.brandRepository.count() == 0) {
-      BrandEntity bmw = initBrand("BMW");
-      BrandEntity audi = initBrand("AUDI");
-      BrandEntity toyota = initBrand("TOYOTA");
-      BrandEntity mercedes = initBrand("MERCEDES");
-      BrandEntity volkswagen = initBrand("VOLKSWAGEN");
-      BrandEntity dacia = initBrand("DACIA");
-      BrandEntity tesla = initBrand("TESLA");
-      BrandEntity honda = initBrand("HONDA");
-      BrandEntity ford = initBrand("FORD");
-      BrandEntity nissan = initBrand("NISSAN");
-      BrandEntity hyundai = initBrand("HYUNDAI");
-      BrandEntity kia = initBrand("KIA");
-
-      this.brandRepository.saveAll(List.of(
-              bmw, audi, toyota, mercedes, volkswagen, dacia, tesla, honda, ford, nissan, hyundai, kia));
+    if (brandRepository.count() > 0) {
+      return;
     }
+
+    List<String> brandNames = List.of(
+            "BMW",
+            "AUDI",
+            "TOYOTA",
+            "MERCEDES",
+            "VOLKSWAGEN",
+            "DACIA",
+            "TESLA",
+            "HONDA",
+            "FORD",
+            "NISSAN",
+            "HYUNDAI",
+            "KIA"
+    );
+
+    List<BrandEntity> brands = brandNames.stream()
+            .map(this::initBrand)
+            .toList();
+
+    brandRepository.saveAll(brands);
   }
 
   private BrandEntity initBrand(String brand) {
