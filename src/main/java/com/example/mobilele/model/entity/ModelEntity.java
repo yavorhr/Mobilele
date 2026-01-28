@@ -16,6 +16,12 @@ public class ModelEntity extends BaseEntity {
   public ModelEntity() {
   }
 
+  public ModelEntity(String name, VehicleCategoryEnum vehicleType, Integer year) {
+    this.name = name;
+    this.vehicleType = vehicleType;
+    this.year = year;
+  }
+
   @OneToMany(mappedBy = "model", fetch = FetchType.EAGER)
   public List<OfferEntity> getOffers() {
     return offers;

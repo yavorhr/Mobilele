@@ -9,9 +9,7 @@ import com.example.mobilele.service.ModelService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,44 +48,48 @@ public class ModelServiceImpl implements ModelService {
 
   @Override
   public void initModels() {
-    if (modelRepository.count() == 0) {
-      BrandEntity bmw = this.brandService.findBrandByName("BMW");
+    if (modelRepository.count() > 0) {
+      return;
+    }
 
-      ModelEntity m1 = new ModelEntity();
+      Map<String, List<ModelEntity>> seedData = Map.of(
+              "BMW", List.of(
+                      new ModelEntity("M1", VehicleCategoryEnum.CAR, 2015),
+                      new ModelEntity("M3", VehicleCategoryEnum.CAR, 2025),
+                      new ModelEntity("X3", VehicleCategoryEnum.SUV, 2010),
+                      new ModelEntity("X5", VehicleCategoryEnum.SUV, 2011)
+              ),
+              "AUDI", List.of(
+                      new ModelEntity("Q3", VehicleCategoryEnum.SUV, 2015),
+                      new ModelEntity("Q5", VehicleCategoryEnum.SUV, 2025),
+                      new ModelEntity("TT", VehicleCategoryEnum.CAR, 2010),
+                      new ModelEntity("A8", VehicleCategoryEnum.CAR, 2011)
+              )
+              // ➕ add the remaining 10 brands here
+      );
 
-      m1
-              .setName("M1")
-              .setBrand(bmw)
-              .setVehicleType(VehicleCategoryEnum.CAR)
-              .setYear(1999);
+      List<ModelEntity> modelsContainer = new ArrayList<>();
 
-      ModelEntity x3 = new ModelEntity();
+      seedData
+              .forEach((brandName, models) -> {
+        BrandEntity brand = brandService.findBrandByName(brandName);
 
-      x3
-              .setName("X3")
-              .setBrand(bmw)
-              .setVehicleType(VehicleCategoryEnum.SUV)
-              .setYear(2003);
+        models.forEach(model -> {
+          modelsContainer.add(
+                  createModel(brand, model)
+          );
+        });
+      });
 
-      BrandEntity audi = this.brandService.findBrandByName("AUDI");
+      modelRepository.saveAll(modelsContainer);
+    }
 
-      ModelEntity q5 = new ModelEntity();
-      q5
-              .setName("Q5")
-              .setBrand(audi)
-              .setVehicleType(VehicleCategoryEnum.SUV)
-              .setYear(2015);
-
-      BrandEntity toyota = this.brandService.findBrandByName("TOYOTA");
-
-      ModelEntity rav4 = new ModelEntity();
-      rav4
-              .setName("RAV4")
-              .setBrand(toyota)
-              .setVehicleType(VehicleCategoryEnum.SUV)
-              .setYear(2023);
-
-      modelRepository.saveAll(List.of(m1, x3, q5, rav4));
+    private ModelEntity createModel (BrandEntity brand, ModelEntity model){
+      return new ModelEntity()
+              .setName(model.getName())
+              .setBrand(brand)
+              .setVehicleType(model.getVehicleType())
+              .setYear(model.getYear());
     }
   }
-}
+
