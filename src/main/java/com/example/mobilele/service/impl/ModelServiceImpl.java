@@ -52,44 +52,115 @@ public class ModelServiceImpl implements ModelService {
       return;
     }
 
-      Map<String, List<ModelEntity>> seedData = Map.of(
-              "BMW", List.of(
-                      new ModelEntity("M1", VehicleCategoryEnum.CAR, 2015),
-                      new ModelEntity("M3", VehicleCategoryEnum.CAR, 2025),
-                      new ModelEntity("X3", VehicleCategoryEnum.SUV, 2010),
-                      new ModelEntity("X5", VehicleCategoryEnum.SUV, 2011)
-              ),
-              "AUDI", List.of(
-                      new ModelEntity("Q3", VehicleCategoryEnum.SUV, 2015),
-                      new ModelEntity("Q5", VehicleCategoryEnum.SUV, 2025),
-                      new ModelEntity("TT", VehicleCategoryEnum.CAR, 2010),
-                      new ModelEntity("A8", VehicleCategoryEnum.CAR, 2011)
-              )
-              // ➕ add the remaining 10 brands here
-      );
+    Map<String, List<ModelEntity>> seedData = Map.ofEntries(
 
-      List<ModelEntity> modelsContainer = new ArrayList<>();
+            Map.entry("BMW", List.of(
+                    new ModelEntity("3 Series", VehicleCategoryEnum.CAR, 2018),
+                    new ModelEntity("5 Series", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("X3", VehicleCategoryEnum.SUV, 2019),
+                    new ModelEntity("X5", VehicleCategoryEnum.SUV, 2022)
+            )),
 
-      seedData
-              .forEach((brandName, models) -> {
-        BrandEntity brand = brandService.findBrandByName(brandName);
+            Map.entry("AUDI", List.of(
+                    new ModelEntity("A4", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("A6", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("Q3", VehicleCategoryEnum.SUV, 2018),
+                    new ModelEntity("Q7", VehicleCategoryEnum.SUV, 2022)
+            )),
 
-        models.forEach(model -> {
-          modelsContainer.add(
-                  createModel(brand, model)
-          );
-        });
-      });
+            Map.entry("TOYOTA", List.of(
+                    new ModelEntity("Corolla", VehicleCategoryEnum.CAR, 2017),
+                    new ModelEntity("Camry", VehicleCategoryEnum.CAR, 2020),
+                    new ModelEntity("RAV4", VehicleCategoryEnum.SUV, 2019),
+                    new ModelEntity("Highlander", VehicleCategoryEnum.SUV, 2021)
+            )),
 
-      modelRepository.saveAll(modelsContainer);
-    }
+            Map.entry("MERCEDES", List.of(
+                    new ModelEntity("C-Class", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("E-Class", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("GLA", VehicleCategoryEnum.SUV, 2018),
+                    new ModelEntity("GLE", VehicleCategoryEnum.SUV, 2022)
+            )),
 
-    private ModelEntity createModel (BrandEntity brand, ModelEntity model){
-      return new ModelEntity()
-              .setName(model.getName())
-              .setBrand(brand)
-              .setVehicleType(model.getVehicleType())
-              .setYear(model.getYear());
-    }
+            Map.entry("VOLKSWAGEN", List.of(
+                    new ModelEntity("Golf", VehicleCategoryEnum.CAR, 2018),
+                    new ModelEntity("Passat", VehicleCategoryEnum.CAR, 2020),
+                    new ModelEntity("Tiguan", VehicleCategoryEnum.SUV, 2019),
+                    new ModelEntity("Touareg", VehicleCategoryEnum.SUV, 2021)
+            )),
+
+            Map.entry("DACIA", List.of(
+                    new ModelEntity("Logan", VehicleCategoryEnum.CAR, 2017),
+                    new ModelEntity("Sandero", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("Duster", VehicleCategoryEnum.SUV, 2020),
+                    new ModelEntity("Bigster", VehicleCategoryEnum.SUV, 2023)
+            )),
+
+            Map.entry("TESLA", List.of(
+                    new ModelEntity("Model 3", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("Model S", VehicleCategoryEnum.CAR, 2022),
+                    new ModelEntity("Model Y", VehicleCategoryEnum.SUV, 2022),
+                    new ModelEntity("Model X", VehicleCategoryEnum.SUV, 2023)
+            )),
+
+            Map.entry("HONDA", List.of(
+                    new ModelEntity("Civic", VehicleCategoryEnum.CAR, 2018),
+                    new ModelEntity("Accord", VehicleCategoryEnum.CAR, 2020),
+                    new ModelEntity("CR-V", VehicleCategoryEnum.SUV, 2019),
+                    new ModelEntity("HR-V", VehicleCategoryEnum.SUV, 2021)
+            )),
+
+            Map.entry("FORD", List.of(
+                    new ModelEntity("Focus", VehicleCategoryEnum.CAR, 2018),
+                    new ModelEntity("Mondeo", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("Kuga", VehicleCategoryEnum.SUV, 2020),
+                    new ModelEntity("Explorer", VehicleCategoryEnum.SUV, 2022)
+            )),
+
+            Map.entry("NISSAN", List.of(
+                    new ModelEntity("Sentra", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("Altima", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("Qashqai", VehicleCategoryEnum.SUV, 2020),
+                    new ModelEntity("X-Trail", VehicleCategoryEnum.SUV, 2022)
+            )),
+
+            Map.entry("HYUNDAI", List.of(
+                    new ModelEntity("Elantra", VehicleCategoryEnum.CAR, 2019),
+                    new ModelEntity("Sonata", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("Tucson", VehicleCategoryEnum.SUV, 2020),
+                    new ModelEntity("Santa Fe", VehicleCategoryEnum.SUV, 2022)
+            )),
+
+            Map.entry("KIA", List.of(
+                    new ModelEntity("Ceed", VehicleCategoryEnum.CAR, 2018),
+                    new ModelEntity("Optima", VehicleCategoryEnum.CAR, 2020),
+                    new ModelEntity("Sportage", VehicleCategoryEnum.SUV, 2021),
+                    new ModelEntity("Sorento", VehicleCategoryEnum.SUV, 2022)
+            ))
+    );
+
+    List<ModelEntity> modelsContainer = new ArrayList<>();
+
+    seedData
+            .forEach((brandName, models) -> {
+              BrandEntity brand = brandService.findBrandByName(brandName);
+
+              models.forEach(model -> {
+                modelsContainer.add(
+                        createModel(brand, model)
+                );
+              });
+            });
+
+    modelRepository.saveAll(modelsContainer);
   }
+
+  private ModelEntity createModel(BrandEntity brand, ModelEntity model) {
+    return new ModelEntity()
+            .setName(model.getName())
+            .setBrand(brand)
+            .setVehicleType(model.getVehicleType())
+            .setYear(model.getYear());
+  }
+}
 
