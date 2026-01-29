@@ -41,6 +41,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class OfferServiceImpl implements OfferService {
+  public static final String CLOUD_NAME = "yavorhr";
+  public static final String ROOT_FOLDER = "mobilele";
+  public static final String BASE_URL =
+          "https://res.cloudinary.com/" + CLOUD_NAME + "/image/upload/" + ROOT_FOLDER + "/";
+
   private final OfferRepository offerRepository;
   private final SoldOfferRepository soldOfferRepository;
   private final ModelService modelService;
@@ -415,73 +420,104 @@ public class OfferServiceImpl implements OfferService {
   @Override
   @Transactional
   public void initOffers() {
-    if (offerRepository.count() == 0) {
 
-      // Offer 1
-      OfferEntity offer1 = buildOffer(
-              1L, EngineEnum.Gasoline, TransmissionType.AUTOMATIC, ConditionEnum.USED,
-              ColorEnum.GRAY, 22500.00, BigDecimal.valueOf(14300),
-              "Used, but well serviced and in good condition.",
-              "admin", CountryEnum.SPAIN, CityEnum.BARCELONA, createPicture("m1", "cars-offers/m1_eicofs",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
-      // Offer 2
-      OfferEntity offer2 = buildOffer(
-              2L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.NEW
-              , ColorEnum.WHITE, 500.00, BigDecimal.valueOf(6500),
-              "The SUV is brand new, just get in and drive!",
-              "admin", CountryEnum.GERMANY, CityEnum.BERLIN, createPicture("x3", "cars-offers/x3_wxw7fr",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923267/mobilele/cars-offers/x3_wxw7fr.jpg"));
-
-      // Offer 3
-      OfferEntity offer3 = buildOffer(
-              3L, EngineEnum.Gasoline, TransmissionType.MANUAL, ConditionEnum.DAMAGED
-              , ColorEnum.BLUE, 10000.00, BigDecimal.valueOf(31000),
-              "The SUV is a bit damaged in the back, but this can be fixed easily!",
-              "user", CountryEnum.BULGARIA, CityEnum.VARNA, createPicture("rav4", "cars-offers/rav4_j72ktc",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923264/mobilele/cars-offers/rav4_j72ktc.jpg"));
-
-      // Offer 4
-      OfferEntity offer4 = buildOffer(
-              4L, EngineEnum.Hybrid, TransmissionType.AUTOMATIC, ConditionEnum.FOR_PARTS
-              , ColorEnum.GREEN, 99999.00, BigDecimal.valueOf(1000),
-              "The car is totally damaged and it could be used for spare parts!",
-              "user", CountryEnum.BULGARIA, CityEnum.SOFIA, createPicture("q5", "cars-offers/q5_bd67cg",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923265/mobilele/cars-offers/q5_bd67cg.jpg"));
-
-      // BMW M1 - 2
-      OfferEntity offer5 = buildOffer(
-              1L, EngineEnum.Hybrid, TransmissionType.AUTOMATIC, ConditionEnum.DAMAGED
-              , ColorEnum.GREEN, 99999.00, BigDecimal.valueOf(1000),
-              "The car is damaged, but it can be fixed!",
-              "admin", CountryEnum.SPAIN, CityEnum.BARCELONA, createPicture("m1", "cars-offers/m1_eicofs",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
-
-      // BMW M1 - 3
-      OfferEntity offer6 = buildOffer(
-              1L, EngineEnum.Hybrid, TransmissionType.MANUAL, ConditionEnum.NEW
-              , ColorEnum.GREEN, 50.00, BigDecimal.valueOf(1000),
-              "The bmw is brand new!",
-              "admin", CountryEnum.BULGARIA, CityEnum.VARNA, createPicture("m1", "cars-offers/m1_eicofs",
-                      "https://res.cloudinary.com/yavorhr/image/upload/v1759923263/mobilele/cars-offers/m1_eicofs.webp"));
-
-      // Save all offers with pictures (cascade persists pictures too)
-      offerRepository.saveAll(List.of(offer1, offer2, offer3, offer4, offer5, offer6));
+    if (offerRepository.count() > 0) {
+      return;
     }
+
+    List<ModelEntity> models = modelService.findAll();
+    List<OfferEntity> offers = new ArrayList<>();
+
+    int index = 0;
+
+    for (ModelEntity model : models) {
+
+      EngineEnum engine =
+              EngineEnum.values()[index % EngineEnum.values().length];
+
+      TransmissionType transmission =
+              TransmissionType.values()[index % TransmissionType.values().length];
+
+      ConditionEnum condition =
+              ConditionEnum.values()[index % ConditionEnum.values().length];
+
+      ColorEnum color =
+              ColorEnum.values()[index % ColorEnum.values().length];
+
+      CityEnum city =
+              CityEnum.values()[index % CityEnum.values().length];
+
+      CountryEnum country = city.getCountry();
+
+      String username = index % 2 == 0 ? "admin" : "user";
+      UserEntity seller = userService.findByUsername(username);
+
+      double mileage =
+              condition == ConditionEnum.NEW ? 0 : 5_000 + (index * 700);
+
+      BigDecimal price =
+              BigDecimal.valueOf(8_000 + (index * 1_500));
+
+      String publicId = buildPublicId(model);
+      String url = buildImageUrl(model);
+
+      Picture picture = createPicture(
+              model.getName(),
+              publicId,
+              url,
+              seller
+      );
+
+      OfferEntity offer = buildOffer(
+              model,
+              engine,
+              transmission,
+              condition,
+              color,
+              mileage,
+              price,
+              buildDescription(model, condition),
+              seller,
+              country,
+              city,
+              picture
+      );
+
+      offers.add(offer);
+      index++;
+    }
+
+    offerRepository.saveAll(offers);
   }
 
   // Private and helpers
-  private OfferEntity buildOffer(Long modelId, EngineEnum engineType, TransmissionType transmissionType,
-                                 ConditionEnum condition, ColorEnum color,
-                                 Double mileage, BigDecimal price, String description,
-                                 String username, CountryEnum country, CityEnum city, Picture picture) {
 
-    UserEntity seller = userService.findByUsername(username);
+  private String buildDescription(ModelEntity model, ConditionEnum condition) {
+    return switch (condition) {
+      case NEW -> "Brand new " + model.getName() + ", ready to drive.";
+      case USED -> "Well maintained " + model.getName() + " in good condition.";
+      case DAMAGED -> model.getName() + " with minor damage, repairable.";
+      case FOR_PARTS -> model.getName() + " suitable for spare parts.";
+    };
+  }
 
+  private OfferEntity buildOffer(
+          ModelEntity model,
+          EngineEnum engineType,
+          TransmissionType transmissionType,
+          ConditionEnum condition,
+          ColorEnum color,
+          Double mileage,
+          BigDecimal price,
+          String description,
+          UserEntity seller,
+          CountryEnum country,
+          CityEnum city,
+          Picture picture
+  ) {
     OfferEntity offer = new OfferEntity();
 
-    offer.setModel(modelService.findById(modelId)
-            .orElseThrow(() -> new ObjectNotFoundException("Model with id: " + modelId + " does not exist!")));
-
+    offer.setModel(model);
     offer.setEngine(engineType);
     offer.setTransmission(transmissionType);
     offer.setCondition(condition);
@@ -491,25 +527,43 @@ public class OfferServiceImpl implements OfferService {
     offer.setDescription(description);
     offer.setCountry(country);
     offer.setCity(city);
-
-    // Set seller
     offer.setSeller(seller);
 
-    // Set picture and bidirectional relationship
     picture.setOffer(offer);
-    picture.setSeller(seller);
     offer.setPictures(List.of(picture));
 
     return offer;
   }
 
-  private Picture createPicture(String title, String publicId, String url) {
+  private Picture createPicture(
+          String title,
+          String publicId,
+          String url,
+          UserEntity seller
+  ) {
     Picture picture = new Picture();
     picture.setTitle(title);
     picture.setPublicId(publicId);
     picture.setUrl(url);
+    picture.setSeller(seller);
     return picture;
   }
+
+  private String normalizeForFileName(String value) {
+    return value.toUpperCase();
+  }
+
+  private String buildPublicId(ModelEntity model) {
+    return "cars-offers/"
+            + model.getBrand().getName()
+            + "/"
+            + normalizeForFileName(model.getName());
+  }
+
+  private String buildImageUrl(ModelEntity model) {
+    return BASE_URL + buildPublicId(model) + ".jpg";
+  }
+
 
   private OfferBaseViewModel mapToOfferBaseViewModel(OfferEntity e) {
     OfferBaseViewModel viewModel = this.modelMapper.map(e, OfferBaseViewModel.class);
