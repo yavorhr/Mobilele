@@ -47,6 +47,11 @@ public class ModelServiceImpl implements ModelService {
   }
 
   @Override
+  public List<ModelEntity> findAll() {
+    return this.modelRepository.findAll();
+  }
+
+  @Override
   public void initModels() {
     if (modelRepository.count() > 0) {
       return;
@@ -56,7 +61,7 @@ public class ModelServiceImpl implements ModelService {
 
             Map.entry("BMW", List.of(
                     new ModelEntity("3 SERIES", VehicleCategoryEnum.CAR, 2018),
-                    new ModelEntity("5 SERIES", VehicleCategoryEnum.CAR, 2021),
+                    new ModelEntity("1 SERIES", VehicleCategoryEnum.CAR, 2021),
                     new ModelEntity("X3", VehicleCategoryEnum.SUV, 2019),
                     new ModelEntity("X5", VehicleCategoryEnum.SUV, 2022)
             )),
@@ -99,7 +104,7 @@ public class ModelServiceImpl implements ModelService {
             Map.entry("TESLA", List.of(
                     new ModelEntity("MODEL 3", VehicleCategoryEnum.CAR, 2021),
                     new ModelEntity("MODEL S", VehicleCategoryEnum.CAR, 2022),
-                    new ModelEntity("MODEL Y", VehicleCategoryEnum.SUV, 2022),
+                    new ModelEntity("CYBERTRUCK", VehicleCategoryEnum.SUV, 2022),
                     new ModelEntity("MODEL X", VehicleCategoryEnum.SUV, 2023)
             )),
 
@@ -133,7 +138,7 @@ public class ModelServiceImpl implements ModelService {
 
             Map.entry("KIA", List.of(
                     new ModelEntity("CEED", VehicleCategoryEnum.CAR, 2018),
-                    new ModelEntity("OPTIMA", VehicleCategoryEnum.CAR, 2020),
+                    new ModelEntity("K5", VehicleCategoryEnum.CAR, 2020),
                     new ModelEntity("SPORTAGE", VehicleCategoryEnum.SUV, 2021),
                     new ModelEntity("SORENTO", VehicleCategoryEnum.SUV, 2022)
             ))

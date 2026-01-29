@@ -13,4 +13,6 @@ public interface ModelService {
   ModelEntity findByName(String model);
 
   List<String> findModelsByVehicleTypeAndBrand(String brand, VehicleCategoryEnum vehicle);
+
+  List<ModelEntity> findAll();
 }
