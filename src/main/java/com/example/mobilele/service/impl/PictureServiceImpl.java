@@ -45,7 +45,7 @@ public class PictureServiceImpl implements PictureService {
     List<Picture> uploadedPictures = new ArrayList<>();
 
     for (MultipartFile file : serviceModel.getPictures()) {
-      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+      CloudinaryImage uploaded = cloudinaryService.upload(file, "api");
 
       if (uploaded == null || uploaded.getUrl() == null || uploaded.getUrl().isBlank()) {
         throw new RuntimeException("Image upload failed! ");
