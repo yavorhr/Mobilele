@@ -24,5 +24,9 @@ public class PictureServiceModel {
     this.picturePublicId = picturePublicId;
     return this;
   }
+
+  public boolean canBeDeleted() {
+    return picturePublicId != null && picturePublicId.startsWith("mobilele/api/");
+  }
 }
 

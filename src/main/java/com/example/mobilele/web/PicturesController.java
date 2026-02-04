@@ -40,10 +40,11 @@ public class PicturesController {
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
 
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #publicId)")
+  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #offerId)")
   @DeleteMapping("/pictures")
   @ResponseBody
   public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId,
+                                            @RequestParam("offer_id") String offerId,
                                             @AuthenticationPrincipal MobileleUser principal) {
 
     boolean cloudinaryDeleted = this.cloudinaryService.delete(publicId);
