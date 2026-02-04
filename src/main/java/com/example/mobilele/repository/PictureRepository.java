@@ -8,12 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PictureRepository extends JpaRepository<Picture, Long> {
-
-  //  @Query("SELECT p.url FROM Picture as p")
-//  List<String> getAllPictureUrls();
-//
+  
   @Transactional
   @Modifying
   @Query("DELETE FROM Picture p WHERE p.publicId = :publicId")
