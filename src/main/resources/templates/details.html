@@ -22,7 +22,8 @@
                          th:src="*{pictures[0].pictureUrl}"
                          alt="Main Image"
                          class="main-image"
-                         th:attr="data-public-id=*{pictures[0].picturePublicId}">
+                         th:attr="data-public-id=*{pictures[0].picturePublicId},
+                                  data-deletable=*{pictures[0].canBeDeleted()}">
 
                     <button id="prevBtn" class="nav-btn left">&lt;</button>
                     <button id="nextBtn" class="nav-btn right">&gt;</button>
@@ -30,7 +31,7 @@
                     <th:block th:if="*{canModify}">
                         <button type="button"
                                 id="deleteBtn"
-                                data-offer-id="[[${offer.id}]]"
+                                th:data-offer-id="*{id}"
                                 class="delete-image-btn"
                                 title="Delete image">
                             <i class="fa fa-trash"></i>
@@ -41,7 +42,9 @@
                 <div class="thumbnail-container">
                     <img th:each="p, iterStat : *{pictures}"
                          th:src="${p.pictureUrl}"
-                         th:attr="data-index=${iterStat.index}, data-public-id=${p.picturePublicId}"
+                         th:attr="data-index=${iterStat.index},
+                         data-public-id=${p.picturePublicId},
+                         data-deletable=${p.canBeDeleted()}"
                          class="thumbnail"
                          alt="Thumbnail">
                 </div>
@@ -149,11 +152,13 @@
             <h4 class="section-heading">Car Details</h4>
             <div class="details-grid">
                 <div class="detail-item"></i><i class="fa-solid fa-gears"></i><span th:text="*{engine}"></span></div>
-                <div class="detail-item"><i class="fa-solid fa-gas-pump"></i> <span th:text="*{mileage} + ' km'"></span></div>
+                <div class="detail-item"><i class="fa-solid fa-gas-pump"></i> <span th:text="*{mileage} + ' km'"></span>
+                </div>
                 <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{transmission}"></span></div>
                 <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
                 <div class="detail-item"><i class="fa-solid fa-wrench"></i> <span th:text="*{condition}"></span></div>
-                <div class="detail-item"><i class="fa-regular fa-calendar-days"></i> <span th:text="*{modelYear}"></span></div>
+                <div class="detail-item"><i class="fa-regular fa-calendar-days"></i> <span
+                        th:text="*{modelYear}"></span></div>
             </div>
         </section>
 
