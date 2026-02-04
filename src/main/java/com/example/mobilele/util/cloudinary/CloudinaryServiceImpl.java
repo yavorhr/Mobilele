@@ -52,10 +52,18 @@ public class CloudinaryServiceImpl implements CloudinaryService {
   @Override
   public boolean delete(String publicId) {
     try {
-      cloudinary.uploader().destroy(publicId, Map.of());
+      Map result = cloudinary.uploader().destroy(
+              publicId,
+              Map.of("resource_type", "image")
+      );
+
+      String status = (String) result.get("result");
+
+      // ok OR not found are both fine
+      return "ok".equals(status) || "not found".equals(status);
+
     } catch (IOException e) {
       throw new RuntimeException("Failed to delete image from Cloudinary: " + publicId, e);
     }
-    return true;
   }
 }
