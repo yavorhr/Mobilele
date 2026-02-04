@@ -222,11 +222,6 @@ public class UserServiceImpl implements UserService {
             .stream()
             .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
 
-    if (result) {
-      log.debug("User {} is the owner of offer {}", username, offerId);
-    } else {
-      log.debug("User {} is NOT the owner of offer {}", username, offerId);
-    }
     return result;
   }
 
