@@ -118,7 +118,10 @@ public class OffersController {
           BindingResult bindingResult,
           RedirectAttributes redirectAttributes) {
 
-    VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
+    String normalized = vehicleType.substring(0, 1).toUpperCase() + vehicleType.substring(1).toLowerCase();
+
+    VehicleCategoryEnum vehicleCategoryEnum =
+            VehicleCategoryEnum.valueOf(normalized);
 
     // ignore city field (fetched with AJAX)
     boolean hasRelevantErrors = bindingResult
