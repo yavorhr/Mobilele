@@ -494,10 +494,10 @@ public class OfferServiceImpl implements OfferService {
 
   private String buildDescription(ModelEntity model, ConditionEnum condition) {
     return switch (condition) {
-      case NEW -> "Brand new " + model.getName() + ", ready to drive.";
-      case USED -> "Well maintained " + model.getName() + " in good condition.";
-      case DAMAGED -> model.getName() + " with minor damage, repairable.";
-      case FOR_PARTS -> model.getName() + " suitable for spare parts.";
+      case New -> "Brand new " + model.getName() + ", ready to drive.";
+      case Used -> "Well maintained " + model.getName() + " in good condition.";
+      case Damaged -> model.getName() + " with minor damage, repairable.";
+      case Spares -> model.getName() + " suitable for spare parts.";
     };
   }
 
