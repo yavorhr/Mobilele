@@ -2,26 +2,26 @@ package com.example.mobilele.model.entity.enums;
 
 public enum CityEnum {
   // Bulgaria
-  SOFIA(CountryEnum.BULGARIA),
-  PLOVDIV(CountryEnum.BULGARIA),
-  VARNA(CountryEnum.BULGARIA),
+  Sofia(CountryEnum.Bulgaria),
+  Plovdiv(CountryEnum.Bulgaria),
+  Varna(CountryEnum.Bulgaria),
 
   // Germany
-  BERLIN(CountryEnum.GERMANY),
-  MUNICH(CountryEnum.GERMANY),
-  HAMBURG(CountryEnum.GERMANY),
+  Berlin(CountryEnum.Germany),
+  Munich(CountryEnum.Germany),
+  Hamburg(CountryEnum.Germany),
 
   // Italy
-  ROME(CountryEnum.ITALY),
-  MILAN(CountryEnum.ITALY),
+  Rome(CountryEnum.Italy),
+  Milan(CountryEnum.Italy),
 
   // France
-  PARIS(CountryEnum.FRANCE),
-  LYON(CountryEnum.FRANCE),
+  Paris(CountryEnum.France),
+  Lyon(CountryEnum.France),
 
   // Spain
-  MADRID(CountryEnum.SPAIN),
-  BARCELONA(CountryEnum.SPAIN);
+  Madrid(CountryEnum.Spain),
+  Barcelona(CountryEnum.Spain);
 
   private final CountryEnum country;
 
