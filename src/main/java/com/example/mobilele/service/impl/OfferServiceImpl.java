@@ -453,7 +453,7 @@ public class OfferServiceImpl implements OfferService {
       UserEntity seller = userService.findByUsername(username);
 
       double mileage =
-              condition == ConditionEnum.NEW ? 0 : 5_000 + (index * 700);
+              condition == ConditionEnum.New ? 0 : 5_000 + (index * 700);
 
       BigDecimal price =
               BigDecimal.valueOf(8_000 + (index * 1_500));
