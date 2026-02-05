@@ -57,16 +57,16 @@ public class BrandServiceImpl implements BrandService {
 
     List<String> brandNames = List.of(
             "BMW",
-            "AUDI",
-            "TOYOTA",
-            "MERCEDES",
-            "VOLKSWAGEN",
-            "DACIA",
-            "TESLA",
-            "HONDA",
-            "FORD",
-            "NISSAN",
-            "HYUNDAI",
+            "Audi",
+            "Toyota",
+            "Mercedes",
+            "Volkswagen",
+            "Dacia",
+            "Tesla",
+            "Honda",
+            "Ford",
+            "Nissan",
+            "Hyundai",
             "KIA"
     );
 
