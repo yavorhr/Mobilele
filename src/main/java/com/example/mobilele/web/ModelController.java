@@ -22,12 +22,12 @@ public class ModelController {
           @RequestParam String brand,
           @RequestParam String vehicleType) {
 
-    VehicleCategoryEnum category = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
+    VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.from(vehicleType);
 
     List<String> models =
             modelService.findModelsByVehicleTypeAndBrand(
                     brand.toUpperCase(Locale.ROOT),
-                    category);
+                    vehicleCategoryEnum);
 
     return ResponseEntity.ok(models);
   }

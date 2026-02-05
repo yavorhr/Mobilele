@@ -118,10 +118,7 @@ public class OffersController {
           BindingResult bindingResult,
           RedirectAttributes redirectAttributes) {
 
-    String normalized = vehicleType.substring(0, 1).toUpperCase() + vehicleType.substring(1).toLowerCase();
-
-    VehicleCategoryEnum vehicleCategoryEnum =
-            VehicleCategoryEnum.valueOf(normalized);
+    VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.from(vehicleType);
 
     // ignore city field (fetched with AJAX)
     boolean hasRelevantErrors = bindingResult
@@ -158,7 +155,7 @@ public class OffersController {
     VehicleCategoryEnum categoryEnum = null;
 
     if (vehicleType != null) {
-      categoryEnum = VehicleCategoryEnum.valueOf(vehicleType.toUpperCase(Locale.ROOT));
+      categoryEnum = VehicleCategoryEnum.from(vehicleType);
     }
 
     String sortField = "creationDate".equals(sort) ? "created" : sort;
