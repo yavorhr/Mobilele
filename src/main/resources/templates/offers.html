@@ -15,7 +15,7 @@
             th:text="${context == 'model'} ?
         'All Offers for ' + *{brand} + ' ' + *{model} :
         (${context == 'brand'} ?
-            'All Offers for Brand: ' + *{brand} :
+            'All Offers for : ' + ${brand} :
             (${context == 'favorites'} ?
                 'My favorites' :
                 'Added offers'))"
