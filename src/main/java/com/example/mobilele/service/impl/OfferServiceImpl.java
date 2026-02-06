@@ -238,7 +238,7 @@ public class OfferServiceImpl implements OfferService {
       if (filter.getEngine() != null) predicates.add(cb.equal(root.get("engine"), filter.getEngine()));
       if (filter.getTransmission() != null)
         predicates.add(cb.equal(root.get("transmission"), filter.getTransmission()));
-      if (filter.getCondition() != null) predicates.add(cb.equal(root.get("vehicleCondition"), filter.getCondition()));
+      if (filter.getCondition() != null) predicates.add(cb.equal(root.get("condition"), filter.getCondition()));
       if (filter.getColor() != null) predicates.add(cb.equal(root.get("color"), filter.getColor()));
       if (filter.getCountry() != null) predicates.add(cb.equal(root.get("country"), filter.getCountry()));
       if (filter.getCity() != null) predicates.add(cb.equal(root.get("city"), filter.getCity()));
