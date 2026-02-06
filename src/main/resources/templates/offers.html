@@ -8,13 +8,14 @@
 <header th:replace="fragments/navbar"></header>
 
 <main class="main-content">
-    <div class="heading-wrapper">
+    <div class="heading-wrapper"
+         th:object="${filters}">
         <!-- Dynamic Heading -->
         <h2 th:if="${offers.size() > 0}"
             th:text="${context == 'model'} ?
-        'All Offers for ' + brand + ' ' + model :
+        'All Offers for ' + *{brand} + ' ' + *{model} :
         (${context == 'brand'} ?
-            'All Offers for Brand: ' + brand :
+            'All Offers for Brand: ' + *{brand} :
             (${context == 'favorites'} ?
                 'My favorites' :
                 'Added offers'))"
