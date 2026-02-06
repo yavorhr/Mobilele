@@ -25,6 +25,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -260,11 +261,24 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferBaseViewModel> findOffersByBrand(String brandName) {
-    return this.offerRepository.findAllByModel_Brand_Name(brandName)
+  public List<OfferBaseViewModel> findOffersByBrand (String brandName, String sort,String dir) {
+    Sort.Direction direction = Sort.Direction.fromString(dir);
+
+    // Map UI sort → entity field
+    String sortField = switch (sort) {
+      case "price" -> "price";
+      case "mileage" -> "mileage";
+      case "creationDate" -> "created";
+      default -> "created";
+    };
+
+    Sort sortObj = Sort.by(direction, sortField);
+
+    return this.offerRepository
+            .findAllByModel_Brand_Name(brandName, sortObj)
             .stream()
             .map(this::mapToOfferBaseViewModel)
-            .collect(Collectors.toList());
+            .toList();
   }
 
   @Override

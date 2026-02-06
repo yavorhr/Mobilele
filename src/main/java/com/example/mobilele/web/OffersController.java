@@ -235,16 +235,13 @@ public class OffersController {
           @RequestParam(defaultValue = "desc") String dir,
           Model model) {
 
-    List<OfferBaseViewModel> offers = this.offerService
-            .findOffersByBrand(brand.toUpperCase(Locale.ROOT))
+    List<OfferBaseViewModel> offers =
+            offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT), sort, dir)
             .stream()
             .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
             .collect(Collectors.toList());
 
-    offers = sortOffers(sort, dir, offers);
-
-    model.addAttribute("brand",
-            brand.substring(0, 1).toUpperCase() + brand.substring(1).toLowerCase());
+    model.addAttribute("brand", brand.substring(0, 1).toUpperCase() + brand.substring(1).toLowerCase());
     model.addAttribute("offers", offers);
     model.addAttribute("context", "brand");
     model.addAttribute("sort", sort);

@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,7 +18,7 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
 
   List<OfferEntity> findAllByModel_Brand_NameAndModel_VehicleType(String brandName, VehicleCategoryEnum vehicleType);
 
-  List<OfferEntity> findAllByModel_Brand_Name(String brandName);
+  List<OfferEntity> findAllByModel_Brand_Name(String brandName, Sort sort);
 
   Page<OfferEntity> findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(
           VehicleCategoryEnum vehicleType,
