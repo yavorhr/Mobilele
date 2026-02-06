@@ -21,14 +21,20 @@
             class="section-title text-center mt-5">
         </h2>
 
-        <h3 class="text-center text-white mt-5"
-            th:unless="${offers.size() > 0}">
-            Currently there are no offers available.
-        </h3>
+        <div th:unless="${offers.size() > 0}"
+             class="no-offers-wrapper">
+            <h3 class="no-offers-heading">
+                Currently there are no offers available
+            </h3>
+            <p class="no-offers-subtext">
+                Try adjusting your filters or check back later.
+            </p>
+        </div>
     </div>
 
     <!-- Sort Form -->
-    <section class="d-flex justify-content-center mt-4">
+    <section class="d-flex justify-content-center mt-4"
+             th:if="${offers != null and !offers.isEmpty()}">
         <form th:action="${context == 'model'} ?
              @{/offers/{vehicleType}/{brand}/{modelName}(vehicleType=${vehicleType}, brand=${brand}, modelName=${model})} :
              (${context == 'brand'} ?
