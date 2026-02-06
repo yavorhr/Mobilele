@@ -93,8 +93,7 @@ public class OffersController {
   // I. Find offers - Main search
   // 1. GET offers/find -> offers/find/vehicleType
   @GetMapping("/offers/find")
-  public String getFindOffersView(Model model) {
-    model.addAttribute("currentPage", "find");
+  public String getFindOffersView() {
     return "offers-categories";
   }
 
@@ -105,7 +104,6 @@ public class OffersController {
 
     model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("brands", this.brandService.findAllBrands());
-    model.addAttribute("currentPage", "find");
 
     return "offers-find";
   }
