@@ -30,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -187,29 +188,6 @@ public class OffersController {
     return "offers";
   }
 
-  // 5. Sort offers - from Main Search
-  @GetMapping("/offers/brands/{brand}/sort")
-  public String showOffersByBrandSorted(
-          @PathVariable String brand,
-          @RequestParam(defaultValue = "creationDate") String sort,
-          @RequestParam(defaultValue = "desc") String dir,
-          Model model) {
-
-    List<OfferBaseViewModel> offers = this.offerService.findOffersByBrand(brand)
-            .stream()
-            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
-            .collect(Collectors.toList());
-
-    offers = sortOffers(sort, dir, offers);
-
-    model.addAttribute("brand", brand);
-    model.addAttribute("offers", offers);
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-
-    return "offers";
-  }
-
   private List<OfferBaseViewModel> sortOffers(@RequestParam(defaultValue = "creationDate")
                                                       String sort, @RequestParam(defaultValue = "desc")
                                                       String dir, List<OfferBaseViewModel> offers) {
@@ -251,10 +229,27 @@ public class OffersController {
 
   // II. Find offers - By brands
   @GetMapping("/offers/brands/{brand}")
-  public String getOffersByBrand(@PathVariable String brand, Model model) {
-    model.addAttribute("brand", brand);
+  public String getOffersByBrand(
+          @PathVariable String brand,
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          Model model) {
+
+    List<OfferBaseViewModel> offers = this.offerService
+            .findOffersByBrand(brand.toUpperCase(Locale.ROOT))
+            .stream()
+            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
+            .collect(Collectors.toList());
+
+    offers = sortOffers(sort, dir, offers);
+
+    model.addAttribute("brand",
+            brand.substring(0, 1).toUpperCase() + brand.substring(1).toLowerCase());
+    model.addAttribute("offers", offers);
     model.addAttribute("context", "brand");
-    model.addAttribute("offers", this.offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT)));
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+
     return "offers";
   }
 
@@ -477,7 +472,8 @@ public class OffersController {
 
     model.addAttribute("offers", topOffers);
 
-    return "top-offers";  }
+    return "top-offers";
+  }
 
   // === VII. FRONTEND API ====
   // 1. Fetch cities
