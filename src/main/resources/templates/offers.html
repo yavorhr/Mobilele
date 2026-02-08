@@ -64,37 +64,9 @@
 
     <!-- Offers List -->
     <div class="offers-grid mt-4">
-        <div th:each="o : ${offers}"
-             th:object="${o}"
-             class="offer-card ui-transition glass-effect">
-
-            <a class="offer-card-link"
-               th:href="@{/offers/details/{id}(id=*{id})}">
-
-                <div class="offer-image">
-                    <img th:src="*{profileImage}" alt="Car image">
-                </div>
-
-                <div class="offer-info">
-                    <h3 th:text="*{modelBrandName} + ' ' + *{modelName} + ' - ' + *{modelYear}">
-                        Brand Model
-                    </h3>
-
-                    <div class="offer-meta">
-                        <span th:text="|Mileage: *{mileage} km|"></span>
-                        <span th:text="|Engine: *{engine}|"></span>
-                        <span th:text="|Transmission: *{transmission}|"></span>
-                        <span th:text="|Created: *{#temporals.format(created, 'dd MMM yyyy')}|"></span>
-                    </div>
-
-                    <div class="offer-price"
-                         th:text="|*{price} BGN|">
-                        10 000 BGN
-                    </div>
-                </div>
-
-            </a>
-        </div>
+        <th:block th:each="offer : ${offers}">
+            <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
+        </th:block>
     </div>
     <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
          th:if="${totalPages > 1}">
