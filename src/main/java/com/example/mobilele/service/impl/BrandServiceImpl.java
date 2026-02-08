@@ -47,6 +47,7 @@ public class BrandServiceImpl implements BrandService {
             .collect(Collectors.toList());
   }
 
+  // Init Brands
   @Override
   public void initBrands() {
     if (brandRepository.count() > 0) {

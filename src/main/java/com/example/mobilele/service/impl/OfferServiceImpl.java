@@ -418,6 +418,8 @@ public class OfferServiceImpl implements OfferService {
             .map(this::mapToOfferBaseViewModel);
   }
 
+
+  // Init offers
   @Override
   @Transactional
   public void initOffers() {
@@ -491,8 +493,6 @@ public class OfferServiceImpl implements OfferService {
     offerRepository.saveAll(offers);
   }
 
-  // Private and helpers
-
   private String buildDescription(ModelEntity model, ConditionEnum condition) {
     return switch (condition) {
       case New -> "Brand new " + model.getName() + ", ready to drive.";
@@ -564,7 +564,6 @@ public class OfferServiceImpl implements OfferService {
   private String buildImageUrl(ModelEntity model) {
     return BASE_URL + buildPublicId(model) + ".jpg";
   }
-
 
   private OfferBaseViewModel mapToOfferBaseViewModel(OfferEntity e) {
     OfferBaseViewModel viewModel = this.modelMapper.map(e, OfferBaseViewModel.class);

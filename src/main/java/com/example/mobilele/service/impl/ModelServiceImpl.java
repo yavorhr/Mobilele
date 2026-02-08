@@ -51,6 +51,7 @@ public class ModelServiceImpl implements ModelService {
     return this.modelRepository.findAll();
   }
 
+  // Init models
   @Override
   public void initModels() {
     if (modelRepository.count() > 0) {

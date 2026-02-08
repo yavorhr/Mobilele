@@ -6,7 +6,6 @@ import com.example.mobilele.repository.UserRoleRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -23,6 +22,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             .orElseThrow(() -> new ObjectNotFoundException("Role with name " + userRole + " was not found!"));
   }
 
+  // Init roles
   @Override
   public void initRoles() {
     if (userRoleRepository.count() == 0) {
