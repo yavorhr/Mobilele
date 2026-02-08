@@ -198,6 +198,7 @@
     border: none;
     border-radius: 8px;
     outline: none;
+    color: var(--color-white-main);
 
     width: 100%;
     max-width: 200px;
