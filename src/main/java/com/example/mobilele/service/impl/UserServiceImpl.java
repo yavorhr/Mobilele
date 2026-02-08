@@ -353,11 +353,11 @@ public class UserServiceImpl implements UserService {
 
     List<UserEntity> users = List.of(
             new UserEntity("admin", "john.atanasoff@gmail.com", "+359888333222",
-                    "John", "Atanasoff", "test", true,
+                    "John", "Atanasoff",   passwordEncoder.encode("test"), true,
                     List.of(adminRole, userRole)),
 
             new UserEntity("user", "peter.ivanov@yahoo.com", "+359888333111",
-                    "Petar", "Ivanov", "test", true,
+                    "Petar", "Ivanov",   passwordEncoder.encode("test"), true,
                     List.of(userRole))
     );
 
