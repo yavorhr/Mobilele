@@ -11,6 +11,7 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,41 +56,33 @@ public class FeedbackServiceImpl implements FeedbackService {
     double avgRating = this.feedbackRepository.findAverageRating().orElse(0.0);
     long count = this.feedbackRepository.count();
 
-    return new FeedbackSummaryViewModel(avgRating,count);
+    return new FeedbackSummaryViewModel(avgRating, count);
   }
 
-  // DB Init + helpers
-
+  // Init feedbacks
   @Override
   public void initFeedbacks() {
-    if (feedbackRepository.count() == 0) {
-
-
-      UserEntity admin = this.userRepository
-              .findByUsername("admin")
-              .orElseThrow(() -> new ObjectNotFoundException("User with username: admin does not exist!"));
-
-      UserEntity user = this.userRepository
-              .findByUsername("user")
-              .orElseThrow(() -> new ObjectNotFoundException("User with username: admin does not exist!"));
-
-      Feedback feedback = createFeedback(admin, "The app is very well made!", 5, Instant.now());
-      Feedback feedback2 = createFeedback(user, "I just don't like it!", 1, Instant.now());
-      Feedback feedback3 = createFeedback(user, "The application is cool, but there are no many offers yet!", 4, Instant.now());
-      Feedback feedback4 = createFeedback(admin, "You rock!", 5, Instant.now());
-      Feedback feedback5 = createFeedback(admin, "Just found my future car here!", 5, Instant.now());
-
-      feedbackRepository.saveAll(List.of(feedback, feedback2, feedback3, feedback4, feedback5));
+    if (feedbackRepository.count() > 0) {
+      return;
     }
+
+    UserEntity admin = getUser("admin");
+    UserEntity user = getUser("user");
+
+    List<Feedback> feedbacks = List.of(
+            new Feedback(admin, "The app is very well made!", 5),
+            new Feedback(user, "I just don't like it!", 1),
+            new Feedback(user, "The application is cool, but there are not many offers yet!", 4),
+            new Feedback(admin, "You rock!", 5),
+            new Feedback(admin, "Just found my future car here!", 5)
+    );
+
+    feedbackRepository.saveAll(feedbacks);
   }
 
-  private Feedback createFeedback(UserEntity userEntity, String comment, int rating, Instant created) {
-    Feedback feedback = new Feedback();
-    feedback.setUser(userEntity);
-    feedback.setComment(comment);
-    feedback.setRating(rating);
-    feedback.setCreated(created);
-
-    return feedback;
+  private UserEntity getUser(String username) {
+    return userRepository.findByUsername(username)
+            .orElseThrow(() ->
+                    new ObjectNotFoundException("User with username: " + username + " does not exist!"));
   }
 }
