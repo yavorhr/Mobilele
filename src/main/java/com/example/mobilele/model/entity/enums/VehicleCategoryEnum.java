@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public enum VehicleCategoryEnum {
   Car,
-  Truck,
-  Motorcycle,
   SUV,
+  Motorcycle,
+  Truck,
+  Caravan,
   Bus;
 
   public static VehicleCategoryEnum from(String value) {
