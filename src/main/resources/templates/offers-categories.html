@@ -4,10 +4,11 @@
 
 <head th:replace="fragments/head :: head(additionalCss='/css/offers/offers-categories.css')"></head>
 
-<body>
+<body class="auth-layout">
+
 <header th:replace="fragments/navbar"></header>
 
-<main>
+<main class="auth-content">
     <div class="vehicle-grid">
         <a th:href="@{/offers/find/car}" class="vehicle-card">
             <i class="fa-solid fa-car-side"></i>
@@ -16,7 +17,12 @@
 
         <a th:href="@{/offers/find/suv}" class="vehicle-card">
             <i class="fa-solid fa-truck-pickup"></i>
-            <h3>SUVs</h3>
+            <h3>SUV</h3>
+        </a>
+
+        <a th:href="@{/offers/find/motorcycle}" class="vehicle-card">
+            <i class="fas fa-motorcycle"></i>
+            <h3>Motorcycles</h3>
         </a>
 
         <a th:href="@{/offers/find/bus}" class="vehicle-card">
@@ -29,18 +35,15 @@
             <h3>Trucks</h3>
         </a>
 
-        <a th:href="@{/offers/find/motorcycle}" class="vehicle-card">
-            <i class="fas fa-motorcycle"></i>
-            <h3>Motorcycles</h3>
-        </a>
-
         <a th:href="@{/offers/find/caravan}" class="vehicle-card">
             <i class="fa-solid fa-caravan"></i>
-            <h3>Caravans & Campers</h3>
+            <h3>Caravans</h3>
         </a>
     </div>
 </main>
-<footer></footer>
+
+<footer th:replace="fragments/minimal-footer"></footer>
+
 </body>
 
 </html>
