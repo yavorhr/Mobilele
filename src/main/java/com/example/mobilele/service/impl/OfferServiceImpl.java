@@ -67,7 +67,7 @@ public class OfferServiceImpl implements OfferService {
   public Page<OfferBaseViewModel> findAllOffers(Pageable pageable) {
     return this.offerRepository
             .findAll(pageable)
-            .map(offer -> modelMapper.map(offer, OfferBaseViewModel.class));
+            .map(this::mapToOfferBaseViewModel);
   }
 
   @Override
