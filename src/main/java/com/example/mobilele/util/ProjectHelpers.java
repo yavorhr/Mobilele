@@ -6,7 +6,6 @@ public final class ProjectHelpers {
   private ProjectHelpers() {
   }
 
-  // Private & helpers
   public static String convertPictureTitle(String originalName) {
     if (originalName != null) {
       int dotIndex = originalName.lastIndexOf('.');
@@ -16,5 +15,9 @@ public final class ProjectHelpers {
       }
     }
     return originalName;
+  }
+
+  public static String capitalizeString(String initStr){
+    return initStr.substring(0, 1).toUpperCase() + initStr.substring(1);
   }
 }
