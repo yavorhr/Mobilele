@@ -27,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,7 +59,6 @@ public class UserServiceImpl implements UserService {
 
     userEntity.setPassword(passwordEncoder.encode(serviceModel.getPassword()))
             .setRoles(List.of(userRoleEntity));
-
     userEntity = userRepository.save(userEntity);
 
     UserDetails principal = mobileleUserService.loadUserByUsername(userEntity.getUsername());
@@ -341,35 +341,26 @@ public class UserServiceImpl implements UserService {
     this.userRepository.save(user);
   }
 
+  // Init users
   @Override
   public void initUsers() {
-    if (userRepository.count() == 0) {
-      UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
-      UserRoleEntity userRoleEntity = this.roleService.findUserRole(UserRoleEnum.USER);
-
-      UserEntity admin = createUser("admin", "john.atanasoff@gmail.com", "+359888333222", "John", "Atanasoff", "test", true);
-      admin.setRoles(List.of(adminRole, userRoleEntity));
-
-      UserEntity userEntity = createUser("user", "peter.ivanov@yahoo.com", "+359888333111", "Petar", "Ivanov", "test", true);
-      userEntity.setRoles(List.of(userRoleEntity));
-
-      this.userRepository.saveAll(List.of(admin, userEntity));
+    if (userRepository.count() > 0) {
+      return;
     }
-  }
 
-  // Helpers
-  private UserEntity createUser(String username, String email, String phoneNumber, String firstName, String lastName, String password, boolean isEnabled) {
-    UserEntity userEntity = new UserEntity();
+    UserRoleEntity adminRole = this.roleService.findUserRole(UserRoleEnum.ADMIN);
+    UserRoleEntity userRole = this.roleService.findUserRole(UserRoleEnum.USER);
 
-    userEntity
-            .setUsername(username)
-            .setEmail(email)
-            .setPhoneNumber(phoneNumber)
-            .setFirstName(firstName)
-            .setLastName(lastName)
-            .setPassword(passwordEncoder.encode(password))
-            .setEnabled(isEnabled);
+    List<UserEntity> users = List.of(
+            new UserEntity("admin", "john.atanasoff@gmail.com", "+359888333222",
+                    "John", "Atanasoff", "test", true,
+                    List.of(adminRole, userRole)),
 
-    return userEntity;
+            new UserEntity("user", "peter.ivanov@yahoo.com", "+359888333111",
+                    "Petar", "Ivanov", "test", true,
+                    List.of(userRole))
+    );
+
+    this.userRepository.saveAll(users);
   }
 }
