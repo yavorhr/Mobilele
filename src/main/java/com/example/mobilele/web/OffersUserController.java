@@ -2,6 +2,7 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.util.ProjectHelpers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,9 +34,7 @@ public class OffersUserController {
 
     String username = principal.getName();
 
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
+    Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
     Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
 
@@ -60,9 +59,7 @@ public class OffersUserController {
 
     String username = principal.getName();
 
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
+    Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
     Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
 

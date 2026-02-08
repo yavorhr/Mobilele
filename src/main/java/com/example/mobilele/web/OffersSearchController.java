@@ -84,7 +84,6 @@ public class OffersSearchController {
     return "redirect:/offers/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
   }
 
-
   // 4. GET - Show filtered offers
   @GetMapping("/offers/{vehicleType}/{brand}/{modelName}")
   public String showOffersByModel(
@@ -103,9 +102,7 @@ public class OffersSearchController {
       categoryEnum = VehicleCategoryEnum.from(vehicleType);
     }
 
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
+    Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
     // redirect attribute from @Post
     OffersFindBindingModel filters = (OffersFindBindingModel) model.asMap().get("filters");
@@ -167,14 +164,7 @@ public class OffersSearchController {
           @RequestParam(defaultValue = "3") int size,
           Model model) {
 
-    String sortField = switch (sort) {
-      case "price" -> "price";
-      case "mileage" -> "mileage";
-      default -> "created";
-    };
-
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
+    Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
     Page<OfferBaseViewModel> offersPage =
             offerService.findOffersByBrand(

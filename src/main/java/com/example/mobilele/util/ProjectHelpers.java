@@ -1,6 +1,10 @@
 package com.example.mobilele.util;
 
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 public final class ProjectHelpers {
 
   private ProjectHelpers() {
@@ -19,5 +23,17 @@ public final class ProjectHelpers {
 
   public static String capitalizeString(String initStr){
     return initStr.substring(0, 1).toUpperCase() + initStr.substring(1);
+  }
+
+  // Pagination
+  public static Pageable create(String sort, String dir, int page, int size) {
+    String sortField = switch (sort) {
+      case "price" -> "price";
+      case "mileage" -> "mileage";
+      default -> "created";
+    };
+
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    return PageRequest.of(page, size, sorting);
   }
 }
