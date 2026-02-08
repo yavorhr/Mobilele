@@ -50,8 +50,42 @@ public class OffersController {
     this.modelService = modelService;
   }
 
+  // 1. Get offers
+  @GetMapping("/offers/all")
+  public String showAllOffers(
+          @RequestParam(defaultValue = "creationDate") String sort,
+          @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "5") int size,
+          Model model) {
 
-  // III. Offer Details
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
+
+    Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("sort", sort);
+    model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "all");
+
+    return "offers";
+  }
+
+  // Get top 20 offers
+  @GetMapping("/offers/top-offers")
+  public String showTop20ByViewsCount(Model model) {
+    List<OfferBaseViewModel> topOffers = offerService.findTopOffersByViews();
+
+    model.addAttribute("offers", topOffers);
+
+    return "top-offers";
+  }
+
+  // 2. Offer Details
   @GetMapping("/offers/details/{id}")
   public String getOffersDetailsPage(@PathVariable Long id, Model model,
                                      HttpServletRequest request,
@@ -70,17 +104,13 @@ public class OffersController {
     return "details";
   }
 
-  // IV. Offer Add
-  // 1. GET "add" view
+  // 3. Add Offer
   @GetMapping("/offers")
   public String getAddOffersPage(Model model) {
     model.addAttribute("brands", this.brandService.findAllBrands());
-    model.addAttribute("currentPage", "add");
-
     return "add";
   }
 
-  // 2. Submit "Add" form -> :/offers/details/
   @PostMapping("/offers")
   public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
                          BindingResult bindingResult,
@@ -113,8 +143,7 @@ public class OffersController {
     return "redirect:/offers/details/" + serviceModel.getId();
   }
 
-  // V. Update offer
-  // 1. Get "update" view
+  // 4. Update Offer
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
@@ -130,7 +159,11 @@ public class OffersController {
     return "update";
   }
 
-  // 2. Submit PATCH Update form -> /offers/details/id"
+  @GetMapping("/offers/update/errors/{id}")
+  public String editOfferErrors(@PathVariable Long id) {
+    return "update";
+  }
+
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
@@ -152,12 +185,8 @@ public class OffersController {
     return "redirect:/offers/details/" + id;
   }
 
-  @GetMapping("/offers/update/errors/{id}")
-  public String editOfferErrors(@PathVariable Long id) {
-    return "update";
-  }
 
-  // VI. Delete offer
+  // 5. Delete offer
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @DeleteMapping("/offers/{id}")
   public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
@@ -179,122 +208,6 @@ public class OffersController {
     redirectAttributes.addFlashAttribute("flashType", "success");
 
     return "redirect:/";
-  }
-
-  // VII. Show Offers cards - different cases -> "/offers/..."
-  // 1. Get all offers
-  @GetMapping("/offers/all")
-  public String showAllOffers(
-          @RequestParam(defaultValue = "creationDate") String sort,
-          @RequestParam(defaultValue = "desc") String dir,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size,
-          Model model) {
-
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
-
-    Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
-
-    model.addAttribute("offers", offersPage.getContent());
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-    model.addAttribute("currentPage", offersPage.getNumber());
-    model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "all");
-
-    return "offers";
-  }
-
-  // 2. Offers by user
-  @GetMapping("/offers/my-offers")
-  public String showMyOffers(
-          Principal principal,
-          @RequestParam(defaultValue = "creationDate") String sort,
-          @RequestParam(defaultValue = "desc") String dir,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
-          Model model) {
-
-    String username = principal.getName();
-
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
-
-    Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
-
-    model.addAttribute("offers", offersPage.getContent());
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-    model.addAttribute("currentPage", offersPage.getNumber());
-    model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "my");
-
-    return "offers";
-  }
-
-  // 3. User's Favorites
-  @GetMapping("/offers/favorites")
-  public String showFavoriteOffers(
-          Principal principal,
-          @RequestParam(defaultValue = "creationDate") String sort,
-          @RequestParam(defaultValue = "desc") String dir,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
-          Model model) {
-
-    String username = principal.getName();
-
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
-    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
-    Pageable pageable = PageRequest.of(page, size, sorting);
-
-    Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
-
-    model.addAttribute("offers", offersPage.getContent());
-    model.addAttribute("sort", sort);
-    model.addAttribute("dir", dir);
-    model.addAttribute("currentPage", offersPage.getNumber());
-    model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "favorites");
-
-    return "offers";
-  }
-
-  // 4. Top 20 offers
-  @GetMapping("/offers/top-offers")
-  public String showTop20ByViewsCount(Model model) {
-    List<OfferBaseViewModel> topOffers = offerService.findTopOffersByViews();
-
-    model.addAttribute("offers", topOffers);
-
-    return "top-offers";
-  }
-
-  // === VII. FRONTEND API ====
-  // 1. Fetch cities
-  @ResponseBody
-  @GetMapping("/locations/cities")
-  public ResponseEntity<List<String>> getCities(@RequestParam("country") CountryEnum country) {
-    List<String> cities = Arrays.stream(CityEnum.values())
-            .filter(city -> city.getCountry().equals(country))
-            .map(Enum::name)
-            .toList();
-
-    return ResponseEntity.ok(cities);
-  }
-
-  // 2. Offer Reservation
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
-  @PatchMapping("/offers/{id}/toggle-reservation")
-  @ResponseBody
-  public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
-                                                                @AuthenticationPrincipal MobileleUser principal) {
-
-    boolean newStatus = offerService.toggleReservation(id, principal.getUsername());
-    return ResponseEntity.ok(Map.of("reserved", newStatus));
   }
 }
 
