@@ -35,7 +35,7 @@
 
     <!-- Sort Form -->
     <section class="d-flex justify-content-center mt-4 sort-container"
-             th:if="${offers != null and !offers.isEmpty()}">
+             th:if="${offers != null and offers.size() > 1}">
         <form th:action="${context == 'model'} ?
              @{/offers/{vehicleType}/{brand}/{modelName}(vehicleType=${vehicleType}, brand=${brand}, modelName=${model})} :
              (${context == 'brand'} ?
