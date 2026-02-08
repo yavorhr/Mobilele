@@ -2,33 +2,31 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<div class="offer-card ui-transition glass-effect"  th:fragment="offerCard(offer, showViews)">
+<div class="offer-card ui-transition glass-effect" th:fragment="offerCard(offer, showViews)">
 
-  <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
+    <a th:href="@{/offers/details/{id}(id=${offer.id})}" class="offer-card-link">
 
-    <div class="offer-image">
-      <img th:src="${offer.profileImage}" alt="Car image" loading="lazy">
-    </div>
+        <div class="offer-image">
+            <img th:src="${offer.profileImage}" alt="Car image" loading="lazy">
+        </div>
 
-    <div class="offer-info">
-      <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
-      <p class="offer-meta">
-        <span th:text="${'Engine : ' + offer.engine}"></span>
-        <span th:text="${'Transmission : ' + offer.transmission}"></span>
-        <span th:text="${'Mileage : ' + offer.mileage + ' km'}"></span>
-      <p class="offer-year"
-         th:text="${'Year : ' + offer.modelYear}"></p>
-      </p>
+        <div class="offer-info">
+            <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
+            <p class="offer-meta">
+                <span th:text="${'Engine : ' + offer.engine}"></span>
+                <span th:text="${'Transmission : ' + offer.transmission}"></span>
+                <span th:text="${'Mileage : ' + offer.mileage + ' km'}"></span>
+                <span th:text="${'Year : ' + offer.modelYear}"></span>
+                <span th:text="'Added: ' + ${#temporals.format(offer.created, 'yyyy-MM-dd')}"></span>
+            <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
 
-      <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
-
-      <!-- Views (optional) -->
-      <div class="views-counter ui-transition glass-effect"
-           th:if="${showViews}">
-        <span class="eye-icon">👁️</span>
-        <span th:text="'Views: ' + ${offer.views}"></span>
-      </div>
-    </div>
-  </a>
+            <!-- Views (optional) -->
+            <div class="views-counter ui-transition glass-effect"
+                 th:if="${showViews}">
+                <span class="eye-icon">👁️</span>
+                <span th:text="'Views: ' + ${offer.views}"></span>
+            </div>
+        </div>
+    </a>
 </div>
 </html>
