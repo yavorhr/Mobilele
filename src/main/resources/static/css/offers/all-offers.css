@@ -25,6 +25,42 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
+.sort-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.sort-form {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.6rem 1rem;
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+}
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.sort-label {
+    color: white;
+    font-weight: 600;
+    margin-right: 0.2rem;
+    font-size: var(--font-size_1-5);
+}
+
+.sort-select {
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    font-weight: 500;
+}
+
+/* No offers */
 .no-offers-wrapper {
     display: flex;
     flex-direction: column;

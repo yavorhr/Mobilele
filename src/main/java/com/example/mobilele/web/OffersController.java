@@ -219,7 +219,7 @@ public class OffersController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "4") int size,
+          @RequestParam(defaultValue = "3") int size,
           Model model) {
 
     String sortField = switch (sort) {
