@@ -38,7 +38,7 @@ public interface OfferService {
 
   OfferEntity findById(long id);
 
-  List<OfferBaseViewModel> findOffersByBrand(String brandName, String sort,String dir);
+  Page<OfferBaseViewModel> findOffersByBrand(String brandName, Pageable pageable);
 
   Page<OfferBaseViewModel> findOffersByUserId(String username, Pageable pageable);
 

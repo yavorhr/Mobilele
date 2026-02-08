@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -233,19 +234,27 @@ public class OffersController {
           @PathVariable String brand,
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "1") int size,
           Model model) {
 
-    List<OfferBaseViewModel> offers =
-            offerService.findOffersByBrand(brand.toUpperCase(Locale.ROOT), sort, dir)
-            .stream()
-            .map(o -> this.modelMapper.map(o, OfferBaseViewModel.class))
-            .collect(Collectors.toList());
+    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
+    Pageable pageable = PageRequest.of(page, size, sorting);
 
-    model.addAttribute("brand", brand.substring(0, 1).toUpperCase() + brand.substring(1).toLowerCase());
-    model.addAttribute("offers", offers);
-    model.addAttribute("context", "brand");
+    Page<OfferBaseViewModel> offersPage =
+            offerService.findOffersByBrand(
+                    brand.toUpperCase(Locale.ROOT),
+                    pageable);
+
+
+    model.addAttribute("offers", offersPage.getContent());
+    model.addAttribute("brand", ProjectHelpers.capitalizeString(brand));
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("currentPage", offersPage.getNumber());
+    model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("context", "brand");
 
     return "offers";
   }

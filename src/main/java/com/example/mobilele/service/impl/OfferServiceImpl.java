@@ -261,24 +261,11 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<OfferBaseViewModel> findOffersByBrand (String brandName, String sort,String dir) {
-    Sort.Direction direction = Sort.Direction.fromString(dir);
+  public Page<OfferBaseViewModel> findOffersByBrand (String brandName, Pageable pageable) {
 
-    // Map UI sort → entity field
-    String sortField = switch (sort) {
-      case "price" -> "price";
-      case "mileage" -> "mileage";
-      case "creationDate" -> "created";
-      default -> "created";
-    };
-
-    Sort sortObj = Sort.by(direction, sortField);
-
-    return this.offerRepository
-            .findAllByModel_Brand_Name(brandName, sortObj)
-            .stream()
-            .map(this::mapToOfferBaseViewModel)
-            .toList();
+    return offerRepository
+            .findAllByModel_Brand_Name(brandName, pageable)
+            .map(this::mapToOfferBaseViewModel);
   }
 
   @Override
