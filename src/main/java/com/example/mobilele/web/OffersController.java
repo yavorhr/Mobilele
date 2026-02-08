@@ -189,22 +189,6 @@ public class OffersController {
     return "offers";
   }
 
-  private List<OfferBaseViewModel> sortOffers(@RequestParam(defaultValue = "creationDate")
-                                                      String sort, @RequestParam(defaultValue = "desc")
-                                                      String dir, List<OfferBaseViewModel> offers) {
-    offers = new ArrayList<>(offers);
-
-    Comparator<OfferBaseViewModel> comparator = switch (sort) {
-      case "price" -> Comparator.comparing(OfferBaseViewModel::getPrice);
-      case "mileage" -> Comparator.comparing(OfferBaseViewModel::getMileage);
-      default -> Comparator.comparing(OfferBaseViewModel::getCreated);
-    };
-
-    if ("desc".equalsIgnoreCase(dir)) comparator = comparator.reversed();
-    offers.sort(comparator);
-    return offers;
-  }
-
   // II. Quick search ->
   @PostMapping("/offers/quick-search")
   public String submitQuickSearch(
@@ -235,10 +219,15 @@ public class OffersController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
+          @RequestParam(defaultValue = "4") int size,
           Model model) {
 
-    String sortField = "creationDate".equals(sort) ? "created" : sort;
+    String sortField = switch (sort) {
+      case "price" -> "price";
+      case "mileage" -> "mileage";
+      default -> "created";
+    };
+
     Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
     Pageable pageable = PageRequest.of(page, size, sorting);
 
@@ -246,7 +235,6 @@ public class OffersController {
             offerService.findOffersByBrand(
                     brand.toUpperCase(Locale.ROOT),
                     pageable);
-
 
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("brand", ProjectHelpers.capitalizeString(brand));
