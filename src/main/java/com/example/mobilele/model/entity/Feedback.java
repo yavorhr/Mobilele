@@ -15,6 +15,12 @@ public class Feedback extends BaseEntity {
   public Feedback() {
   }
 
+  public Feedback(UserEntity user, String comment, Integer rating) {
+    this.comment = comment;
+    this.user = user;
+    this.rating = rating;
+  }
+
   @Column
   public Instant getCreated() {
     return created;
