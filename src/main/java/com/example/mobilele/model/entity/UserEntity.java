@@ -1,6 +1,7 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,17 @@ public class UserEntity extends BaseEntity {
     this.favorites = new HashSet<>();
     this.accountLocked = false;
     this.failedLoginAttempts = 0;
+  }
+
+  public UserEntity(String username, String email, String phoneNumber, String firstName, String lastName, String password, boolean enabled, List<UserRoleEntity> roles) {
+    this.username = username;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.password = password;
+    this.enabled = enabled;
+    this.roles = roles;
   }
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
