@@ -37,13 +37,14 @@ public class OffersSearchController {
     this.modelService = modelService;
   }
 
-  // 1. GET offers/find -> offers/find/vehicleType
+  // I. Offers find by Vehicle Type
+  // 1. offers/find -> offers/find/vehicleType
   @GetMapping("/offers/find")
   public String getFindOffersView() {
     return "offers-categories";
   }
 
-  // 2. GET offers/find/vehicleType -> POST offers/find/vehicleType
+  // 2. offers/find/vehicleType -> POST offers/find/vehicleType
   @GetMapping("/offers/find/{vehicleType}")
   public String getSearchFormByCategory(@PathVariable String vehicleType,
                                         Model model) {
@@ -84,7 +85,7 @@ public class OffersSearchController {
     return "redirect:/offers/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
   }
 
-  // 4. GET - Show filtered offers
+  // 4. Show filtered offers
   @GetMapping("/offers/{vehicleType}/{brand}/{modelName}")
   public String showOffersByModel(
           @PathVariable String brand,
@@ -131,7 +132,7 @@ public class OffersSearchController {
     return "offers";
   }
 
-  // II. Quick search ->
+  // II. Quick search
   @PostMapping("/offers/quick-search")
   public String submitQuickSearch(
           @Valid @ModelAttribute("offersFindBindingModel") OffersFindBindingModel form,
@@ -154,7 +155,7 @@ public class OffersSearchController {
             + "/" + form.getModel().toLowerCase();
   }
 
-  // II. Find offers - By brands
+  // III. Find offers - By brands
   @GetMapping("/offers/brands/{brand}")
   public String getOffersByBrand(
           @PathVariable String brand,
