@@ -219,30 +219,7 @@
  RECENT AND MOST VIEWED
 ===================== */
 
-/* Offer Views */
-.views-counter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 
-    padding: 6px 12px;
-    margin-bottom: 10px;
-
-    width: fit-content;
-
-    font-weight: 600;
-    color: var(--white)
-}
-
-.views-counter:hover {
-    background: rgba(255, 255, 255, 0.14);
-    transform: scale(1.03);
-}
-
-.views-counter .eye-icon {
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
-}
 
 /* NO OFFERS */
 .no-offers {
