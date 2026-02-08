@@ -34,7 +34,6 @@ public class DataInitializer {
     brandService.initBrands();
     modelService.initModels();
     offerService.initOffers();
-    offerService.initOffers();
     feedbackService.initFeedbacks();
   }
 }
