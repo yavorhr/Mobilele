@@ -98,7 +98,7 @@ public class ModelServiceImpl implements ModelService {
             Map.entry("DACIA", List.of(
                     new ModelEntity("Logan", VehicleCategoryEnum.Car, 2017),
                     new ModelEntity("Sandero", VehicleCategoryEnum.Car, 2019),
-                    new ModelEntity("Dustrer", VehicleCategoryEnum.SUV, 2020),
+                    new ModelEntity("Duster", VehicleCategoryEnum.SUV, 2020),
                     new ModelEntity("Bigster", VehicleCategoryEnum.SUV, 2023)
             )),
 
