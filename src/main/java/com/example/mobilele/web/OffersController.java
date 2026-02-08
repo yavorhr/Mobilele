@@ -104,7 +104,7 @@ public class OffersController {
   public String getSearchFormByCategory(@PathVariable String vehicleType,
                                         Model model) {
 
-    model.addAttribute("vehicleType", vehicleType);
+    model.addAttribute("vehicleType", VehicleCategoryEnum.from(vehicleType));
     model.addAttribute("brands", this.brandService.findAllBrands());
 
     return "offers-find";
