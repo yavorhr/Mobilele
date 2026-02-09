@@ -63,7 +63,7 @@ public class OfferAddBindingModel {
   }
 
   @PositiveOrZero(message = "Mileage must be zero or positive")
-  @NotNull(message = "Please enter price")
+  @NotNull(message = "Please enter mileage")
   public Double getMileage() {
     return mileage;
   }
@@ -79,8 +79,6 @@ public class OfferAddBindingModel {
     return transmission;
   }
 
-  @NotNull(message = "Please insert model year")
-  @Positive(message = "Model year must be positive")
   @ValidYear
   public Integer getYear() {
     return year;
