@@ -123,7 +123,7 @@ public class OfferServiceImpl implements OfferService {
     //Set pictures
     offer.getPictures().clear();
     for (MultipartFile file : offerServiceModel.getPictures()) {
-      CloudinaryImage uploaded = cloudinaryService.upload(file, "cars-offers");
+      CloudinaryImage uploaded = cloudinaryService.upload(file, "api");
 
       Picture picture = new Picture();
 
