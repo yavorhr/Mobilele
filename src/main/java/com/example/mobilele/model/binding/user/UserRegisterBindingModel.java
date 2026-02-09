@@ -59,7 +59,7 @@ public class UserRegisterBindingModel {
   public String getLastName() {
     return lastName;
   }
-  
+
   public void setUsername(String username) {
     this.username = username;
   }
