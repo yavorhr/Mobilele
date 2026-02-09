@@ -191,12 +191,11 @@ public class OffersController {
       offerService.saveSoldOffer(id);
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("flashMessage",
-              "✅ Offer deleted and marked as sold via Mobilele. Thank you!");
+              "✅ Offer is successfully sold and deleted!");
     } else {
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("flashMessage",
-              "✅ Offer deleted successfully!");
-    }
+              "✅ Offer is successfully deleted!"); }
 
     redirectAttributes.addFlashAttribute("flashType", "success");
 
