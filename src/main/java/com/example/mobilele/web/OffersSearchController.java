@@ -37,14 +37,14 @@ public class OffersSearchController {
     this.modelService = modelService;
   }
 
-  // I. Offers find by Vehicle Type
-  // 1. offers/find -> offers/find/vehicleType
+  // I. Offers find - by Vehicle Type
+  // 1. "offers/find" -> "offers/find/vehicleType"
   @GetMapping("/offers/find")
   public String getFindOffersView() {
     return "offers-categories";
   }
 
-  // 2. offers/find/vehicleType -> POST offers/find/vehicleType
+  // 2. "offers/find/vehicleType" -> POST "offers/find/vehicleType"
   @GetMapping("/offers/find/{vehicleType}")
   public String getSearchFormByCategory(@PathVariable String vehicleType,
                                         Model model) {
@@ -55,7 +55,7 @@ public class OffersSearchController {
     return "offers-find";
   }
 
-  // 3. POST-REDIRECT-GET - offers/find/vehicleType -> offers/{vehicleType}/{brand}/{modelName}")
+  // 3. POST-REDIRECT-GET - "offers/find/vehicleType" -> "offers/{vehicleType}/{brand}/{modelName}")"
   @PostMapping("/offers/find/{vehicleType}")
   public String submitFindOffersForm(
           @PathVariable String vehicleType,
