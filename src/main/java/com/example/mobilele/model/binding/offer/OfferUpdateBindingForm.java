@@ -1,6 +1,8 @@
 package com.example.mobilele.model.binding.offer;
 
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.validator.ValidYear;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -24,10 +26,14 @@ public class OfferUpdateBindingForm {
     return id;
   }
 
+  @NotNull(message = "Please enter price")
+  @DecimalMin(value = "100", message = "Price must be at least 100")
   public BigDecimal getPrice() {
     return price;
   }
 
+  @PositiveOrZero(message = "Mileage must be zero or positive")
+  @NotNull(message = "Please enter mileage")
   public Double getMileage() {
     return mileage;
   }
@@ -40,6 +46,7 @@ public class OfferUpdateBindingForm {
     return transmission;
   }
 
+  @ValidYear
   public Integer getYear() {
     return year;
   }
@@ -52,6 +59,7 @@ public class OfferUpdateBindingForm {
     return color;
   }
 
+  @Size(min = 10, message = "Description must be at least 10 characters long")
   public String getDescription() {
     return description;
   }
