@@ -470,13 +470,14 @@
     font-size: 0.9rem;
 }
 
-/* === Comment === */
+/* Comment  */
 .review-comment {
     color: var(--color-white-muted);
     line-height: 1.4;
     font-style: italic;
 }
 
+/* Top sellers link */
 .text-link {
     position: relative;
     font-weight: 600;
