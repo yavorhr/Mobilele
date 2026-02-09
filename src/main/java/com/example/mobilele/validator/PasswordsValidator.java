@@ -3,7 +3,9 @@ package com.example.mobilele.validator;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PasswordsValidator implements ConstraintValidator<DoesPasswordAndConfirmPasswordMatch, UserRegisterBindingModel> {
 
   public PasswordsValidator() {
