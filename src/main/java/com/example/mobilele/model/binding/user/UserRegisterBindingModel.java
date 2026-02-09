@@ -32,16 +32,20 @@ public class UserRegisterBindingModel {
     return email;
   }
 
+  @UniquePhoneNumber
   @Pattern(
           regexp = "^\\+359\\d{9}$",
           message = "Must start with +359 and contains 9 digits after that")
-  @UniquePhoneNumber
   public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  @NotNull
-  @NotBlank
+  @Size(min = 5, message = "Length must be between 5 and 20 symbols")
+  public String getPassword() {
+    return password;
+  }
+
+  @Size(min = 5, message = "Length must be between 5 and 20 symbols")
   public String getConfirmPassword() {
     return confirmPassword;
   }
@@ -55,13 +59,7 @@ public class UserRegisterBindingModel {
   public String getLastName() {
     return lastName;
   }
-
-  @Size(min = 5)
-  @NotBlank
-  public String getPassword() {
-    return password;
-  }
-
+  
   public void setUsername(String username) {
     this.username = username;
   }
