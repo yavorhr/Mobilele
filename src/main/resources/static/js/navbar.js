@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        if (comment.length < 5) {
+            messageBox.textContent = "Comment must be at least 5 characters long.";
+            messageBox.style.color = "#ff6b6b";
+            return;
+        }
+
         const res = await fetch("/users/submit-feedback", {
             method: "POST",
             headers: {
