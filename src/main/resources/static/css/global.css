@@ -209,6 +209,14 @@ p {
     gap: 2rem;
 }
 
+.offers-grid-two-rows {
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(4, 300px);
+    gap: 2rem;
+}
+
 /* OFFER CARD */
 .offer-card {
     overflow: hidden;
