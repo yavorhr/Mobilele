@@ -42,7 +42,7 @@ public final class ProjectHelpers {
     return switch (context) {
       case "model" -> "All offers for " + brand + " " + model;
       case "brand" -> "All offers for " + brand;
-      case "favorites" -> "Favorite offers";
+      case "favorites" -> "Favorites";
       case "my" -> "My offers";
       default -> "All offers";
     };
