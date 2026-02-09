@@ -3,7 +3,9 @@ package com.example.mobilele.validator;
 import com.example.mobilele.service.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PhoneNumberValidator implements ConstraintValidator<UniquePhoneNumber, String> {
   private final UserService userService;
 
