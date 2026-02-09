@@ -3,14 +3,18 @@ package com.example.mobilele.web.globalAttributes;
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.web.OffersApiController;
 import com.example.mobilele.web.OffersController;
 import com.example.mobilele.web.OffersSearchController;
+import com.example.mobilele.web.OffersUserController;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice(assignableTypes = {
         OffersController.class,
         OffersSearchController.class,
+        OffersUserController.class,
+        OffersApiController.class
 })
 public class GlobalModelAttributes {
 
