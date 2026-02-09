@@ -36,4 +36,15 @@ public final class ProjectHelpers {
     Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
     return PageRequest.of(page, size, sorting);
   }
+
+  // Context for dynamic header
+  public static String resolveTitle(String context, String brand, String model) {
+    return switch (context) {
+      case "model" -> "All offers for " + brand + " " + model;
+      case "brand" -> "All offers for " + brand;
+      case "favorites" -> "Favorite offers";
+      case "my" -> "My offers";
+      default -> "All offers";
+    };
+  }
 }

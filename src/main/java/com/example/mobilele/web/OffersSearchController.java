@@ -7,6 +7,7 @@ import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.util.Constants;
 import com.example.mobilele.util.ProjectHelpers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Locale;
 
 @Slf4j
@@ -127,7 +129,8 @@ public class OffersSearchController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "model");
+    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_MODEL,
+                    ProjectHelpers.capitalizeString(brand), ProjectHelpers.capitalizeString(modelName)));
 
     return "offers";
   }
@@ -178,7 +181,7 @@ public class OffersSearchController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "brand");
+    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_BRAND, ProjectHelpers.capitalizeString(brand), null));
 
     return "offers";
   }

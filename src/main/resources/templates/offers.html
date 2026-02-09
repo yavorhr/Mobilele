@@ -12,13 +12,7 @@
          th:object="${filters}">
         <!-- Dynamic Heading -->
         <h2 th:if="${offers.size() > 0}"
-            th:text="${context == 'model'} ?
-        'All offers for ' + *{brand} + ' ' + *{model} :
-        (${context == 'brand'} ?
-            'All offers for : ' + ${brand} :
-            (${context == 'favorites'} ?
-                'Favorite offers' :
-                'All offers'))"
+            th:text="${title}"
             class="section-title text-center mt-5">
         </h2>
 
@@ -63,7 +57,7 @@
     </section>
 
     <!-- Offers List -->
-    <div class="offers-grid mt-4">
+    <div class="offers-grid-two-rows mt-4">
         <th:block th:each="offer : ${offers}">
             <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
         </th:block>

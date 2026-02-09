@@ -2,8 +2,10 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.util.Constants;
 import com.example.mobilele.util.ProjectHelpers;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ public class OffersUserController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
+          @RequestParam(defaultValue = "8") int size,
           Model model) {
 
     String username = principal.getName();
@@ -41,7 +43,7 @@ public class OffersUserController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "my");
+    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_MY, null, null));
 
     return "offers";
   }
@@ -66,7 +68,8 @@ public class OffersUserController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "favorites");
+    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_FAVORITES, null, null));
+
 
     return "offers";
   }

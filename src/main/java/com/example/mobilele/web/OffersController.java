@@ -2,21 +2,16 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.offer.OfferAddBindingModel;
 import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
-import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
-import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
-import com.example.mobilele.model.entity.enums.*;
-import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
@@ -70,7 +65,6 @@ public class OffersController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("context", "all");
 
     return "offers";
   }
@@ -184,7 +178,6 @@ public class OffersController {
 
     return "redirect:/offers/details/" + id;
   }
-
 
   // 5. Delete offer
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
