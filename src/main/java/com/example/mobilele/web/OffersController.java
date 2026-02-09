@@ -51,7 +51,7 @@ public class OffersController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size,
+          @RequestParam(defaultValue = "8") int size,
           Model model) {
 
     String sortField = "creationDate".equals(sort) ? "created" : sort;
