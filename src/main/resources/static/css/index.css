@@ -1,3 +1,7 @@
+.offers-grid {
+    max-width: 1700px;
+}
+
 /* ================
    FLASH MESSAGE
  ================ */
@@ -219,7 +223,6 @@
  OFFERS SECTIONS -
  RECENT AND MOST VIEWED
 ===================== */
-
 
 
 /* NO OFFERS */

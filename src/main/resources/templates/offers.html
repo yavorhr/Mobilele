@@ -57,7 +57,7 @@
     </section>
 
     <!-- Offers List -->
-    <div class="offers-grid-two-rows mt-4">
+    <div class="offers-grid mt-4">
         <th:block th:each="offer : ${offers}">
             <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
         </th:block>
