@@ -38,10 +38,12 @@ public class OfferUpdateBindingForm {
     return mileage;
   }
 
+  @NotNull(message = "Please select engine type")
   public EngineEnum getEngine() {
     return engine;
   }
 
+  @NotNull(message = "Please select transmission type")
   public TransmissionType getTransmission() {
     return transmission;
   }
@@ -51,10 +53,12 @@ public class OfferUpdateBindingForm {
     return year;
   }
 
+  @NotNull(message = "Please select condition")
   public ConditionEnum getCondition() {
     return condition;
   }
 
+  @NotNull(message = "Please select color")
   public ColorEnum getColor() {
     return color;
   }
@@ -63,11 +67,13 @@ public class OfferUpdateBindingForm {
   public String getDescription() {
     return description;
   }
-
+  @NotNull(message = "Please select color")
+  @NotNull(message = "Please choose country")
   public CountryEnum getCountry() {
     return country;
   }
 
+  @NotNull(message = "Please choose city")
   public CityEnum getCity() {
     return city;
   }
