@@ -1,9 +1,5 @@
-.offers-grid {
-    grid-template-columns: repeat(4, 300px);
-}
 
 /*  ANIMATION*/
-
 .container-fluid > h2 {
     font-size: var(--font-size_2);
 }
