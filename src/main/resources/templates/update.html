@@ -49,7 +49,6 @@
                     <div class="form-group">
                         <label for="engine">Engine</label>
                         <select id="engine" th:field="*{engine}">
-                            <option value="">- Select engine type -</option>
                             <option
                                     th:each="e : ${engines}"
                                     th:value="${e}"
@@ -64,7 +63,6 @@
                     <div class="form-group">
                         <label for="transmission">Transmission</label>
                         <select id="transmission" th:field="*{transmission}">
-                            <option value="">- Select transmission type -</option>
                             <option th:each="t : ${transmissions}"
                                     th:value="${t}"
                                     th:text="${t}"></option>
@@ -90,7 +88,6 @@
                     <div class="form-group">
                         <label for="condition">Condition</label>
                         <select id="condition" th:field="*{condition}">
-                            <option value="">- Select condition -</option>
                             <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
                         </select>
                         <div
@@ -104,7 +101,6 @@
                     <div class="form-group" style="flex: 0.5;">
                         <label for="color">Color</label>
                         <select id="color" th:field="*{color}">
-                            <option value="">- Select color -</option>
                             <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
                         </select>
                         <div
@@ -119,7 +115,6 @@
                         <label for="country">Country</label>
                         <select id="country"
                                 th:field="*{country}">
-                            <option value="">-- Select country --</option>
                             <option th:each="c : ${countries}"
                                     th:value="${c}"
                                     th:text="${c}"></option>
@@ -135,7 +130,6 @@
                         <select id="city"
                                 th:field="*{city}"
                                 th:attr="data-selected-city=*{city}">
-                            <option value="">-- Select city --</option>
                         </select>
                         <div th:if="${#fields.hasErrors('city')}"
                              th:errors="*{city}"
