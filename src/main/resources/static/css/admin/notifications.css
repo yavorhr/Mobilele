@@ -176,17 +176,11 @@ th {
 
 /* Change role btn */
 .change-role-btn {
-    background-color: #aeb4b8; /* Gray (disabled state) */
-    color: var(--color-bg-white);
-    cursor: not-allowed;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.change-role-enabled {
     background-color: #2ecc71;
-    color: var(--color-bg-white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
+
 
 .change-role-enabled:hover {
     background-color: #27ae60;
