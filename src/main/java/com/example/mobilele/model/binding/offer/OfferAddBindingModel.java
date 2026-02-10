@@ -80,6 +80,7 @@ public class OfferAddBindingModel {
   }
 
   @ValidYear
+  @NotNull(message = "Please enter model year")
   public Integer getYear() {
     return year;
   }
