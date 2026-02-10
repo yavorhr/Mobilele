@@ -3,6 +3,10 @@ main {
     max-width: 1400px;
 }
 
+.section-title{
+    font-size: clamp(1.4rem, 3vw, var(--font-size_2_5));
+}
+
 /* Filters */
 .filters {
     display: flex;
