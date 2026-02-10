@@ -46,14 +46,12 @@ public class StatsServiceImpl implements StatsService {
     EndpointStats endpoint = endpointStats.computeIfAbsent(path, EndpointStats::new);
     endpoint.record(durationMs, status);
 
-    // per-user stats (only for authenticated users)
     if (authenticated) {
       UserStats uStats = userStats.computeIfAbsent(username, UserStats::new);
       uStats.increment();
     }
   }
 
-  // Show Live stats
   @Override
   public StatsViewModel getStats() {
     long auth = authRequests.get();
