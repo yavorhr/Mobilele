@@ -28,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -250,7 +251,6 @@ public class OfferServiceImpl implements OfferService {
             .map(this::mapToOfferBaseViewModel);
   }
 
-
   @Override
   public OfferEntity findById(long id) {
     return this.offerRepository
@@ -259,7 +259,7 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Page<OfferBaseViewModel> findOffersByBrand (String brandName, Pageable pageable) {
+  public Page<OfferBaseViewModel> findOffersByBrand(String brandName, Pageable pageable) {
 
     return offerRepository
             .findAllByModel_Brand_Name(brandName, pageable)
@@ -429,6 +429,15 @@ public class OfferServiceImpl implements OfferService {
     List<ModelEntity> models = modelService.findAll();
     List<OfferEntity> offers = new ArrayList<>();
 
+    UserEntity admin = userService.findByUsername("admin");
+    UserEntity user = userService.findByUsername("user");
+
+    List<UserEntity> otherUsers = userService.findAll().stream()
+            .filter(u -> !u.getUsername().equals("admin"))
+            .filter(u -> !u.getUsername().equals("user"))
+            .toList();
+
+    Random random = new Random();
     int index = 0;
 
     for (ModelEntity model : models) {
@@ -450,8 +459,13 @@ public class OfferServiceImpl implements OfferService {
 
       CountryEnum country = city.getCountry();
 
-      String username = index % 2 == 0 ? "admin" : "user";
-      UserEntity seller = userService.findByUsername(username);
+      UserEntity seller = resolveSeller(
+              index,
+              admin,
+              user,
+              otherUsers,
+              random
+      );
 
       double mileage =
               condition == ConditionEnum.New ? 0 : 5_000 + (index * 700);
@@ -498,6 +512,22 @@ public class OfferServiceImpl implements OfferService {
       case Damaged -> model.getName() + " with minor damage, repairable.";
       case Spares -> model.getName() + " suitable for spare parts.";
     };
+  }
+
+  private UserEntity resolveSeller(
+          int index,
+          UserEntity admin,
+          UserEntity user,
+          List<UserEntity> otherUsers,
+          Random random) {
+
+    if (index < 2) {
+      return admin;
+    } else if (index < 4) {
+      return user;
+    } else {
+      return otherUsers.get(random.nextInt(otherUsers.size()));
+    }
   }
 
   private OfferEntity buildOffer(

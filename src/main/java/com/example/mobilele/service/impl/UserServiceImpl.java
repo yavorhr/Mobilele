@@ -115,6 +115,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public List<UserEntity> findAll() {
+    return this.userRepository.findAll();
+  }
+
+  @Override
   public UserViewModel findUserViewModelById(Long id) {
     return this.userRepository
             .findById(id)
@@ -353,11 +358,38 @@ public class UserServiceImpl implements UserService {
 
     List<UserEntity> users = List.of(
             new UserEntity("admin", "john.atanasoff@gmail.com", "+359888333222",
-                    "John", "Atanasoff",   passwordEncoder.encode("test"), true,
+                    "John", "Atanasoff", passwordEncoder.encode("test"), true,
                     List.of(adminRole, userRole)),
 
             new UserEntity("user", "peter.ivanov@yahoo.com", "+359888333111",
-                    "Petar", "Ivanov",   passwordEncoder.encode("test"), true,
+                    "Petar", "Ivanov", passwordEncoder.encode("test"), true,
+                    List.of(userRole)),
+            new UserEntity("georgie", "george.mihaylov@yahoo.com", "+359888333333",
+                    "George", "Mihaylov", passwordEncoder.encode("test"), true,
+                    List.of(userRole))
+            , new UserEntity("rado_763", "radoslav.penkov@abv.com", "+359888847621",
+                    "Radoslav", "Penkov", passwordEncoder.encode("test"), true,
+                    List.of(userRole))
+            , new UserEntity("silvia_", "silvia.dimitrova@gmail.com", "+359888987459",
+                    "Silvia", "Dimitrova", passwordEncoder.encode("test"), true,
+                    List.of(userRole))
+            , new UserEntity("yan_peng", "yan.peng@abv.bg", "+359888956105",
+                    "Yan", "Peng", passwordEncoder.encode("test"), true,
+                    List.of(userRole))
+            , new UserEntity("spas40", "spas.kolev@yahoo.com", "+359888873950",
+                    "Spas", "Kolev", passwordEncoder.encode("test"), true,
+                    List.of(userRole))
+            , new UserEntity("radostinka", "radostin.teneff@gmail.com", "+359888859026",
+                    "Radostina", "Tenev", passwordEncoder.encode("test"), true,
+                    List.of(userRole)),
+            new UserEntity("ralka", "ralitsa.uvakova@abv.bg", "+359888830026",
+                    "Ralitsa", "Uvakova", passwordEncoder.encode("test"), true,
+                    List.of(userRole)),
+            new UserEntity("dean_XXL", "dean.deyanov@abv.bg", "+359888683031",
+                    "Dean", "Deyanov", passwordEncoder.encode("test"), true,
+                    List.of(userRole)),
+            new UserEntity("richkata", "richard.emoroigbe@yahoo.com", "+359883985205",
+                    "Richard", "Emoro", passwordEncoder.encode("test"), true,
                     List.of(userRole))
     );
 

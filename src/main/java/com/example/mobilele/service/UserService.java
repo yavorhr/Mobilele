@@ -34,6 +34,8 @@ public interface UserService {
 
   List<UserEntity> findLockedUsers();
 
+  List<UserEntity> findAll();
+
   UserViewModel findUserViewModelById(Long id);
 
   UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel);
