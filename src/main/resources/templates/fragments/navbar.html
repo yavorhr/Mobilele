@@ -44,7 +44,8 @@
                    role="button"
                    data-toggle="dropdown"
                    aria-haspopup="true"
-                   aria-expanded="false">
+                   aria-expanded="false"
+                   th:text="#{nav.admin}">
                     Admin
                 </a>
 
@@ -52,7 +53,8 @@
                      aria-labelledby="adminDropdown"
                      data-admin-dropdown>
 
-                    <a class="dropdown-item" th:href="@{/admin/notifications}">
+                    <a class="dropdown-item" th:href="@{/admin/notifications}"
+                       th:text="#{nav.notifications}">
                         Notifications
                     </a>
 
@@ -60,53 +62,60 @@
                     <div class="dropdown-submenu">
                         <a class="dropdown-item stats-toggle"
                            href="#"
-                           role="button">
+                           role="button"
+                           th:text="#{nav.stats}">
                             Stats
                             <span class="arrow">▸</span>
                         </a>
 
                         <div class="dropdown-menu stats-menu">
-                            <a class="dropdown-item" th:href="@{/admin/statistics}">
+                            <a class="dropdown-item" th:href="@{/admin/statistics}"
+                               th:text="#{nav.liveStats}">
                                 Live stats
                             </a>
-                            <a class="dropdown-item" th:href="@{/admin/history}">
+                            <a class="dropdown-item" th:href="@{/admin/history}"
+                               th:text="#{nav.statsHistory}">
                                 Stats history
                             </a>
                         </div>
                     </div>
 
-                    <a class="dropdown-item" th:href="@{/admin/sellers-performance}">
+                    <a class="dropdown-item" th:href="@{/admin/sellers-performance}"
+                       th:text="#{nav.sellersPerformance}">
                         Sellers performance
                     </a>
 
                 </div>
             </li>
 
-
             <li class="nav-item"
                 sec:authorize="isAuthenticated()"
                 th:if="${currentPage != 'find'}">
-                <a class="nav-link" th:href="@{/offers/find}">Find offers</a>
+                <a class="nav-link" th:href="@{/offers/find}"
+                   th:text="#{nav.findOffers}">Find offers</a>
             </li>
             <li class="nav-item"
                 sec:authorize="isAuthenticated()"
                 th:if="${currentPage != 'add'}">
                 <a class="nav-link"
-                   th:href="@{/offers}">Add Offer</a>
+                   th:href="@{/offers}"
+                   th:text="#{nav.addOffer}">Add Offer</a>
             </li>
 
             <!-- Profile  -->
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                 <a class="nav-link profile-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   th:text="#{nav.profile}">
                     My Profile
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item" th:href="@{/users/profile}">Details</a>
-                    <a class="dropdown-item" th:href="@{/offers/favorites}">Favorites</a>
-                    <a class="dropdown-item" th:href="@{/offers/my-offers}">My Offers</a>
+                    <a class="dropdown-item" th:href="@{/users/profile}" th:text="#{nav.details}">Details</a>
+                    <a class="dropdown-item" th:href="@{/offers/favorites}" th:text="#{nav.favorites}">Favorites</a>
+                    <a class="dropdown-item" th:href="@{/offers/my-offers}" th:text="#{nav.myOffers}">My Offers</a>
                     <button class="dropdown-item"
-                            id="feedbackBtn">⭐ Rate us
+                            id="feedbackBtn"
+                            th:text="#{nav.rateUs}">⭐ Rate us
                     </button>
 
                     <div class="dropdown-divider"></div>
@@ -118,7 +127,7 @@
 
                     <a class="dropdown-item delete-account" href="#" id="deleteAccountLink">
                         <span class="delete-icon">🗑</span>
-                        <span>Delete Account</span>
+                        <span th:text="#{nav.deleteAccount}">Delete Account</span>
                     </a>
                 </div>
             </li>
@@ -127,17 +136,18 @@
                 <div class="form-inline my-2 my-lg-0">
                     <form th:action="@{/users/logout}"
                           th:method="post">
-                        <button type="submit" class="logout">
+                        <button type="submit" class="logout"
+                                th:text="#{nav.logout}">
                             Logout
                         </button>
                     </form>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" th:href="@{/users/register}">Register</a>
+                <a class="nav-link" th:href="@{/users/register}" th:text="#{nav.register}">Register</a>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" href="users/login">Login</a>
+                <a class="nav-link" href="users/login" th:text="#{nav.login}">Login</a>
             </li>
         </ul>
     </div>
@@ -146,7 +156,7 @@
 <div id="feedbackModal" class="feedback-modal">
     <div class="feedback-content">
         <button class="close-btn" id="closeFeedback">&times;</button>
-        <h2 class="modal-title">Leave Feedback</h2>
+        <h2 class="modal-title" th:text="#{feedback.title}">Leave Feedback</h2>
 
         <form id="feedbackForm">
             <div class="stars">
@@ -157,10 +167,15 @@
                 <span class="star" data-value="5">★</span>
             </div>
 
-            <textarea id="feedbackComment" placeholder="Write your feedback..." minlength="5" maxlength="500" required></textarea>
+            <textarea id="feedbackComment"
+                      th:placeholder="#{feedback.placeholder}"
+                      minlength="5" maxlength="500"
+                      required></textarea>
 
             <div class="button-holder">
-                <button type="submit" class="btn btn-submit">Submit Feedback</button>
+                <button type="submit"
+                        class="btn btn-submit"
+                        th:text="#{feedback.submit}">Submit Feedback</button>
             </div>
 
             <p id="feedbackMessage" class="feedback-message"></p>
