@@ -21,7 +21,8 @@
                 th:text="#{greeting}">
             </h1>
 
-            <p th:text="#{slogan}">Find your next car with ease — explore trusted offers, compare prices, and connect with verified
+            <p th:text="#{slogan}">Find your next car with ease — explore trusted offers, compare prices, and connect
+                with verified
                 sellers.</p>
             <a th:href="@{/offers/find}"
                class="cta-btn"
@@ -37,8 +38,8 @@
     </div>
 
     <section class="quick-search section">
-        <h2>Quick Search</h2>
-        <p>Find the right car instantly — filter by brand, price, or year.</p>
+        <h2 th:text="#{quick.search}">Quick Search</h2>
+        <p th:text="#{quick.search.desc}">Find the right car instantly — filter by brand, price, or year.</p>
 
         <form th:action="@{/offers/quick-search}"
               th:object="${offersFindBindingModel}"
@@ -132,12 +133,12 @@
                 </div>
             </div>
 
-            <button type="submit" id="searchBtn" class="cta-btn disabled-btn">Search</button>
+            <button th:text="#{button.search}" type="submit" id="searchBtn" class="cta-btn disabled-btn">Search</button>
         </form>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Recently added offers</h2>
+        <h2 th:text="#{offers.recent}" class="section-title">Recently added offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${latestOffers}">
                 <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
@@ -148,12 +149,12 @@
             </div>
         </div>
         <div class="show-all">
-            <a th:href="@{/offers/all}" class="cta-btn">All offers →</a>
+            <a th:text="#{button.all.offers}" th:href="@{/offers/all}" class="cta-btn">All offers →</a>
         </div>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Most viewed offers</h2>
+        <h2 th:text="#{offers.mostViewed}" class="section-title">Most viewed offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${mostViewedOffers}">
                 <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
@@ -164,7 +165,7 @@
             </div>
         </div>
         <div class="show-all">
-            <a th:href="@{/offers/top-offers}" class="cta-btn">Show Top 20 →</a>
+            <a th:text="#{button.top20}" th:href="@{/offers/top-offers}" class="cta-btn">Show Top 20 →</a>
         </div>
     </section>
 
@@ -196,11 +197,14 @@
     </section>
 
     <section class="why-choose-us section">
-        <h2 class="section-title">Why to choose <span class="brand-name">Mobilele</span>?</h2>
+        <h2 class="section-title"
+            th:utext="#{why.choose('<span class=&quot;brand-name&quot;>Mobilele</span>')}">
+            Why choose <span class="brand-name">Mobilele</span>?
+        </h2>
         <div class="features-grid">
             <div class="feature rating-feature ui-transition glass-effect">
                 <i class="fa fa-star"></i>
-                <h3>Our Community Rating</h3>
+                <h3 th:text="#{community.rating}">Our Community Rating</h3>
 
                 <div class="rating-info ui-transition">
                     <div class="stars">
@@ -211,18 +215,21 @@
                     <p class="rating-average">
                         <span th:text="${#numbers.formatDecimal(summary.rating, 1, 1)}">4.8</span> / 5
                     </p>
-                    <p class="rating-count">
-                        Based on <span th:text="${summary.count}">124</span> reviews
+                    <p class="rating-count"
+                       th:text="#{reviews.based(${summary.count})}">
+                        Based on 124 reviews
                     </p>
                 </div>
             </div>
 
             <div class="feature ui-transition glass-effect">
                 <i class="fa fa-shield"></i>
-                <h3>Verified Sellers</h3>
-                <p>Every seller is verified for authenticity and trustworthiness.</p>
+                <h3 th:text="#{sellers.verified}">Verified Sellers</h3>
+                <p th:text="#{sellers.verified.desc}">Every seller is verified for authenticity and trustworthiness.</p>
                 <p class="feature-link">
-                    <a th:href="@{/sellers/top}" class="text-link">
+                    <a th:text="#{btn.sellers.top}"
+                       th:href="@{/sellers/top}"
+                       class="text-link">
                         View our top sellers →
                     </a>
                 </p>
@@ -230,32 +237,29 @@
 
             <div class="feature ui-transition glass-effect">
                 <i class="fa fa-car"></i>
-                <h3>Wide Selection</h3>
-                <p>Thousands of offers from top brands and private owners. </p>
-                <p>
-                    Successfully sold
-                    <span th:text="${soldCount}"></span>
-                    vehicles since
-                    <span th:text="${startYear}"></span>.
+                <h3 th:text="#{selection.title}">Wide Selection</h3>
+                <p th:text="#{selection.desc}">Thousands of offers from top brands and private owners. </p>
+                <p th:text="#{selection.stats(${soldCount}, ${startYear})}">
+                    Successfully sold 6 vehicles since 2025.
                 </p>
             </div>
 
             <div class="feature ui-transition glass-effect">
                 <i class="fa fa-clock-o"></i>
-                <h3>Fast & Easy</h3>
-                <p>Filter, compare, and contact sellers — all in under a minute.</p>
+                <h3 th:text="#{fast.title}">Fast & Easy</h3>
+                <p th:text="#{fast.desc}">Filter, compare, and contact sellers — all in under a minute.</p>
             </div>
 
             <div class="feature ui-transition glass-effect">
                 <i class="fa fa-money"></i>
-                <h3>Transparent Prices</h3>
-                <p>No hidden fees. See clear, real-time offers you can trust.</p>
+                <h3 th:text="#{prices.title}">Transparent Prices</h3>
+                <p th:text="#{prices.desc}">No hidden fees. See clear, real-time offers you can trust.</p>
             </div>
         </div>
     </section>
 
     <section class="reviews section">
-        <h2 class="section-title">What our users say ⭐</h2>
+        <h2 th:text="#{users.say}" class="section-title">What our users say ⭐</h2>
 
         <div class="reviews-marquee">
             <div class="reviews-track">
