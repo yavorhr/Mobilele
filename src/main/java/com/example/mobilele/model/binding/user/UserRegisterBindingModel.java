@@ -19,7 +19,7 @@ public class UserRegisterBindingModel {
   }
 
   @UniqueUsername
-  @Size(min = 2,max = 20, message = "Must be between 2 and 20 symbols")
+  @Size(min = 2,max = 20, message = "Should be between 2 and 20 symbols")
   public String getUsername() {
     return username;
   }
@@ -35,27 +35,27 @@ public class UserRegisterBindingModel {
   @UniquePhoneNumber
   @Pattern(
           regexp = "^\\+359\\d{9}$",
-          message = "Must start with +359 and contains 9 digits after that")
+          message = "Number should start with +359 and contains 9 digits after that")
   public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  @Size(min = 5, message = "Length must be between 5 and 20 symbols")
+  @Size(min = 5, message = "Length should be between 5 and 20 symbols")
   public String getPassword() {
     return password;
   }
 
-  @Size(min = 5, message = "Length must be between 5 and 20 symbols")
+  @Size(min = 5, message = "Length should be between 5 and 20 symbols")
   public String getConfirmPassword() {
     return confirmPassword;
   }
 
-  @Size(min = 2,max = 20, message = "Must be between 4 and 20 symbols")
+  @Size(min = 2,max = 20, message = "Should be between 4 and 20 symbols")
   public String getFirstName() {
     return firstName;
   }
 
-  @Size(min = 2,max = 20, message = "Must be between 4 and 20 symbols")
+  @Size(min = 2,max = 20, message = "Should be between 4 and 20 symbols")
   public String getLastName() {
     return lastName;
   }
