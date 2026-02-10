@@ -96,7 +96,7 @@ public class UserEntity extends BaseEntity {
     return email;
   }
 
-  @Column(nullable = false, name = "phone_number")
+  @Column(nullable = false, name = "phone_number", unique = true)
   public String getPhoneNumber() {
     return phoneNumber;
   }
