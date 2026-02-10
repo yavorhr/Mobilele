@@ -352,9 +352,9 @@ p {
 }
 
 
-/* =====================
+/* =============
    PAGINATION
-===================== */
+=============== */
 
 .pagination-container {
     display: flex;
@@ -425,6 +425,51 @@ p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     text-decoration: none;
     color: var(--color-turquoise-hover);
+}
+
+/* ================
+   FLASH MESSAGE
+ ================ */
+
+.alert-toast {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    padding: 20px 36px;
+    min-width: 360px;
+    max-width: 700px;
+    width: auto;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+
+    color: var(--white);
+    font-size: var(--font-size_1);
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+
+    z-index: 3000;
+    transform: translateX(-50%) translateY(-20px);
+    transition: all 0.5s ease-in-out;
+}
+
+/* Show animation */
+.alert-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Smooth fade-out*/
+.alert-toast:not(.show) {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-25px);
 }
 
 /* ??? */

@@ -2,52 +2,15 @@
     max-width: 1700px;
 }
 
-/* ================
-   FLASH MESSAGE
- ================ */
-.alert-toast {
-    position: fixed;
-    top: 120px;
-    left: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-
-    padding: 20px 36px;
-    min-width: 360px;
-    max-width: 700px;
-    width: auto;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #4CAF50, #66bb6a);
-
-    color: var(--white);
-    font-size: var(--font-size_1);
-    font-weight: 600;
-    text-align: center;
-    opacity: 0;
-    pointer-events: none;
-
-    z-index: 3000;
-    transform: translateX(-50%) translateY(-20px);
-    transition: all 0.5s ease-in-out;
-}
-
-/* Show animation */
-.alert-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
 /* Icon  */
 .alert-icon img {
     width: 50px;
     height: 50px;
     border-radius: 8px;
     flex-shrink: 0;
+    color: var(--color-bg-white);
 
-    filter: grayscale(80%) brightness(1.2) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    filter: grayscale(80%) brightness(1.2) drop-shadow(0 2px 3px rgba(101, 100, 100, 0.99));
     animation: wiggle 0.9s ease-in-out;
     transition: transform 0.2s ease;
 }
@@ -70,12 +33,6 @@
     75% {
         transform: rotate(-4deg);
     }
-}
-
-/* Smooth fade-out*/
-.alert-toast:not(.show) {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-25px);
 }
 
 /* Optional stat strip */
