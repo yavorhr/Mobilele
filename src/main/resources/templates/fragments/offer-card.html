@@ -13,18 +13,21 @@
         <div class="offer-info">
             <h3 th:text="${offer.modelBrandName + ' ' + offer.modelName}"></h3>
             <p class="offer-meta">
-                <span th:text="${'Engine : ' + offer.engine}"></span>
-                <span th:text="${'Transmission : ' + offer.transmission}"></span>
-                <span th:text="${'Mileage : ' + offer.mileage + ' km'}"></span>
-                <span th:text="${'Year : ' + offer.modelYear}"></span>
-                <span th:text="'Added: ' + ${#temporals.format(offer.created, 'yyyy-MM-dd')}"></span>
-            <p class="offer-price" th:text="${offer.price + ' BGN'}"></p>
+                <span th:text="#{offer.engine} + ' : ' + ${offer.engine}"></span>
+                <span th:text="#{offer.transmission} + ' : ' + ${offer.transmission}"></span>
+                <span th:text="#{offer.mileage} + ' : ' + ${offer.mileage} + ' ' + #{unit.km}"></span>
+                <span th:text="#{offer.year} + ' : ' + ${offer.modelYear}"></span>
+                <span th:text="#{offer.added} + ': ' + ${#temporals.format(offer.created, 'yyyy-MM-dd')}"></span>
+            </p>
 
-            <!-- Views (optional) -->
+            <p class="offer-price"
+               th:text="${offer.price} + ' ' + #{currency.bgn}">
+            </p>
+
             <div class="views-counter ui-transition glass-effect"
                  th:if="${showViews}">
                 <span class="eye-icon">👁️</span>
-                <span th:text="'Views: ' + ${offer.views}"></span>
+                <span th:text="#{offer.views} + ': ' + ${offer.views}"></span>
             </div>
         </div>
     </a>
