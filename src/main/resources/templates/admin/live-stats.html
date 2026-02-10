@@ -12,7 +12,7 @@
 
         <div class="mt-4 text-center">
             <div th:if="${message}"
-                 class="alert alert-success flash-message"
+                 class="alert-toast alert-success"
                  th:text="${message}">
             </div>
         </div>
@@ -125,10 +125,12 @@
 <footer th:replace="fragments/minimal-footer"></footer>
 
 <script>
-    setTimeout(() => {
-        const msg = document.querySelector(".flash-message");
-        if (msg) msg.style.display = "none";
-    }, 4000);
+    const msg = document.querySelector(".alert-toast");
+
+    if (msg) {
+        setTimeout(() => msg.classList.add("show"), 50);
+        setTimeout(() => msg.classList.remove("show"), 4000);
+    }
 </script>
 
 </body>
