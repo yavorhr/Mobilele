@@ -50,11 +50,11 @@
 
                 <!-- Vehicle type -->
                 <div class="form-group">
-                    <label for="vehicleType">Vehicle Type</label>
+                    <label for="vehicleType" th:text="#{form.vehicleType}">Vehicle Type</label>
                     <select name="vehicleType"
                             id="vehicleType"
                             class="form-control">
-                        <option value="">- Select vehicle category -</option>
+                        <option value="" th:text="#{form.selectCategory}">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
                                 th:value="${c.name().toLowerCase()}"
                                 th:text="${c}">
@@ -64,11 +64,11 @@
 
                 <!-- Brand -->
                 <div class="form-group">
-                    <label for="brand">Brand</label>
+                    <label for="brand" th:text="#{form.brand}">Brand</label>
                     <select th:field="*{brand}"
                             id="brand"
                             class="form-control">
-                        <option value="">- Select brand -</option>
+                        <option value="" th:text="#{form.selectBrand}">- Select brand -</option>
                         <option th:each="b : ${brands}"
                                 th:value="${b.name}"
                                 th:text="${b.name}">
@@ -81,13 +81,13 @@
 
                 <!-- Model -->
                 <div class="form-group">
-                    <label for="model">Model</label>
+                    <label for="model" th:text="#{form.model}">Model</label>
                     <select id="model"
                             class="form-control"
                             th:name="model"
                             th:errorclass="is-invalid"
                             th:selected="${model} == *{model}">
-                        <option value="" selected>- Select model -</option>
+                        <option value="" selected th:text="#{form.selectModel}">- Select model -</option>
                         <optgroup label="Model name">
                             <option
                                     th:each="model : ${models}"
@@ -104,31 +104,33 @@
 
                 <!-- Price -->
                 <div class="form-group">
-                    <label for="price">Price</label>
+                    <label for="price" th:text="#{form.price}">Price</label>
                     <select th:field="*{priceComparison}" id="priceComparison" class="form-control">
-                        <option value="under">Under</option>
-                        <option value="between">Between</option>
-                        <option value="above">Above</option>
+                        <option value="under" th:text="#{form.price.under}">Under</option>
+                        <option value="between" th:text="#{form.price.between}">Between</option>
+                        <option value="above" th:text="#{form.price.above}">Above</option>
                     </select>
-                    <input id="price" type="number" min="0" th:field="*{price}" placeholder="Suggested price"
+                    <input id="price" type="number" min="0" th:field="*{price}"
+                           th:placeholder="#{form.price.placeholder}"
                            class="form-control"/>
-                    <input id="priceMax" type="number" th:field="*{priceMax}" placeholder="Max price"
+                    <input id="priceMax" type="number" th:field="*{priceMax}" th:placeholder="#{form.price.max}"
                            style="display:none;" class="form-control"/>
                 </div>
 
                 <!-- Year -->
                 <div class="form-group">
-                    <label for="year">Year</label>
+                    <label for="year" th:text="#{form.year}">Year</label>
                     <select th:field="*{yearComparison}"
                             id="yearComparison"
                             class="form-control">
-                        <option value="under">Before</option>
-                        <option value="between">Between</option>
-                        <option value="above">After</option>
+                        <option value="under" th:text="#{form.year.before}">Before</option>
+                        <option value="between" th:text="#{form.year.between}">Between</option>
+                        <option value="above" th:text="#{form.year.after}">After</option>
                     </select>
-                    <input id="year" type="number" step="1" th:field="*{year}" placeholder="Manufacturing year"
+                    <input id="year" type="number" step="1" th:field="*{year}" th:placeholder="#{form.year.placeholder}"
                            class="form-control"/>
-                    <input id="yearMax" type="number" th:field="*{yearMax}" placeholder="To year" style="display:none;"
+                    <input id="yearMax" type="number" th:field="*{yearMax}" th:placeholder="#{form.year.max}"
+                           style="display:none;"
                            class="form-control"/>
                 </div>
             </div>
