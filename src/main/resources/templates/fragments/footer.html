@@ -13,15 +13,15 @@
                 <img src="/images/car.png" alt="Mobilele logo">
                 <h3>Mobilele</h3>
             </a>
-            <p>
+            <p th:text="#{footer.description}">
                 Find your next car with confidence. Trusted sellers, transparent prices,
                 and a community-driven marketplace.
             </p>
         </div>
 
         <div class="footer-links">
-            <h4>Explore</h4>
-            <a th:href="@{/offers/find}">Find Offers</a>
+            <h4 th:text="#{footer.explore}">Explore</h4>
+            <a th:href="@{/offers/find}" th:text="#{footer.findOffers}">Find Offers</a>
             <a th:href="@{/offers/all}">All Offers</a>
             <a th:href="@{/offers/top-offers}">Top Offers</a>
             <a th:href="@{/sellers/top}">Top Sellers</a>
@@ -39,21 +39,25 @@
 
         <div class="footer-links" sec:authorize="hasRole('ADMIN')">
             <h4>Admin</h4>
-            <a th:href="@{/admin/notifications}">Notifications</a>
-            <a th:href="@{/admin/statistics}">Live Stats</a>
-            <a th:href="@{/admin/history}">Stats History</a>
-            <a th:href="@{/admin/sellers-performance}">Seller Performance</a>
+            <a th:href="@{/admin/notifications}" th:text="#{notifications}">Notifications</a>
+            <a th:href="@{/admin/statistics}" th:text="#{liveStats}">Live Stats</a>
+            <a th:href="@{/admin/history}" th:text="#{statsHistory}">Stats History</a>
+            <a th:href="@{/admin/sellers-performance}" th:text="#{sellersPerformance}">Seller Performance</a>
         </div>
 
         <div class="footer-links">
-            <h4>Support</h4>
-            <a href="mailto:support@mobilele.com">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <h4 th:text="#{footer.support}">Support</h4>
+            <a href="mailto:support@mobilele.com" th:text="#{footer.contact}">Contact Us</a>
+            <a href="#" th:text="#{footer.privacy}">Privacy Policy</a>
+            <a href="#" th:text="#{footer.terms}">Terms of Service</a>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© <span th:text="${#dates.year(#dates.createNow())}"></span> Mobilele. All rights reserved.</p>
+        <p>
+            © <span th:text="${#dates.year(#dates.createNow())}"></span>
+            Mobilele.
+            <span th:text="#{footer.rights}">All rights reserved.</span>
+        </p>
     </div>
 </footer>
 </html>
