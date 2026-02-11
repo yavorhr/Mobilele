@@ -57,7 +57,7 @@
                         <option value="" th:text="#{form.selectCategory}">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
                                 th:value="${c.name().toLowerCase()}"
-                                th:text="${c}">
+                                th:text="#{${'category.' + c.name()}}">
                         </option>
                     </select>
                 </div>
