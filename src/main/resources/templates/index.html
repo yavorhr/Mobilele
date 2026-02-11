@@ -138,7 +138,7 @@
     </section>
 
     <section class="section">
-        <h2 th:text="#{offers.recent}" class="section-title">Recently added offers</h2>
+        <h2 th:text="#{recent}" class="section-title">Recently added offers</h2>
         <div class="offers-grid">
             <th:block th:each="offer : ${latestOffers}">
                 <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
@@ -149,7 +149,7 @@
             </div>
         </div>
         <div class="show-all">
-            <a th:text="#{button.all.offers}" th:href="@{/offers/all}" class="cta-btn">All offers →</a>
+            <a th:text="#{all.offers}" th:href="@{/offers/all}" class="cta-btn">All offers →</a>
         </div>
     </section>
 
