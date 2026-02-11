@@ -1,12 +1,14 @@
 package com.example.mobilele.model.binding.user;
+
 import com.example.mobilele.validator.DoesPasswordAndConfirmPasswordMatch;
 import com.example.mobilele.validator.UniqueEmail;
 import com.example.mobilele.validator.UniquePhoneNumber;
 import com.example.mobilele.validator.UniqueUsername;
 import jakarta.validation.constraints.*;
 
-@DoesPasswordAndConfirmPasswordMatch
+@DoesPasswordAndConfirmPasswordMatch(message = "{validation.password.match}")
 public class UserRegisterBindingModel {
+
   private String username;
   private String firstName;
   private String phoneNumber;
@@ -18,47 +20,54 @@ public class UserRegisterBindingModel {
   public UserRegisterBindingModel() {
   }
 
-  @UniqueUsername
-  @Size(min = 2,max = 20, message = "Should be between 2 and 20 symbols")
+  @UniqueUsername(message = "{validation.username.unique}")
+  @NotBlank(message = "{validation.required}")
+  @Size(min = 2, max = 20, message = "{validation.size}")
   public String getUsername() {
     return username;
   }
 
-  @UniqueEmail
-  @Pattern(
-          regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-          message = "Invalid email format")
+  @UniqueEmail(message = "{validation.email.unique}")
+  @NotBlank(message = "{validation.required}")
+  @Email(message = "{validation.email.invalid}")
   public String getEmail() {
     return email;
   }
 
-  @UniquePhoneNumber
+  @UniquePhoneNumber(message = "{validation.phone.unique}")
   @Pattern(
           regexp = "^\\+359\\d{9}$",
-          message = "Number should start with +359 and contains 9 digits after that")
+          message = "{validation.phone.invalid}"
+  )
   public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  @Size(min = 5, message = "Length should be between 5 and 20 symbols")
+  @NotBlank(message = "{validation.required}")
+  @Size(min = 5, max = 20, message = "{validation.size}")
   public String getPassword() {
     return password;
   }
 
-  @Size(min = 5, message = "Length should be between 5 and 20 symbols")
+  @NotBlank(message = "{validation.required}")
+  @Size(min = 5, max = 20, message = "{validation.size}")
   public String getConfirmPassword() {
     return confirmPassword;
   }
 
-  @Size(min = 2,max = 20, message = "Should be between 4 and 20 symbols")
+  @NotBlank(message = "{validation.required}")
+  @Size(min = 2, max = 20, message = "{validation.size}")
   public String getFirstName() {
     return firstName;
   }
 
-  @Size(min = 2,max = 20, message = "Should be between 4 and 20 symbols")
+  @NotBlank(message = "{validation.required}")
+  @Size(min = 2, max = 20, message = "{validation.size}")
   public String getLastName() {
     return lastName;
   }
+
+  // setters
 
   public void setUsername(String username) {
     this.username = username;
