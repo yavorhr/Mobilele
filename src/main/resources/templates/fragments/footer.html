@@ -21,24 +21,24 @@
 
         <div class="footer-links">
             <h4 th:text="#{footer.explore}">Explore</h4>
-            <a th:href="@{/offers/find}" th:text="#{footer.findOffers}">Find Offers</a>
-            <a th:href="@{/offers/all}">All Offers</a>
-            <a th:href="@{/offers/top-offers}">Top Offers</a>
-            <a th:href="@{/sellers/top}">Top Sellers</a>
+            <a th:href="@{/offers/find}" th:text="#{findOffers}">Find Offers</a>
+            <a th:href="@{/offers/all}" th:text="#{all.offers}">All Offers</a>
+            <a th:href="@{/offers/top-offers}" th:text="#{footer.topOffers}">Top Offers</a>
+            <a th:href="@{/sellers/top}" th:text="#{footer.topSellers}">Top Sellers</a>
         </div>
 
         <div class="footer-links">
-            <h4>My Account</h4>
-            <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/offers/my-offers}">My Offers</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/offers/favorites}">Favorites</a>
+            <h4 th:text="#{footer.account}">My Account</h4>
+            <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}" th:text="#{profile}">Profile</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/offers/my-offers}" th:text="#{myOffers}">My Offers</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/offers/favorites}" th:text="#{favorites}">Favorites</a>
 
-            <a sec:authorize="!isAuthenticated()" th:href="@{/users/register}">Register</a>
-            <a sec:authorize="!isAuthenticated()" th:href="@{/users/login}">Login</a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/users/register}" th:text="#{register}">Register</a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/users/login}" th:text="#{login}">Login</a>
         </div>
 
         <div class="footer-links" sec:authorize="hasRole('ADMIN')">
-            <h4>Admin</h4>
+            <h4 th:text="#{admin}">Admin</h4>
             <a th:href="@{/admin/notifications}" th:text="#{notifications}">Notifications</a>
             <a th:href="@{/admin/statistics}" th:text="#{liveStats}">Live Stats</a>
             <a th:href="@{/admin/history}" th:text="#{statsHistory}">Stats History</a>
