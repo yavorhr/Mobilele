@@ -29,8 +29,11 @@ public class PasswordsValidator implements ConstraintValidator<DoesPasswordAndCo
 
     if (!matches) {
       context.disableDefaultConstraintViolation();
-      context.buildConstraintViolationWithTemplate("Passwords don't match")
-              .addPropertyNode("confirmPassword")
+
+      context.buildConstraintViolationWithTemplate(
+              context.getDefaultConstraintMessageTemplate()
+      )
+              .addPropertyNode("confirmPassword") 
               .addConstraintViolation();
     }
     return matches;
