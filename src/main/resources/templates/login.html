@@ -12,7 +12,7 @@
 
 <main class="login-container auth-content">
     <div class="auth-card login-card">
-        <h2 class="text-center mb-4">Login</h2>
+        <h2 class="text-center mb-4" th:text="#{auth.login.title}">Login</h2>
 
         <form th:method="POST"
               th:action="@{/users/login}"
@@ -20,7 +20,7 @@
 
             <!-- Username -->
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username" th:text="#{auth.username}">Username</label>
                 <input
                         th:value="${username}"
                         name="username"
@@ -28,20 +28,20 @@
                         type="text"
                         minlength="2"
                         maxlength="50"
-                        placeholder="Enter your username"
+                        th:placeholder="#{auth.placeholder.loginUsername}"
                         class="form-input">
             </div>
 
             <!-- Password -->
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password" th:text="#{auth.password}">Password</label>
                 <input
                         id="password"
                         name="password"
                         type="password"
                         minlength="2"
                         maxlength="20"
-                        placeholder="Enter your password"
+                        th:placeholder="#{auth.placeholder.loginPassword}"
                         class="form-input">
             </div>
 
@@ -52,15 +52,14 @@
 
             <!-- Submit -->
             <div class="button-holder">
-                <input type="submit" class="btn btn-submit" value="Login">
+                <input type="submit" class="btn btn-submit" th:value="#{auth.login.submit}">
             </div>
 
             <!-- Register Redirect -->
-            <p class="text-center mt-3 register-hint">
-                Don’t have an account?
-                <a th:href="@{/users/register}" class="register-link">Register here</a>
+            <p class="text-center mt-3 register-hint"
+               th:utext="#{auth.login.registerHint(@{/users/register},#{auth.login.registerHere}
+   )}">
             </p>
-
         </form>
     </div>
 </main>

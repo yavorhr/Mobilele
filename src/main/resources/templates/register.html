@@ -11,7 +11,7 @@
 
 <main class="register-container auth-content">
     <div class="auth-card register-card">
-        <h2 class="text-center mb-4">Register</h2>
+        <h2 class="text-center mb-4" th:text="#{auth.register.title}">Register</h2>
 
         <form class="auth-form"
               th:method="POST"
@@ -19,17 +19,21 @@
               th:object="${userRegisterBindingModel}">
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input th:field="*{firstName}" th:errorclass="is-invalid"
-                           id="firstName" type="text" placeholder="First name">
+                    <label for="firstName" th:text="#{auth.firstName}">First Name</label>
+                    <input th:field="*{firstName}"
+                           th:errorclass="is-invalid"
+                           id="firstName" type="text"
+                           th:placeholder="#{auth.placeholder.firstName}">
                     <p th:if="${#fields.hasErrors('firstName')}"
                        th:errors="*{firstName}" class="error-msg">First name should be between 4 and 20 symbols</p>
                 </div>
 
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input th:field="*{lastName}" th:errorclass="is-invalid"
-                           id="lastName" type="text" placeholder="Last name">
+                    <label for="lastName" th:text="#{auth.lastName}">Last Name</label>
+                    <input th:field="*{lastName}"
+                           th:errorclass="is-invalid"
+                           id="lastName" type="text"
+                           th:placeholder="#{auth.placeholder.lastName}">
                     <p th:if="${#fields.hasErrors('lastName')}"
                        th:errors="*{lastName}" class="error-msg">Last name should be between 4 and 20 symbols</p>
                 </div>
@@ -37,17 +41,20 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input th:field="*{username}" th:errorclass="is-invalid"
-                           id="username" type="text" placeholder="Username">
+                    <label for="username" th:text="#{auth.username}">Username</label>
+                    <input th:field="*{username}"
+                           th:errorclass="is-invalid"
+                           id="username" type="text"
+                           th:placeholder="#{auth.placeholder.username}">
                     <p th:if="${#fields.hasErrors('username')}"
                        th:errors="*{username}" class="error-msg">Username error passed by controller</p>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email" th:text="#{auth.email}">Email</label>
                     <input th:field="*{email}" th:errorclass="is-invalid"
-                           id="email" type="email" placeholder="Email">
+                           id="email" type="email" placeholder="Email"
+                           th:placeholder="#{auth.placeholder.email}">
                     <p th:if="${#fields.hasErrors('email')}"
                        th:errors="*{email}" class="error-msg">Invalid email address</p>
                 </div>
@@ -55,9 +62,9 @@
 
             <div class="form-flex">
                 <div class="form-group phone-number">
-                    <label for="phoneNumber">Phone Number</label>
+                    <label for="phoneNumber" th:text="#{auth.phone}">Phone Number</label>
                     <input th:field="*{phoneNumber}" th:errorclass="is-invalid"
-                           id="phoneNumber" type="text" placeholder="+359XXXXXXXXX"
+                           id="phoneNumber" type="text" th:placeholder="#{auth.placeholder.phone}"
                            pattern="^\+359\d{9}$"
                            title="Phone number must start with +359 and contain exactly 9 digits">
                     <p th:if="${#fields.hasErrors('phoneNumber')}"
@@ -67,24 +74,26 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password" th:text="#{auth.password}">Password</label>
                     <input th:field="*{password}" th:errorclass="is-invalid"
-                           id="password" type="password" placeholder="Password">
+                           id="password" type="password" th:placeholder="#{auth.placeholder.password}">
                     <p th:if="${#fields.hasErrors('password')}"
                        th:errors="*{password}" class="error-msg">Password should be at least 5 symbols long</p>
                 </div>
 
                 <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
+                    <label for="confirmPassword" th:text="#{auth.confirmPassword}">Confirm Password</label>
                     <input th:field="*{confirmPassword}" th:errorclass="is-invalid"
-                           id="confirmPassword" type="password" placeholder="Confirm password">
+                           id="confirmPassword" type="password" th:placeholder="#{auth.placeholder.confirmPassword}">
                     <p th:if="${#fields.hasErrors('confirmPassword')}"
                        th:errors="*{confirmPassword}" class="error-msg"></p>
                 </div>
             </div>
 
             <div class="button-holder">
-                <input type="submit" class="btn btn-submit" value="Create Account">
+                <input type="submit"
+                       class="btn btn-submit"
+                       th:value="#{auth.createAccount}">
             </div>
         </form>
     </div>
