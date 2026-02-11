@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = PhoneNumberValidator.class)
 public @interface UniquePhoneNumber {
 
-  String message() default "Phone number already exists";
+  String message() default "{validation.phone.unique}";
 
   Class<?>[] groups() default {};
 
