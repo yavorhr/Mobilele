@@ -33,7 +33,7 @@ public class PasswordsValidator implements ConstraintValidator<DoesPasswordAndCo
       context.buildConstraintViolationWithTemplate(
               context.getDefaultConstraintMessageTemplate()
       )
-              .addPropertyNode("confirmPassword") 
+              .addPropertyNode("confirmPassword")
               .addConstraintViolation();
     }
     return matches;
