@@ -9,7 +9,7 @@
 
 <main class="main-content" role="main">
     <section>
-        <h2 class="text-center">Add Offer</h2>
+        <h2 class="text-center" th:text="#{offer.add.title}">>Add Offer</h2>
 
         <form
                 th:action="@{/offers}"
@@ -20,10 +20,10 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="vehicleType">Vehicle Type</label>
+                    <label for="vehicleType" th:text="#{offer.vehicleType}">Vehicle Type</label>
                     <select id="vehicleType"
                             th:field="*{vehicleType}">
-                        <option value="">- Select vehicle category -</option>
+                        <option value="" th:text="#{offer.selectCategory}">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
                                 th:value="${c}"
                                 th:text="${c}"></option>
