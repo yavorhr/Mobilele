@@ -10,49 +10,49 @@
 
 <main class="container profile-container auth-content" th:object="${user}">
     <section class="profile-card">
-        <h2 class="text-center mb-4">My Profile</h2>
+        <h2 class="text-center mb-4" th:text="#{profile.title}">My Profile</h2>
 
         <div class="profile-info">
             <!-- Username -->
             <p>
-                <strong>Username:</strong>
+                <strong th:text="#{profile.username}">Username:</strong>
                 <span id="username-display" th:text="*{username}"></span>
                 <input id="username-input" type="text" th:value="*{username}" readonly class="hidden readonly-input">
             </p>
 
             <!-- First Name -->
             <p>
-                <strong>First Name:</strong>
+                <strong th:text="#{profile.firstName}">First Name:</strong>
                 <span id="firstName-display" th:text="*{firstName}"></span>
                 <input id="firstName-input" type="text" th:value="*{firstName}" class="hidden editable-input">
             </p>
 
             <!-- Last Name -->
             <p>
-                <strong>Last Name:</strong>
+                <strong th:text="#{profile.lastName}">Last Name:</strong>
                 <span id="lastName-display" th:text="*{lastName}"></span>
                 <input id="lastName-input" type="text" th:value="*{lastName}" class="hidden editable-input">
             </p>
 
             <!-- Email -->
             <p>
-                <strong>Email:</strong>
+                <strong th:text="#{profile.email}">Email:</strong>
                 <span id="email-display" th:text="*{email}"></span>
                 <input id="email-input" type="email" th:value="*{email}" readonly class="hidden readonly-input">
             </p>
 
             <!-- Phone Number -->
             <p>
-                <strong>Phone Number:</strong>
+                <strong th:text="#{profile.phone}">Phone Number:</strong>
                 <span id="phoneNumber-display" th:text="*{phoneNumber}"></span>
                 <input id="phoneNumber-input" type="text" th:value="*{phoneNumber}" class="hidden editable-input">
             </p>
         </div>
 
         <div class="actions mt-4">
-            <button id="edit-btn" class="btn btn-submit">Edit Profile</button>
-            <button id="save-btn" class="btn btn-success hidden">Save</button>
-            <button id="cancel-btn" class="btn btn-secondary hidden">Cancel</button>
+            <button id="edit-btn" class="btn btn-submit" th:text="#{profile.edit}">Edit Profile</button>
+            <button id="save-btn" class="btn btn-success hidden"  th:text="#{profile.save}">Save</button>
+            <button id="cancel-btn" class="btn btn-secondary hidden" th:text="#{profile.cancel}">Cancel</button>
         </div>
     </section>
 </main>
