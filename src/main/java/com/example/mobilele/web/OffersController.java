@@ -100,8 +100,7 @@ public class OffersController {
 
   // 3. Add Offer
   @GetMapping("/offers")
-  public String getAddOffersPage(Model model) {
-    model.addAttribute("brands", this.brandService.findAllBrands());
+  public String getAddOffersPage() {
     return "add";
   }
 

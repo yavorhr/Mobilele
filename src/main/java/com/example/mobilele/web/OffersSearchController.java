@@ -52,7 +52,6 @@ public class OffersSearchController {
                                         Model model) {
 
     model.addAttribute("vehicleType", VehicleCategoryEnum.from(vehicleType));
-    model.addAttribute("brands", this.brandService.findAllBrands());
 
     return "offers-find";
   }

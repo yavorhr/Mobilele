@@ -37,7 +37,6 @@ public class HomeController {
     int startYear = 2025;
 
     model.addAttribute("latestOffers", offerService.findLatestOffers(5));
-    model.addAttribute("brands", this.brandService.findAllBrands());
     model.addAttribute("mostViewedOffers", offerService.findMostViewedOffers(5));
     model.addAttribute("feedbacks", feedbackService.findRecentFeedbacks(10));
     model.addAttribute("summary", feedbackService.getFeedbackSummary());
