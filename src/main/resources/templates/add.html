@@ -25,8 +25,8 @@
                             th:field="*{vehicleType}">
                         <option value="" th:text="#{offer.selectCategory}">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
-                                th:value="${c}"
-                                th:text="${c}"></option>
+                                th:value="${c.name().toLowerCase()}"
+                                th:text="#{${'category.' + c.name()}}">
                     </select>
                     <div th:if="${#fields.hasErrors('vehicleType')}"
                          th:errors="*{vehicleType}"
