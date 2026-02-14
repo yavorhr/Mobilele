@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="brand">Brand</label>
-                    <select id="brand" th:field="*{brand}">
+                    <label for="brand" th:text="#{offer.brand}">Brand</label>
+                    <select id="brand" th:field="*{brand}" th:text="#{offer.selectBrand}">
                         <option value="">- Select brand -</option>
                         <option th:each="b : ${brands}"
                                 th:value="${b.name}"
@@ -51,9 +51,9 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="model">Model</label>
+                    <label for="model" th:text="#{offer.model}">Model</label>
                     <select id="model" th:field="*{model}">
-                        <option value="">- Select model -</option>
+                        <option value="" th:text="#{offer.selectModel}">- Select model -</option>
                         <option
                                 th:each="m : ${models}"
                                 th:value="${m}"
@@ -65,10 +65,10 @@
                          class="error-msg"></div>
                 </div>
                 <div class="form-group">
-                    <label for="price">Price</label>
+                    <label for="price" th:text="#{offer.price}">Price</label>
                     <input id="price"
                            type="number"
-                           min="0" placeholder="Suggested price"
+                           min="0" th:placeholder="#{offer.price.placeholder}"
                            th:field="*{price}"/>
                     <div th:if="${#fields.hasErrors('price')}"
                          th:errors="*{price}"
@@ -78,11 +78,11 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="mileage">Mileage</label>
+                    <label for="mileage" th:text="#{offer.mileage}">Mileage</label>
                     <input id="mileage"
                            type="number"
                            min="0"
-                           placeholder="Mileage in kilometers"
+                           th:placeholder="#{offer.mileage.placeholder}"
                            th:field="*{mileage}"/>
                     <div th:if="${#fields.hasErrors('mileage')}"
                          th:errors="*{mileage}"
@@ -91,9 +91,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="engine">Engine</label>
+                    <label for="engine" th:text="#{offer.engine}">Engine</label>
                     <select id="engine" th:field="*{engine}">
-                        <option value="">- Select engine type -</option>
+                        <option value="" th:text="#{offer.selectEngine}">- Select engine type -</option>
                         <option
                                 th:each="e : ${engines}"
                                 th:value="${e}"
@@ -108,9 +108,9 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="transmission">Transmission</label>
+                    <label for="transmission" th:text="#{offer.transmission}">Transmission</label>
                     <select id="transmission" th:field="*{transmission}">
-                        <option value="">- Select transmission type -</option>
+                        <option value="" th:text="#{offer.selectTransmission}">- Select transmission type -</option>
                         <option th:each="t : ${transmissions}"
                                 th:value="${t}"
                                 th:text="${t}"></option>
@@ -127,15 +127,16 @@
                     <div
                             th:if="${#fields.hasErrors('year')}"
                             th:errors="*{year}"
+                            th:placeholder="#{offer.year.placeholder}"
                             class="error-msg"></div>
                 </div>
             </div>
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="condition">Condition</label>
+                    <label for="condition" th:text="#{offer.condition}">Condition</label>
                     <select id="condition" th:field="*{condition}">
-                        <option value="">- Select condition -</option>
+                        <option value="" th:text="#{offer.selectCondition}">- Select condition -</option>
                         <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
                     </select>
                     <div
@@ -145,9 +146,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="color">Color</label>
+                    <label for="color" th:text="#{offer.color}">Color</label>
                     <select id="color" th:field="*{color}">
-                        <option value="">- Select color -</option>
+                        <option value="" th:text="#{offer.selectColor}">- Select color -</option>
                         <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
                     </select>
                     <div
@@ -159,9 +160,9 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="country">Country</label>
+                    <label for="country" th:text="#{offer.country}">Country</label>
                     <select id="country" th:field="*{country}">
-                        <option value="">-- Select a country --</option>
+                        <option value="" th:text="#{offer.selectCountry}">- Select a country -</option>
                         <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
                     </select>
                     <div th:if="${#fields.hasErrors('country')}"
@@ -174,8 +175,8 @@
                     <label for="city">City</label>
                     <select id="city" th:field="*{city}"
                             th:attr="data-selected-city=*{city}">
-                        <option value="">-- Select city --</option>
-                        <option value="">-- Select a city --</option>
+                        <option value="" th:text="#{offer.selectCity}">-- Select city --</option>
+                        <option value="">- Select a city -</option>
                     </select>
                     <div th:if="${#fields.hasErrors('city')}"
                          th:errors="*{city}"
@@ -184,10 +185,10 @@
             </div>
 
             <div class="form-group full-width">
-                <label for="description">Description</label>
+                <label for="description" th:text="#{offer.description}">Description</label>
                 <textarea id="description"
                           rows="3"
-                          placeholder="Description"
+                          th:placeholder="#{offer.description.placeholder}"
                           th:field="*{description}">
                 </textarea>
                 <div th:if="${#fields.hasErrors('description')}"
@@ -196,7 +197,7 @@
             </div>
 
             <div class="form-group full-width">
-                <label for="inputPictures">Add Pictures</label>
+                <label for="inputPictures" th:text="#{offer.pictures}">Add Pictures</label>
                 <input id="inputPictures"
                        type="file" multiple
                        th:field="*{pictures}"/>
@@ -205,7 +206,7 @@
                      class="error-msg"></div>
             </div>
             <div class="button-holder">
-                <button class="btn btn-submit">Add offer</button>
+                <button class="btn btn-submit" th:value="#{offer.submit}">Add offer</button>
             </div>
         </form>
     </section>
