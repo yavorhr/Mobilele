@@ -20,7 +20,8 @@
 
             <div class="form-flex">
                 <div class="form-group">
-                    <label for="vehicleType" th:text="#{offer.vehicleType}">Vehicle Type</label>
+                    <label for="vehicleType"
+                           th:text="#{offer.vehicleType}">Vehicle Type</label>
                     <select id="vehicleType"
                             th:field="*{vehicleType}">
                         <option value="" th:text="#{offer.selectCategory}">- Select vehicle category -</option>
@@ -34,9 +35,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="brand" th:text="#{offer.brand}">Brand</label>
-                    <select id="brand" th:field="*{brand}" th:text="#{offer.selectBrand}">
-                        <option value="">- Select brand -</option>
+                    <label for="brand"
+                           th:text="#{offer.brand}">Brand</label>
+                    <select id="brand"
+                            th:field="*{brand}">
+                        <option value=""    th:text="#{offer.selectBrand}">- Select brand -</option>
                         <option th:each="b : ${brands}"
                                 th:value="${b.name}"
                                 th:text="${b.name}">
@@ -218,7 +221,7 @@
                      class="error-msg"></div>
             </div>
             <div class="button-holder">
-                <button class="btn btn-submit" th:value="#{offer.submit}">Add offer</button>
+                <button class="btn btn-submit" th:text="#{offer.submit}">Add offer</button>
             </div>
         </form>
     </section>
