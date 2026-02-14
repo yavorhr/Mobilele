@@ -97,7 +97,7 @@
                         <option
                                 th:each="e : ${engines}"
                                 th:value="${e}"
-                                th:text="${e}">
+                                th:text="#{${'engine.' + e.name()}}">
                         </option>
                     </select>
                     <div th:if="${#fields.hasErrors('engine')}"
@@ -113,7 +113,8 @@
                         <option value="" th:text="#{offer.selectTransmission}">- Select transmission type -</option>
                         <option th:each="t : ${transmissions}"
                                 th:value="${t}"
-                                th:text="${t}"></option>
+                                th:text="#{${'transmission.' + t.name()}}">
+                        </option>
                     </select>
                     <div
                             th:if="${#fields.hasErrors('transmission')}"
@@ -137,7 +138,10 @@
                     <label for="condition" th:text="#{offer.condition}">Condition</label>
                     <select id="condition" th:field="*{condition}">
                         <option value="" th:text="#{offer.selectCondition}">- Select condition -</option>
-                        <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
+                        <option th:each="c : ${conditions}"
+                                th:value="${c}"
+                                th:text="#{${'condition.' + c.name()}}">
+                        </option>
                     </select>
                     <div
                             th:if="${#fields.hasErrors('condition')}"
@@ -149,7 +153,10 @@
                     <label for="color" th:text="#{offer.color}">Color</label>
                     <select id="color" th:field="*{color}">
                         <option value="" th:text="#{offer.selectColor}">- Select color -</option>
-                        <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
+                        <option th:each="c : ${colors}"
+                                th:value="${c}"
+                                th:text="#{${'color.' + c.name()}}">
+                        </option>
                     </select>
                     <div
                             th:if="${#fields.hasErrors('color')}"
@@ -163,7 +170,10 @@
                     <label for="country" th:text="#{offer.country}">Country</label>
                     <select id="country" th:field="*{country}">
                         <option value="" th:text="#{offer.selectCountry}">- Select a country -</option>
-                        <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+                        <option th:each="c : ${countries}"
+                                th:value="${c}"
+                                th:text="#{${'country.' + c.name()}}">
+                        </option>
                     </select>
                     <div th:if="${#fields.hasErrors('country')}"
                          th:errors="*{country}"
@@ -175,8 +185,10 @@
                     <label for="city">City</label>
                     <select id="city" th:field="*{city}"
                             th:attr="data-selected-city=*{city}">
-                        <option value="" th:text="#{offer.selectCity}">-- Select city --</option>
-                        <option value="">- Select a city -</option>
+                        <option value=""
+                                th:text="#{offer.selectCity}">- Select city -
+                        </option>
+                        <option value="" th:text="#{${'city.' + c.name()}}">- Select a city -</option>
                     </select>
                     <div th:if="${#fields.hasErrors('city')}"
                          th:errors="*{city}"
