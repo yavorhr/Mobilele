@@ -18,10 +18,12 @@
 
         <div th:unless="${offers.size() > 0}"
              class="no-offers-wrapper">
-            <h3 class="no-offers-heading">
+            <h3 class="no-offers-heading"
+                th:text="#{offers.none.heading}">
                 Currently there are no offers available
             </h3>
-            <p class="no-offers-subtext">
+            <p class="no-offers-subtext"
+               th:text="#{offers.none.subtext}">
                 Try adjusting your filters or check back later.
             </p>
         </div>
