@@ -4,12 +4,13 @@
 
 <header th:replace="fragments/navbar"></header>
 
-<body  data-logged-in-username="${loggedInUsername}">
+<body data-logged-in-username="${loggedInUsername}">
 
 <div class="auth-layout">
     <main class="main-content">
         <section class="first-section">
-            <h1 class="admin-header">Admin Notifications</h1>
+            <h1 class="admin-header"
+                th:text="#{admin.notifications.title}">Admin Notifications</h1>
         </section>
 
         <section class="second-section">
@@ -19,25 +20,27 @@
                     action="/admin/notifications">
                 <input type="text" id="searchInput"
                        name="query"
-                       placeholder="Search user by email"
+                       th:placeholder="#{admin.notifications.search.placeholder}"
                        th:value="${query}">
                 <input type="hidden"
                        name="size"
                        th:value="${usersPage.size}">
-                <button class="btn-submit" type="submit">Search</button>
+                <button class="btn-submit" type="submit"
+                        th:text="#{admin.notifications.search}">Search
+                </button>
             </form>
             <div class="table-wrapper">
                 <table class="notifications-table">
                     <thead>
                     <tr>
-                        <th>Status</th>
-                        <th>Locked status</th>
-                        <th>Times Locked</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Created</th>
-                        <th>Roles</th>
-                        <th>Actions</th>
+                        <th th:text="#{admin.notifications.status}">Status</th>
+                        <th th:text="#{admin.notifications.lockedStatus}">Locked status</th>
+                        <th th:text="#{admin.notifications.timesLocked}">Times Locked</th>
+                        <th th:text="#{admin.notifications.username}">Username</th>
+                        <th th:text="#{admin.notifications.email}">Email</th>
+                        <th th:text="#{admin.notifications.created}">Created</th>
+                        <th th:text="#{admin.notifications.roles}">Roles</th>
+                        <th th:text="#{admin.notifications.actions}">Actions</th>
                     </tr>
                     </thead>
                     <tbody id="users-tbody">
@@ -45,10 +48,11 @@
                         <input type="hidden" name="user-id" class="user-id" th:value="*{id}">
                         <td class="status"
                             th:classappend="${u.isEnabled} ? 'active' : 'inactive'"
-                            th:text="${u.isEnabled} ?'Active' : 'Inactive'"></td>
+                            th:text="${u.isEnabled} ? #{admin.notifications.active} : #{admin.notifications.inactive}">
+                        </td>
                         <td class="locked-status"
                             th:classappend="${u.accountLocked} ? 'inactive' : 'active'"
-                            th:text="${u.accountLocked} ?'Locked' : 'Not locked'"></td>
+                            th:text="${u.accountLocked} ? #{admin.notifications.locked} : #{admin.notifications.notLocked}">
                         <td th:text="*{timesLocked}"></td>
                         <td class="username" th:text="*{username}">test2</td>
                         <td class="email" th:text="*{email}">test@abv.bg</td>
@@ -68,25 +72,30 @@
                                         </div>
                                     </th:block>
                                 </div>
-                                <button class="change-role-btn btn btn-disabled">Update Roles</button>
+                                <button class="change-role-btn btn btn-disabled"
+                                        th:text="#{admin.notifications.updateRoles}">Update Roles
+                                </button>
                             </div>
                         </td>
                         <td>
                             <div class="actions-container">
                                 <button
-                                        class="delete-btn btn">Delete User
+                                        class="delete-btn btn"
+                                        th:text="#{admin.notifications.deleteUser}">Delete User
                                 </button>
                                 <button
                                         class="enable-btn btn"
-                                        th:text="${u.isEnabled} ? 'Disable user' : 'Enable user'"
+                                        th:text="${u.isEnabled} ? #{admin.notifications.disableUser} : #{admin.notifications.enableUser}"
                                         th:classappend="${u.isEnabled} ? 'inactive' : 'active'"> Enable/Disable User
                                 </button>
                                 <button
                                         class="lock-btn btn"
-                                        th:text="${u.isAccountLocked} ? 'Unlock user' : 'Lock user'"
+                                        th:text="${u.isAccountLocked} ? #{admin.notifications.unlockUser} : #{admin.notifications.lockUser}"
                                         th:classappend="${u.isAccountLocked} ? 'active' : 'inactive'"> Lock/Unlock User
                                 </button>
-                                <button class="send-email-btn btn">Send Email</button>
+                                <button class="send-email-btn btn"
+                                        th:text="#{admin.notifications.sendEmail}">Send Email
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -104,7 +113,8 @@
            page=${currentPage - 1},
            query=${query},
            size=${usersPage.size})}"
-                   class="pagination-btn">
+                   class="pagination-btn"
+                   th:text="#{pagination.prev}">
                     &laquo; Prev
                 </a>
 
@@ -127,7 +137,8 @@
            page=${currentPage + 1},
            query=${query},
            size=${usersPage.size})}"
-                   class="pagination-btn">
+                   class="pagination-btn"
+                   th:text="#{pagination.next}">
                     Next &raquo;
                 </a>
             </div>
@@ -135,7 +146,7 @@
             <!-- Page indicator -->
             <p class="text-white text-center mt-2"
                th:if="${totalPages > 1}"
-               th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}">
+               th:text="#{pagination.pageInfo(${currentPage + 1}, ${totalPages})}">
             </p>
 
         </section>
