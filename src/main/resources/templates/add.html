@@ -26,7 +26,7 @@
                             th:field="*{vehicleType}">
                         <option value="" th:text="#{offer.selectCategory}">- Select vehicle category -</option>
                         <option th:each="c : ${categories}"
-                                th:value="${c.name().toLowerCase()}"
+                                th:value="${c.name()}"
                                 th:text="#{${'category.' + c.name()}}">
                     </select>
                     <div th:if="${#fields.hasErrors('vehicleType')}"
@@ -188,10 +188,13 @@
                     <label for="city">City</label>
                     <select id="city" th:field="*{city}"
                             th:attr="data-selected-city=*{city}">
-                        <option value=""
-                                th:text="#{offer.selectCity}">- Select city -
+                        <option value="" th:text="#{offer.selectCity}">- Select city -
                         </option>
-                        <option value="" th:text="#{${'city.' + c.name()}}">- Select a city -</option>
+                        <option th:each="c : ${cities}"
+                                th:value="${c}"
+                                th:text="#{${'city.' + c.name()}}">
+                        </option>
+
                     </select>
                     <div th:if="${#fields.hasErrors('city')}"
                          th:errors="*{city}"
