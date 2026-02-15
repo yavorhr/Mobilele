@@ -27,75 +27,75 @@ public class OfferAddBindingModel {
   public OfferAddBindingModel() {
   }
 
-  @NotNull(message = "Please select vehicle category")
+  @NotNull(message = "{validation.vehicleType.required}")
   public VehicleCategoryEnum getVehicleType() {
     return vehicleType;
   }
 
-  @NotBlank(message = "Please select model")
+  @NotBlank(message = "{validation.model.required}")
   public String getModel() {
     return model;
   }
 
-  @NotBlank(message = "Please select brand")
+  @NotBlank(message = "{validation.brand.required}")
   public String getBrand() {
     return brand;
   }
 
-  @NotNull(message = "Please upload at least one picture")
+  @NotNull(message = "{validation.pictures.required}")
   public List<MultipartFile> getPictures() {
     return pictures;
   }
 
-  @NotNull(message = "Please select condition")
+  @NotNull(message = "{validation.condition.required}")
   public ConditionEnum getCondition() {
     return condition;
   }
 
-  @Size(min = 10, message = "Description must be at least 10 characters long")
+  @Size(min = 10, message = "{validation.description.size}")
   public String getDescription() {
     return description;
   }
 
-  @NotNull(message = "Please select engine type")
+  @NotNull(message = "{validation.engine.required}")
   public EngineEnum getEngine() {
     return engine;
   }
 
-  @PositiveOrZero(message = "Mileage must be zero or positive")
-  @NotNull(message = "Please enter mileage")
+  @PositiveOrZero(message = "{validation.mileage.positive}")
+  @NotNull(message = "{validation.mileage.required}")
   public Double getMileage() {
     return mileage;
   }
 
-  @NotNull(message = "Please insert price")
-  @DecimalMin(value = "100", message = "Price must be at least 100")
+  @NotNull(message = "{validation.price.required}")
+  @DecimalMin(value = "100", message = "{validation.price.min}")
   public BigDecimal getPrice() {
     return price;
   }
 
-  @NotNull(message = "Please select transmission type")
+  @NotNull(message = "{validation.transmission.required}")
   public TransmissionType getTransmission() {
     return transmission;
   }
 
   @ValidYear
-  @NotNull(message = "Please enter model year")
+  @NotNull(message = "{validation.year.required}")
   public Integer getYear() {
     return year;
   }
 
-  @NotNull(message = "Please select color")
+  @NotNull(message = "{validation.color.required}")
   public ColorEnum getColor() {
     return color;
   }
 
-  @NotNull(message = "Please choose country")
+  @NotNull(message = "{validation.country.required}")
   public CountryEnum getCountry() {
     return country;
   }
 
-  @NotNull(message = "Please choose city")
+  @NotNull(message = "{validation.city.required}")
   public CityEnum getCity() {
     return city;
   }
