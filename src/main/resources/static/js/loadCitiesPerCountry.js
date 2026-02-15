@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const populateCities = (country) => {
         citySelect.innerHTML = '';
         const defaultOption = document.createElement('option');
-        defaultOption.textContent = "-- Select city --";
+        defaultOption.textContent = "- Select city -";
         defaultOption.value = "";
         citySelect.appendChild(defaultOption);
 
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 data.forEach(city => {
                     const option = document.createElement('option');
-                    option.value = city;
-                    option.textContent = city;
+                    option.value = city.value;
+                    option.textContent = city.label;
 
                     if (previousCity && previousCity.trim().toLowerCase() === city.trim().toLowerCase()) {
                         option.selected = true;
