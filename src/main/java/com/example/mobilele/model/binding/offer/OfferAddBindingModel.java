@@ -1,6 +1,7 @@
 package com.example.mobilele.model.binding.offer;
 
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.validator.NotEmptyFiles;
 import com.example.mobilele.validator.ValidYear;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +43,7 @@ public class OfferAddBindingModel {
     return brand;
   }
 
-  @NotNull(message = "{validation.pictures.required}")
+  @NotEmptyFiles
   public List<MultipartFile> getPictures() {
     return pictures;
   }
