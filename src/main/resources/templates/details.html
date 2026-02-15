@@ -16,7 +16,7 @@
             <section class="gallery-section section">
                 <div class="main-image-container">
                     <div class="reserved-banner" th:if="*{isReserved}">
-                        <span>Reserved</span>
+                        <span th:text="#{offer.reserved}">Reserved</span>
                     </div>
                     <img id="modalImage"
                          th:src="*{pictures[0].pictureUrl}"
@@ -55,7 +55,7 @@
                 <div class="views-favorites-wrapper">
                     <div class="views-counter">
                         <span class="eye-icon">👁️</span>
-                        <span th:text="'Views: ' + *{views}"></span>
+                        <span th:text="#{offer.views} + ': ' + *{views}"></span>
                     </div>
                     <div class="favorite-container">
                         <div id="favorite-message" class="favorite-message"></div>
@@ -67,21 +67,19 @@
                                     th:classappend="${isFavorite} ? 'added' : ''">
                                 <span class="heart-icon">💖</span>
                                 <span class="btn-text"
-                                      th:text="${isFavorite} ? 'Remove from Favorites' : 'Add to Favorites'"></span>
+                                      th:text="${isFavorite} ? #{offer.removeFavorite} : #{offer.addFavorite}"></span>
                             </button>
                         </th:block>
                     </div>
                 </div>
 
-
                 <h2 class="offer-title" th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
-                <h4 th:text="'Year: ' + *{modelYear}"></h4>
+                <h4 th:text="#{offer.year} + ': ' + *{modelYear}"></h4>
                 <p class="price" th:text="*{price} + ' BGN'"></p>
-
                 <p class="location" th:text="*{country} + ', ' + *{city}"></p>
 
                 <div class="seller-info">
-                    <h4 class="section-heading">Seller Information</h4>
+                    <h4 class="section-heading" th:text="#{offer.sellerInfo}">Seller Information</h4>
                     <p><i class="fa fa-user"></i> <span th:text="*{seller.getFullName()}"></span></p>
                     <p><i class="fa fa-envelope"></i> <span th:text="*{seller.getEmail()}"></span></p>
                     <p><i class="fa fa-phone"></i> <span th:text="*{seller.getPhoneNumber()}"></span></p>
@@ -98,10 +96,14 @@
                                 th:classappend="${isReserved} ? 'reserved' : ''">
                             <span class="icon" th:text="${isReserved} ? '🔒' : '🟢'"></span>
                             <span class="text"
-                                  th:text="${isReserved} ? 'Cancel reservation' : 'Mark as reserved'"></span>
+                                  th:text="${isReserved} ? #{offer.cancelReservation} : #{offer.markReserved}">
+                            Mark as reserved
+                        </span>
                         </button>
 
-                        <a class="btn update-btn" th:href="@{/offers/update/{id}(id=${offer.id})}">Update</a>
+                        <a class="btn update-btn"
+                           th:text="#{offer.update}"
+                           th:href="@{/offers/update/{id}(id=${offer.id})} ">Update</a>
 
                         <form
                                 th:action="@{/offers/{id}(id=${offer.id})}"
@@ -109,7 +111,11 @@
                                 id="delete-offer-form"
                                 class="d-inline">
                             <input type="hidden" name="soldOffer" id="soldOffer" value="false"/>
-                            <button type="button" id="delete-offer-btn" class="btn delete-btn">Delete</button>
+                            <button th:text="#{offer.delete}"
+                                    type="button"
+                                    id="delete-offer-btn"
+                                    class="btn delete-btn">Delete
+                            </button>
                         </form>
                     </div>
                     <form id="picture-upload-form"
@@ -131,14 +137,18 @@
                                    class="add-picture-btn"
                                    title="Add picture">
                                 <i class="fa fa-plus"></i>
-                                <span>Add pictures</span>
+                                <span th:text="#{offer.addPictures}">Add pictures</span>
                             </label>
 
-                            <div id="uploadSuccess" class="upload-message success">
+                            <div th:text="#{offer.upload.success}"
+                                 id="uploadSuccess"
+                                 class="upload-message success">
                                 Successfully added
                             </div>
 
-                            <div id="uploadFail" class="upload-message fail">
+                            <div id="uploadFail"
+                                 class="upload-message fail"
+                                 th:text="#{offer.upload.fail}">
                                 Picture can't be added
                             </div>
                         </div>
@@ -149,36 +159,56 @@
 
         <!-- === CAR DETAILS === -->
         <section class="car-details section">
-            <h4 class="section-heading">Car Details</h4>
+            <h4 class="section-heading" th:text="#{offer.carDetails}">Car Details</h4>
             <div class="details-grid">
-                <div class="detail-item"></i><i class="fa-solid fa-gears"></i><span th:text="*{engine}"></span></div>
+                <div class="detail-item"></i><i class="fa-solid fa-gears"></i><span
+                        th:text="#{*{'engine.' + engine}}"></span>
+                </div>
                 <div class="detail-item"><i class="fa-solid fa-gas-pump"></i> <span th:text="*{mileage} + ' km'"></span>
                 </div>
-                <div class="detail-item"><i class="fa fa-car"></i> <span th:text="*{transmission}"></span></div>
-                <div class="detail-item"><i class="fa fa-paint-brush"></i> <span th:text="*{color}"></span></div>
-                <div class="detail-item"><i class="fa-solid fa-wrench"></i> <span th:text="*{condition}"></span></div>
-                <div class="detail-item"><i class="fa-regular fa-calendar-days"></i> <span
-                        th:text="*{modelYear}"></span></div>
+                <div class="detail-item">
+                    <i class="fa fa-car"></i>
+                    <span th:text="#{*{'transmission.' + transmission}}"></span>
+                </div>
+
+                <div class="detail-item">
+                    <i class="fa fa-paint-brush"></i>
+                    <span th:text="#{*{'color.' + color}}"></span>
+                </div>
+
+                <div class="detail-item">
+                    <i class="fa-solid fa-wrench"></i>
+                    <span th:text="#{*{'condition.' + condition}}"></span>
+                </div>
+                <div class="detail-item"><i class="fa-regular fa-calendar-days"></i>
+                    <span th:text="*{modelYear}"></span>
+                </div>
             </div>
         </section>
 
-
         <!-- === DESCRIPTION === -->
         <section class="description-section section">
-            <h4 class="section-heading">Description</h4>
+            <h4 th:text="#{offer.description}" class="section-heading">Description</h4>
             <p th:text="*{description}"></p>
         </section>
     </div>
 
     <div id="delete-confirm-box" class="delete-confirm-overlay hidden">
         <div class="delete-confirm-window">
-            <h4>Delete Offer</h4>
-            <p>Did you manage to sell your car in Mobilele?</p>
+            <h4 th:text="#{offer.delete.title}">Delete Offer</h4>
+            <p th:text="#{offer.delete.question}">Did you manage to sell your car in Mobilele?</p>
 
             <div class="confirm-buttons">
-                <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
-                <button id="confirm-no" class="btn btn-warning">No, just delete</button>
-                <button id="confirm-yes" class="btn btn-success">Yes, I sold it</button>
+                <button th:text="#{offer.delete.cancel}"
+                        id="confirm-cancel"
+                        class="btn btn-secondary">Cancel
+                </button>
+                <button th:text="#{offer.delete.no}"
+                        id="confirm-no"
+                        class="btn btn-warning">No, just delete</button>
+                <button th:text="#{offer.delete.yes}"
+                        id="confirm-yes"
+                        class="btn btn-success">Yes, I sold it</button>
             </div>
         </div>
     </div>
