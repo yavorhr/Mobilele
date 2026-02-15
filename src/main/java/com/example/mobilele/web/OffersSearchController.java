@@ -4,7 +4,6 @@ import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
-import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.util.Constants;
@@ -12,31 +11,29 @@ import com.example.mobilele.util.ProjectHelpers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Locale;
 
 @Slf4j
 @Controller
 public class OffersSearchController {
   private final OfferService offerService;
-  private final BrandService brandService;
   private final ModelMapper modelMapper;
   private final ModelService modelService;
+  private final MessageSource messageSource;
 
-  public OffersSearchController(OfferService offerService, BrandService brandService, ModelMapper modelMapper, ModelService modelService) {
+  public OffersSearchController(OfferService offerService, ModelMapper modelMapper, ModelService modelService, MessageSource messageSource) {
     this.offerService = offerService;
-    this.brandService = brandService;
     this.modelMapper = modelMapper;
     this.modelService = modelService;
+    this.messageSource = messageSource;
   }
 
   // I. Offers find - by Vehicle Type
@@ -96,7 +93,8 @@ public class OffersSearchController {
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "1") int size,
-          Model model) {
+          Model model,
+          Locale locale) {
 
     VehicleCategoryEnum categoryEnum = null;
 
@@ -120,6 +118,15 @@ public class OffersSearchController {
       offersPage = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName, pageable);
     }
 
+    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
+            Constants.CONTEXT_MODEL, brand, modelName);
+
+    String title = messageSource.getMessage(
+            ctx.key(),
+            ctx.args(),
+            locale
+    );
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("brand", brand);
@@ -128,8 +135,7 @@ public class OffersSearchController {
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_MODEL,
-                    ProjectHelpers.capitalizeString(brand), ProjectHelpers.capitalizeString(modelName)));
+    model.addAttribute("title", title);
 
     return "offers";
   }
@@ -165,7 +171,8 @@ public class OffersSearchController {
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "3") int size,
-          Model model) {
+          Model model,
+          Locale locale) {
 
     Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
@@ -174,14 +181,22 @@ public class OffersSearchController {
                     brand.toUpperCase(Locale.ROOT),
                     pageable);
 
+    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
+            Constants.CONTEXT_BRAND, brand, null);
+
+    String title = messageSource.getMessage(
+            ctx.key(),
+            ctx.args(),
+            locale
+    );
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("brand", ProjectHelpers.capitalizeString(brand));
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_BRAND, ProjectHelpers.capitalizeString(brand), null));
-
+    model.addAttribute("title", title);
     return "offers";
   }
 }

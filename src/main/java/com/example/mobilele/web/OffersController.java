@@ -34,13 +34,11 @@ import java.util.*;
 @Controller
 public class OffersController {
   private final OfferService offerService;
-  private final BrandService brandService;
   private final ModelMapper modelMapper;
   private final ModelService modelService;
 
-  public OffersController(OfferService offerService, BrandService brandService, ModelMapper modelMapper, ModelService modelService) {
+  public OffersController(OfferService offerService, ModelMapper modelMapper, ModelService modelService) {
     this.offerService = offerService;
-    this.brandService = brandService;
     this.modelMapper = modelMapper;
     this.modelService = modelService;
   }

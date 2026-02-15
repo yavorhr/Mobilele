@@ -5,22 +5,26 @@ import com.example.mobilele.service.OfferService;
 import com.example.mobilele.util.Constants;
 import com.example.mobilele.util.ProjectHelpers;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.bcel.Const;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.security.Principal;
+import java.util.Locale;
 
 @Slf4j
 @Controller
 public class OffersUserController {
   private final OfferService offerService;
+  private final MessageSource messageSource;
 
-  public OffersUserController(OfferService offerService) {
+  public OffersUserController(OfferService offerService, MessageSource messageSource) {
     this.offerService = offerService;
+    this.messageSource = messageSource;
   }
 
   @GetMapping("/offers/my-offers")
@@ -30,7 +34,8 @@ public class OffersUserController {
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "8") int size,
-          Model model) {
+          Model model,
+          Locale locale) {
 
     String username = principal.getName();
 
@@ -38,12 +43,21 @@ public class OffersUserController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
 
+    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
+            Constants.CONTEXT_MY, null, null);
+
+    String title = messageSource.getMessage(
+            ctx.key(),
+            ctx.args(),
+            locale
+    );
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_MY, null, null));
+    model.addAttribute("title", title);
 
     return "offers";
   }
@@ -55,7 +69,7 @@ public class OffersUserController {
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "1") int size,
-          Model model) {
+          Model model, Locale locale) {
 
     String username = principal.getName();
 
@@ -63,13 +77,22 @@ public class OffersUserController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
 
+    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
+            Constants.CONTEXT_FAVORITES,
+            null, null);
+
+    String title = messageSource.getMessage(
+            ctx.key(),
+            ctx.args(),
+            locale
+    );
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("title", ProjectHelpers.resolveTitle(Constants.CONTEXT_FAVORITES, null, null));
-
+    model.addAttribute("title", title);
 
     return "offers";
   }
