@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidYear {
-  String message() default "Year must be between 1900 and the current year";
+  String message() default "{validation.year.period}";
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default {};
 }
