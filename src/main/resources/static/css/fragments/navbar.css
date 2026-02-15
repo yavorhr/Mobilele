@@ -296,6 +296,10 @@
     "RATE US"
 ================= */
 
+#feedbackBtn{
+    cursor: pointer;
+}
+
 .feedback-modal {
     position: fixed;
     top: 0;
