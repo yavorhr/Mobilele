@@ -118,12 +118,11 @@ public class OffersSearchController {
       offersPage = this.offerService.findByTypeBrandAndModel(categoryEnum, brand, modelName, pageable);
     }
 
-    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
-            Constants.CONTEXT_MODEL, brand, modelName);
-
-    String title = messageSource.getMessage(
-            ctx.key(),
-            ctx.args(),
+    String title = ProjectHelpers.resolveLocalizedTitle(
+            Constants.CONTEXT_MODEL,
+            brand,
+            modelName,
+            messageSource,
             locale
     );
 
@@ -181,12 +180,11 @@ public class OffersSearchController {
                     brand.toUpperCase(Locale.ROOT),
                     pageable);
 
-    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
-            Constants.CONTEXT_BRAND, brand, null);
-
-    String title = messageSource.getMessage(
-            ctx.key(),
-            ctx.args(),
+    String title = ProjectHelpers.resolveLocalizedTitle(
+            Constants.CONTEXT_BRAND,
+            brand,
+            null,
+            messageSource,
             locale
     );
 

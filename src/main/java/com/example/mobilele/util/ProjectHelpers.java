@@ -1,9 +1,12 @@
 package com.example.mobilele.util;
 
 
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.Locale;
 
 public final class ProjectHelpers {
 
@@ -50,5 +53,21 @@ public final class ProjectHelpers {
       case "my" -> new TitleContext("offers.title.my", new Object[]{});
       default -> new TitleContext("offers.title.all", new Object[]{});
     };
+  }
+
+  public static String resolveLocalizedTitle(
+          String context,
+          String brand,
+          String model,
+          MessageSource messageSource,
+          Locale locale) {
+
+    TitleContext ctx = resolveTitle(context, brand, model);
+
+    return messageSource.getMessage(
+            ctx.key(),
+            ctx.args(),
+            locale
+    );
   }
 }

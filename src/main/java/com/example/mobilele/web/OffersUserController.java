@@ -43,12 +43,11 @@ public class OffersUserController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
 
-    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
-            Constants.CONTEXT_MY, null, null);
-
-    String title = messageSource.getMessage(
-            ctx.key(),
-            ctx.args(),
+    String title = ProjectHelpers.resolveLocalizedTitle(
+            Constants.CONTEXT_MY,
+            null,
+            null,
+            messageSource,
             locale
     );
 
@@ -77,13 +76,11 @@ public class OffersUserController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
 
-    ProjectHelpers.TitleContext ctx = ProjectHelpers.resolveTitle(
+    String title = ProjectHelpers.resolveLocalizedTitle(
             Constants.CONTEXT_FAVORITES,
-            null, null);
-
-    String title = messageSource.getMessage(
-            ctx.key(),
-            ctx.args(),
+            null,
+            null,
+            messageSource,
             locale
     );
 
