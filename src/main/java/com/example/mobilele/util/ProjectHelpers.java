@@ -10,6 +10,7 @@ public final class ProjectHelpers {
   private ProjectHelpers() {
   }
 
+
   public static String convertPictureTitle(String originalName) {
     if (originalName != null) {
       int dotIndex = originalName.lastIndexOf('.');
@@ -21,7 +22,7 @@ public final class ProjectHelpers {
     return originalName;
   }
 
-  public static String capitalizeString(String initStr){
+  public static String capitalizeString(String initStr) {
     return initStr.substring(0, 1).toUpperCase() + initStr.substring(1);
   }
 
@@ -38,13 +39,16 @@ public final class ProjectHelpers {
   }
 
   // Context for dynamic header
-  public static String resolveTitle(String context, String brand, String model) {
+  public record TitleContext(String key, Object[] args) {
+  }
+
+  public static TitleContext resolveTitle(String context, String brand, String model) {
     return switch (context) {
-      case "model" -> "All offers for " + brand + " " + model;
-      case "brand" -> "All offers for " + brand;
-      case "favorites" -> "Favorites";
-      case "my" -> "My offers";
-      default -> "All offers";
+      case "model" -> new TitleContext("offers.title.model", new Object[]{ProjectHelpers.capitalizeString(brand) , ProjectHelpers.capitalizeString(model)});
+      case "brand" -> new TitleContext("offers.title.brand", new Object[]{ProjectHelpers.capitalizeString(brand)});
+      case "favorites" -> new TitleContext("offers.title.favorites", new Object[]{});
+      case "my" -> new TitleContext("offers.title.my", new Object[]{});
+      default -> new TitleContext("offers.title.all", new Object[]{});
     };
   }
 }
