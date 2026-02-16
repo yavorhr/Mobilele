@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchBtn = document.getElementById("searchBtn");
 
     if (!brand || !vehicleType || !model || !searchBtn) return;
-    
+
     const validationMsg = searchBtn.dataset.validationMsg || "";
 
     function isFormValid() {
