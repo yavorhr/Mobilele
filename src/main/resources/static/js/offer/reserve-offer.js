@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const csrfHeaderName = document.head.querySelector('[name="_csrf_header"]').content;
     const csrfHeaderValue = document.head.querySelector('[name="_csrf"]').content;
 
+    const textReserve = reserveBtn.dataset.textReserve;
+    const textCancel = reserveBtn.dataset.textCancel;
+    const textBanner = reserveBtn.dataset.textBanner;
+    const textError = reserveBtn.dataset.textError;
+
     reserveBtn.addEventListener('click', async () => {
         const offerId = reserveBtn.dataset.offerId;
         const currentState = reserveBtn.dataset.reserved === 'true';
@@ -22,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) throw new Error('Request failed');
-            const data = await response.json(); // expects { reserved: true/false }
+            const data = await response.json();
 
             reserveBtn.dataset.reserved = data.reserved;
             reserveBtn.classList.toggle('reserved', data.reserved);
@@ -32,18 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.reserved) {
                 icon.textContent = '🔒';
-                text.textContent = 'Cancel reservation';
+                text.textContent = textCancel;
                 mainContainer.classList.add('reserved');
 
                 if (!mainContainer.querySelector('.reserved-banner')) {
                     const banner = document.createElement('div');
                     banner.className = 'reserved-banner';
-                    banner.innerHTML = '<span>Reserved</span>';
+                    banner.innerHTML = `<span>${textBanner}</span>`;
                     mainContainer.appendChild(banner);
                 }
             } else {
                 icon.textContent = '🟢';
-                text.textContent = 'Mark as reserved';
+                text.textContent = textReserve;
                 mainContainer.classList.remove('reserved');
 
                 const banner = mainContainer.querySelector('.reserved-banner');
@@ -51,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error('Error toggling reservation:', err);
-            alert('Could not update reservation status. Try again.');
+            alert(textError);
         }
     });
 });

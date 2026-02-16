@@ -93,12 +93,17 @@
                                 class="btn reserve-btn"
                                 th:data-offer-id="*{id}"
                                 th:data-reserved="*{isReserved}"
+                                th:data-text-reserve="#{offer.markReserved}"
+                                th:data-text-cancel="#{offer.cancelReservation}"
+                                th:data-text-banner="#{offer.reserved}"
+                                th:data-text-error="#{offer.reservationError}"
                                 th:classappend="${isReserved} ? 'reserved' : ''">
+
                             <span class="icon" th:text="${isReserved} ? '🔒' : '🟢'"></span>
                             <span class="text"
-                                  th:text="${isReserved} ? #{offer.cancelReservation} : #{offer.markReserved}">
-                            Mark as reserved
-                        </span>
+                                  th:text="${isReserved}
+                                  ? #{offer.cancelReservation}
+                                  : #{offer.markReserved}"></span>
                         </button>
 
                         <a class="btn update-btn"
@@ -205,10 +210,12 @@
                 </button>
                 <button th:text="#{offer.delete.no}"
                         id="confirm-no"
-                        class="btn btn-warning">No, just delete</button>
+                        class="btn btn-warning">No, just delete
+                </button>
                 <button th:text="#{offer.delete.yes}"
                         id="confirm-yes"
-                        class="btn btn-success">Yes, I sold it</button>
+                        class="btn btn-success">Yes, I sold it
+                </button>
             </div>
         </div>
     </div>
