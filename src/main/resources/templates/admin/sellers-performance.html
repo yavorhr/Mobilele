@@ -9,15 +9,13 @@
 
 <body class="auth-layout">
 <main class="main-content container-fluid">
-
     <div class="heading-wrapper mb-4">
-        <h1 class="section-title">📊 Sellers Performances</h1>
+        <h1 class="section-title" th:text="#{stats.sellers.title}">📊 Sellers Performances</h1>
     </div>
-
     <form
             method="get" class="filters mb-5">
         <label>
-            Year:
+            <span th:text="#{stats.sellers.year}"></span>:
             <select name="year" onchange=" this.form.submit()">
                 <option th:each="y : ${years}"
                         th:value="${y}"
@@ -26,30 +24,26 @@
                 </option>
             </select>
         </label>
-
         <label>
-            Top:
+            <span th:text="#{stats.sellers.top}"></span>:
             <select name="top" onchange="this.form.submit()">
-                <option value="">All</option>
-                <option value="10" th:selected="${top == 10}">Top 10</option>
-                <option value="20" th:selected="${top == 20}">Top 20</option>
+                <option value="" th:text="#{stats.sellers.all}">All</option>
+                <option value="10" th:text="#{stats.sellers.top10}" th:selected="${top == 10}">Top 10</option>
+                <option value="20" th:text="#{stats.sellers.top20}" th:selected="${top == 20}">Top 20</option>
             </select>
         </label>
     </form>
-
-    <!-- Table -->
     <div class="table-wrapper">
         <table class="stats-table">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Seller</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Sold Cars</th>
+                <th th:text="#{stats.sellers.seller}"></th>
+                <th th:text="#{stats.sellers.email}"></th>
+                <th th:text="#{stats.sellers.phone}"></th>
+                <th th:text="#{stats.sellers.soldCars}"></th>
             </tr>
             </thead>
-
             <tbody>
             <tr th:each="row, stat : ${sellers}">
                 <td th:text="${stat.index + 1}"></td>
@@ -58,14 +52,14 @@
                 <td th:text="${row.phoneNumber}"></td>
                 <td class="sold-count" th:text="${row.soldCount}"></td>
             </tr>
-
             <tr th:if="${#lists.isEmpty(sellers)}">
-                <td colspan="5">No data for this year.</td>
+                <td colspan="5"
+                    th:text="#{stats.sellers.noData}">No data for this year.
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
-
 </main>
 <footer th:replace="fragments/minimal-footer"></footer>
 </body>
