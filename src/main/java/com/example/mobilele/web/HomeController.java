@@ -14,22 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class HomeController {
   private final OfferService offerService;
   private final FeedbackService feedbackService;
-  private final BrandService brandService;
 
-  public HomeController(OfferService offerService, FeedbackService feedbackService, BrandService brandService) {
+  public HomeController(OfferService offerService, FeedbackService feedbackService) {
     this.offerService = offerService;
     this.feedbackService = feedbackService;
-    this.brandService = brandService;
   }
 
   @ModelAttribute("offersFindBindingModel")
   public OffersFindBindingModel offersFindBindingModel() {
     return new OffersFindBindingModel();
-  }
-
-  @ModelAttribute("categories")
-  public VehicleCategoryEnum[] getVehicleCategories() {
-    return VehicleCategoryEnum.values();
   }
 
   @GetMapping("/")
