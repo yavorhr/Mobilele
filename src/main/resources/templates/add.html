@@ -39,7 +39,7 @@
                            th:text="#{offer.brand}">Brand</label>
                     <select id="brand"
                             th:field="*{brand}">
-                        <option value=""    th:text="#{offer.selectBrand}">- Select brand -</option>
+                        <option value="" th:text="#{offer.selectBrand}">- Select brand -</option>
                         <option th:each="b : ${brands}"
                                 th:value="${b.name}"
                                 th:text="${b.name}">
@@ -223,9 +223,9 @@
                      th:text="${#fields.errors('pictures')[0]}"
                      class="error-msg">
                 </div>
-            <div class="button-holder">
-                <button class="btn btn-submit" th:text="#{offer.submit}">Add offer</button>
-            </div>
+                <div class="button-holder">
+                    <button class="btn btn-submit" th:text="#{offer.submit}">Add offer</button>
+                </div>
         </form>
     </section>
 </main>
