@@ -10,7 +10,7 @@
     <div class="container-fluid">
 
         <div class="heading-wrapper">
-            <h1 class="section-title">Stats History</h1>
+            <h1 class="section-title" th:text="#{stats.history.title}">Stats History</h1>
         </div>
 
         <section class="stats-history-card">
@@ -18,12 +18,12 @@
             <table class="table stats-history-table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Timestamp</th>
-                    <th>Total</th>
-                    <th>Auth</th>
-                    <th>Anon</th>
-                    <th>View</th>
+                    <th th:text="#{stats.history.id}"></th>
+                    <th th:text="#{stats.history.timestamp}"></th>
+                    <th th:text="#{stats.history.total}"></th>
+                    <th th:text="#{stats.history.auth}"></th>
+                    <th th:text="#{stats.history.anon}"></th>
+                    <th th:text="#{stats.history.view}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,8 @@
                     <td th:text="${s.anonRequests}"></td>
                     <td>
                         <a th:href="@{'/admin/history/' + ${s.id}}"
-                           class="btn btn-submit">
+                           class="btn btn-submit"
+                           th:text="#{stats.history.open}">
                             Open
                         </a>
                     </td>
@@ -46,7 +47,9 @@
         </section>
 
         <div class="stats-history-back">
-            <a th:href="@{/admin/statistics}" class="btn btn-secondary">Back to live stats</a>
+            <a th:href="@{/admin/statistics}"
+               class="btn btn-secondary"
+               th:text="#{stats.history.back}">Back to live stats</a>
         </div>
     </div>
 </main>
