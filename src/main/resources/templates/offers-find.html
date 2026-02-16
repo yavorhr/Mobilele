@@ -21,14 +21,19 @@
                 class="main-form mx-auto col-lg-8 p-4 p-md-5 rounded-4 shadow-lg bg-dark bg-opacity-75">
             <input type="hidden" id="vehicleType" th:value="${vehicleType}">
             <div class="row g-4">
+
+                <!-- Brand -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="brand" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Brand</label>
+                    <label for="brand" class="form-label fw-bold fs-6 text-uppercase text-light mb-2"
+                           th:text="#{form.brand}">Brand</label>
                     <select
                             id="brand"
                             class="form-control"
                             th:name="brand"
                             th:errorclass="is-invalid">
-                        <option value="" selected disabled>- Select brand -</option>
+                        <option value="" selected disabled
+                                th:text="#{offer.selectBrand}">>- Select brand -
+                        </option>
                         <optgroup label="Brand name">
                             <option
                                     th:each="brand : ${brands}"
@@ -43,14 +48,16 @@
                     </p>
                 </div>
 
+                <!-- Model -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="model" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Model</label>
+                    <label th:text="#{offer.model}" for="model"
+                           class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Model</label>
                     <select id="model"
                             class="form-control"
                             th:name="model"
                             th:errorclass="is-invalid"
                             th:selected="${model} == *{model}">
-                        <option value="" selected disabled>- Select model -</option>
+                        <option th:text="#{offer.selectModel}" value="" selected disabled>- Select model -</option>
                         <optgroup label="Model name">
                             <option
                                     th:each="model : ${models}"
@@ -65,15 +72,23 @@
                     </p>
                 </div>
 
+                <!-- Price -->
                 <div class="form-group col-md-6 mb-4">
                     <label for="price" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Price</label>
                     <select th:field="*{priceComparison}" id="priceComparison">
-                        <option value="under" th:selected="${offersFindBindingModel.priceComparison == 'under'}">Under
+                        <option value="under"
+                                th:selected="${offersFindBindingModel.priceComparison == 'under'}"
+                                th:text="#{form.price.under}">
+                            Under
                         </option>
-                        <option value="between" th:selected="${offersFindBindingModel.priceComparison == 'between'}">
+                        <option value="between"
+                                th:selected="${offersFindBindingModel.priceComparison == 'between'}"
+                                th:text="#{form.price.between}">
                             Between
                         </option>
-                        <option value="above" th:selected="${offersFindBindingModel.priceComparison == 'above'}">Above
+                        <option value="above"
+                                th:selected="${offersFindBindingModel.priceComparison == 'above'}"
+                                th:text="#{form.price.above}">Above
                         </option>
                     </select>
                     <input
@@ -94,16 +109,24 @@
                     </p>
                 </div>
 
+                <!-- Mileage -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="mileage" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Mileage</label>
+                    <label th:text="#{offer.mileage}" for="mileage" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Mileage</label>
                     <select th:field="*{mileageComparison}" id="mileageComparison">
-                        <option value="under" th:selected="${offersFindBindingModel.mileageComparison == 'under'}">
+                        <option
+                                value="under"
+                                th:selected="${offersFindBindingModel.mileageComparison == 'under'}"
+                                th:text="#{offer.mileage.under}">
                             Under
                         </option>
-                        <option value="between" th:selected="${offersFindBindingModel.mileageComparison == 'between'}">
+                        <option value="between"
+                                th:selected="${offersFindBindingModel.mileageComparison == 'between'}"
+                                th:text="#{offer.mileage.between}">
                             Between
                         </option>
-                        <option value="above" th:selected="${offersFindBindingModel.mileageComparison == 'above'}">
+                        <option value="above"
+                                th:selected="${offersFindBindingModel.mileageComparison == 'above'}"
+                                th:text="#{offer.mileage.above}">
                             Above
                         </option>
                     </select>
@@ -113,10 +136,9 @@
                             min="0"
                             max="900000"
                             class="form-control"
-                            placeholder="Mileage in km"
+                            th:placeholder="#{offer.mileage.placeholder}"
                             th:field="*{mileage}"
-                            th:errorclass="is-invalid"
-                    />
+                            th:errorclass="is-invalid"/>
                     <input
                             class="form-control mt-2"
                             type="number" th:field="*{mileageMax}" id="mileageMax" placeholder="Max mileage"
@@ -127,6 +149,7 @@
                     </p>
                 </div>
 
+                <!-- Engine -->
                 <div class="form-group col-md-6 mb-4">
                     <label for="engine" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Engine</label>
                     <select
