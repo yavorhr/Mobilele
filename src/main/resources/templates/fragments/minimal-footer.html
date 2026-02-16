@@ -16,42 +16,40 @@
                 </a>
             </div>
 
-            <a th:href="@{/offers/find}" class="footer-cta">
+            <a th:href="@{/offers/find}" class="footer-cta"
+               th:text="#{findOffers}">
                 🔍 Find Offers
             </a>
 
             <a sec:authorize="isAuthenticated()"
-               th:href="@{/users/profile}">
+               th:href="@{/users/profile}"
+               th:text="#{profile}">
                 My Profile
             </a>
-
             <a sec:authorize="!isAuthenticated()"
-               th:href="@{/users/login}">
+               th:href="@{/users/login}"
+               th:text="#{login}">
                 Login
             </a>
-
             <a sec:authorize="!isAuthenticated()"
-               th:href="@{/users/register}">
+               th:href="@{/users/register}"
+               th:text="#{register}">
                 Register
             </a>
         </div>
-
-        <!-- Legal / Support -->
         <div class="footer-links footer-links--legal">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="mailto:support@mobilele.com">Contact</a>
+            <a href="#" th:text="#{footer.privacy}">Privacy</a>
+            <a href="#" th:text="#{footer.terms}">Terms</a>
+            <a href="mailto:support@mobilele.com" th:text="#{footer.contact}">Contact</a>
         </div>
-
     </div>
-
     <div class="footer-bottom">
         <p>
-            © <span th:text="${#dates.year(#dates.createNow())}"></span> Mobilele. All rights reserved.
+            © <span th:text="${#dates.year(#dates.createNow())}"></span>
+            Mobilele.
+            <span th:text="#{footer.rights}">All rights reserved.</span>
         </p>
     </div>
 </footer>
-
-
 </body>
 </html>
