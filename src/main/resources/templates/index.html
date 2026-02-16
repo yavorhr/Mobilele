@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -84,7 +84,7 @@
                     <label for="model" th:text="#{form.model}">Model</label>
                     <select id="model"
                             class="form-control"
-                            th:name="model"
+                            th:field="*{model}"
                             th:errorclass="is-invalid"
                             th:selected="${model} == *{model}">
                         <option value="" selected th:text="#{form.selectModel}">- Select model -</option>
@@ -157,7 +157,7 @@
             </th:block>
 
             <div th:if="${#lists.isEmpty(latestOffers)}" class="no-offers">
-                <p>No offers available</p>
+                <p th:text="#{none.offers}">No offers available</p>
             </div>
         </div>
         <div class="show-all">
@@ -173,7 +173,7 @@
             </th:block>
 
             <div th:if="${#lists.isEmpty(mostViewedOffers)}" class="no-offers">
-                <p>No offers available</p>
+                <p th:text="#{none.offers}">No offers available</p>
             </div>
         </div>
         <div class="show-all">
