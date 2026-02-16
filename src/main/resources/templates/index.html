@@ -88,7 +88,7 @@
                             th:errorclass="is-invalid"
                             th:selected="${model} == *{model}">
                         <option value="" selected th:text="#{form.selectModel}">- Select model -</option>
-                        <optgroup label="Model name">
+                        <optgroup th:label="#{form.modelGroup}">
                             <option
                                     th:each="model : ${models}"
                                     th:text="${model}"
@@ -110,9 +110,12 @@
                         <option value="between" th:text="#{form.price.between}">Between</option>
                         <option value="above" th:text="#{form.price.above}">Above</option>
                     </select>
-                    <input id="price" type="number" min="0" th:field="*{price}"
-                           th:placeholder="#{form.price.placeholder}"
-                           class="form-control"/>
+                    <input id="price" type="number" min="0"
+                           th:field="*{price}"
+                           class="form-control"
+                           th:data-ph-default="#{form.price.placeholder}"
+                           th:data-ph-from="#{form.price.from}"
+                           th:data-ph-to="#{form.price.max}"/>
                     <input id="priceMax" type="number" th:field="*{priceMax}" th:placeholder="#{form.price.max}"
                            style="display:none;" class="form-control"/>
                 </div>
@@ -127,15 +130,22 @@
                         <option value="between" th:text="#{form.year.between}">Between</option>
                         <option value="above" th:text="#{form.year.after}">After</option>
                     </select>
-                    <input id="year" type="number" step="1" th:field="*{year}" th:placeholder="#{form.year.placeholder}"
-                           class="form-control"/>
+                    <input id="year" type="number" step="1"
+                           th:field="*{year}"
+                           class="form-control"
+                           th:data-ph-default="#{form.year.placeholder}"
+                           th:data-ph-from="#{form.year.from}"
+                           th:data-ph-to="#{form.year.max}"/>
                     <input id="yearMax" type="number" th:field="*{yearMax}" th:placeholder="#{form.year.max}"
                            style="display:none;"
                            class="form-control"/>
                 </div>
             </div>
 
-            <button th:text="#{button.search}" type="submit" id="searchBtn" class="cta-btn disabled-btn">Search</button>
+            <button th:text="#{button.search}"
+                    type="submit"
+                    id="searchBtn"
+                    class="cta-btn disabled-btn">Search</button>
         </form>
     </section>
 
