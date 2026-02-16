@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Find any <select> whose id ends with "Comparison"
+
     const comparisonSelects = document.querySelectorAll("select[id$='Comparison']");
 
     comparisonSelects.forEach(select => {
@@ -8,73 +8,63 @@ document.addEventListener("DOMContentLoaded", () => {
         const maxInput = document.getElementById(field + "Max");
         const mainInput = document.getElementById(field);
 
-        // If the matching elements don't exist → skip
-        if (!select || !maxInput || !mainInput) {
-            return;
-        }
+        if (!maxInput || !mainInput) return;
+
+        const phDefault = mainInput.dataset.phDefault || "";
+        const phFrom = mainInput.dataset.phFrom || "";
+        const phTo = mainInput.dataset.phTo || "";
 
         function toggle() {
             if (select.value === "between") {
                 maxInput.style.display = "inline-block";
-
-                if (field === "price") {
-                    mainInput.placeholder = "Start Price";
-                    maxInput.placeholder = "Max Price";
-                }
-                if (field === "year") {
-                    mainInput.placeholder = "From Year";
-                    maxInput.placeholder = "To Year";
-                }
+                mainInput.placeholder = phFrom;
+                maxInput.placeholder = phTo;
             } else {
                 maxInput.style.display = "none";
-
-                if (field === "price") {
-                    mainInput.placeholder = "Suggested Price";
-                }
-                if (field === "year") {
-                    mainInput.placeholder = "Manufacturing Year";
-                }
+                mainInput.placeholder = phDefault;
             }
         }
 
-        // Bind behavior + run once
         select.addEventListener("change", toggle);
         toggle();
     });
 
-    // Check if mandatory options are selected
-    const brand = document.getElementById('brand');
-    const vehicleType = document.getElementById('vehicleType');
-    const model = document.getElementById('model');
-    const searchBtn = document.getElementById('searchBtn');
+    const brand = document.getElementById("brand");
+    const vehicleType = document.getElementById("vehicleType");
+    const model = document.getElementById("model");
+    const searchBtn = document.getElementById("searchBtn");
+
+    if (!brand || !vehicleType || !model || !searchBtn) return;
+    
+    const validationMsg = searchBtn.dataset.validationMsg || "";
 
     function isFormValid() {
         return (
-            brand.value !== '' &&
-            vehicleType.value !== '' &&
-            model.value !== ''
+            brand.value !== "" &&
+            vehicleType.value !== "" &&
+            model.value !== ""
         );
     }
 
     function updateButtonState() {
         if (isFormValid()) {
-            searchBtn.classList.remove('disabled-btn');
+            searchBtn.classList.remove("disabled-btn");
         } else {
-            searchBtn.classList.add('disabled-btn');
+            searchBtn.classList.add("disabled-btn");
         }
     }
 
-    searchBtn.addEventListener('click', (e) => {
+    searchBtn.addEventListener("click", (e) => {
         if (!isFormValid()) {
             e.preventDefault();
-            alert("Please select at least Brand, Vehicle type and Model")
+            alert(validationMsg);
         }
     });
 
     [brand, vehicleType, model].forEach(select => {
-        select.addEventListener('change', updateButtonState);
+        select.addEventListener("change", updateButtonState);
     });
 
-// Initial state
+    // Initial state
     updateButtonState();
 });
