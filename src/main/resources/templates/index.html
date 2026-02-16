@@ -42,11 +42,11 @@
     </th:block>
 
     <th:block th:replace="fragments/offers-section :: offersSection(
-    #{recent},${latestOffers},'offers.none',@{/offers/all},'all.offers')">
+    #{recent},${latestOffers},'offers.none.heading',@{/offers/all},'all.offers')">
     </th:block>
 
     <th:block th:replace="fragments/offers-section :: offersSection(
-    #{offers.mostViewed},${mostViewedOffers},'offers.none',@{/offers/top-offers},'button.top20')">
+    #{offers.mostViewed},${mostViewedOffers},'offers.none.heading',@{/offers/top-offers},'button.top20')">
     </th:block>
 
     <section class="vehicle-grid section">
