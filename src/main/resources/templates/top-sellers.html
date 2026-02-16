@@ -5,58 +5,58 @@
 
 <header th:replace="fragments/navbar"></header>
 
-<body>
-<main>
-  <section class="first-section">
-    <h1 class="admin-header">🏆 Top 20 Sellers</h1>
-  </section>
+<body class="auth-layout">
+<main class="main">
+    <section class="first-section">
+        <h1 class="admin-header" th:text="#{top20.sellers}">🏆 Top 20 Sellers</h1>
+    </section>
+    <section class="second-section">
+        <div class="table-wrapper">
+            <table class="notifications-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th th:text="#{auth.firstName}">First Name</th>
+                    <th th:text="#{auth.lastName}">Last Name</th>
+                    <th th:text="#{auth.email}">Email</th>
+                    <th th:text="#{auth.phone}">Phone</th>
+                    <th th:text="#{stats.sellers.soldCars}">Sold Cars</th>
+                    <th th:text="#{top20.contact}">Contact</th>
+                </tr>
+                </thead>
 
-  <section class="second-section">
-    <div class="table-wrapper">
-      <table class="notifications-table">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Sold Cars</th>
-          <th>Contact</th>
-        </tr>
-        </thead>
+                <tbody>
+                <tr th:each="seller, stat : ${topSellers}">
+                    <td th:text="${stat.index + 1}"></td>
 
-        <tbody>
-        <tr th:each="seller, stat : ${topSellers}">
-          <td th:text="${stat.index + 1}"></td>
+                    <td th:text="${seller.firstName}">John</td>
+                    <td th:text="${seller.lastName}">Doe</td>
 
-          <td th:text="${seller.firstName}">John</td>
-          <td th:text="${seller.lastName}">Doe</td>
+                    <td th:text="${seller.email}">john@demo.com</td>
 
-          <td th:text="${seller.email}">john@demo.com</td>
+                    <td th:text="${seller.phoneNumber}">+359888123456</td>
 
-          <td th:text="${seller.phoneNumber}">+359888123456</td>
+                    <td>
+                        <strong th:text="${seller.soldCount}"></strong>
+                    </td>
 
-          <td>
-            <strong th:text="${seller.soldCount}"></strong>
-          </td>
+                    <td>
+                        <a th:href="'mailto:' + ${seller.email}"
+                           class="btn btn-primary"
+                           th:text="#{top20.contact.btn}">
+                            Contact Seller
+                        </a>
+                    </td>
+                </tr>
 
-          <td>
-            <a th:href="'mailto:' + ${seller.email}"
-               class="btn btn-primary">
-              Contact Seller
-            </a>
-          </td>
-        </tr>
-
-        <tr th:if="${#lists.isEmpty(topSellers)}">
-          <td colspan="7">No sellers found.</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
+                <tr th:if="${#lists.isEmpty(topSellers)}">
+                    <td colspan="7">No sellers found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
+<footer th:replace="fragments/minimal-footer"></footer>
 </body>
 </html>
