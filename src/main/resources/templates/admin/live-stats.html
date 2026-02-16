@@ -18,11 +18,14 @@
         </div>
 
         <div class="heading-wrapper">
-            <h1 class="section-title text-center text-white mt-5">Welcome to Stats!</h1>
+            <h1 class="section-title text-center text-white mt-5"
+                th:text="#{stats.title}">>Welcome to Stats!</h1>
             <form
                     th:action="@{/admin/statistics}"
                     th:method="POST">
-                <button type="submit" class="btn cta-btn">
+                <button type="submit"
+                        class="btn cta-btn"
+                        th:text="#{stats.saveReset}">
                     Save and reset stats
                 </button>
             </form>
@@ -33,8 +36,10 @@
                 <div class="col-md-4">
                     <div class="card bg-dark text-white shadow-sm">
                         <div class="card-body">
-                            <h6 class="text-uppercase text-muted">Total Requests</h6>
-                            <h2 class="fw-bold" th:text="${stats.totalRequests}"></h2>
+                            <h6 class="text-uppercase text-muted"
+                                th:text="#{stats.totalRequests}">Total Requests</h6>
+                            <h2 class="fw-bold"
+                                th:text="${stats.totalRequests}"></h2>
                         </div>
                     </div>
                 </div>
@@ -42,7 +47,8 @@
                 <div class="col-md-4">
                     <div class="card bg-dark text-white shadow-sm">
                         <div class="card-body">
-                            <h6 class="text-uppercase text-muted">Anonymous Requests</h6>
+                            <h6 class="text-uppercase text-muted" th:text="#{stats.anonRequests}">Anonymous
+                                Requests</h6>
                             <h2 class="fw-bold" th:text="${stats.anonRequests}"></h2>
                         </div>
                     </div>
@@ -51,7 +57,8 @@
                 <div class="col-md-4">
                     <div class="card bg-dark text-white shadow-sm">
                         <div class="card-body">
-                            <h6 class="text-uppercase text-muted">Authorized Requests</h6>
+                            <h6 class="text-uppercase text-muted" th:text="#{stats.authRequests}">Authorized
+                                Requests</h6>
                             <h2 class="fw-bold" th:text="${stats.authRequests}"></h2>
                         </div>
                     </div>
@@ -61,7 +68,8 @@
         </section>
 
         <section class="container mt-5 p-4 bg-dark rounded shadow">
-            <h2 class="text-center text-white fw-semibold mb-4">
+            <h2 class="text-center text-white fw-semibold mb-4"
+                th:text="#{stats.mostViewed}">
                 Most Viewed Pages
             </h2>
 
@@ -69,11 +77,11 @@
 
                 <thead class="border-bottom border-secondary">
                 <tr class="text-uppercase text-secondary small">
-                    <th>Path</th>
-                    <th class="text-end">Requests</th>
-                    <th class="text-end">Avg Response (ms)</th>
-                    <th class="text-end">4xx</th>
-                    <th class="text-end">5xx</th>
+                    <th th:text="#{stats.path}">Path</th>
+                    <th th:text="#{stats.requests}" class="text-end">Requests</th>
+                    <th th:text="#{stats.avgResponse}" class="text-end">Avg Response (ms)</th>
+                    <th th:text="#{stats.error4xx}" class="text-end">4xx</th>
+                    <th th:text="#{stats.error5xx}" class="text-end">5xx</th>
                 </tr>
                 </thead>
 
@@ -98,15 +106,16 @@
         </section>
 
         <section class="container mt-5 p-4 bg-dark rounded shadow">
-            <h2 class="text-center text-white fw-semibold mb-4">
+            <h2 class="text-center text-white fw-semibold mb-4"
+                th:text="#{stats.mostActiveUsers}">
                 Most Active Users
             </h2>
 
             <table class="table table-dark table-hover align-middle mb-0 fs-6">
                 <thead class="border-bottom border-secondary">
                 <tr class="text-uppercase text-secondary small">
-                    <th>Username</th>
-                    <th class="text-end">Requests</th>
+                    <th th:text="#{stats.username}">Username</th>
+                    <th th:text="#{stats.requests}" class="text-end">Requests</th>
                 </tr>
                 </thead>
 
