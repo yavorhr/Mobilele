@@ -38,43 +38,16 @@
     </div>
 
     <th:block th:replace="fragments/quick-search :: quickSearch(
-    ${offersFindBindingModel},
-    ${categories},
-    ${brands},
-    ${models})">
+    ${offersFindBindingModel},${categories},${brands},${models})">
     </th:block>
 
-    <section class="section">
-        <h2 th:text="#{recent}" class="section-title">Recently added offers</h2>
-        <div class="offers-grid">
-            <th:block th:each="offer : ${latestOffers}">
-                <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
-            </th:block>
+    <th:block th:replace="fragments/offers-section :: offersSection(
+    #{recent},${latestOffers},'offers.none',@{/offers/all},'all.offers')">
+    </th:block>
 
-            <div th:if="${#lists.isEmpty(latestOffers)}" class="no-offers">
-                <p th:text="#{none.offers}">No offers available</p>
-            </div>
-        </div>
-        <div class="show-all">
-            <a th:text="#{all.offers}" th:href="@{/offers/all}" class="cta-btn">All offers →</a>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2 th:text="#{offers.mostViewed}" class="section-title">Most viewed offers</h2>
-        <div class="offers-grid">
-            <th:block th:each="offer : ${mostViewedOffers}">
-                <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
-            </th:block>
-
-            <div th:if="${#lists.isEmpty(mostViewedOffers)}" class="no-offers">
-                <p th:text="#{none.offers}">No offers available</p>
-            </div>
-        </div>
-        <div class="show-all">
-            <a th:text="#{button.top20}" th:href="@{/offers/top-offers}" class="cta-btn">Show Top 20 →</a>
-        </div>
-    </section>
+    <th:block th:replace="fragments/offers-section :: offersSection(
+    #{offers.mostViewed},${mostViewedOffers},'offers.none',@{/offers/top-offers},'button.top20')">
+    </th:block>
 
     <section class="vehicle-grid section">
         <th:block

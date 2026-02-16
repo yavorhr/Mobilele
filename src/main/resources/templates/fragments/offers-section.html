@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<section class="section"
+         th:fragment="offersSection(title, offers, emptyKey, linkUrl, linkTextKey)">
+  <h2 th:text="${title}" class="section-title"></h2>
+
+  <div class="offers-grid">
+    <th:block th:each="offer : ${offers}">
+      <div th:replace="fragments/offer-card :: offerCard(${offer}, true)"></div>
+    </th:block>
+
+    <div th:if="${#lists.isEmpty(offers)}" class="no-offers">
+      <p th:text="#{${emptyKey}}">No offers available</p>
+    </div>
+  </div>
+
+  <div class="show-all">
+    <a th:href="${linkUrl}" th:text="#{${linkTextKey}}" class="cta-btn">
+      Show all →
+    </a>
+  </div>
+</section>
+</html>
