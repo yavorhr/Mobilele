@@ -3,17 +3,23 @@ package com.example.mobilele.model.entity.enums;
 import java.util.Arrays;
 
 public enum VehicleCategoryEnum {
-  Car("car"),
-  SUV("SUV"),
-  Motorcycle("motorcycle"),
-  Truck("truck"),
-  Caravan("caravan"),
-  Bus("bus");
+  Car("car", "fa-solid fa-car-side"),
+  SUV("SUV", "fa-solid fa-truck-pickup"),
+  Motorcycle("motorcycle", "fas fa-motorcycle"),
+  Truck("truck", "fas fa-truck"),
+  Caravan("caravan", "fa-solid fa-caravan"),
+  Bus("bus", "fa-solid fa-bus-simple");
 
   private final String label;
+  private final String iconClass;
 
-  VehicleCategoryEnum(String label) {
+  VehicleCategoryEnum(String label, String iconClass) {
     this.label = label;
+    this.iconClass = iconClass;
+  }
+
+  public String getIconClass() {
+    return iconClass;
   }
 
   public String getLabel() {
@@ -26,7 +32,7 @@ public enum VehicleCategoryEnum {
     }
 
     return Arrays.stream(values())
-            .filter(v -> v.name().equalsIgnoreCase(value.trim()))
+            .filter(v -> v.getLabel().equalsIgnoreCase(value.trim()))
             .findFirst()
             .orElseThrow(() ->
                     new IllegalArgumentException(
