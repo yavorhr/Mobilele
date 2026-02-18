@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 
-<head th:replace="fragments/head">
+<head th:replace="fragments/head :: head(additionalCss='/css/offers/offers-find.css')"></head>
 
 <body class="auth-layout">
 <header th:replace="fragments/navbar"></header>
@@ -33,14 +33,12 @@
                         <option value="" selected disabled
                                 th:text="#{offer.selectBrand}">>- Select brand -
                         </option>
-                        <optgroup label="Brand name">
-                            <option
-                                    th:each="brand : ${brands}"
-                                    th:text="${brand.getName()}"
-                                    th:value="${brand.getName()}"
-                                    th:selected="${brand.getName()} == *{brand}">
-                            </option>
-                        </optgroup>
+                        <option
+                                th:each="brand : ${brands}"
+                                th:text="${brand.getName()}"
+                                th:value="${brand.getName()}"
+                                th:selected="${brand.getName()} == *{brand}">
+                        </option>
                     </select>
                     <div th:if="${#fields.hasErrors('brand')}"
                          th:errors="*{brand}"
@@ -57,14 +55,12 @@
                             th:name="model"
                             th:selected="${model} == *{model}">
                         <option th:text="#{offer.selectModel}" value="" selected disabled>- Select model -</option>
-                        <optgroup label="Model name">
-                            <option
-                                    th:each="model : ${models}"
-                                    th:text="${model}"
-                                    th:value="${model}"
-                                    th:selected="${model} == *{model}">
-                            </option>
-                        </optgroup>
+                        <option
+                                th:each="model : ${models}"
+                                th:text="${model}"
+                                th:value="${model}"
+                                th:selected="${model} == *{model}">
+                        </option>
                     </select>
                     <div th:if="${#fields.hasErrors('model')}"
                          th:errors="*{model}"
@@ -179,7 +175,8 @@
                             id="transmission"
                             class="form-control">
                         <option value=""
-                                th:text="#{offer.selectTransmission}" >- Select transmission type -</option>
+                                th:text="#{offer.selectTransmission}">- Select transmission type -
+                        </option>
                         <option th:each="t : ${transmissions}"
                                 th:text="#{${'transmission.' + t.name()}}"
                                 th:value="${t}"
@@ -261,13 +258,15 @@
 
                 <!-- Country -->
                 <div class="form-group col-md-6 mb-4">
-                    <label th:text="#{offer.country}" for="country" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Country</label>
+                    <label th:text="#{offer.country}" for="country"
+                           class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Country</label>
                     <select id="country" name="country" class="form-control"
                             th:field="*{country}">
-                        <option value="" th:text="#{offer.selectCountry}">-- Select a country --</option>
+                        <option value="" th:text="#{offer.selectCountry}">- Select a country -</option>
                         <option th:each="c : ${countries}"
                                 th:value="${c}"
-                                th:text="#{${'country.' + c.name()}}">></option>
+                                th:text="#{${'country.' + c.name()}}">>
+                        </option>
                     </select>
                     <div th:if="${#fields.hasErrors('country')}"
                          th:errors="*{country}"
@@ -295,7 +294,7 @@
                 <!-- Condition -->
                 <div class="form-group col-md-6 mb-3">
                     <label th:text="#{offer.condition}"
-                            for="condition"
+                           for="condition"
                            class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Condition</label>
                     <select
                             id="condition"
