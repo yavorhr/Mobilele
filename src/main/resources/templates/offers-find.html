@@ -10,10 +10,11 @@
 
 <main class="auth-content">
     <div class="container">
-        <div class="text-center">
-            <h2 class="text-center section-title"
-                th:text="'Search for ' + ${vehicleType.label} + ' offers'">></h2>
-        </div>
+        <h2 class="text-center section-title vehicle-search-title d-flex justify-content-center align-items-center gap-2">
+            <span th:text="#{search.for}"></span>
+            <span class="vehicle-title-icon"><i th:class="${vehicleType.iconClass}"></i></span>
+        </h2>
+
         <form
                 th:action="@{/offers/find/{vehicleType}(vehicleType=${vehicleType})}"
                 th:method="POST"

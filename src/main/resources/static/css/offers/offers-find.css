@@ -1,3 +1,67 @@
 .container {
     max-width: 1500px;
 }
+
+/* Override title class */
+.section-title{
+    display: flex !important;
+    margin: 2rem auto;
+    max-width: 60%;
+    gap: 20px;
+
+}
+
+/* Icon styling */
+.vehicle-search-title .vehicle-title-icon i {
+    font-size: 2.4rem;
+    background: linear-gradient(135deg, #0ce510, #056533);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.5s ease;
+}
+
+/* Hover animation (desktop) */
+.vehicle-search-title:hover .vehicle-title-icon i {
+    animation: driveBounceMini 0.9s ease-in-out both;
+}
+
+.vehicle-search-title .vehicle-title-icon i {
+    animation: idleShake 4s ease-in-out infinite;
+}
+
+@keyframes driveBounceMini {
+    0% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+    40% {
+        transform: translateX(8px) rotate(4deg);
+    }
+    70% {
+        transform: translateX(14px) rotate(6deg);
+    }
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+@keyframes idleShake {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-1px) rotate(-1deg);
+    }
+    50% {
+        transform: translateY(1px) rotate(1deg);
+    }
+    75% {
+        transform: translateY(-1px) rotate(-1deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vehicle-search-title .vehicle-title-icon i {
+        animation: none !important;
+        transition: none !important;
+    }
+}
