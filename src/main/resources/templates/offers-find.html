@@ -74,7 +74,7 @@
 
                 <!-- Price -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="price" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Price</label>
+                    <label th:text="#{offer.price}" for="price" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Price</label>
                     <select th:field="*{priceComparison}" id="priceComparison">
                         <option value="under"
                                 th:selected="${offersFindBindingModel.priceComparison == 'under'}"
@@ -151,15 +151,15 @@
 
                 <!-- Engine -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="engine" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Engine</label>
+                    <label th:text="#{offer.engine}" for="engine" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Engine</label>
                     <select
                             id="engine"
                             class="form-control"
                             name="engine"
                             th:errorclass="is-invalid">
-                        <option value="">- Select engine type -</option>
+                        <option value=""  th:text="#{offer.selectEngine}">- Select engine type -</option>
                         <option th:each="e : ${engines}"
-                                th:text="${e}"
+                                th:text="#{${'engine.' + e.name()}}"
                                 th:value="${e}"
                                 th:selected="${e} == *{engine}">
                             Engine type
@@ -170,8 +170,9 @@
                     </p>
                 </div>
 
+                <!-- Engine -->
                 <div class="form-group col-md-6 mb-4">
-                    <label for="transmission" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Transmission</label>
+                    <label th:text="#{offer.transmission}" for="transmission" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Transmission</label>
                     <select
                             name="transmission"
                             id="transmission"
@@ -179,7 +180,7 @@
                             th:errorclass="is-invalid">
                         <option value="">- Select transmission type -</option>
                         <option th:each="t : ${transmissions}"
-                                th:text="${t}"
+                                th:text="#{${'transmission.' + t.name()}}"
                                 th:value="${t}"
                                 th:selected="${t} == *{transmission}">Transmission type
                         </option>
@@ -190,15 +191,23 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-4">
-                    <label for="year" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Year</label>
+                    <label th:text="#{offer.year}" for="year" class="form-label fw-bold fs-6 text-uppercase text-light mb-2">Year</label>
                     <select th:field="*{yearComparison}" id="yearComparison">
-                        <option value="under" th:selected="${offersFindBindingModel.yearComparison == 'under'}">
+                        <option
+                                th:text="#{form.year.before}"
+                                value="under"
+                                th:selected="${offersFindBindingModel.yearComparison == 'under'}">
                             Before
                         </option>
-                        <option value="between" th:selected="${offersFindBindingModel.yearComparison == 'between'}">
+                        <option
+                                th:text="#{form.year.between}"
+                                value="between"
+                                th:selected="${offersFindBindingModel.yearComparison == 'between'}">
                             Between
                         </option>
-                        <option value="above" th:selected="${offersFindBindingModel.yearComparison == 'above'}">
+                        <option
+                                th:text="#{form.year.after}"
+                                value="above" th:selected="${offersFindBindingModel.yearComparison == 'above'}">
                             After
                         </option>
                     </select>
@@ -206,14 +215,15 @@
                             id="year"
                             type="number"
                             step="1" class="form-control"
-                            placeholder="Manufacturing year"
+                            th:data-ph-default="#{form.year.placeholder}"
                             th:field="*{year}"
                             th:errorclass="is-invalid"/>
                     <input
-                            type="number" th:field="*{yearMax}"
+                            type="number"
+                            th:field="*{yearMax}"
                             class="form-control mt-2"
                             id="yearMax"
-                            placeholder="To year"
+                            th:placeholder="#{form.year.max}"
                             th:value="${offersFindBindingModel.yearMax}"
                             th:style="${offersFindBindingModel.yearComparison == 'between' ? 'display:inline-block;' : 'display:none;'}">
                     <p class="invalid-feedback error-msg"
@@ -232,7 +242,7 @@
                             th:errorclass="is-invalid">
                         <option value="">- Choose color -</option>
                         <option th:each="c : ${colors}"
-                                th:text="${c}"
+                                th:text="#{${'color.' + c.name()}}">
                                 th:value="${c}"
                                 th:selected="${c} == *{color}">Color
                         </option>
