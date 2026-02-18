@@ -76,7 +76,9 @@
                 <h2 class="offer-title" th:text="*{modelBrandName} + ' ' + *{modelName}"></h2>
                 <h4 th:text="#{offer.year} + ': ' + *{modelYear}"></h4>
                 <p class="price" th:text="*{price} + ' BGN'"></p>
-                <p class="location" th:text="*{country} + ', ' + *{city}"></p>
+                <p class="location"
+                   th:text="#{${'country.' + *{country}}} + ', ' + #{${'city.' + *{city}}}">
+                </p>
 
                 <div class="seller-info">
                     <h4 class="section-heading" th:text="#{offer.sellerInfo}">Seller Information</h4>
