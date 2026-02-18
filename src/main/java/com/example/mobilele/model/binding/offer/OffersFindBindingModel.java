@@ -1,8 +1,7 @@
 package com.example.mobilele.model.binding.offer;
 
 import com.example.mobilele.model.entity.enums.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -32,20 +31,22 @@ public class OffersFindBindingModel {
   public OffersFindBindingModel() {
   }
 
-  @NotEmpty(message = "Brand is required")
+  @NotBlank(message = "{validation.brand.required}")
   public String getBrand() {
     return brand;
   }
 
-  @NotEmpty(message = "Model is required")
+  @NotBlank(message = "{validation.model.required}")
   public String getModel() {
     return model;
   }
 
+  @DecimalMin(value = "100", message = "{validation.price.min}")
   public BigDecimal getPrice() {
     return price;
   }
 
+  @PositiveOrZero(message = "{validation.mileage.positive}")
   public Double getMileage() {
     return mileage;
   }
