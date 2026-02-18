@@ -77,7 +77,7 @@
                 <h4 th:text="#{offer.year} + ': ' + *{modelYear}"></h4>
                 <p class="price" th:text="*{price} + ' BGN'"></p>
                 <p class="location"
-                   th:text="#{${'country.' + *{country}}} + ', ' + #{${'city.' + *{city}}}">
+                   th:text="#{${'country.' + offer.country}} + ', ' + #{${'city.' + offer.city}}">
                 </p>
 
                 <div class="seller-info">
