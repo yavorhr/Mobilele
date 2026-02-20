@@ -41,7 +41,7 @@ public class OffersFindBindingModel {
     return model;
   }
 
-  @DecimalMin(value = "100", message = "{validation.price.min}")
+  @DecimalMin(value = "1", message = "{validation.price.min}")
   public BigDecimal getPrice() {
     return price;
   }
