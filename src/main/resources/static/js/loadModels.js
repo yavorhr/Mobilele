@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addSelectPlaceholder() {
         const placeholder = document.createElement('option');
         placeholder.value = '';
-        placeholder.textContent = '-- Select a model --';
+        placeholder.textContent = '- Select a model -';
         modelSelect.appendChild(placeholder);
     }
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     } else {
                         const option = document.createElement('option');
-                        option.textContent = '-- No models available --';
+                        option.textContent = '- No models available -';
                         option.disabled = true;
                         option.selected = true;
                         modelSelect.appendChild(option);
