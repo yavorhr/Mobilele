@@ -2,115 +2,113 @@
 <html lang="en">
 <section class="quick-search section"
          th:fragment="quickSearch(offersFindBindingModel, categories, brands, models)">
-  <h2 th:text="#{quick.search}">Quick Search</h2>
-  <p th:text="#{quick.search.desc}">
-    Find the right car instantly — filter by brand, price, or year.
-  </p>
+    <h2 th:text="#{quick.search}">Quick Search</h2>
+    <p th:text="#{quick.search.desc}">
+        Find the right car instantly — filter by brand, price, or year.
+    </p>
 
-  <form th:action="@{/offers/quick-search}"
-        th:object="${offersFindBindingModel}"
-        method="post"
-        class="search-form">
+    <form th:action="@{/offers/quick-search}"
+          th:object="${offersFindBindingModel}"
+          method="post"
+          class="search-form">
 
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}"/>
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
 
-    <div class="quick-search-fields">
+        <div class="quick-search-fields">
 
-      <!-- Vehicle type -->
-      <div class="form-group">
-        <label for="vehicleType" th:text="#{form.vehicleType}">Vehicle Type</label>
-        <select name="vehicleType" id="vehicleType" class="form-control">
-          <option value="" th:text="#{form.selectCategory}">- Select vehicle category -</option>
-          <option th:each="c : ${categories}"
-                  th:value="${c.name().toLowerCase()}"
-                  th:text="#{${'category.' + c.name()}}">
-          </option>
-        </select>
-      </div>
+            <!-- Vehicle type -->
+            <div class="form-group">
+                <label for="vehicleType" th:text="#{form.vehicleType}">Vehicle Type</label>
+                <select name="vehicleType" id="vehicleType" class="form-control">
+                    <option value="" th:text="#{form.selectCategory}">- Select vehicle category -</option>
+                    <option th:each="c : ${categories}"
+                            th:value="${c.name().toLowerCase()}"
+                            th:text="#{${'category.' + c.name()}}">
+                    </option>
+                </select>
+            </div>
 
-      <!-- Brand -->
-      <div class="form-group">
-        <label for="brand" th:text="#{form.brand}">Brand</label>
-        <select th:field="*{brand}" id="brand" class="form-control">
-          <option value="" th:text="#{form.selectBrand}">- Select brand -</option>
-          <option th:each="b : ${brands}"
-                  th:value="${b.name}"
-                  th:text="${b.name}">
-          </option>
-        </select>
-        <div th:if="${#fields.hasErrors('brand')}"
-             th:errors="*{brand}" class="error-msg"></div>
-      </div>
+            <!-- Brand -->
+            <div class="form-group">
+                <label for="brand" th:text="#{form.brand}">Brand</label>
+                <select th:field="*{brand}" id="brand" class="form-control">
+                    <option value="" th:text="#{form.selectBrand}">- Select brand -</option>
+                    <option th:each="b : ${brands}"
+                            th:value="${b.name}"
+                            th:text="${b.name}">
+                    </option>
+                </select>
+                <div th:if="${#fields.hasErrors('brand')}"
+                     th:errors="*{brand}" class="error-msg"></div>
+            </div>
 
-      <!-- Model -->
-      <div class="form-group">
-        <label for="model" th:text="#{form.model}">Model</label>
-        <select id="model" th:field="*{model}" class="form-control">
-          <option value="" selected th:text="#{form.selectModel}">- Select model -</option>
-          <optgroup th:label="#{form.modelGroup}">
-            <option th:each="m : ${models}"
-                    th:text="${m}"
-                    th:value="${m}">
-            </option>
-          </optgroup>
-        </select>
-        <div th:if="${#fields.hasErrors('model')}"
-             th:errors="*{model}" class="error-msg"></div>
-      </div>
+            <!-- Model -->
+            <div class="form-group">
+                <label for="model" th:text="#{form.model}">Model</label>
+                <select id="model" th:field="*{model}" class="form-control">
+                    <option value="" selected th:text="#{form.selectModel}">- Select model -</option>
+                    <option th:each="m : ${models}"
+                            th:text="${m}"
+                            th:value="${m}">
+                    </option>
+                </select>
+                <div th:if="${#fields.hasErrors('model')}"
+                     th:errors="*{model}" class="error-msg"></div>
+            </div>
 
-      <!-- Price -->
-      <div class="form-group">
-        <label for="price" th:text="#{form.price}">Price</label>
-        <select th:field="*{priceComparison}" id="priceComparison" class="form-control">
-          <option value="under" th:text="#{form.price.under}">Under</option>
-          <option value="between" th:text="#{form.price.between}">Between</option>
-          <option value="above" th:text="#{form.price.above}">Above</option>
-        </select>
-        <input id="price" type="number" min="0"
-               th:field="*{price}"
-               class="form-control"
-               th:data-ph-default="#{form.price.placeholder}"
-               th:data-ph-from="#{form.price.from}"
-               th:data-ph-to="#{form.price.max}"/>
-        <input id="priceMax" type="number"
-               th:field="*{priceMax}"
-               th:placeholder="#{form.price.max}"
-               style="display:none;"
-               class="form-control"/>
-      </div>
+            <!-- Price -->
+            <div class="form-group">
+                <label for="price" th:text="#{form.price}">Price</label>
+                <select th:field="*{priceComparison}" id="priceComparison" class="form-control">
+                    <option value="under" th:text="#{form.price.under}">Under</option>
+                    <option value="between" th:text="#{form.price.between}">Between</option>
+                    <option value="above" th:text="#{form.price.above}">Above</option>
+                </select>
+                <input id="price" type="number" min="0"
+                       th:field="*{price}"
+                       class="form-control"
+                       th:data-ph-default="#{form.price.placeholder}"
+                       th:data-ph-from="#{form.price.from}"
+                       th:data-ph-to="#{form.price.max}"/>
+                <input id="priceMax" type="number"
+                       th:field="*{priceMax}"
+                       th:placeholder="#{form.price.max}"
+                       style="display:none;"
+                       class="form-control"/>
+            </div>
 
-      <!-- Year -->
-      <div class="form-group">
-        <label for="year" th:text="#{form.year}">Year</label>
-        <select th:field="*{yearComparison}" id="yearComparison" class="form-control">
-          <option value="under" th:text="#{form.year.before}">Before</option>
-          <option value="between" th:text="#{form.year.between}">Between</option>
-          <option value="above" th:text="#{form.year.after}">After</option>
-        </select>
-        <input id="year" type="number" step="1"
-               th:field="*{year}"
-               class="form-control"
-               th:data-ph-default="#{form.year.placeholder}"
-               th:data-ph-from="#{form.year.from}"
-               th:data-ph-to="#{form.year.max}"/>
-        <input id="yearMax" type="number"
-               th:field="*{yearMax}"
-               th:placeholder="#{form.year.max}"
-               style="display:none;"
-               class="form-control"/>
-      </div>
+            <!-- Year -->
+            <div class="form-group">
+                <label for="year" th:text="#{form.year}">Year</label>
+                <select th:field="*{yearComparison}" id="yearComparison" class="form-control">
+                    <option value="under" th:text="#{form.year.before}">Before</option>
+                    <option value="between" th:text="#{form.year.between}">Between</option>
+                    <option value="above" th:text="#{form.year.after}">After</option>
+                </select>
+                <input id="year" type="number" step="1"
+                       th:field="*{year}"
+                       class="form-control"
+                       th:data-ph-default="#{form.year.placeholder}"
+                       th:data-ph-from="#{form.year.from}"
+                       th:data-ph-to="#{form.year.max}"/>
+                <input id="yearMax" type="number"
+                       th:field="*{yearMax}"
+                       th:placeholder="#{form.year.max}"
+                       style="display:none;"
+                       class="form-control"/>
+            </div>
 
-    </div>
+        </div>
 
-    <button th:text="#{button.search}"
-            type="submit"
-            id="searchBtn"
-            class="cta-btn disabled-btn"
-            th:data-validation-msg="#{quick.search.validation}">
-      Search
-    </button>
-  </form>
+        <button th:text="#{button.search}"
+                type="submit"
+                id="searchBtn"
+                class="cta-btn disabled-btn"
+                th:data-validation-msg="#{quick.search.validation}">
+            Search
+        </button>
+    </form>
 </section>
 </html>
