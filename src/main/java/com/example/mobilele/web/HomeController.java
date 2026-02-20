@@ -1,14 +1,10 @@
 package com.example.mobilele.web;
 
-import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
-import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
-import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.FeedbackService;
 import com.example.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class HomeController {
@@ -18,11 +14,6 @@ public class HomeController {
   public HomeController(OfferService offerService, FeedbackService feedbackService) {
     this.offerService = offerService;
     this.feedbackService = feedbackService;
-  }
-
-  @ModelAttribute("offersFindBindingModel")
-  public OffersFindBindingModel offersFindBindingModel() {
-    return new OffersFindBindingModel();
   }
 
   @GetMapping("/")
