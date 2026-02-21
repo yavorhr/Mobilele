@@ -5,7 +5,6 @@
 <header th:replace="fragments/navbar"></header>
 
 <body data-logged-in-username="${loggedInUsername}">
-
 <div class="auth-layout">
     <main class="main-content">
         <section class="first-section">
@@ -106,7 +105,6 @@
 
             <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
                  th:if="${totalPages > 1}">
-
                 <!-- Prev -->
                 <a th:if="${currentPage > 0}"
                    th:href="@{/admin/notifications(
