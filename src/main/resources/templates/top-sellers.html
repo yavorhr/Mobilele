@@ -24,22 +24,16 @@
                     <th th:text="#{top20.contact}">Contact</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:each="seller, stat : ${topSellers}">
                     <td th:text="${stat.index + 1}"></td>
-
                     <td th:text="${seller.firstName}">John</td>
                     <td th:text="${seller.lastName}">Doe</td>
-
                     <td th:text="${seller.email}">john@demo.com</td>
-
                     <td th:text="${seller.phoneNumber}">+359888123456</td>
-
                     <td>
                         <strong th:text="${seller.soldCount}"></strong>
                     </td>
-
                     <td>
                         <a th:href="'mailto:' + ${seller.email}"
                            class="btn btn-primary"
@@ -48,7 +42,6 @@
                         </a>
                     </td>
                 </tr>
-
                 <tr th:if="${#lists.isEmpty(topSellers)}">
                     <td colspan="7">No sellers found.</td>
                 </tr>
