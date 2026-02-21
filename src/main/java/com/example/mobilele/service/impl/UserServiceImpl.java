@@ -10,6 +10,7 @@ import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.OfferRepository;
+import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
@@ -41,14 +42,16 @@ public class UserServiceImpl implements UserService {
   private final UserRoleService roleService;
   private final MobileleUserServiceImpl mobileleUserService;
   private final ModelMapper modelMapper;
+  private final SoldOfferRepository soldOfferRepository;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, OfferRepository offerRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, OfferRepository offerRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper, SoldOfferRepository soldOfferRepository) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.offerRepository = offerRepository;
     this.roleService = roleService;
     this.mobileleUserService = mobileleUserService;
     this.modelMapper = modelMapper;
+    this.soldOfferRepository = soldOfferRepository;
   }
 
   @Override
@@ -142,14 +145,19 @@ public class UserServiceImpl implements UserService {
     return this.modelMapper.map(userEntity, UserViewModel.class);
   }
 
+  @Transactional
   @Override
   public void deleteProfileById(Long userId) {
     UserEntity userEntity = this.userRepository
             .findById(userId)
             .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
 
+
+    soldOfferRepository.clearSeller(userId);
+
     userEntity.getRoles().clear();
     this.userRepository.save(userEntity);
+
     this.userRepository.deleteById(userId);
   }
 

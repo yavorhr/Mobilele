@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.SoldOfferEntity;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -42,4 +43,8 @@ public interface SoldOfferRepository extends JpaRepository<SoldOfferEntity, Long
           @Param("start") Instant start,
           @Param("end") Instant end
   );
+
+  @Modifying
+  @Query("UPDATE SoldOfferEntity s SET s.seller = null WHERE s.seller.id = :userId")
+  void clearSeller(@Param("userId") Long userId);
 }

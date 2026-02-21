@@ -28,6 +28,7 @@ public class SoldOfferEntity extends BaseEntity {
   }
 
   @ManyToOne
+  @JoinColumn(name = "seller_id", nullable = true)
   public UserEntity getSeller() {
     return seller;
   }
