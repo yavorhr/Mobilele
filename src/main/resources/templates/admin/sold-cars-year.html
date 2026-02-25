@@ -46,18 +46,18 @@
                 <th class="seller-group seller-group-end">Profile</th>
 
                 <!-- Car data -->
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>Price (Bgn)</th>
-                <th>Mileage (Km)</th>
-                <th>Engine</th>
-                <th>Condition</th>
-                <th>Transmission</th>
-                <th>Color</th>
-                <th>Views</th>
-                <th>Sold At</th>
+                <th th:text="#{offer.brand}">Brand</th>
+                <th th:text="#{offer.model}">Model</th>
+                <th th:text="#{offer.country}">Country</th>
+                <th th:text="#{offer.city}">City</th>
+                <th th:text="#{offer.price} + #{currency.bgn}">Price (Bgn)</th>
+                <th th:text="#{offer.mileage} + #{unit.km}">Mileage (Km)</th>
+                <th th:text="#{offer.engine}">Engine</th>
+                <th th:text="#{offer.condition}">Condition</th>
+                <th th:text="#{offer.transmission}">Transmission</th>
+                <th th:text="#{offer.color}">Color</th>
+                <th th:text="#{offer.views}">Views</th>
+                <th th:text="#{offer.soldAt}">Sold At</th>
             </tr>
             </thead>
 
