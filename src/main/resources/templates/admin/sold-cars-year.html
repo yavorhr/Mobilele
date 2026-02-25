@@ -40,18 +40,18 @@
                 <th>#</th>
 
                 <!-- Seller info group -->
-                <th class="seller-group">Seller</th>
-                <th class="seller-group">Email</th>
-                <th class="seller-group">Phone</th>
-                <th class="seller-group seller-group-end">Profile</th>
+                <th th:text="#{profile.title}" class="seller-group">Seller</th>
+                <th th:text="#{profile.email}" class="seller-group">Email</th>
+                <th th:text="#{profile.phone}" class="seller-group">Phone</th>
+                <th th:text="#{stats.profile}" class="seller-group seller-group-end">Profile</th>
 
                 <!-- Car data -->
                 <th th:text="#{offer.brand}">Brand</th>
                 <th th:text="#{offer.model}">Model</th>
                 <th th:text="#{offer.country}">Country</th>
                 <th th:text="#{offer.city}">City</th>
-                <th th:text="#{offer.price} + #{currency.bgn}">Price (Bgn)</th>
-                <th th:text="#{offer.mileage} + #{unit.km}">Mileage (Km)</th>
+                <th th:text="#{offer.price} + ' ' + #{currency.bgn}">Price (Bgn)</th>
+                <th th:text="#{offer.mileage} + ' ' + #{unit.km}">Mileage (Km)</th>
                 <th th:text="#{offer.engine}">Engine</th>
                 <th th:text="#{offer.condition}">Condition</th>
                 <th th:text="#{offer.transmission}">Transmission</th>
@@ -86,14 +86,14 @@
                 <!-- Car data -->
                 <td th:text="${row.brand}"></td>
                 <td th:text="${row.model}"></td>
-                <td th:text="${row.country}"></td>
-                <td th:text="${row.city}"></td>
+                <td th:text="#{${'country.' + row.country}}"></td>
+                <td th:text="#{${'city.' + row.city}}"></td>
                 <td th:text="${row.price}"></td>
                 <td th:text="${row.mileage}"></td>
-                <td th:text="${row.engine}"></td>
-                <td th:text="${row.condition}"></td>
-                <td th:text="${row.transmission}"></td>
-                <td th:text="${row.color}"></td>
+                <td th:text="#{${'engine.' + row.engine}}"></td>
+                <td th:text="#{${'condition.' + row.condition}}"></td>
+                <td th:text="#{${'transmission.' + row.transmission}}"></td>
+                <td th:text="#{${'color.' + row.color}}"></td>
                 <td th:text="${row.views}"></td>
                 <td th:text="${#temporals.format(row.saleTime, 'dd MMM yyyy')}"></td>
             </tr>
