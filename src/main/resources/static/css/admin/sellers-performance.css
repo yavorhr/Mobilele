@@ -3,8 +3,12 @@ main {
     max-width: 1400px;
 }
 
-.section-title{
+.section-title {
     font-size: clamp(1.4rem, 3vw, var(--font-size_2_5));
+}
+
+.container-fluid{
+    max-width: max-content;
 }
 
 /* Filters */
@@ -89,4 +93,16 @@ main {
     padding: 2rem;
     text-align: center;
     color: var(--color-white-muted);
+}
+
+.stats-table td.seller-group-end,
+.stats-table th.seller-group-end {
+    border-right: 4px solid var(--color-turquoise);
+    box-shadow: 6px 0 8px -6px var(--color-turquoise);
+    padding-left: 12px;
+}
+
+.stats-table tbody tr:hover td.seller-group-end {
+    border-right: 4px solid var(--color-turquoise);
+    box-shadow: 8px 0 10px -6px var(--color-turquoise);
 }
