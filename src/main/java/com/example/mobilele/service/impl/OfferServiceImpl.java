@@ -7,6 +7,7 @@ import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -28,7 +29,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -402,6 +402,23 @@ public class OfferServiceImpl implements OfferService {
     }
 
     return results;
+  }
+
+  @Override
+  public Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page) {
+    ZoneId zone = ZoneId.systemDefault();
+
+    Instant start = LocalDate.of(year, 1, 1)
+            .atStartOfDay(zone)
+            .toInstant();
+
+    Instant end = LocalDate.of(year + 1, 1, 1)
+            .atStartOfDay(zone)
+            .toInstant();
+
+    Pageable pageable = PageRequest.of(page, 10);
+
+    return soldOfferRepository.findSoldCarsByPeriod(start, end, pageable);
   }
 
   @Override

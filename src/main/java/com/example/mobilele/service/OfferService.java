@@ -7,6 +7,7 @@ import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
@@ -63,4 +64,6 @@ public interface OfferService {
   List<TopSellerViewModel> getTop20Sellers();
 
   List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top);
+
+  Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page);
 }

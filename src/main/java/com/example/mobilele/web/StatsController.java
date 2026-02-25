@@ -1,9 +1,11 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.admin.StatsViewModel;
+import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.StatsService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +83,33 @@ public class StatsController {
     );
 
     return "admin/sellers-performance";
+  }
+
+  @GetMapping("/sold-cars-stats")
+  public String getSoldCarsPerYear(
+          @RequestParam(required = false) Integer year,
+          @RequestParam(defaultValue = "0") int page,
+          Model model) {
+
+    int selectedYear = (year != null) ? year : Year.now().getValue();
+
+    Page<SoldOfferViewModel> carsPage =
+            offerService.getSoldCarsByYear(selectedYear, page);
+
+    model.addAttribute("selectedYear", selectedYear);
+    model.addAttribute("cars", carsPage.getContent());
+    model.addAttribute("currentPage", page);
+    model.addAttribute("totalPages", carsPage.getTotalPages());
+
+    int currentYear = Year.now().getValue();
+
+    model.addAttribute("years",
+            IntStream.rangeClosed(currentYear - 4, currentYear)
+                    .boxed()
+                    .sorted(Comparator.reverseOrder())
+                    .toList());
+
+    return "admin/sold-cars-year";
   }
 }
 

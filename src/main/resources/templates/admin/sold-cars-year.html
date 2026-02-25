@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head :: head(additionalCss='/css/admin/sellers-performance.css')"></head>
+
+<header th:replace="fragments/navbar"></header>
+
+<body class="auth-layout">
+<main class="main-content container-fluid">
+    <div class="heading-wrapper mb-4">
+        <h1 class="section-title" th:text="#{stats.sellers.title}">📊 Sold Cars Stats</h1>
+    </div>
+    <form
+            method="get" class="filters mb-5">
+        <label>
+            <span th:text="#{stats.sellers.year}"></span>:
+            <select name="year" onchange=" this.form.submit()">
+                <option th:each="y : ${years}"
+                        th:value="${y}"
+                        th:text="${y}"
+                        th:selected="${y == selectedYear}">
+                </option>
+            </select>
+        </label>
+        <label>
+            <span th:text="#{stats.sellers.top}"></span>:
+            <select name="top" onchange="this.form.submit()">
+                <option value="" th:text="#{stats.sellers.all}">All</option>
+                <option value="10" th:text="#{stats.sellers.top10}" th:selected="${top == 10}">Top 10</option>
+                <option value="20" th:text="#{stats.sellers.top20}" th:selected="${top == 20}">Top 20</option>
+            </select>
+        </label>
+    </form>
+    <div class="table-wrapper">
+        <table class="stats-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Seller</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Price</th>
+                <th>Mileage</th>
+                <th>Engine</th>
+                <th>Condition</th>
+                <th>Transmission</th>
+                <th>Color</th>
+                <th>Views</th>
+                <th>Sold At</th>
+                <th>Profile</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="row, stat : ${cars}">
+                <td th:text="${stat.index + 1}"></td>
+
+                <!-- Seller name -->
+                <td th:text="${row.sellerName}"></td>
+
+                <td th:text="${row.email != null ? row.email : '-'}"></td>
+                <td th:text="${row.phoneNumber != null ? row.phoneNumber : '-'}"></td>
+
+                <td th:text="${row.brand}"></td>
+                <td th:text="${row.model}"></td>
+
+                <td th:text="${row.country}"></td>
+                <td th:text="${row.city}"></td>
+
+                <td th:text="${row.price}"></td>
+                <td th:text="${row.mileage + ' km'}"></td>
+
+                <td th:text="${row.engine}"></td>
+                <td th:text="${row.condition}"></td>
+                <td th:text="${row.transmission}"></td>
+                <td th:text="${row.color}"></td>
+
+                <td th:text="${row.views}"></td>
+
+                <td th:text="${#temporals.format(row.saleTime, 'dd MMM yyyy HH:mm')}"></td>
+
+                <!-- Seller profile button -->
+                <td>
+            <span th:if="${row.sellerId == null}" class="text-muted">
+                User deleted
+            </span>
+
+                    <a th:if="${row.sellerId != null}"
+                       th:href="@{/admin/users/{id}(id=${row.sellerId})}"
+                       class="btn btn-sm btn-outline-info">
+                        View Profile
+                    </a>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(cars)}">
+                <td colspan="17" class="text-center">
+                    No sold cars for this year.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination" th:if="${totalPages > 1}">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/admin/sold-cars-per-year(year=${selectedYear}, page=${currentPage - 1})}">
+                Prev
+            </a>
+
+            <span th:text="${currentPage + 1} + ' / ' + ${totalPages}"></span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/admin/sold-cars-per-year(year=${selectedYear}, page=${currentPage + 1})}">
+                Next
+            </a>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/minimal-footer"></footer>
+</body>
+</html>
