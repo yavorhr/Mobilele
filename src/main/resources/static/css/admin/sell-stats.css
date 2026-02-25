@@ -1,4 +1,3 @@
-
 main {
     max-width: 1400px;
 }
@@ -7,7 +6,7 @@ main {
     font-size: clamp(1.4rem, 3vw, var(--font-size_2_5));
 }
 
-.container-fluid{
+.container-fluid {
     max-width: max-content;
 }
 
@@ -84,16 +83,24 @@ main {
     background-color: #3a3f45;
 }
 
-.sold-count {
-    font-weight: bold;
-    color: var(--color-accent);
-}
-
 .stats-table td[colspan] {
     padding: 2rem;
     text-align: center;
     color: var(--color-white-muted);
 }
+
+/* ================
+Sellers-performance
+==================*/
+
+.sold-count {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+/* ================
+Sold Cars per Year
+==================*/
 
 .stats-table td.seller-group-end,
 .stats-table th.seller-group-end {
