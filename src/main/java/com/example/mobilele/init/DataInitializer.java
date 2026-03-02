@@ -13,18 +13,20 @@ public class DataInitializer {
   private final ModelService modelService;
   private final OfferService offerService;
   private final FeedbackService feedbackService;
+  private final SoldOfferService soldOfferService;
 
   public DataInitializer(UserRoleService userRoleService,
                          UserService userService,
                          BrandService brandService,
                          ModelService modelService,
-                         OfferService offerService, FeedbackService feedbackService) {
+                         OfferService offerService, FeedbackService feedbackService, SoldOfferService soldOfferService) {
     this.userRoleService = userRoleService;
     this.userService = userService;
     this.brandService = brandService;
     this.modelService = modelService;
     this.offerService = offerService;
     this.feedbackService = feedbackService;
+    this.soldOfferService = soldOfferService;
   }
 
   @EventListener(ApplicationReadyEvent.class)
@@ -34,6 +36,7 @@ public class DataInitializer {
     brandService.initBrands();
     modelService.initModels();
     offerService.initOffers();
+    soldOfferService.initSoldOffers();
     feedbackService.initFeedbacks();
   }
 }
