@@ -1,5 +1,7 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.init.OfferSeedContext;
+import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
@@ -53,8 +55,9 @@ public class OfferServiceImpl implements OfferService {
   private final UserService userService;
   private final BrandService brandService;
   private final CloudinaryService cloudinaryService;
+  private final OfferSeedGenerator seedGenerator;
 
-  public OfferServiceImpl(OfferRepository offerRepository, SoldOfferRepository soldOfferRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService) {
+  public OfferServiceImpl(OfferRepository offerRepository, SoldOfferRepository soldOfferRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService, OfferSeedGenerator seedGenerator) {
     this.offerRepository = offerRepository;
     this.soldOfferRepository = soldOfferRepository;
     this.modelService = modelService;
@@ -62,6 +65,7 @@ public class OfferServiceImpl implements OfferService {
     this.userService = userService;
     this.brandService = brandService;
     this.cloudinaryService = cloudinaryService;
+    this.seedGenerator = seedGenerator;
   }
 
   @Override
@@ -435,116 +439,45 @@ public class OfferServiceImpl implements OfferService {
 
 
   // Init offers
-  @Override
   @Transactional
+  @Override
   public void initOffers() {
+    if (offerRepository.count() > 0) return;
 
-    if (offerRepository.count() > 0) {
-      return;
-    }
-
-    List<ModelEntity> models = modelService.findAll();
     List<OfferEntity> offers = new ArrayList<>();
 
-    UserEntity admin = userService.findByUsername("admin");
-    UserEntity user = userService.findByUsername("user");
+    for (OfferSeedContext data : seedGenerator.generateData()) {
 
-    List<UserEntity> otherUsers = userService.findAll().stream()
-            .filter(u -> !u.getUsername().equals("admin"))
-            .filter(u -> !u.getUsername().equals("user"))
-            .toList();
-
-    Random random = new Random();
-    int index = 0;
-
-    for (ModelEntity model : models) {
-
-      EngineEnum engine =
-              EngineEnum.values()[index % EngineEnum.values().length];
-
-      TransmissionType transmission =
-              TransmissionType.values()[index % TransmissionType.values().length];
-
-      ConditionEnum condition =
-              ConditionEnum.values()[index % ConditionEnum.values().length];
-
-      ColorEnum color =
-              ColorEnum.values()[index % ColorEnum.values().length];
-
-      CityEnum city =
-              CityEnum.values()[index % CityEnum.values().length];
-
-      CountryEnum country = city.getCountry();
-
-      UserEntity seller = resolveSeller(
-              index,
-              admin,
-              user,
-              otherUsers,
-              random
-      );
-
-      double mileage =
-              condition == ConditionEnum.New ? 0 : 5_000 + (index * 700);
-
-      BigDecimal price =
-              BigDecimal.valueOf(8_000 + (index * 1_500));
-
-      String publicId = buildPublicId(model);
-      String url = buildImageUrl(model);
+      // Create picture
+      String publicId = buildPublicId(data.model());
+      String url = buildImageUrl(data.model());
 
       Picture picture = createPicture(
-              model.getName(),
+              data.model().getName(),
               publicId,
               url,
-              seller
+              data.seller()
       );
 
       OfferEntity offer = buildOffer(
-              model,
-              engine,
-              transmission,
-              condition,
-              color,
-              mileage,
-              price,
-              buildDescription(model, condition),
-              seller,
-              country,
-              city,
+              data.model(),
+              data.engine(),
+              data.transmission(),
+              data.condition(),
+              data.color(),
+              data.mileage(),
+              data.price(),
+              data.description(),
+              data.seller(),
+              data.country(),
+              data.city(),
               picture
       );
 
       offers.add(offer);
-      index++;
     }
 
     offerRepository.saveAll(offers);
-  }
-
-  private String buildDescription(ModelEntity model, ConditionEnum condition) {
-    return switch (condition) {
-      case New -> "Brand new " + model.getName() + ", ready to drive.";
-      case Used -> "Well maintained " + model.getName() + " in good condition.";
-      case Damaged -> model.getName() + " with minor damage, repairable.";
-      case Spares -> model.getName() + " suitable for spare parts.";
-    };
-  }
-
-  private UserEntity resolveSeller(
-          int index,
-          UserEntity admin,
-          UserEntity user,
-          List<UserEntity> otherUsers,
-          Random random) {
-
-    if (index < 2) {
-      return admin;
-    } else if (index < 4) {
-      return user;
-    } else {
-      return otherUsers.get(random.nextInt(otherUsers.size()));
-    }
   }
 
   private OfferEntity buildOffer(
@@ -559,8 +492,7 @@ public class OfferServiceImpl implements OfferService {
           UserEntity seller,
           CountryEnum country,
           CityEnum city,
-          Picture picture
-  ) {
+          Picture picture) {
     OfferEntity offer = new OfferEntity();
 
     offer.setModel(model);
