@@ -41,6 +41,9 @@ public class NotificationsController {
     Page<UserAdministrationViewModel> usersPage =
             userService.searchPaginatedUsersPerEmail(query, pageRequest);
 
+    model.addAttribute("paginationUrl", "/admin/notifications");
+    model.addAttribute("size", size);
+
     model.addAttribute("usersPage", usersPage);
     model.addAttribute("users", usersPage.getContent());
     model.addAttribute("loggedInUsername", principal.getUsername());
