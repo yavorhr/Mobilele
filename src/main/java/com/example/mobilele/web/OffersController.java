@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
@@ -58,11 +57,15 @@ public class OffersController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
 
+    String paginationUrl = "/offers/all";
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("paginationUrl", paginationUrl);
+    model.addAttribute("size", size);
 
     return "offers";
   }

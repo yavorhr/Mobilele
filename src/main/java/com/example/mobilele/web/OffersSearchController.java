@@ -126,6 +126,8 @@ public class OffersSearchController {
             locale
     );
 
+    String paginationUrl = "/offers/" + vehicleType + "/" + brand + "/" + modelName;
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("vehicleType", vehicleType);
     model.addAttribute("brand", brand);
@@ -135,6 +137,8 @@ public class OffersSearchController {
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("title", title);
+    model.addAttribute("paginationUrl", paginationUrl);
+    model.addAttribute("size", size);
 
     return "offers";
   }
