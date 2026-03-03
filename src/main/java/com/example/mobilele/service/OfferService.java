@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public interface OfferService {
 
   List<TopSellerViewModel> getTop20Sellers();
 
-  List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top);
+  Page<TopSellerViewModel> getSellerPerformanceByYear(int year, int page);
 
   Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page);
 }

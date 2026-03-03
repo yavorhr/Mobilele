@@ -58,20 +58,21 @@ public class StatsController {
   }
 
   @GetMapping("/sellers-performance")
-  public String getTopSellersByYear(
+  public String getSellersPerformanceByYear(
           @RequestParam(required = false) Integer year,
-          @RequestParam(required = false) Integer top,
+          @RequestParam(defaultValue = "0") int page,
           Model model) {
 
     int selectedYear = (year != null) ? year : Year.now().getValue();
-    int topN = (top != null) ? top : 20;
 
-    List<TopSellerViewModel> sellers =
-            offerService.getSellerPerformanceByYear(selectedYear, topN);
+    Page<TopSellerViewModel> sellersPage =
+            offerService.getSellerPerformanceByYear(selectedYear, page);
 
     model.addAttribute("selectedYear", selectedYear);
-    model.addAttribute("top", topN);
-    model.addAttribute("sellers", sellers);
+    model.addAttribute("sellersPage", sellersPage);
+    model.addAttribute("sellers", sellersPage.getContent());
+    model.addAttribute("currentPage", page);
+    model.addAttribute("totalPages", sellersPage.getTotalPages());
 
     int currentYear = Year.now().getValue();
 

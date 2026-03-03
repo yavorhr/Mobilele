@@ -387,7 +387,8 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<TopSellerViewModel> getSellerPerformanceByYear(int year, Integer top) {
+  public Page<TopSellerViewModel> getSellerPerformanceByYear(int year, int page) {
+
     ZoneId zone = ZoneId.systemDefault();
 
     Instant start = LocalDate.of(year, 1, 1)
@@ -398,14 +399,9 @@ public class OfferServiceImpl implements OfferService {
             .atStartOfDay(zone)
             .toInstant();
 
-    List<TopSellerViewModel> results =
-            soldOfferRepository.findSellerPerformanceByPeriod(start, end);
+    Pageable pageable = PageRequest.of(page, 5);
 
-    if (top != null && top > 0 && results.size() > top) {
-      return results.subList(0, top);
-    }
-
-    return results;
+    return soldOfferRepository.findSellerPerformanceByPeriod(start, end, pageable);
   }
 
   @Override

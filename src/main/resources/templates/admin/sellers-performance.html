@@ -25,14 +25,6 @@
                 </option>
             </select>
         </label>
-        <label>
-            <span th:text="#{stats.sellers.top}"></span>:
-            <select name="top" onchange="this.form.submit()">
-                <option value="" th:text="#{stats.sellers.all}">All</option>
-                <option value="10" th:text="#{stats.sellers.top10}" th:selected="${top == 10}">Top 10</option>
-                <option value="20" th:text="#{stats.sellers.top20}" th:selected="${top == 20}">Top 20</option>
-            </select>
-        </label>
     </form>
     <div class="table-wrapper">
         <table class="stats-table">
@@ -60,6 +52,19 @@
             </tr>
             </tbody>
         </table>
+        <div class="pagination" th:if="${totalPages > 1}">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/admin/sellers-performance(year=${selectedYear}, page=${currentPage - 1})}">
+                ◀ Previous
+            </a>
+
+            <span th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}"></span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/admin/sellers-performance(year=${selectedYear}, page=${currentPage + 1})}">
+                Next ▶
+            </a>
+        </div>
     </div>
 </main>
 <footer th:replace="fragments/minimal-footer"></footer>

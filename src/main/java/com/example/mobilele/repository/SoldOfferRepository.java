@@ -42,9 +42,10 @@ public interface SoldOfferRepository extends JpaRepository<SoldOfferEntity, Long
           GROUP BY so.seller.firstName, so.seller.lastName, so.seller.email, so.seller.phoneNumber
           ORDER BY COUNT(so.id) DESC
           """)
-  List<TopSellerViewModel> findSellerPerformanceByPeriod(
+  Page<TopSellerViewModel> findSellerPerformanceByPeriod(
           @Param("start") Instant start,
-          @Param("end") Instant end
+          @Param("end") Instant end,
+          Pageable pageable
   );
 
   @Modifying
