@@ -192,6 +192,8 @@ public class OffersSearchController {
             locale
     );
 
+    String paginationUrl = "/offers/brands/" + brand;
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("brand", ProjectHelpers.capitalizeString(brand));
     model.addAttribute("sort", sort);
@@ -199,6 +201,9 @@ public class OffersSearchController {
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("title", title);
+    model.addAttribute("paginationUrl", paginationUrl);
+    model.addAttribute("size", size);
+
     return "offers";
   }
 }

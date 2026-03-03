@@ -33,7 +33,7 @@ public class OffersUserController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "8") int size,
+          @RequestParam(defaultValue = "4") int size,
           Model model,
           Locale locale) {
 
@@ -51,12 +51,16 @@ public class OffersUserController {
             locale
     );
 
+    String paginationUrl = "/offers/my-offers";
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("title", title);
+    model.addAttribute("paginationUrl", paginationUrl);
+    model.addAttribute("size", size);
 
     return "offers";
   }
@@ -67,7 +71,7 @@ public class OffersUserController {
           @RequestParam(defaultValue = "creationDate") String sort,
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "1") int size,
+          @RequestParam(defaultValue = "4") int size,
           Model model, Locale locale) {
 
     String username = principal.getName();
@@ -84,12 +88,16 @@ public class OffersUserController {
             locale
     );
 
+    String paginationUrl = "/offers/favorites";
+
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("title", title);
+    model.addAttribute("paginationUrl", paginationUrl);
+    model.addAttribute("size", size);
 
     return "offers";
   }
