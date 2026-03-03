@@ -103,43 +103,15 @@
                 </table>
             </div>
 
-            <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
-                 th:if="${totalPages > 1}">
-                <!-- Prev -->
-                <a th:if="${currentPage > 0}"
-                   th:href="@{/admin/notifications(
-           page=${currentPage - 1},
-           query=${query},
-           size=${usersPage.size})}"
-                   class="pagination-btn"
-                   th:text="#{pagination.prev}">
-                    &laquo; Prev
-                </a>
-
-                <!-- Page numbers -->
-                <div class="pagination-numbers mx-2">
-                    <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                       th:href="@{/admin/notifications(
-               page=${i},
-               query=${query},
-               size=${usersPage.size})}"
-                       th:text="${i + 1}"
-                       th:classappend="${i == currentPage} ? 'active' : ''"
-                       class="pagination-number">
-                    </a>
-                </div>
-
-                <!-- Next -->
-                <a th:if="${currentPage + 1 < totalPages}"
-                   th:href="@{/admin/notifications(
-           page=${currentPage + 1},
-           query=${query},
-           size=${usersPage.size})}"
-                   class="pagination-btn"
-                   th:text="#{pagination.next}">
-                    Next &raquo;
-                </a>
-            </div>
+            <th:block th:replace="fragments/pagination :: pagination(
+    ${paginationUrl},
+    ${currentPage},
+    ${totalPages},
+    ${sort},
+    ${dir},
+    ${size}
+)">
+            </th:block>
 
             <!-- Page indicator -->
             <p class="text-white text-center mt-2"
