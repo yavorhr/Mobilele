@@ -54,7 +54,6 @@ public class OfferSeedGenerator {
               city, country, seller, mileage, price,
               buildDescription(model, condition), index
       ));
-
       index++;
     }
 
@@ -66,7 +65,6 @@ public class OfferSeedGenerator {
                                    UserEntity user,
                                    List<UserEntity> otherUsers,
                                    Random random) {
-
     if (index < 2) return admin;
     if (index < 4) return user;
     return otherUsers.get(random.nextInt(otherUsers.size()));
