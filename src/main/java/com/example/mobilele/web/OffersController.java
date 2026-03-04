@@ -25,6 +25,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -63,9 +65,16 @@ public class OffersController {
     model.addAttribute("size", size);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute(
-            "paginationBase",
-            "/offers/all?sort=" + sort + "&dir=" + dir + "&size=" + size);
+    String paginationBase = UriComponentsBuilder
+            .fromPath("/offers/all")
+            .queryParam("sort", sort)
+            .queryParam("dir", dir)
+            .queryParam("size", size)
+            .build()
+            .toUriString();
+
+    model.addAttribute("paginationBase", paginationBase);
+    
     model.addAttribute("baseUrl", "/offers/all");
 
     return "offers";

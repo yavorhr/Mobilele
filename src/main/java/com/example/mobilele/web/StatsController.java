@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import java.time.Year;
 import java.util.Comparator;
 import java.util.stream.IntStream;
@@ -70,9 +72,13 @@ public class StatsController {
     model.addAttribute("sellers", sellersPage.getContent());
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", sellersPage.getTotalPages());
-    model.addAttribute(
-            "paginationBase",
-            "/admin/sellers-performance?year=" + selectedYear);
+
+    String paginationBase = UriComponentsBuilder
+            .fromPath("/admin/sellers-performance")
+            .queryParam("year", selectedYear)
+            .build()
+            .toUriString();
+    model.addAttribute("paginationBase", paginationBase);
 
     int currentYear = Year.now().getValue();
 
@@ -99,12 +105,15 @@ public class StatsController {
 
     model.addAttribute("selectedYear", selectedYear);
     model.addAttribute("cars", carsPage.getContent());
-    model.addAttribute("currentPage", page);
+    model.addAttribute("currentPage", carsPage.getNumber());
     model.addAttribute("totalPages", carsPage.getTotalPages());
-    model.addAttribute(
-            "paginationBase",
-            "/admin/sold-cars-stats?year=" + selectedYear
-    );
+
+    String paginationBase = UriComponentsBuilder
+            .fromPath("/admin/sold-cars-stats")
+            .queryParam("year", selectedYear)
+            .build()
+            .toUriString();
+    model.addAttribute("paginationBase", paginationBase);
 
     int currentYear = Year.now().getValue();
 
