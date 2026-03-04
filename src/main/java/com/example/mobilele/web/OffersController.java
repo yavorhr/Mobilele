@@ -57,15 +57,16 @@ public class OffersController {
 
     Page<OfferBaseViewModel> offersPage = offerService.findAllOffers(pageable);
 
-    String paginationUrl = "/offers/all";
-
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("size", size);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
-    model.addAttribute("paginationUrl", paginationUrl);
-    model.addAttribute("size", size);
+    model.addAttribute(
+            "paginationBase",
+            "/offers/all?sort=" + sort + "&dir=" + dir + "&size=" + size);
+    model.addAttribute("baseUrl", "/offers/all");
 
     return "offers";
   }

@@ -47,6 +47,8 @@ public class OfferServiceImpl implements OfferService {
   public static final String ROOT_FOLDER = "mobilele";
   public static final String BASE_URL =
           "https://res.cloudinary.com/" + CLOUD_NAME + "/image/upload/" + ROOT_FOLDER + "/";
+  private static final int SELLERS_PAGE_SIZE = 5;
+
 
   private final OfferRepository offerRepository;
   private final SoldOfferRepository soldOfferRepository;
@@ -399,7 +401,7 @@ public class OfferServiceImpl implements OfferService {
             .atStartOfDay(zone)
             .toInstant();
 
-    Pageable pageable = PageRequest.of(page, 5);
+    Pageable pageable = PageRequest.of(page, SELLERS_PAGE_SIZE);
 
     return soldOfferRepository.findSellerPerformanceByPeriod(start, end, pageable);
   }

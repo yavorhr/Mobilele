@@ -33,9 +33,7 @@
     <section class="d-flex justify-content-center mt-4 sort-container"
              th:if="${offers != null and offers.size() > 1}">
 
-        <form th:action="@{${paginationUrl}}"
-              method="GET"
-              class="form-inline sort-form">
+        <form th:action="@{${baseUrl}}" method="GET" class="form-inline sort-form">
 
             <div class="sort-group">
                 <label for="sort" class="text-white mr-2">Sort:</label>
@@ -53,7 +51,6 @@
 
                 <!-- Keep size -->
                 <input type="hidden" name="size" th:value="${size}" />
-
                 <!-- Reset to first page when sorting -->
                 <input type="hidden" name="page" value="0" />
 
@@ -71,13 +68,11 @@
     </div>
 
     <th:block th:replace="fragments/pagination :: pagination(
-    ${paginationUrl},
+    ${paginationBase},
     ${currentPage},
-    ${totalPages},
-    ${sort},
-    ${dir},
-    ${size})">
+    ${totalPages})">
     </th:block>
+
 </main>
 <footer th:replace="fragments/minimal-footer"></footer>
 </body>

@@ -7,46 +7,29 @@
 </head>
 
 <body>
-<th:block th:fragment="pagination(baseUrl, currentPage, totalPages, sort, dir, size)">
+<th:block th:fragment="pagination(baseUrl, currentPage, totalPages)">
 
-  <div class="pagination-container d-flex justify-content-center align-items-center mt-4"
+  <div class="pagination-container"
        th:if="${totalPages > 1}">
 
     <!-- Prev -->
     <a th:if="${currentPage > 0}"
-       th:href="@{${baseUrl}(
-               page=${currentPage - 1},
-               sort=${sort},
-               dir=${dir},
-               size=${size}
-           )}"
+       th:href="@{${baseUrl} + '&page=' + ${currentPage - 1}}"
        class="pagination-btn">
       &laquo; Prev
     </a>
 
-    <!-- Page Numbers -->
-    <div class="pagination-numbers mx-2">
-      <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-         th:href="@{${baseUrl}(
-                   page=${i},
-                   sort=${sort},
-                   dir=${dir},
-                   size=${size}
-               )}"
-         th:text="${i + 1}"
-         th:classappend="${i == currentPage} ? 'active' : ''"
-         class="pagination-number">
-      </a>
-    </div>
+    <!-- Page numbers -->
+    <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+       th:href="@{${baseUrl} + '&page=' + ${i}}"
+       th:text="${i + 1}"
+       th:classappend="${i == currentPage} ? 'active' : ''"
+       class="pagination-number">
+    </a>
 
     <!-- Next -->
     <a th:if="${currentPage + 1 < totalPages}"
-       th:href="@{${baseUrl}(
-               page=${currentPage + 1},
-               sort=${sort},
-               dir=${dir},
-               size=${size}
-           )}"
+       th:href="@{${baseUrl} + '&page=' + ${currentPage + 1}}"
        class="pagination-btn">
       Next &raquo;
     </a>
