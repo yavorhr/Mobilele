@@ -65,6 +65,8 @@ public class OffersController {
     model.addAttribute("size", size);
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
+    model.addAttribute("baseUrl", "/offers/all");
+
     String paginationBase = UriComponentsBuilder
             .fromPath("/offers/all")
             .queryParam("sort", sort)
@@ -72,10 +74,7 @@ public class OffersController {
             .queryParam("size", size)
             .build()
             .toUriString();
-
     model.addAttribute("paginationBase", paginationBase);
-    
-    model.addAttribute("baseUrl", "/offers/all");
 
     return "offers";
   }
