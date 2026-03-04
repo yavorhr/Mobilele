@@ -164,15 +164,13 @@ public class UsersController {
           @AuthenticationPrincipal MobileleUser principal) {
 
     Map<String, Object> response = new HashMap<>();
-
-    // Rating validation
+    
     if (rating < 1) {
       response.put("success", false);
       response.put("message", "Please select at least one star.");
       return ResponseEntity.badRequest().body(response);
     }
 
-    // Comment validation
     if (comment == null || comment.trim().length() < 5) {
       response.put("success", false);
       response.put("message", "Comment must be at least 5 characters long.");
