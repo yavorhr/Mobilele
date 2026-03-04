@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.security.Principal;
 import java.util.Locale;
@@ -41,7 +42,8 @@ public class OffersUserController {
 
     Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
-    Page<OfferBaseViewModel> offersPage = offerService.findOffersByUserId(username, pageable);
+    Page<OfferBaseViewModel> offersPage =
+            offerService.findOffersByUserId(username, pageable);
 
     String title = ProjectHelpers.resolveLocalizedTitle(
             Constants.CONTEXT_MY,
@@ -51,16 +53,20 @@ public class OffersUserController {
             locale
     );
 
-    String paginationUrl = "/offers/my-offers";
+    String paginationBase =
+            ProjectHelpers.buildPaginationBase("/offers/my-offers", sort, dir, size);
 
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("size", size);
+
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
+
     model.addAttribute("title", title);
-    model.addAttribute("paginationUrl", paginationUrl);
-    model.addAttribute("size", size);
+    model.addAttribute("paginationBase", paginationBase);
+    model.addAttribute("baseUrl", "/offers/my-offers");
 
     return "offers";
   }
@@ -72,13 +78,15 @@ public class OffersUserController {
           @RequestParam(defaultValue = "desc") String dir,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "4") int size,
-          Model model, Locale locale) {
+          Model model,
+          Locale locale) {
 
     String username = principal.getName();
 
     Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
-    Page<OfferBaseViewModel> offersPage = offerService.findFavoriteOffers(username, pageable);
+    Page<OfferBaseViewModel> offersPage =
+            offerService.findFavoriteOffers(username, pageable);
 
     String title = ProjectHelpers.resolveLocalizedTitle(
             Constants.CONTEXT_FAVORITES,
@@ -88,16 +96,20 @@ public class OffersUserController {
             locale
     );
 
-    String paginationUrl = "/offers/favorites";
+    String paginationBase =
+            ProjectHelpers.buildPaginationBase("/offers/favorites", sort, dir, size);
 
     model.addAttribute("offers", offersPage.getContent());
     model.addAttribute("sort", sort);
     model.addAttribute("dir", dir);
+    model.addAttribute("size", size);
+
     model.addAttribute("currentPage", offersPage.getNumber());
     model.addAttribute("totalPages", offersPage.getTotalPages());
+
     model.addAttribute("title", title);
-    model.addAttribute("paginationUrl", paginationUrl);
-    model.addAttribute("size", size);
+    model.addAttribute("paginationBase", paginationBase);
+    model.addAttribute("baseUrl", "/offers/favorites");
 
     return "offers";
   }

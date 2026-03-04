@@ -6,6 +6,7 @@ import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -67,13 +68,9 @@ public class OffersController {
     model.addAttribute("totalPages", offersPage.getTotalPages());
     model.addAttribute("baseUrl", "/offers/all");
 
-    String paginationBase = UriComponentsBuilder
-            .fromPath("/offers/all")
-            .queryParam("sort", sort)
-            .queryParam("dir", dir)
-            .queryParam("size", size)
-            .build()
-            .toUriString();
+    String paginationBase =
+            ProjectHelpers.buildPaginationBase("/offers/all", sort, dir, size);
+
     model.addAttribute("paginationBase", paginationBase);
 
     return "offers";
@@ -204,7 +201,8 @@ public class OffersController {
     } else {
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("flashMessage",
-              "✅ Offer is successfully deleted!"); }
+              "✅ Offer is successfully deleted!");
+    }
 
     redirectAttributes.addFlashAttribute("flashType", "success");
 

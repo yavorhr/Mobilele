@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Locale;
 
@@ -39,6 +40,16 @@ public final class ProjectHelpers {
 
     Sort sorting = Sort.by(Sort.Direction.fromString(dir), sortField);
     return PageRequest.of(page, size, sorting);
+  }
+
+  public static String buildPaginationBase(String path, String sort, String dir, int size) {
+    return UriComponentsBuilder
+            .fromPath(path)
+            .queryParam("sort", sort)
+            .queryParam("dir", dir)
+            .queryParam("size", size)
+            .build()
+            .toUriString();
   }
 
   // Context for dynamic header
