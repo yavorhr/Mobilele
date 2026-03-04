@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.Year;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.IntStream;
 
 @Controller
@@ -49,7 +48,6 @@ public class StatsController {
     return "/admin/history";
   }
 
-
   @GetMapping("/history/{id}")
   public String showSnapshotDetails(@PathVariable Long id, Model model) {
     StatsViewModel stats = statsService.getSnapshotViewById(id);
@@ -69,10 +67,12 @@ public class StatsController {
             offerService.getSellerPerformanceByYear(selectedYear, page);
 
     model.addAttribute("selectedYear", selectedYear);
-    model.addAttribute("sellersPage", sellersPage);
     model.addAttribute("sellers", sellersPage.getContent());
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", sellersPage.getTotalPages());
+    model.addAttribute(
+            "paginationBase",
+            "/admin/sellers-performance?year=" + selectedYear);
 
     int currentYear = Year.now().getValue();
 

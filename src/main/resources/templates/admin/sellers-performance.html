@@ -52,19 +52,11 @@
             </tr>
             </tbody>
         </table>
-        <div class="pagination" th:if="${totalPages > 1}">
-            <a th:if="${currentPage > 0}"
-               th:href="@{/admin/sellers-performance(year=${selectedYear}, page=${currentPage - 1})}">
-                ◀ Previous
-            </a>
-
-            <span th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}"></span>
-
-            <a th:if="${currentPage + 1 < totalPages}"
-               th:href="@{/admin/sellers-performance(year=${selectedYear}, page=${currentPage + 1})}">
-                Next ▶
-            </a>
-        </div>
+        <th:block th:replace="fragments/pagination :: pagination(
+    ${paginationBase},
+    ${currentPage},
+    ${totalPages})">
+        </th:block>
     </div>
 </main>
 <footer th:replace="fragments/minimal-footer"></footer>
