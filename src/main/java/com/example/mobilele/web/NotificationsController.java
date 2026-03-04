@@ -51,8 +51,9 @@ public class NotificationsController {
     model.addAttribute("currentPage", usersPage.getNumber());
     model.addAttribute("totalPages", usersPage.getTotalPages());
 
-    return "admin/notifications"; // no leading slash
+    return "admin/notifications";
   }
+
   @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
