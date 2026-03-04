@@ -101,6 +101,10 @@ public class StatsController {
     model.addAttribute("cars", carsPage.getContent());
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", carsPage.getTotalPages());
+    model.addAttribute(
+            "paginationBase",
+            "/admin/sold-cars-stats?year=" + selectedYear
+    );
 
     int currentYear = Year.now().getValue();
 
