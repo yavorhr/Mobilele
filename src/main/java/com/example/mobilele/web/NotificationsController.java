@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("/admin")
@@ -41,9 +42,20 @@ public class NotificationsController {
     Page<UserAdministrationViewModel> usersPage =
             userService.searchPaginatedUsersPerEmail(query, pageRequest);
 
-    model.addAttribute("paginationUrl", "/admin/notifications");
-    model.addAttribute("size", size);
+    String paginationBase = UriComponentsBuilder
+            .fromPath("/admin/notifications")
+            .queryParam("query", query)
+            .queryParam("size", size)
+            .build()
+            .toUriString();
 
+    model.addAttribute(paginationBase, paginationBase);
+    model.addAttribute(
+            "paginationBase",
+            "/admin/notifications?query=" + query + "&size=" + size
+    );
+
+    model.addAttribute("size", size);
     model.addAttribute("usersPage", usersPage);
     model.addAttribute("users", usersPage.getContent());
     model.addAttribute("loggedInUsername", principal.getUsername());

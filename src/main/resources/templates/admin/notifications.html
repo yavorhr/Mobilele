@@ -104,13 +104,9 @@
             </div>
 
             <th:block th:replace="fragments/pagination :: pagination(
-    ${paginationUrl},
+    ${paginationBase},
     ${currentPage},
-    ${totalPages},
-    ${sort},
-    ${dir},
-    ${size}
-)">
+    ${totalPages})">
             </th:block>
 
             <!-- Page indicator -->
