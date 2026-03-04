@@ -12,8 +12,7 @@
     <div class="heading-wrapper mb-4">
         <h1 class="section-title" th:text="#{stats.sellers.soldCars.title}">📊 Sold Cars Stats</h1>
     </div>
-    <form
-            method="get" class="filters mb-5">
+    <form method="get" class="filters mb-5">
         <label>
             <span th:text="#{stats.sellers.year}"></span>:
             <select name="year" onchange=" this.form.submit()">
@@ -24,7 +23,6 @@
                 </option>
             </select>
         </label>
-
     </form>
     <div class="table-wrapper">
         <table class="stats-table">
