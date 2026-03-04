@@ -145,8 +145,7 @@ public class UsersController {
   @DeleteMapping("/delete")
   public String deleteUserProfile(
           @AuthenticationPrincipal MobileleUser principal,
-          HttpServletRequest request,
-          HttpServletResponse response) throws ServletException {
+          HttpServletRequest request) throws ServletException {
 
     Long userId = principal.getId();
     this.userService.deleteProfileById(userId);
@@ -164,7 +163,7 @@ public class UsersController {
           @AuthenticationPrincipal MobileleUser principal) {
 
     Map<String, Object> response = new HashMap<>();
-    
+
     if (rating < 1) {
       response.put("success", false);
       response.put("message", "Please select at least one star.");
