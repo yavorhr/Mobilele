@@ -435,7 +435,6 @@ public class OfferServiceImpl implements OfferService {
             .map(this::mapToOfferBaseViewModel);
   }
 
-
   // Init offers
   @Transactional
   @Override
@@ -478,6 +477,7 @@ public class OfferServiceImpl implements OfferService {
     offerRepository.saveAll(offers);
   }
 
+  // Private helper methods
   private OfferEntity buildOffer(
           ModelEntity model,
           EngineEnum engineType,

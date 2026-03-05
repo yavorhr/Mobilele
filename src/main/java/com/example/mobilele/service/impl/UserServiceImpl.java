@@ -28,7 +28,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -151,7 +150,6 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = this.userRepository
             .findById(userId)
             .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
-
 
     soldOfferRepository.clearSeller(userId);
 
