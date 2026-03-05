@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const icon = reserveBtn.querySelector('.icon');
     const text = reserveBtn.querySelector('.text');
-    
+
     const initialReserved = reserveBtn.dataset.reserved === 'true';
 
     if (initialReserved) {
