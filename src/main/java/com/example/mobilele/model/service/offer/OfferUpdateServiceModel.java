@@ -5,6 +5,7 @@ import com.example.mobilele.model.entity.enums.*;
 import java.math.BigDecimal;
 
 public class OfferUpdateServiceModel {
+  private Long id;
   private BigDecimal price;
   private Double mileage;
   private EngineEnum engine;
@@ -17,6 +18,10 @@ public class OfferUpdateServiceModel {
   private String description;
 
   public OfferUpdateServiceModel() {
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public ConditionEnum getCondition() {
@@ -68,6 +73,11 @@ public class OfferUpdateServiceModel {
 
   public OfferUpdateServiceModel setPrice(BigDecimal price) {
     this.price = price;
+    return this;
+  }
+
+  public OfferUpdateServiceModel setId(Long id) {
+    this.id = id;
     return this;
   }
 
