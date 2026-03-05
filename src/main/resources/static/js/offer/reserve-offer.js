@@ -12,6 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const textBanner = reserveBtn.dataset.textBanner;
     const textError = reserveBtn.dataset.textError;
 
+    const icon = reserveBtn.querySelector('.icon');
+    const text = reserveBtn.querySelector('.text');
+    
+    const initialReserved = reserveBtn.dataset.reserved === 'true';
+
+    if (initialReserved) {
+        icon.textContent = '🔒';
+        text.textContent = textCancel;
+        reserveBtn.classList.add('reserved');
+        mainContainer.classList.add('reserved');
+    } else {
+        icon.textContent = '🟢';
+        text.textContent = textReserve;
+        reserveBtn.classList.remove('reserved');
+        mainContainer.classList.remove('reserved');
+    }
+
     reserveBtn.addEventListener('click', async () => {
         const offerId = reserveBtn.dataset.offerId;
         const currentState = reserveBtn.dataset.reserved === 'true';
@@ -22,18 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json',
                     [csrfHeaderName]: csrfHeaderValue,
-                },
-                body: JSON.stringify({ reserved: !currentState }),
+                }
             });
 
             if (!response.ok) throw new Error('Request failed');
+
             const data = await response.json();
 
             reserveBtn.dataset.reserved = data.reserved;
             reserveBtn.classList.toggle('reserved', data.reserved);
-
-            const icon = reserveBtn.querySelector('.icon');
-            const text = reserveBtn.querySelector('.text');
 
             if (data.reserved) {
                 icon.textContent = '🔒';
@@ -46,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     banner.innerHTML = `<span>${textBanner}</span>`;
                     mainContainer.appendChild(banner);
                 }
+
             } else {
                 icon.textContent = '🟢';
                 text.textContent = textReserve;
@@ -54,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const banner = mainContainer.querySelector('.reserved-banner');
                 if (banner) banner.remove();
             }
+
         } catch (err) {
             console.error('Error toggling reservation:', err);
             alert(textError);
