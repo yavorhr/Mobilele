@@ -32,6 +32,18 @@ public class OfferUpdateServiceModel {
     return this;
   }
 
+  public ColorEnum getColor() {
+    return color;
+  }
+
+  public CountryEnum getCountry() {
+    return country;
+  }
+
+  public CityEnum getCity() {
+    return city;
+  }
+
   public EngineEnum getEngine() {
     return engine;
   }
@@ -61,6 +73,21 @@ public class OfferUpdateServiceModel {
 
   public OfferUpdateServiceModel setCondition(ConditionEnum condition) {
     this.condition = condition;
+    return this;
+  }
+
+  public OfferUpdateServiceModel setColor(ColorEnum color) {
+    this.color = color;
+    return this;
+  }
+
+  public OfferUpdateServiceModel setCountry(CountryEnum country) {
+    this.country = country;
+    return this;
+  }
+
+  public OfferUpdateServiceModel setCity(CityEnum city) {
+    this.city = city;
     return this;
   }
 
