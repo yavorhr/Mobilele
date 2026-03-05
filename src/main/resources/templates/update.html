@@ -15,7 +15,7 @@
 
             <form
                     th:object="${offerUpdateBindingModel}"
-                    th:action="@{/offers/update/{id}(id=${offerUpdateBindingModel.id})}"
+                    th:action="@{/offers/update/{id}(id=*{id})}"
                     th:method="PATCH"
                     enctype="multipart/form-data"
                     class="offer-form">
