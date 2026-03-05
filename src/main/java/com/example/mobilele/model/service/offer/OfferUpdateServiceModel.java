@@ -1,21 +1,26 @@
 package com.example.mobilele.model.service.offer;
 
-import com.example.mobilele.model.entity.enums.EngineEnum;
-import com.example.mobilele.model.entity.enums.TransmissionType;
-import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
+import com.example.mobilele.model.entity.enums.*;
 
 import java.math.BigDecimal;
 
 public class OfferUpdateServiceModel {
-  private String description;
-  private EngineEnum engine;
-  private String imageUrl;
-  private Double mileage;
   private BigDecimal price;
+  private Double mileage;
+  private EngineEnum engine;
   private TransmissionType transmission;
   private Integer year;
+  private ConditionEnum condition;
+  private ColorEnum color;
+  private CountryEnum country;
+  private CityEnum city;
+  private String description;
 
   public OfferUpdateServiceModel() {
+  }
+
+  public ConditionEnum getCondition() {
+    return condition;
   }
 
   public String getDescription() {
@@ -36,15 +41,6 @@ public class OfferUpdateServiceModel {
     return this;
   }
 
-  public String getImageUrl() {
-    return imageUrl;
-  }
-
-  public OfferUpdateServiceModel setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-    return this;
-  }
-
   public Double getMileage() {
     return mileage;
   }
@@ -60,6 +56,11 @@ public class OfferUpdateServiceModel {
 
   public OfferUpdateServiceModel setPrice(BigDecimal price) {
     this.price = price;
+    return this;
+  }
+
+  public OfferUpdateServiceModel setCondition(ConditionEnum condition) {
+    this.condition = condition;
     return this;
   }
 
