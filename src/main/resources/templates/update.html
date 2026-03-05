@@ -10,7 +10,8 @@
 <div class="auth-layout">
     <main class="main-content" role="main">
         <section>
-            <h2 class="text-center">Update Offer</h2>
+            <h2 class="text-center"
+            th:text="#{offer.update.title}">Update Offer</h2>
 
             <form
                     th:object="${offerBindingModel}"
@@ -21,7 +22,7 @@
 
                 <div class="form-flex">
                     <div class="form-group">
-                        <label for="price">Price</label>
+                        <label for="price" th:text="#{offer.price}">Price</label>
                         <input id="price"
                                type="number"
                                min="0" placeholder="Suggested price"
@@ -32,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mileage">Mileage</label>
+                        <label for="mileage" th:text="#{offer.mileage}">Mileage</label>
                         <input id="mileage"
                                type="number"
                                min="0"
@@ -47,12 +48,12 @@
 
                 <div class="form-flex">
                     <div class="form-group">
-                        <label for="engine">Engine</label>
+                        <label for="engine" th:text="#{offer.engine}">Engine</label>
                         <select id="engine" th:field="*{engine}">
                             <option
                                     th:each="e : ${engines}"
                                     th:value="${e}"
-                                    th:text="${e}">
+                                    th:text="#{${'engine.' + e.name()}}">
                             </option>
                         </select>
                         <div th:if="${#fields.hasErrors('engine')}"
@@ -61,11 +62,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="transmission">Transmission</label>
+                        <label for="transmission" th:text="#{offer.transmission}">Transmission</label>
                         <select id="transmission" th:field="*{transmission}">
                             <option th:each="t : ${transmissions}"
                                     th:value="${t}"
-                                    th:text="${t}"></option>
+                                    th:text="#{${'transmission.' + t.name()}}"></option>
                         </select>
                         <div
                                 th:if="${#fields.hasErrors('transmission')}"
@@ -77,7 +78,7 @@
                 <div class="form-flex">
 
                     <div class="form-group">
-                        <label for="year">Model Year</label>
+                        <label for="year" th:text="#{form.year}">Model Year</label>
                         <input id="year" type="number" placeholder="e.g. 2020" th:field="*{year}"/>
                         <div
                                 th:if="${#fields.hasErrors('year')}"
@@ -86,9 +87,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="condition">Condition</label>
+                        <label for="condition" th:text="#{offer.condition}">Condition</label>
                         <select id="condition" th:field="*{condition}">
-                            <option th:each="c : ${conditions}" th:value="${c}" th:text="${c}"></option>
+                            <option th:each="c : ${conditions}"
+                                    th:value="${c}"
+                                    th:text="#{${'condition.' + c.name()}}"></option>
                         </select>
                         <div
                                 th:if="${#fields.hasErrors('condition')}"
@@ -99,9 +102,11 @@
 
                 <div class="form-flex color">
                     <div class="form-group" style="flex: 0.5;">
-                        <label for="color">Color</label>
+                        <label for="color" th:text="#{offer.color}">Color</label>
                         <select id="color" th:field="*{color}">
-                            <option th:each="c : ${colors}" th:value="${c}" th:text="${c}"></option>
+                            <option th:each="c : ${colors}"
+                                    th:value="${c}"
+                                    th:text="#{${'color.' + c.name()}}"></option>
                         </select>
                         <div
                                 th:if="${#fields.hasErrors('color')}"
@@ -112,12 +117,12 @@
 
                 <div class="form-flex">
                     <div class="form-group">
-                        <label for="country">Country</label>
+                        <label for="country" th:text="#{offer.country}">Country</label>
                         <select id="country"
                                 th:field="*{country}">
                             <option th:each="c : ${countries}"
                                     th:value="${c}"
-                                    th:text="${c}"></option>
+                                    th:text="#{${'country.' + c.name()}}"></option>
                         </select>
                         <div th:if="${#fields.hasErrors('country')}"
                              th:errors="*{country}"
@@ -126,7 +131,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="city">City</label>
+                        <label for="city" th:text="#{offer.city}">City</label>
                         <select id="city"
                                 th:field="*{city}"
                                 th:attr="data-selected-city=*{city}">
@@ -138,7 +143,8 @@
                 </div>
 
                 <div class="form-group full-width">
-                    <label for="description">Description</label>
+                    <label for="description"
+                           th:text="#{offer.description}">Description</label>
                     <textarea id="description"
                               rows="7"
                               placeholder="Description"
@@ -150,7 +156,7 @@
                 </div>
 
                 <div class="button-holder">
-                    <button class="btn btn-submit">Update offer</button>
+                    <button class="btn btn-submit" th:text="#{offer.update}">Update offer</button>
                 </div>
             </form>
         </section>
