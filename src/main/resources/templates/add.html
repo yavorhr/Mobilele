@@ -186,8 +186,9 @@
 
                 <div class="form-group">
                     <label for="city">City</label>
-                    <select id="city" th:field="*{city}"
-                            th:attr="data-selected-city=*{city}">
+                    <select id="city"
+                            th:field="*{city}"
+                            th:data-selected-city="*{city}">
                         <option value="" th:text="#{offer.selectCity}">- Select city -
                         </option>
                         <option th:each="c : ${cities}"
@@ -226,6 +227,7 @@
                 <div class="button-holder">
                     <button class="btn btn-submit" th:text="#{offer.submit}">Add offer</button>
                 </div>
+            </div>
         </form>
     </section>
 </main>

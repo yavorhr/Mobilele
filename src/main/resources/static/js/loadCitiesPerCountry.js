@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     option.value = city.value;
                     option.textContent = city.label;
 
-                    if (previousCity && previousCity.trim().toLowerCase() === city.trim().toLowerCase()) {
+                    if (previousCity && previousCity === city.value) {
                         option.selected = true;
                     }
 
