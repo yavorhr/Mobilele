@@ -1,5 +1,6 @@
 package com.example.mobilele.service;
 
+import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
@@ -67,4 +68,6 @@ public interface OfferService {
   Page<TopSellerViewModel> getSellerPerformanceByYear(int year, int page);
 
   Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page);
+
+  OfferUpdateBindingForm getUpdateForm(Long id);
 }

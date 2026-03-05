@@ -157,11 +157,6 @@ public class OffersController {
     return "update";
   }
 
-  @GetMapping("/offers/update/errors/{id}")
-  public String editOfferErrors(@PathVariable Long id) {
-    return "update";
-  }
-
   @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
@@ -181,6 +176,17 @@ public class OffersController {
     this.offerService.updateOffer(this.modelMapper.map(offerUpdateBindingModel, OfferUpdateServiceModel.class), id);
 
     return "redirect:/offers/details/" + id;
+  }
+
+  @GetMapping("/offers/update/errors/{id}")
+  public String editOfferErrors(@PathVariable Long id, Model model) {
+
+    if (!model.containsAttribute("offerUpdateBindingModel")) {
+      model.addAttribute("offerUpdateBindingModel",
+              offerService.getUpdateForm(id));
+    }
+
+    return "update";
   }
 
   // 5. Delete offer

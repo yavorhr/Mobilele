@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
+import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
@@ -421,6 +422,14 @@ public class OfferServiceImpl implements OfferService {
     Pageable pageable = PageRequest.of(page, 10);
 
     return soldOfferRepository.findSoldCarsByPeriod(start, end, pageable);
+  }
+
+  @Override
+  public OfferUpdateBindingForm getUpdateForm(Long id) {
+    return modelMapper.map(
+            offerRepository.findById(id).orElseThrow(),
+            OfferUpdateBindingForm.class
+    );
   }
 
   @Override
