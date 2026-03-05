@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const editBtn = document.getElementById("edit-btn");
     const saveBtn = document.getElementById("save-btn");
     const cancelBtn = document.getElementById("cancel-btn");
+    const errorBox = document.getElementById("phoneNumber-error");
 
     const editableFields = ["firstName", "lastName", "phoneNumber"];
 
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (response.ok) {
+                errorBox.classList.add("hidden");
                 const updated = await response.json();
                 // Update the displayed values
                 for (let key in updated) {
@@ -49,8 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (span) span.textContent = updated[key];
                 }
                 toggleEditMode(false);
+            } else if (response.status === 409) {
+
+                const error = await response.json();
+                errorBox.textContent = error.phoneNumber;
+
+                errorBox.classList.remove("hidden");
+
             } else {
-                alert("Failed to update profile. Try again.");
+                alert("Failed to update profile.");
             }
         } catch (err) {
             console.error("Error updating profile:", err);

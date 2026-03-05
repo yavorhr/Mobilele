@@ -46,12 +46,13 @@
                 <strong th:text="#{profile.phone}">Phone Number:</strong>
                 <span id="phoneNumber-display" th:text="*{phoneNumber}"></span>
                 <input id="phoneNumber-input" type="text" th:value="*{phoneNumber}" class="hidden editable-input">
+            <div id="phoneNumber-error" class="error-msg hidden"></div>
             </p>
         </div>
 
         <div class="actions mt-4">
             <button id="edit-btn" class="btn btn-submit" th:text="#{profile.edit}">Edit Profile</button>
-            <button id="save-btn" class="btn btn-success hidden"  th:text="#{profile.save}">Save</button>
+            <button id="save-btn" class="btn btn-success hidden" th:text="#{profile.save}">Save</button>
             <button id="cancel-btn" class="btn btn-secondary hidden" th:text="#{profile.cancel}">Cancel</button>
         </div>
     </section>

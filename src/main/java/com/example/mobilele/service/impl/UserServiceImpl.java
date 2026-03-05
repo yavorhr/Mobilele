@@ -15,6 +15,7 @@ import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
+import com.example.mobilele.web.exception.DuplicatePhoneException;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -134,6 +135,13 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = this.userRepository
             .findById(userId)
             .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " was not found!"));
+
+    Optional<UserEntity> existing =
+            userRepository.findByPhoneNumberIgnoreCase(bindingModel.getPhoneNumber());
+
+    if (existing.isPresent() && !existing.get().getId().equals(userId)) {
+      throw new DuplicatePhoneException("Phone number already in use");
+    }
 
     userEntity.setFirstName(bindingModel.getFirstName());
     userEntity.setLastName(bindingModel.getLastName());
