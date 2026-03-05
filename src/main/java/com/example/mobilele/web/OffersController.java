@@ -26,8 +26,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -154,7 +152,7 @@ public class OffersController {
             this.modelMapper.map(this.offerService
                     .findOfferById(principal.getUsername(), id), OfferUpdateBindingForm.class);
 
-    model.addAttribute("offerBindingModel", offerBindingModel);
+    model.addAttribute("offerUpdateBindingModel", offerBindingModel);
 
     return "update";
   }
@@ -168,19 +166,19 @@ public class OffersController {
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
                             @AuthenticationPrincipal MobileleUser principal,
-                            @Valid OfferUpdateBindingForm offerBindingModel,
+                            @Valid OfferUpdateBindingForm offerUpdateBindingModel,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes
-              .addFlashAttribute("offerBindingModel", offerBindingModel)
-              .addFlashAttribute("org.springframework.validation.BindingResult.offerBindingModel", bindingResult);
+              .addFlashAttribute("offerUpdateBindingModel", offerUpdateBindingModel)
+              .addFlashAttribute("org.springframework.validation.BindingResult.offerUpdateBindingModel", bindingResult);
 
       return "redirect:/offers/update/errors/" + id;
     }
 
-    this.offerService.updateOffer(this.modelMapper.map(offerBindingModel, OfferUpdateServiceModel.class), id);
+    this.offerService.updateOffer(this.modelMapper.map(offerUpdateBindingModel, OfferUpdateServiceModel.class), id);
 
     return "redirect:/offers/details/" + id;
   }
