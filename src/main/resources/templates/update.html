@@ -134,7 +134,9 @@
                         <label for="city" th:text="#{offer.city}">City</label>
                         <select id="city"
                                 th:field="*{city}"
-                                th:attr="data-selected-city=*{city}">
+                                th:attr="data-selected-city=*{city}"
+                                th:data-placeholder="#{offer.selectCity}">>
+                            <option value="" th:text="#{offer.selectCity}">- Select city -</option>
                         </select>
                         <div th:if="${#fields.hasErrors('city')}"
                              th:errors="*{city}"

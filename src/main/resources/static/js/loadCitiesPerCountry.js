@@ -7,11 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const previousCity = citySelect.getAttribute('data-selected-city');
 
     const populateCities = (country) => {
-        citySelect.innerHTML = '';
-        const defaultOption = document.createElement('option');
-        defaultOption.textContent = "- Select city -";
-        defaultOption.value = "";
-        citySelect.appendChild(defaultOption);
+
+        citySelect.querySelectorAll('option:not(:first-child)').forEach(o => o.remove());
 
         if (!country) return;
 
