@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,4 +73,13 @@ class MobileleUserServiceImplTest {
     Assertions.assertEquals(actualUser.getUsername(), user.getEmail());
     Assertions.assertEquals(expectedRoles, actualRoles);
   }
+
+ @Test
+  void testUserNotFound() {
+    Assertions.assertThrows(
+            UsernameNotFoundException.class,
+            () -> userService.loadUserByUsername("invalid_user_email@not-exist.com")
+    );
+  }
+
 }
