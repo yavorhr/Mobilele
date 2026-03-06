@@ -4,7 +4,8 @@ import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +36,7 @@ class MobileleUserServiceImplTest {
     // Arrange
     user = new UserEntity();
     user.setId(1L);
-    user.setEmail("user@gmail.com");
+    user.setUsername("user");
     user.setPassword("password");
     user.setAccountLocked(false);
 
@@ -50,17 +50,17 @@ class MobileleUserServiceImplTest {
   }
 
   @Test
-  void testLoadUserByUsername_UserExists() {
+  public void testLoadUserByUsername_UserExists() {
     // Arrange
-    Mockito.when(userRepository.findByUsername(user.getEmail()))
+    Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
 
     // Act
-    var actualUser = userService.loadUserByUsername("user@gmail.com");
+    var actualUser = userService.loadUserByUsername("user");
 
     // Assert
     Assertions.assertNotNull(actualUser);
-    Assertions.assertEquals("user@gmail.com", actualUser.getUsername());
+    Assertions.assertEquals("user", actualUser.getUsername());
     Assertions.assertEquals("password", actualUser.getPassword());
 
     String expectedRoles = "ROLE_ADMIN, ROLE_USER";
@@ -69,12 +69,12 @@ class MobileleUserServiceImplTest {
             .map(GrantedAuthority::getAuthority).collect(
                     Collectors.joining(", "));
 
-    Assertions.assertEquals(actualUser.getUsername(), user.getEmail());
+    Assertions.assertEquals(actualUser.getUsername(), user.getUsername());
     Assertions.assertEquals(expectedRoles, actualRoles);
   }
 
  @Test
-  void testUserNotFound() {
+ public void testUserNotFound() {
    Mockito.when(userRepository.findByUsername("missingUser"))
            .thenReturn(Optional.empty());
 
