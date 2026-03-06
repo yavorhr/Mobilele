@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
@@ -89,8 +90,15 @@ class MobileleUserServiceImplTest {
 
   @Test
   void testMapToUserDetails() {
+    // Arrange test getUserId
+    List<GrantedAuthority> authorities = List.of(
+            new SimpleGrantedAuthority("ROLE_USER"),
+            new SimpleGrantedAuthority("ROLE_ADMIN")
+    );
+
     // Act
     userDetails = userService.loadUserByUsername("user");
+    MobileleUser mobileleUser = new MobileleUser(user, authorities);
 
     // Assert
     Assertions.assertEquals(1L, ((MobileleUser) userDetails).getId());
@@ -101,6 +109,7 @@ class MobileleUserServiceImplTest {
     Assertions.assertTrue(userDetails.isCredentialsNonExpired());
     Assertions.assertTrue(userDetails.isAccountNonLocked());
     Assertions.assertEquals(2, userDetails.getAuthorities().size());
+    Assertions.assertEquals(mobileleUser.getUserEntity(), user);
   }
 
 }
