@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +25,14 @@ import java.util.stream.Collectors;
 class MobileleUserServiceImplTest {
   private UserRoleEntity adminRole, userRole;
   private UserEntity user;
+  private UserDetails userDetails;
 
   @Mock
   private UserRepository userRepository;
 
   @InjectMocks
   private MobileleUserServiceImpl userService;
+
 
   @BeforeEach
   void init() {
@@ -47,29 +50,29 @@ class MobileleUserServiceImplTest {
     userRole.setRole(UserRoleEnum.USER);
 
     user.setRoles(List.of(adminRole, userRole));
+
+    Mockito.when(userRepository
+            .findByUsername(user.getUsername()))
+            .thenReturn(Optional.of(user));
   }
 
   @Test
   public void testLoadUserByUsername_UserExists() {
-    // Arrange
-    Mockito.when(userRepository.findByUsername(user.getUsername()))
-            .thenReturn(Optional.of(user));
-
     // Act
-    var actualUser = userService.loadUserByUsername("user");
+     userDetails = userService.loadUserByUsername("user");
 
     // Assert
-    Assertions.assertNotNull(actualUser);
-    Assertions.assertEquals("user", actualUser.getUsername());
-    Assertions.assertEquals("password", actualUser.getPassword());
+    Assertions.assertNotNull(userDetails);
+    Assertions.assertEquals("user", userDetails.getUsername());
+    Assertions.assertEquals("password", userDetails.getPassword());
 
     String expectedRoles = "ROLE_ADMIN, ROLE_USER";
-    String actualRoles = actualUser.getAuthorities()
+    String actualRoles = userDetails.getAuthorities()
             .stream()
             .map(GrantedAuthority::getAuthority).collect(
                     Collectors.joining(", "));
 
-    Assertions.assertEquals(actualUser.getUsername(), user.getUsername());
+    Assertions.assertEquals(userDetails.getUsername(), user.getUsername());
     Assertions.assertEquals(expectedRoles, actualRoles);
   }
 
@@ -82,6 +85,22 @@ class MobileleUserServiceImplTest {
             UsernameNotFoundException.class,
             () -> userService.loadUserByUsername("missingUser")
     );
+  }
+
+  @Test
+  void testMapToUserDetails() {
+    // Act
+    userDetails = userService.loadUserByUsername("user");
+
+    // Assert
+    Assertions.assertEquals(1L, ((MobileleUser) userDetails).getId());
+    Assertions.assertEquals(user.getUsername(), userDetails.getUsername());
+    Assertions.assertEquals(user.getPassword(), userDetails.getPassword());
+    Assertions.assertTrue(userDetails.isEnabled());
+    Assertions.assertTrue(userDetails.isAccountNonExpired());
+    Assertions.assertTrue(userDetails.isCredentialsNonExpired());
+    Assertions.assertTrue(userDetails.isAccountNonLocked());
+    Assertions.assertEquals(2, userDetails.getAuthorities().size());
   }
 
 }
