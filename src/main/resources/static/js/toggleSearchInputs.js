@@ -49,8 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateButtonState() {
         if (isFormValid()) {
             searchBtn.classList.remove("disabled-btn");
+            searchBtn.disabled = false;
         } else {
             searchBtn.classList.add("disabled-btn");
+            searchBtn.disabled = true;
         }
     }
 
