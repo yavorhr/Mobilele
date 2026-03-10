@@ -41,7 +41,7 @@ public class OffersApiController {
   }
 
   // Offer Reservation
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #id )")
   @PatchMapping("/offers/{id}/toggle-reservation")
   public ResponseEntity<Map<String, Boolean>> toggleReservation(@PathVariable Long id,
                                                                 @AuthenticationPrincipal MobileleUser principal) {
