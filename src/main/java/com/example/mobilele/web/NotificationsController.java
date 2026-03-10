@@ -50,7 +50,7 @@ public class NotificationsController {
             .build()
             .toUriString();
 
-    model.addAttribute(paginationBase, paginationBase);
+    model.addAttribute("paginationBase", paginationBase);
     model.addAttribute(
             "paginationBase",
             "/admin/notifications?query=" + query + "&size=" + size
