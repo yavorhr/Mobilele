@@ -142,7 +142,7 @@ public class OffersController {
   }
 
   // 4. Update Offer
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id )")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #id )")
   @GetMapping("/offers/update/{id}")
   public String getOfferUpdatePage(@PathVariable Long id,
                                    @AuthenticationPrincipal MobileleUser principal,
@@ -157,7 +157,7 @@ public class OffersController {
     return "update";
   }
 
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #id )")
   @PatchMapping("/offers/update/{id}")
   public String updateOffer(@PathVariable Long id,
                             @AuthenticationPrincipal MobileleUser principal,
@@ -190,7 +190,7 @@ public class OffersController {
   }
 
   // 5. Delete offer
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #id)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #id )")
   @DeleteMapping("/offers/{id}")
   public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
                             @PathVariable Long id,
