@@ -103,7 +103,7 @@ public class UsersController {
     return "profile";
   }
 
-  @PreAuthorize("@userServiceImpl.isNotOwnerOrIsAdmin(#principal.name,#offerId)")
+  @PreAuthorize("@security.canToggleFavorite(#principal.name,#offerId)")
   @PostMapping("/favorites/{offerId}/toggle")
   @ResponseBody
   public ResponseEntity<Map<String, Object>> toggleFavorite(

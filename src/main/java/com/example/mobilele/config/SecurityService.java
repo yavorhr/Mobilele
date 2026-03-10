@@ -1,5 +1,6 @@
 package com.example.mobilele.config;
 
+import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Component;
 public class SecurityService {
 
   private final UserService userService;
+  private final OfferService offerService;
 
-  public SecurityService(UserService userService) {
+  public SecurityService(UserService userService, OfferService offerService) {
     this.userService = userService;
+    this.offerService = offerService;
   }
 
   public boolean canModifyOffer(String username, Long offerId) {
@@ -22,5 +25,9 @@ public class SecurityService {
 
   public boolean isNotModifyingOwnProfile(String targetUsername, String currentUsername) {
     return userService.isNotModifyingOwnProfile(targetUsername, currentUsername);
+  }
+
+  public boolean canToggleFavorite(String username, Long offerId) {
+    return userService.isNotOwnerOrIsAdmin(username, offerId);
   }
 }
