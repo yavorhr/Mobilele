@@ -20,10 +20,6 @@ public class SecurityService {
     return userService.isOwnerOrIsAdmin(username, offerId);
   }
 
-  public boolean canModifyUser(String currentUsername, String targetUsername) {
-    return !currentUsername.equals(targetUsername);
-  }
-
   public boolean isNotModifyingOwnProfile(String targetUsername, String currentUsername) {
     return userService.isNotModifyingOwnProfile(targetUsername, currentUsername);
   }
