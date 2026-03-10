@@ -56,8 +56,6 @@ public interface UserService {
 
   boolean isOwner(String username, Long routeId);
 
-  void deleteOfferFromFavorites(Long id);
-
   Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String emailQuery, Pageable pageable);
 
   UserUpdateStatusResponse changeAccess(String username);

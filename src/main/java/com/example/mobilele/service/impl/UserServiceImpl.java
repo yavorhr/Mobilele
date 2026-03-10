@@ -245,21 +245,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @Transactional
-  public void deleteOfferFromFavorites(Long offerId) {
-    List<UserEntity> users = userRepository.findAll();
-
-    for (UserEntity user : users) {
-      boolean modified = user.getFavorites()
-              .removeIf(o -> o.getId().equals(offerId));
-
-      if (modified) {
-        userRepository.save(user);
-      }
-    }
-  }
-
-  @Override
   public UserUpdateStatusResponse changeAccess(String username) {
     UserEntity userEntity =
             this.userRepository

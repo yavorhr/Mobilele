@@ -2,6 +2,7 @@ package com.example.mobilele.repository;
 
 import com.example.mobilele.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   List<UserEntity> findAllLockedUsers();
 
   List<UserEntity> findAllByEmailContainingIgnoreCase(String email);
+
+  @Modifying
+  @Query(value = "DELETE FROM users_favorites WHERE offer_id = :offerId", nativeQuery = true)
+  void deleteFavoritesByOfferId(Long offerId);
 }

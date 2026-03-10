@@ -14,6 +14,7 @@ import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
+import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.*;
 import com.example.mobilele.util.ProjectHelpers;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
@@ -49,6 +50,7 @@ public class OfferServiceImpl implements OfferService {
 
 
   private final OfferRepository offerRepository;
+  private final UserRepository userRepository;
   private final SoldOfferRepository soldOfferRepository;
   private final ModelService modelService;
   private final ModelMapper modelMapper;
@@ -57,8 +59,9 @@ public class OfferServiceImpl implements OfferService {
   private final CloudinaryService cloudinaryService;
   private final OfferSeedGenerator seedGenerator;
 
-  public OfferServiceImpl(OfferRepository offerRepository, SoldOfferRepository soldOfferRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService, OfferSeedGenerator seedGenerator) {
+  public OfferServiceImpl(OfferRepository offerRepository, UserRepository userRepository, SoldOfferRepository soldOfferRepository, ModelService modelService, ModelMapper modelMapper, UserService userService, BrandService brandService, CloudinaryService cloudinaryService, OfferSeedGenerator seedGenerator) {
     this.offerRepository = offerRepository;
+    this.userRepository = userRepository;
     this.soldOfferRepository = soldOfferRepository;
     this.modelService = modelService;
     this.modelMapper = modelMapper;
@@ -98,7 +101,7 @@ public class OfferServiceImpl implements OfferService {
             .findById(id)
             .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + id + " was not found!"));
 
-    userService.deleteOfferFromFavorites(id);
+    userRepository.deleteFavoritesByOfferId(id);
 
     for (Picture picture : offer.getPictures()) {
       try {
