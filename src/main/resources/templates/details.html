@@ -28,7 +28,7 @@
                     <button id="prevBtn" class="nav-btn left">&lt;</button>
                     <button id="nextBtn" class="nav-btn right">&gt;</button>
 
-                    <th:block th:if="*{canModify}">
+                    <th:block th:if="*{canModify}" sec:authorize="isAuthenticated()">
                         <button type="button"
                                 id="deleteBtn"
                                 th:data-offer-id="*{id}"
@@ -59,7 +59,7 @@
                     </div>
                     <div class="favorite-container">
                         <div id="favorite-message" class="favorite-message"></div>
-                        <th:block th:if="*{isNotOwnerOrIsAdmin}">
+                        <th:block th:if="*{isNotOwnerOrIsAdmin}" sec:authorize="isAuthenticated()">
                             <button
                                     type="button"
                                     class="btn favorites-btn"
@@ -88,7 +88,7 @@
                 </div>
 
 
-                <th:block th:if="*{canModify}">
+                <th:block th:if="*{canModify}" sec:authorize="isAuthenticated()">
                     <div class="modify-buttons">
                         <button
                                 type="button"
