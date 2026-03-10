@@ -219,7 +219,7 @@ public class OffersController {
   public String deleteOffer(@AuthenticationPrincipal MobileleUser principal,
                             @PathVariable Long id,
                             RedirectAttributes redirectAttributes,
-                            boolean soldOffer) {
+                            @RequestParam(defaultValue = "false") boolean soldOffer) {
 
     if (soldOffer) {
       offerService.saveSoldOffer(id);
