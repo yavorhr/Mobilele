@@ -67,7 +67,7 @@ public class NotificationsController {
     return "admin/notifications";
   }
 
-  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#username, #principal.username)")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String username,
@@ -78,7 +78,7 @@ public class NotificationsController {
     return ResponseEntity.ok(statusResponse);
   }
 
-  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#username, #principal.username)")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#username, #principal.username)")
   @DeleteMapping("/api/remove-user/{username}")
   @ResponseBody
   public ResponseEntity<?> deleteUser(@PathVariable String username,
@@ -89,7 +89,7 @@ public class NotificationsController {
     return ResponseEntity.ok("User deleted successfully!");
   }
 
-  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#principal.username, #username)")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#principal.username, #username)")
   @PutMapping("/api/change-user-lock-status/{username}")
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String username,
@@ -100,7 +100,7 @@ public class NotificationsController {
     return ResponseEntity.ok(statusResponse);
   }
 
-  @PreAuthorize("@userServiceImpl.isNotModifyingOwnProfile(#principal.username, #request.getUsername())")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#principal.username, #request.getUsername())")
   @PatchMapping("/api/update-roles")
   @ResponseBody
   public ResponseEntity<?> updateRoles(@RequestBody RoleUpdateRequest request,
