@@ -26,6 +26,7 @@ public class NotificationsController {
     this.userService = userService;
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/notifications")
   public String viewNotifications(
           @RequestParam(defaultValue = "") String query,
