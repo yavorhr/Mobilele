@@ -27,7 +27,7 @@ public class PicturesController {
     this.pictureService = pictureService;
   }
 
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #bindingModel.offerId)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #bindingModel.offerId)")
   @PostMapping("/pictures")
   public String addOfferPictures(PicturesAddBindingModel bindingModel,
                                  @AuthenticationPrincipal MobileleUser principal) throws IOException {
@@ -40,7 +40,7 @@ public class PicturesController {
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
 
-  @PreAuthorize("@userServiceImpl.isOwnerOrIsAdmin(#principal.username, #offerId)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #bindingModel.offerId)")
   @DeleteMapping("/pictures")
   @ResponseBody
   public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId,

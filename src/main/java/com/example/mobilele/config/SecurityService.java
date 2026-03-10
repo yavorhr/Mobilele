@@ -15,6 +15,7 @@ public class SecurityService {
     this.offerService = offerService;
   }
 
+
   public boolean canModifyOffer(String username, Long offerId) {
     return userService.isOwnerOrIsAdmin(username, offerId);
   }
