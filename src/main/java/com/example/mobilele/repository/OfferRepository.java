@@ -41,4 +41,5 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long>, JpaSp
   void incrementViews(@Param("offerId") Long offerId);
 
   List<OfferEntity> findTop20ByOrderByViewsDesc();
+
 }
