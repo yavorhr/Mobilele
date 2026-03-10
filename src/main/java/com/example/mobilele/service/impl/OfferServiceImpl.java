@@ -21,8 +21,6 @@ import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -34,7 +32,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -332,6 +329,9 @@ public class OfferServiceImpl implements OfferService {
   @Transactional
   @Override
   public void incrementViews(Long offerId) {
+    OfferEntity offer = offerRepository.findById(offerId)
+            .orElseThrow(() -> new ObjectNotFoundException("Offer not found"));
+
     offerRepository.incrementViews(offerId);
   }
 
