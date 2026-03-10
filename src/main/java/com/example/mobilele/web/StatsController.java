@@ -6,6 +6,7 @@ import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.StatsService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class StatsController {
     this.offerService = offerService;
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/statistics")
   public String statistics(Model model) {
     model.addAttribute("stats", statsService.getStats());
@@ -43,12 +45,14 @@ public class StatsController {
     return "redirect:/admin/statistics";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/history")
   public String statsHistory(Model model) {
     model.addAttribute("snapshots", statsService.getAllSnapshots());
     return "/admin/history";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/history/{id}")
   public String showSnapshotDetails(@PathVariable Long id, Model model) {
     StatsViewModel stats = statsService.getSnapshotViewById(id);
@@ -56,6 +60,7 @@ public class StatsController {
     return "admin/snapshot-details";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/sellers-performance")
   public String getSellersPerformanceByYear(
           @RequestParam(required = false) Integer year,
@@ -91,6 +96,7 @@ public class StatsController {
     return "admin/sellers-performance";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/sold-cars-stats")
   public String getSoldCarsPerYear(
           @RequestParam(required = false) Integer year,
