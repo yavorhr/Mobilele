@@ -8,6 +8,7 @@ import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -86,19 +87,42 @@ public class OffersController {
 
   // 2. Offer Details
   @GetMapping("/offers/details/{id}")
-  public String getOffersDetailsPage(@PathVariable Long id, Model model,
+  public String getOffersDetailsPage(@PathVariable Long id,
+                                     Model model,
                                      HttpServletRequest request,
                                      Principal principal) {
 
-    offerService.incrementViewsIfEligible(id, request, principal);
+    HttpSession session = request.getSession();
+
+    @SuppressWarnings("unchecked")
+    Set<Long> viewedOffers = (Set<Long>) session.getAttribute("viewedOffers");
+
+    if (viewedOffers == null) {
+      viewedOffers = new HashSet<>();
+    }
+
+    if (!viewedOffers.contains(id)) {
+      offerService.incrementViews(id);
+      viewedOffers.add(id);
+      session.setAttribute("viewedOffers", viewedOffers);
+    }
+
+    String username = principal != null ? principal.getName() : null;
 
     OfferViewModel viewModel =
-            this.modelMapper.map(this.offerService
-                            .findOfferById(principal.getName(), id),
-                    OfferViewModel.class);
+            this.modelMapper.map(
+                    this.offerService.findOfferById(username, id),
+                    OfferViewModel.class
+            );
 
     model.addAttribute("offer", viewModel);
-    model.addAttribute("isFavorite", this.offerService.doesOfferExistInUsersFavorites(id, principal.getName()));
+
+    if (username != null) {
+      model.addAttribute("isFavorite",
+              this.offerService.doesOfferExistInUsersFavorites(id, username));
+    } else {
+      model.addAttribute("isFavorite", false);
+    }
 
     return "details";
   }
