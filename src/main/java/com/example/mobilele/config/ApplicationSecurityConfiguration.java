@@ -37,7 +37,7 @@ public class ApplicationSecurityConfiguration {
                     requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                     requestMatchers(EndpointRequest.to("health", "info")).permitAll().
                     requestMatchers("/", "/error", "/users/login", "/users/register", "/logger/**", "/models/**").permitAll().
-                    requestMatchers("/statistics").hasRole(UserRoleEnum.ADMIN.name()).
+                    requestMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.name()).
                     requestMatchers("/static/**").permitAll().
                     requestMatchers("/**").authenticated())
             .formLogin(form -> form
