@@ -80,11 +80,11 @@ public class OffersSearchController {
 
     redirectAttributes.addFlashAttribute("filters", offersFindBindingModel);
 
-    return "redirect:/offers/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
+    return "redirect:/offers/find/" + vehicleType + "/" + offersFindBindingModel.getBrand().toLowerCase(Locale.ROOT) + "/" + offersFindBindingModel.getModel().toLowerCase(Locale.ROOT);
   }
 
   // 4. Show filtered offers
-  @GetMapping("/offers/{vehicleType}/{brand}/{modelName}")
+  @GetMapping("/offers/find/{vehicleType}/{brand}/{modelName}")
   public String showOffersByModel(
           @PathVariable String brand,
           @PathVariable String modelName,
