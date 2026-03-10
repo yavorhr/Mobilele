@@ -406,7 +406,7 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public OfferUpdateBindingForm getUpdateForm(Long id) {
     return modelMapper.map(
-            offerRepository.findById(id).orElseThrow(),
+            offerRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Offer with id :" + id + "does not exist!")),
             OfferUpdateBindingForm.class
     );
   }
