@@ -155,6 +155,7 @@ public class UsersController {
     return "redirect:/";
   }
 
+  @PreAuthorize("isAuthenticated()")
   @PostMapping("/submit-feedback")
   @ResponseBody
   public ResponseEntity<Map<String, Object>> submitFeedback(
