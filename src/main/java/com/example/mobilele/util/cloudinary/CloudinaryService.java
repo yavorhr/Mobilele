@@ -10,4 +10,7 @@ public interface CloudinaryService {
 
   boolean delete(String publicId);
 
+  String buildImageUrl(String publicId);
+
+
 }

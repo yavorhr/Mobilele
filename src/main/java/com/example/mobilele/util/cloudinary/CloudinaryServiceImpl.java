@@ -16,9 +16,11 @@ public class CloudinaryServiceImpl implements CloudinaryService {
   private static final String PUBLIC_ID = "public_id";
 
   private final Cloudinary cloudinary;
+  private final CloudinaryProperties properties;
 
-  public CloudinaryServiceImpl(Cloudinary cloudinary) {
+  public CloudinaryServiceImpl(Cloudinary cloudinary, CloudinaryProperties properties) {
     this.cloudinary = cloudinary;
+    this.properties = properties;
   }
 
   @Override
@@ -65,5 +67,17 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     } catch (IOException e) {
       throw new RuntimeException("Failed to delete image from Cloudinary: " + publicId, e);
     }
+  }
+
+  @Override
+  public String buildImageUrl(String publicId) {
+    return properties.getBaseUrl()
+            + "/"
+            + properties.getCloudName()
+            + "/image/upload/"
+            + properties.getRootFolder()
+            + "/"
+            + publicId
+            + ".jpg";
   }
 }

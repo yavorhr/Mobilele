@@ -42,12 +42,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class OfferServiceImpl implements OfferService {
-  public static final String CLOUD_NAME = "yavorhr";
-  public static final String ROOT_FOLDER = "mobilele";
-  public static final String BASE_URL =
-          "https://res.cloudinary.com/" + CLOUD_NAME + "/image/upload/" + ROOT_FOLDER + "/";
   private static final int SELLERS_PAGE_SIZE = 5;
-
 
   private final OfferRepository offerRepository;
   private final UserRepository userRepository;
@@ -528,7 +523,8 @@ public class OfferServiceImpl implements OfferService {
   }
 
   private String buildImageUrl(ModelEntity model) {
-    return BASE_URL + buildPublicId(model) + ".jpg";
+    String publicId = buildPublicId(model);
+    return cloudinaryService.buildImageUrl(publicId);
   }
 
   private OfferBaseViewModel mapToOfferBaseViewModel(OfferEntity e) {
