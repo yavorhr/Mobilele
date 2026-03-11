@@ -47,7 +47,6 @@ public class UsersController {
   //1. Register
   @GetMapping("/register")
   public String registerPage(Model model) {
-    System.out.println(model);
     return "register";
   }
 
