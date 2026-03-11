@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface BrandService {
-  void initBrands();
+  void seedBrands();
 
   BrandEntity findBrandByName(String name);
 

@@ -24,7 +24,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
   // Init roles
   @Override
-  public void initRoles() {
+  public void seedRoles() {
     if (userRoleRepository.count() == 0) {
       UserRoleEntity userRoleEntity = new UserRoleEntity();
       userRoleEntity.setRole(UserRoleEnum.USER);

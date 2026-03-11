@@ -61,7 +61,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
   // Init feedbacks
   @Override
-  public void initFeedbacks() {
+  public void seedFeedbacks() {
     if (feedbackRepository.count() > 0) {
       return;
     }

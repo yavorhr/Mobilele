@@ -424,7 +424,7 @@ public class OfferServiceImpl implements OfferService {
   // Init offers
   @Transactional
   @Override
-  public void initOffers() {
+  public void seedOffers() {
     if (offerRepository.count() > 0) return;
 
     List<OfferEntity> offers = new ArrayList<>();

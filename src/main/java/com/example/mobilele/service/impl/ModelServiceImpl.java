@@ -52,7 +52,7 @@ public class ModelServiceImpl implements ModelService {
 
   // Init models
   @Override
-  public void initModels() {
+  public void seedModels() {
     if (modelRepository.count() > 0) {
       return;
     }

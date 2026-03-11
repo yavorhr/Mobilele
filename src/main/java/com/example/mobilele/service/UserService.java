@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface UserService {
 
-  void initUsers();
+  void seedUsers();
 
   void registerAndLoginUser(UserRegisterServiceModel serviceModel);
 

@@ -49,7 +49,7 @@ public class BrandServiceImpl implements BrandService {
 
   // Init Brands
   @Override
-  public void initBrands() {
+  public void seedBrands() {
     if (brandRepository.count() > 0) {
       return;
     }

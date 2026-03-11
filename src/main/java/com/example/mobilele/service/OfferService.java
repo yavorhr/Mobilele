@@ -21,7 +21,7 @@ import java.util.List;
 
 public interface OfferService {
 
-  void initOffers();
+  void seedOffers();
 
   Page<OfferBaseViewModel> findAllOffers(Pageable pageable);
 

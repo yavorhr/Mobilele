@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ModelService {
-  void initModels();
+  void seedModels();
 
   Optional<ModelEntity> findById(Long id);
 

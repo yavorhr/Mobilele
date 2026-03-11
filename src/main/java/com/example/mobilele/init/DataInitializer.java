@@ -31,13 +31,13 @@ public class DataInitializer {
 
   @EventListener(ApplicationReadyEvent.class)
   public void init() {
-    userRoleService.initRoles();
-    userService.initUsers();
-    brandService.initBrands();
-    modelService.initModels();
-    offerService.initOffers();
-    soldOfferService.initSoldOffers();
-    feedbackService.initFeedbacks();
+    userRoleService.seedRoles();
+    userService.seedUsers();
+    brandService.seedBrands();
+    modelService.seedModels();
+    offerService.seedOffers();
+    soldOfferService.seedSoldOffers();
+    feedbackService.seedFeedbacks();
   }
 }
 

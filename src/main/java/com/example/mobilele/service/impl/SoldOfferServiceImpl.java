@@ -25,7 +25,7 @@ public class SoldOfferServiceImpl implements SoldOfferService {
     this.seedGenerator = seedGenerator;
   }
 
-  public void initSoldOffers() {
+  public void seedSoldOffers() {
     if (soldOfferRepository.count() > 0) {
       return;
     }

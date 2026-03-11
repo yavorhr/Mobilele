@@ -347,7 +347,7 @@ public class UserServiceImpl implements UserService {
 
   // Init users
   @Override
-  public void initUsers() {
+  public void seedUsers() {
     if (userRepository.count() > 0) {
       return;
     }

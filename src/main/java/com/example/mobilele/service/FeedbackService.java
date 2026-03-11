@@ -10,7 +10,7 @@ public interface FeedbackService {
 
   List<FeedbackViewModel> findRecentFeedbacks(int i);
 
-  void initFeedbacks();
+  void seedFeedbacks();
 
   FeedbackSummaryViewModel getFeedbackSummary();
 }
