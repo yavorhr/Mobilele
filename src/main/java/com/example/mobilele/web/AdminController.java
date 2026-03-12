@@ -19,10 +19,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("/admin")
-public class NotificationsController {
+public class AdminController {
   private final UserService userService;
 
-  public NotificationsController(UserService userService) {
+  public AdminController(UserService userService) {
     this.userService = userService;
   }
 
