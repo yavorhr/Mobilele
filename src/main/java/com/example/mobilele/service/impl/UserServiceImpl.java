@@ -1,7 +1,6 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
-import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
@@ -25,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
-
 
 @Slf4j
 @Service
@@ -73,12 +71,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserEntity findByUsername(String username) {
-    return this.getByUsernameOrThrow(username);
+    return this.getUserByUsernameOrThrow(username);
   }
 
   @Override
   public UserEntity findById(Long id) {
-    return this.getByIdOrThrow(id);
+    return this.getUserByIdOrThrow(id);
   }
 
   @Override
@@ -98,14 +96,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserViewModel findUserViewModelById(Long id) {
-    UserEntity user = getByIdOrThrow(id);
+    UserEntity user = getUserByIdOrThrow(id);
 
     return modelMapper.map(user, UserViewModel.class);
   }
 
   @Override
   public UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel) {
-    UserEntity userEntity = this.getByIdOrThrow(userId);
+    UserEntity userEntity = this.getUserByIdOrThrow(userId);
 
     Optional<UserEntity> existing = userRepository.findByPhoneNumberIgnoreCase(bindingModel.getPhoneNumber());
 
@@ -125,7 +123,7 @@ public class UserServiceImpl implements UserService {
   @Transactional
   @Override
   public void deleteProfileById(Long userId) {
-    UserEntity userEntity = this.getByIdOrThrow(userId);
+    UserEntity userEntity = this.getUserByIdOrThrow(userId);
 
     soldOfferRepository.clearSeller(userId);
 
@@ -171,17 +169,18 @@ public class UserServiceImpl implements UserService {
             .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
   }
 
-  // Helpers
-  private UserEntity getByUsernameOrThrow(String username) {
+  @Override
+  public UserEntity getUserByUsernameOrThrow(String username) {
     return userRepository.findByUsername(username)
             .orElseThrow(() ->
                     new ObjectNotFoundException("User with username: " + username + " not found"));
   }
 
-  private UserEntity getByIdOrThrow(Long userId) {
-    return userRepository.findById(userId)
+  @Override
+  public UserEntity getUserByIdOrThrow(Long id) {
+    return userRepository.findById(id)
             .orElseThrow(() ->
-                    new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
+                    new ObjectNotFoundException("User with id: " + id + " does not exist!"));
   }
 
   // Init users

@@ -8,13 +8,12 @@ import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserAdminService;
 import com.example.mobilele.service.UserRoleService;
-import com.example.mobilele.web.exception.ObjectNotFoundException;
+import com.example.mobilele.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -25,16 +24,18 @@ public class UserAdminServiceImpl implements UserAdminService {
   private final ModelMapper modelMapper;
   private final UserRepository userRepository;
   private final UserRoleService roleService;
+  private final UserService userService;
 
-  public UserAdminServiceImpl(ModelMapper modelMapper, UserRepository userRepository, UserRoleService roleService) {
+  public UserAdminServiceImpl(ModelMapper modelMapper, UserRepository userRepository, UserRoleService roleService, UserService userService) {
     this.modelMapper = modelMapper;
     this.userRepository = userRepository;
     this.roleService = roleService;
+    this.userService = userService;
   }
 
   @Override
   public UserUpdateStatusResponse modifyLockStatus(String username) {
-    UserEntity userEntity = this.getByUsernameOrThrow(username);
+    UserEntity userEntity = userService.getUserByUsernameOrThrow(username);
 
     if (userEntity.isAccountLocked()) {
       userEntity.setAccountLocked(false);
@@ -55,7 +56,7 @@ public class UserAdminServiceImpl implements UserAdminService {
   @Override
   @Transactional
   public void updateUserRoles(String username, String[] roles) {
-    UserEntity userEntity = this.getByUsernameOrThrow(username);
+    UserEntity userEntity = userService.getUserByUsernameOrThrow(username);
 
     List<UserRoleEntity> userRoles =
             Arrays.stream(roles)
@@ -87,7 +88,7 @@ public class UserAdminServiceImpl implements UserAdminService {
 
   @Override
   public UserUpdateStatusResponse changeAccess(String username) {
-    UserEntity userEntity = this.getByUsernameOrThrow(username);
+    UserEntity userEntity = userService.getUserByUsernameOrThrow(username);
 
     if (userEntity.isEnabled()) {
       userEntity.setEnabled(false);
@@ -102,24 +103,10 @@ public class UserAdminServiceImpl implements UserAdminService {
 
   @Override
   public void deleteUser(String username) {
-    UserEntity userEntity = getByUsernameOrThrow(username);
+    UserEntity userEntity = userService.getUserByUsernameOrThrow(username);
 
     userEntity.getRoles().clear();
     this.userRepository.save(userEntity);
     this.userRepository.delete(userEntity);
   }
-
-  // Helpers
-  private UserEntity getByUsernameOrThrow(String username) {
-    return userRepository.findByUsername(username)
-            .orElseThrow(() ->
-                    new ObjectNotFoundException("User with username: " + username + " not found"));
-  }
-
-  private UserEntity getByIdOrThrow(Long userId) {
-    return userRepository.findById(userId)
-            .orElseThrow(() ->
-                    new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
-  }
-
 }

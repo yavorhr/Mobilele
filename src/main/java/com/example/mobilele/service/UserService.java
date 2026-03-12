@@ -39,4 +39,8 @@ public interface UserService {
 
   boolean isOwner(String username, Long routeId);
 
+  UserEntity getUserByUsernameOrThrow(String username);
+
+  UserEntity getUserByIdOrThrow(Long id);
+
 }

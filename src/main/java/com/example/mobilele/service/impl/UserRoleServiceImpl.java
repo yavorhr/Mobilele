@@ -22,7 +22,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             .orElseThrow(() -> new ObjectNotFoundException("Role with name " + userRole + " was not found!"));
   }
 
-  // Init roles
+  // Seed roles
   @Override
   public void seedRoles() {
     if (userRoleRepository.count() == 0) {

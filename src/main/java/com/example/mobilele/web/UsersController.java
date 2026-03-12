@@ -4,7 +4,6 @@ import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.binding.user.UserRegisterBindingModel;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
-
 import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
@@ -19,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 @Controller
 @RequestMapping("/users")
@@ -99,7 +97,6 @@ public class UsersController {
 
     return "redirect:/";
   }
-
 
   //4. Profile
   @GetMapping("/profile")
