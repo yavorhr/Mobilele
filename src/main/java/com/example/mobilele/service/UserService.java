@@ -34,8 +34,6 @@ public interface UserService {
 
   void deleteProfileById(Long userId);
 
-  void deleteUser(String username);
-
   boolean isEmailAvailable(String email);
 
   boolean isPhoneNumberAvailable(String phoneNumber);
@@ -48,13 +46,4 @@ public interface UserService {
 
   boolean isOwner(String username, Long routeId);
 
-  Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String emailQuery, Pageable pageable);
-
-  UserUpdateStatusResponse changeAccess(String username);
-
-  UserUpdateStatusResponse modifyLockStatus(String username);
-
-  void updateUserRoles(String username, String[] roles);
-
-  boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser);
 }

@@ -1,10 +1,9 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.RoleUpdateRequest;
-import com.example.mobilele.model.view.admin.StatsViewModel;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
-import com.example.mobilele.service.StatsService;
+import com.example.mobilele.service.UserAdminService;
 import com.example.mobilele.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +20,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/admin")
 public class AdminController {
   private final UserService userService;
+  private final UserAdminService userAdminService;
 
-  public AdminController(UserService userService) {
+  public AdminController(UserService userService, UserAdminService userAdminService) {
     this.userService = userService;
+    this.userAdminService = userAdminService;
   }
 
   @PreAuthorize("hasRole('ADMIN')")
@@ -41,7 +42,7 @@ public class AdminController {
     PageRequest pageRequest = PageRequest.of(page, size);
 
     Page<UserAdministrationViewModel> usersPage =
-            userService.searchPaginatedUsersPerEmail(query, pageRequest);
+            userAdminService.searchPaginatedUsersPerEmail(query, pageRequest);
 
     String paginationBase = UriComponentsBuilder
             .fromPath("/admin/notifications")
@@ -73,7 +74,7 @@ public class AdminController {
   public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String username,
                                                                    @AuthenticationPrincipal UserDetails principal) {
 
-    UserUpdateStatusResponse statusResponse = this.userService.changeAccess(username);
+    UserUpdateStatusResponse statusResponse = this.userAdminService.changeAccess(username);
 
     return ResponseEntity.ok(statusResponse);
   }
@@ -84,7 +85,7 @@ public class AdminController {
   public ResponseEntity<?> deleteUser(@PathVariable String username,
                                       @AuthenticationPrincipal UserDetails principal) {
 
-    this.userService.deleteUser(username);
+    this.userAdminService.deleteUser(username);
 
     return ResponseEntity.ok("User deleted successfully!");
   }
@@ -95,7 +96,7 @@ public class AdminController {
   public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String username,
                                                                        @AuthenticationPrincipal UserDetails principal) {
 
-    UserUpdateStatusResponse statusResponse = this.userService.modifyLockStatus(username);
+    UserUpdateStatusResponse statusResponse = this.userAdminService.modifyLockStatus(username);
 
     return ResponseEntity.ok(statusResponse);
   }
@@ -106,7 +107,7 @@ public class AdminController {
   public ResponseEntity<?> updateRoles(@RequestBody RoleUpdateRequest request,
                                        @AuthenticationPrincipal UserDetails principal) {
 
-    this.userService.updateUserRoles(request.getUsername(), request.getRoles());
+    this.userAdminService.updateUserRoles(request.getUsername(), request.getRoles());
 
     return ResponseEntity.ok("Roles updated successfully");
   }
