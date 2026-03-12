@@ -118,8 +118,7 @@ public class OffersController {
     model.addAttribute("offer", viewModel);
 
     if (username != null) {
-      model.addAttribute("isFavorite",
-              this.offerService.doesOfferExistInUsersFavorites(id, username));
+      model.addAttribute("isFavorite", this.offerService.doesOfferExistInUsersFavorites(id, username));
     } else {
       model.addAttribute("isFavorite", false);
     }

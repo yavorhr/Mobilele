@@ -32,4 +32,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   void deleteFavoritesByOfferId(Long offerId);
 
   Page<UserEntity> findByEmailContainingIgnoreCase(String email, Pageable pageable);
+
+  boolean existsByUsernameAndFavorites_Id(String username, Long offerId);
 }

@@ -294,15 +294,7 @@ public class OfferServiceImpl implements OfferService {
   @Override
   @Transactional
   public boolean doesOfferExistInUsersFavorites(Long id, String username) {
-    UserEntity user = this.userService.findByUsername(username);
-
-    OfferEntity offer = this.offerRepository
-            .findById(id)
-            .orElseThrow(() -> new ObjectNotFoundException("Offer with id: " + id + " does not exist!"));
-
-    return user.getFavorites()
-            .stream()
-            .anyMatch(o -> o.getId().equals(offer.getId()));
+    return userRepository.existsByUsernameAndFavorites_Id(username, id);
   }
 
   @Override
