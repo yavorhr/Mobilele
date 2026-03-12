@@ -21,7 +21,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -79,15 +79,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserEntity findByUsername(String username) {
-    return userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new ObjectNotFoundException("User with username" + username + "does not exist!"));
+    return this.getByUsernameOrThrow(username);
   }
 
   @Override
   public UserEntity findById(Long id) {
-    return this.userRepository.findById(id)
-            .orElseThrow(() -> new ObjectNotFoundException("User with id" + id + "does not exist!"));
+    return this.getByIdOrThrow(id);
   }
 
   @Override
@@ -124,20 +121,16 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserViewModel findUserViewModelById(Long id) {
-    return this.userRepository
-            .findById(id)
-            .map(u -> this.modelMapper.map(u, UserViewModel.class))
-            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + id + " was not found!"));
+    UserEntity user = getByIdOrThrow(id);
+
+    return modelMapper.map(user, UserViewModel.class);
   }
 
   @Override
   public UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel) {
-    UserEntity userEntity = this.userRepository
-            .findById(userId)
-            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " was not found!"));
+    UserEntity userEntity = this.getByIdOrThrow(userId);
 
-    Optional<UserEntity> existing =
-            userRepository.findByPhoneNumberIgnoreCase(bindingModel.getPhoneNumber());
+    Optional<UserEntity> existing = userRepository.findByPhoneNumberIgnoreCase(bindingModel.getPhoneNumber());
 
     if (existing.isPresent() && !existing.get().getId().equals(userId)) {
       throw new DuplicatePhoneException("Phone number already in use");
@@ -155,9 +148,7 @@ public class UserServiceImpl implements UserService {
   @Transactional
   @Override
   public void deleteProfileById(Long userId) {
-    UserEntity userEntity = this.userRepository
-            .findById(userId)
-            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
+    UserEntity userEntity = this.getByIdOrThrow(userId);
 
     soldOfferRepository.clearSeller(userId);
 
@@ -169,9 +160,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void deleteUser(String username) {
-    UserEntity userEntity = this.userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new ObjectNotFoundException("User with id: " + username + " does not exist!"));
+    UserEntity userEntity = getByUsernameOrThrow(username);
 
     userEntity.getRoles().clear();
     this.userRepository.save(userEntity);
@@ -193,9 +182,7 @@ public class UserServiceImpl implements UserService {
   public boolean toggleFavorite(String username, Long offerId) {
     boolean exists = userRepository.existsByUsernameAndFavorites_Id(username, offerId);
 
-    UserEntity user = userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    UserEntity user = this.getByUsernameOrThrow(username);
 
     OfferEntity offer = offerRepository
             .findById(offerId)
@@ -232,21 +219,15 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   public boolean isOwner(String username, Long offerId) {
-
-    boolean result = offerRepository
+    return offerRepository
             .findById(offerId)
             .stream()
             .anyMatch(offer -> offer.getSeller().getUsername().equals(username));
-
-    return result;
   }
 
   @Override
   public UserUpdateStatusResponse changeAccess(String username) {
-    UserEntity userEntity =
-            this.userRepository
-                    .findByUsername(username)
-                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
+    UserEntity userEntity = this.getByUsernameOrThrow(username);
 
     if (userEntity.isEnabled()) {
       userEntity.setEnabled(false);
@@ -261,10 +242,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserUpdateStatusResponse modifyLockStatus(String username) {
-    UserEntity userEntity =
-            this.userRepository
-                    .findByUsername(username)
-                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
+    UserEntity userEntity = this.getByUsernameOrThrow(username);
 
     if (userEntity.isAccountLocked()) {
       userEntity.setAccountLocked(false);
@@ -280,25 +258,19 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser) {
     return !loggedInUser.equals(targetUser);
-
   }
 
   @Override
+  @Transactional
   public void updateUserRoles(String username, String[] roles) {
-    UserEntity userEntity =
-            this.userRepository
-                    .findByUsername(username)
-                    .orElseThrow(() -> new ObjectNotFoundException("User with the username " + username + " was not found!"));
+    UserEntity userEntity = this.getByUsernameOrThrow(username);
 
-    List<UserRoleEntity> userRoles = new ArrayList<>();
-
-    Arrays.stream(roles).forEach(r -> {
-      UserRoleEntity roleEntity = this.roleService.findUserRole(UserRoleEnum.valueOf(r));
-      userRoles.add(roleEntity);
-    });
+    List<UserRoleEntity> userRoles =
+            Arrays.stream(roles)
+                    .map(r -> roleService.findUserRole(UserRoleEnum.valueOf(r)))
+                    .toList();
 
     userEntity.setRoles(userRoles);
-    this.userRepository.save(userEntity);
   }
 
   @Override
@@ -334,6 +306,19 @@ public class UserServiceImpl implements UserService {
   public void resetFailedAttempts(UserEntity user) {
     user.setFailedLoginAttempts(0);
     this.userRepository.save(user);
+  }
+
+  // Helpers
+  private UserEntity getByUsernameOrThrow(String username) {
+    return userRepository.findByUsername(username)
+            .orElseThrow(() ->
+                    new ObjectNotFoundException("User with username: " + username + " not found"));
+  }
+
+  private UserEntity getByIdOrThrow(Long userId) {
+    return userRepository.findById(userId)
+            .orElseThrow(() ->
+                    new ObjectNotFoundException("User with id: " + userId + " does not exist!"));
   }
 
   // Init users
