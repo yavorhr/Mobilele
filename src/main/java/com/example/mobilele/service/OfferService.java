@@ -8,7 +8,6 @@ import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
-import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,15 +46,12 @@ public interface OfferService {
 
   List<OfferBaseViewModel> findTopOffersByViews();
 
-  void saveSoldOffer(Long id);
-
-  long getSoldVehiclesCount();
+  OfferUpdateBindingForm getUpdateForm(Long id);
 
   List<TopSellerViewModel> getTop20Sellers();
 
   Page<TopSellerViewModel> getSellerPerformanceByYear(int year, int page);
 
-  Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page);
 
-  OfferUpdateBindingForm getUpdateForm(Long id);
+
 }

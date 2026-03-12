@@ -301,24 +301,7 @@ public class OfferServiceImpl implements OfferService {
             .toList();
   }
 
-  @Override
-  public void saveSoldOffer(Long id) {
-    var offerEntity =
-            this.offerRepository
-                    .findById(id)
-                    .orElseThrow(() ->
-                            new ObjectNotFoundException("Offer with id " + id + "was not found!"));
 
-    var soldOffer = this.modelMapper.map(offerEntity, SoldOfferEntity.class);
-    soldOffer.setSaleTime(Instant.now());
-
-    this.soldOfferRepository.save(soldOffer);
-  }
-
-  @Override
-  public long getSoldVehiclesCount() {
-    return soldOfferRepository.count();
-  }
 
   @Override
   public List<TopSellerViewModel> getTop20Sellers() {
@@ -342,23 +325,6 @@ public class OfferServiceImpl implements OfferService {
     Pageable pageable = PageRequest.of(page, SELLERS_PAGE_SIZE);
 
     return soldOfferRepository.findSellerPerformanceByPeriod(start, end, pageable);
-  }
-
-  @Override
-  public Page<SoldOfferViewModel> getSoldCarsByYear(int year, int page) {
-    ZoneId zone = ZoneId.systemDefault();
-
-    Instant start = LocalDate.of(year, 1, 1)
-            .atStartOfDay(zone)
-            .toInstant();
-
-    Instant end = LocalDate.of(year + 1, 1, 1)
-            .atStartOfDay(zone)
-            .toInstant();
-
-    Pageable pageable = PageRequest.of(page, 10);
-
-    return soldOfferRepository.findSoldCarsByPeriod(start, end, pageable);
   }
 
   @Override

@@ -4,6 +4,7 @@ import com.example.mobilele.model.view.admin.StatsViewModel;
 import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.service.OfferService;
+import com.example.mobilele.service.SoldOfferService;
 import com.example.mobilele.service.StatsService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,10 +22,12 @@ import java.util.stream.IntStream;
 public class StatsController {
   private final StatsService statsService;
   private final OfferService offerService;
+  private final SoldOfferService soldOfferService;
 
-  public StatsController(StatsService statsService, OfferService offerService) {
+  public StatsController(StatsService statsService, OfferService offerService, SoldOfferService soldOfferService) {
     this.statsService = statsService;
     this.offerService = offerService;
+    this.soldOfferService = soldOfferService;
   }
 
   @PreAuthorize("hasRole('ADMIN')")
@@ -106,7 +109,7 @@ public class StatsController {
     int selectedYear = (year != null) ? year : Year.now().getValue();
 
     Page<SoldOfferViewModel> carsPage =
-            offerService.getSoldCarsByYear(selectedYear, page);
+            soldOfferService.getSoldCarsByYear(selectedYear, page);
 
     model.addAttribute("selectedYear", selectedYear);
     model.addAttribute("cars", carsPage.getContent());

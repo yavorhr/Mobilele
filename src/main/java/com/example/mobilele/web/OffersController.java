@@ -7,6 +7,7 @@ import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.service.FavoritesService;
+import com.example.mobilele.service.SoldOfferService;
 import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,12 +37,14 @@ import java.util.*;
 @Controller
 public class OffersController {
   private final OfferService offerService;
+  private final SoldOfferService soldOfferService;
   private final FavoritesService favoritesService;
   private final ModelMapper modelMapper;
   private final ModelService modelService;
 
-  public OffersController(OfferService offerService, FavoritesService favoritesService, ModelMapper modelMapper, ModelService modelService) {
+  public OffersController(OfferService offerService, SoldOfferService soldOfferService, FavoritesService favoritesService, ModelMapper modelMapper, ModelService modelService) {
     this.offerService = offerService;
+    this.soldOfferService = soldOfferService;
     this.favoritesService = favoritesService;
     this.modelMapper = modelMapper;
     this.modelService = modelService;
@@ -224,7 +227,7 @@ public class OffersController {
                             @RequestParam(defaultValue = "false") boolean soldOffer) {
 
     if (soldOffer) {
-      offerService.saveSoldOffer(id);
+      soldOfferService.saveSoldOffer(id);
       offerService.deleteById(id);
       redirectAttributes.addFlashAttribute("flashMessage",
               "✅ Offer is successfully sold and deleted!");
