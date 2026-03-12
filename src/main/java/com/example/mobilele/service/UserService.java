@@ -7,7 +7,6 @@ import com.example.mobilele.model.view.user.UserViewModel;
 
 import java.util.List;
 
-
 public interface UserService {
 
   void seedUsers();
