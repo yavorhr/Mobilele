@@ -10,13 +10,9 @@ import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.io.IOException;
-import java.security.Principal;
-import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 
 public interface OfferService {
@@ -30,8 +26,6 @@ public interface OfferService {
   void deleteById(Long id);
 
   OfferAddServiceModel addOffer(OfferAddServiceModel offer, String username) throws IOException;
-
-  Collection<OfferViewModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType);
 
   void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
 

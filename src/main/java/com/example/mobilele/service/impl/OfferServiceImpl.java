@@ -146,16 +146,7 @@ public class OfferServiceImpl implements OfferService {
 
     return offerServiceModel;
   }
-
-  @Override
-  public Collection<OfferViewModel> findOffersByBrandAndVehicleType(String brand, VehicleCategoryEnum vehicleType) {
-    return this.offerRepository.findAllByModel_Brand_NameAndModel_VehicleType(brand, vehicleType)
-            .stream()
-            .map(offerEntity ->
-                    this.modelMapper.map(offerEntity, OfferViewModel.class))
-            .collect(Collectors.toList());
-  }
-
+  
   @Transactional
   @Override
   public void updateOffer(OfferUpdateServiceModel serviceModel, Long id) {
