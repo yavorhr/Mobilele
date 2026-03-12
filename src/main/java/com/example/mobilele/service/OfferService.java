@@ -18,21 +18,24 @@ public interface OfferService {
 
   void seedOffers();
 
+  OfferAddServiceModel addOffer(OfferAddServiceModel offer, String username) throws IOException;
+
+  OfferUpdateBindingForm getUpdateForm(Long id);
+
+  void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
+
+  void deleteById(Long id);
+
   Page<OfferBaseViewModel> findAllOffers(Pageable pageable);
 
   OfferViewModel findOfferById(String name, Long id);
 
-  void deleteById(Long id);
-
-  OfferAddServiceModel addOffer(OfferAddServiceModel offer, String username) throws IOException;
-
-  void updateOffer(OfferUpdateServiceModel serviceModel, Long id);
+  OfferEntity findById(long id);
 
   Page<OfferBaseViewModel> findOffersByFilters(OffersFindServiceModel offersFindServiceModel, VehicleCategoryEnum vehicleCategory, Pageable pageable);
 
   Page<OfferBaseViewModel> findByTypeBrandAndModel(VehicleCategoryEnum category, String brand, String modelName, Pageable pageable);
 
-  OfferEntity findById(long id);
 
   Page<OfferBaseViewModel> findOffersByBrand(String brandName, Pageable pageable);
 
@@ -45,8 +48,6 @@ public interface OfferService {
   void incrementViews(Long offerId);
 
   List<OfferBaseViewModel> findTopOffersByViews();
-
-  OfferUpdateBindingForm getUpdateForm(Long id);
 
   List<TopSellerViewModel> getTop20Sellers();
 
