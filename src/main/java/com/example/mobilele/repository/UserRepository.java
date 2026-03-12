@@ -1,6 +1,8 @@
 package com.example.mobilele.repository;
 
 import com.example.mobilele.model.entity.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
   @Modifying
   @Query(value = "DELETE FROM users_favorites WHERE offer_id = :offerId", nativeQuery = true)
   void deleteFavoritesByOfferId(Long offerId);
+
+  Page<UserEntity> findByEmailContainingIgnoreCase(String email, Pageable pageable);
 }

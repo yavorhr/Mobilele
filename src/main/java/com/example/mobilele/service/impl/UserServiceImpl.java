@@ -306,28 +306,22 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String email, Pageable pageable) {
-    List<UserEntity> users = userRepository.findAllByEmailContainingIgnoreCase(email);
 
-    int start = Math.toIntExact(pageable.getOffset());
-    int end = Math.min(start + pageable.getPageSize(), users.size());
+    Page<UserEntity> usersPage =
+            userRepository.findByEmailContainingIgnoreCase(email, pageable);
 
-    List<UserEntity> pagedUsers = users.subList(start, end);
+    return usersPage.map(u -> {
+      UserAdministrationViewModel vm =
+              modelMapper.map(u, UserAdministrationViewModel.class);
 
-    List<UserAdministrationViewModel> viewModels =
-            pagedUsers.stream()
-                    .map(u -> {
-                      UserAdministrationViewModel vm = modelMapper.map(u, UserAdministrationViewModel.class);
+      Set<UserRoleEnum> roleEnums = u.getRoles().stream()
+              .map(UserRoleEntity::getRole)
+              .collect(Collectors.toSet());
 
-                      Set<UserRoleEnum> roleEnums = u.getRoles().stream()
-                              .map(UserRoleEntity::getRole)
-                              .collect(Collectors.toSet());
+      vm.setRoles(roleEnums);
 
-                      vm.setRoles(roleEnums);
-                      return vm;
-                    })
-                    .toList();
-
-    return new PageImpl<>(viewModels, pageable, users.size());
+      return vm;
+    });
   }
 
   @Override
