@@ -191,6 +191,8 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public boolean toggleFavorite(String username, Long offerId) {
+    boolean exists = userRepository.existsByUsernameAndFavorites_Id(username, offerId);
+
     UserEntity user = userRepository
             .findByUsername(username)
             .orElseThrow(() -> new RuntimeException("User not found"));
@@ -199,20 +201,15 @@ public class UserServiceImpl implements UserService {
             .findById(offerId)
             .orElseThrow(() -> new RuntimeException("Offer not found"));
 
-    boolean added;
-
-    if (user.getFavorites().contains(offer)) {
+    if (exists) {
       user.getFavorites().remove(offer);
       offer.getFavoritedBy().remove(user);
-      added = false;
+      return false;
     } else {
       user.getFavorites().add(offer);
       offer.getFavoritedBy().add(user);
-      added = true;
+      return true;
     }
-
-    userRepository.save(user);
-    return added;
   }
 
   @Override
