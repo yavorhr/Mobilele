@@ -161,7 +161,7 @@ public class OffersSearchController {
 
     redirectAttributes.addFlashAttribute("filters", form);
 
-    return "redirect:/offers/" + vehicleType.toLowerCase()
+    return "redirect:/offers/find/" + vehicleType.toLowerCase()
             + "/" + form.getBrand().toLowerCase()
             + "/" + form.getModel().toLowerCase();
   }
