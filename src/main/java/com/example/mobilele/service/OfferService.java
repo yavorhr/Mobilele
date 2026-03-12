@@ -52,6 +52,4 @@ public interface OfferService {
 
   Page<TopSellerViewModel> getSellerPerformanceByYear(int year, int page);
 
-
-
 }
