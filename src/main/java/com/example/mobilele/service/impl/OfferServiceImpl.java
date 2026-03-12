@@ -301,8 +301,6 @@ public class OfferServiceImpl implements OfferService {
             .toList();
   }
 
-
-
   @Override
   public List<TopSellerViewModel> getTop20Sellers() {
     return soldOfferRepository
