@@ -1,4 +1,4 @@
-package com.example.mobilele.config;
+package com.example.mobilele.config.security;
 
 import com.example.mobilele.service.UserAdminService;
 import com.example.mobilele.service.UserService;
