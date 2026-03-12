@@ -146,7 +146,7 @@ public class OfferServiceImpl implements OfferService {
 
     return offerServiceModel;
   }
-  
+
   @Transactional
   @Override
   public void updateOffer(OfferUpdateServiceModel serviceModel, Long id) {
@@ -282,30 +282,7 @@ public class OfferServiceImpl implements OfferService {
             .toList();
   }
 
-  @Override
-  @Transactional
-  public boolean doesOfferExistInUsersFavorites(Long id, String username) {
-    return userRepository.existsByUsernameAndFavorites_Id(username, id);
-  }
 
-  @Override
-  public Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable) {
-    return offerRepository
-            .findFavoritesByUsername(username, pageable)
-            .map(this::mapToOfferBaseViewModel);
-  }
-
-  @Transactional
-  @Override
-  public boolean toggleReservation(Long id, String username) {
-    OfferEntity offer = offerRepository.findById(id)
-            .orElseThrow(() -> new ObjectNotFoundException("Offer not found"));
-
-    offer.setReserved(!offer.isReserved());
-    offerRepository.save(offer);
-
-    return offer.isReserved();
-  }
 
   @Transactional
   @Override

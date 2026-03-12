@@ -43,12 +43,6 @@ public interface OfferService {
 
   List<OfferBaseViewModel> findMostViewedOffers(int count);
 
-  boolean doesOfferExistInUsersFavorites(Long id, String name);
-
-  Page<OfferBaseViewModel> findFavoriteOffers(String username, Pageable pageable);
-
-  boolean toggleReservation(Long id, String username);
-
   void incrementViews(Long offerId);
 
   List<OfferBaseViewModel> findTopOffersByViews();

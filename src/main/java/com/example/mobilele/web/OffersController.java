@@ -6,6 +6,7 @@ import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.service.FavoritesService;
 import com.example.mobilele.util.ProjectHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,11 +36,13 @@ import java.util.*;
 @Controller
 public class OffersController {
   private final OfferService offerService;
+  private final FavoritesService favoritesService;
   private final ModelMapper modelMapper;
   private final ModelService modelService;
 
-  public OffersController(OfferService offerService, ModelMapper modelMapper, ModelService modelService) {
+  public OffersController(OfferService offerService, FavoritesService favoritesService, ModelMapper modelMapper, ModelService modelService) {
     this.offerService = offerService;
+    this.favoritesService = favoritesService;
     this.modelMapper = modelMapper;
     this.modelService = modelService;
   }
@@ -118,7 +121,7 @@ public class OffersController {
     model.addAttribute("offer", viewModel);
 
     if (username != null) {
-      model.addAttribute("isFavorite", this.offerService.doesOfferExistInUsersFavorites(id, username));
+      model.addAttribute("isFavorite", this.favoritesService.doesOfferExistInUsersFavorites(id, username));
     } else {
       model.addAttribute("isFavorite", false);
     }

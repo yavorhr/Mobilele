@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
+import com.example.mobilele.service.FavoritesService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.util.Constants;
 import com.example.mobilele.util.ProjectHelpers;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.security.Principal;
 import java.util.Locale;
@@ -21,10 +21,12 @@ import java.util.Locale;
 @Controller
 public class OffersUserController {
   private final OfferService offerService;
+  private final FavoritesService favoritesService;
   private final MessageSource messageSource;
 
-  public OffersUserController(OfferService offerService, MessageSource messageSource) {
+  public OffersUserController(OfferService offerService, FavoritesService favoritesService, MessageSource messageSource) {
     this.offerService = offerService;
+    this.favoritesService = favoritesService;
     this.messageSource = messageSource;
   }
 
@@ -86,7 +88,7 @@ public class OffersUserController {
     Pageable pageable = ProjectHelpers.create(sort, dir, page, size);
 
     Page<OfferBaseViewModel> offersPage =
-            offerService.findFavoriteOffers(username, pageable);
+            favoritesService.findFavoriteOffers(username, pageable);
 
     String title = ProjectHelpers.resolveLocalizedTitle(
             Constants.CONTEXT_FAVORITES,
