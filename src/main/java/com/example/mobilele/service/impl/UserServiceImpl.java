@@ -28,7 +28,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -95,23 +94,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean isUserNameAvailable(String username) {
     return userRepository.findByUsernameIgnoreCase(username).isEmpty();
-  }
-
-  @Override
-  public void increaseUserFailedLoginAttempts(UserEntity user) {
-    int failedAttempts = user.getFailedLoginAttempts() + 1;
-    user.setFailedLoginAttempts(failedAttempts);
-
-    if (user.getFailedLoginAttempts() == 3) {
-      this.lockAccount(user);
-    } else {
-      userRepository.save(user);
-    }
-  }
-
-  @Override
-  public List<UserEntity> findLockedUsers() {
-    return this.userRepository.findAllLockedUsers();
   }
 
   @Override
@@ -291,21 +273,6 @@ public class UserServiceImpl implements UserService {
 
       return vm;
     });
-  }
-
-  @Override
-  public void lockAccount(UserEntity user) {
-    user.setAccountLocked(true);
-    user.setLockTime(LocalDateTime.now().plusMinutes(15));
-    user.setFailedLoginAttempts(0);
-
-    userRepository.save(user);
-  }
-
-  @Override
-  public void resetFailedAttempts(UserEntity user) {
-    user.setFailedLoginAttempts(0);
-    this.userRepository.save(user);
   }
 
   // Helpers

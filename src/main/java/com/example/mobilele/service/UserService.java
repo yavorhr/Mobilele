@@ -26,14 +26,6 @@ public interface UserService {
 
   boolean isUserNameAvailable(String userName);
 
-  void increaseUserFailedLoginAttempts(UserEntity user);
-
-  void lockAccount(UserEntity user);
-
-  void resetFailedAttempts(UserEntity user);
-
-  List<UserEntity> findLockedUsers();
-
   List<UserEntity> findAll();
 
   UserViewModel findUserViewModelById(Long id);

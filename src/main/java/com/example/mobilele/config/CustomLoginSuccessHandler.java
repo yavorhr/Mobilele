@@ -1,6 +1,7 @@
 package com.example.mobilele.config;
 
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.service.UserSecurityService;
 import com.example.mobilele.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,9 +14,11 @@ import java.io.IOException;
 @Component
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
   private final UserService userService;
+  private final UserSecurityService userSecurityService;
 
-  public CustomLoginSuccessHandler(UserService userService) {
+  public CustomLoginSuccessHandler(UserService userService, UserSecurityService userSecurityService) {
     this.userService = userService;
+    this.userSecurityService = userSecurityService;
   }
 
   @Override
@@ -24,7 +27,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
     UserEntity user = userService.findByUsername(username);
 
     if (user != null) {
-      userService.resetFailedAttempts(user);
+      userSecurityService.resetFailedAttempts(user);
     }
 
     response.sendRedirect("/");

@@ -2,6 +2,7 @@ package com.example.mobilele.config;
 
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.enums.LoginErrorType;
+import com.example.mobilele.service.UserSecurityService;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.servlet.ServletException;
@@ -15,9 +16,12 @@ import java.io.IOException;
 
 @Component
 public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
+  private final UserSecurityService securityService;
   private final UserService userService;
 
-  public CustomLoginFailureHandler(UserService userService) {
+  public CustomLoginFailureHandler(UserSecurityService securityService, UserService userService) {
+
+    this.securityService = securityService;
     this.userService = userService;
   }
 
@@ -32,7 +36,7 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
       if (exception instanceof LockedException) {
         errorType = LoginErrorType.ACCOUNT_LOCKED.name();
       } else {
-        userService.increaseUserFailedLoginAttempts(user);
+        securityService.increaseUserFailedLoginAttempts(user);
       }
     } catch (ObjectNotFoundException e) {
       errorType = LoginErrorType.USER_NOT_FOUND.name();
