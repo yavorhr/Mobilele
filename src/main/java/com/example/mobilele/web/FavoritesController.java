@@ -1,5 +1,6 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.service.FavoritesService;
 import com.example.mobilele.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/users")
 public class FavoritesController {
-  private final UserService userService;
+  private final FavoritesService favoritesService;
 
-  public FavoritesController(UserService userService) {
-    this.userService = userService;
+  public FavoritesController(FavoritesService favoritesService) {
+    this.favoritesService = favoritesService;
   }
 
   @PreAuthorize("@security.canToggleFavorite(#principal.name,#offerId)")
@@ -32,7 +33,7 @@ public class FavoritesController {
     Map<String, Object> response = new HashMap<>();
 
     try {
-      boolean added = userService.toggleFavorite(principal.getName(), offerId);
+      boolean added = favoritesService.toggleFavorite(principal.getName(), offerId);
 
       response.put("success", true);
       response.put("message", added

@@ -34,8 +34,6 @@ public interface UserService {
 
   boolean isPhoneNumberAvailable(String phoneNumber);
 
-  boolean toggleFavorite(String name, Long offerId);
-
   boolean isOwnerOrIsAdmin(String username, Long routeId);
 
   boolean isNotOwnerOrIsAdmin(String username, Long routeId);
