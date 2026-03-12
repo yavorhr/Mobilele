@@ -1,6 +1,5 @@
 package com.example.mobilele.util;
 
-
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,6 @@ public final class ProjectHelpers {
 
   private ProjectHelpers() {
   }
-
 
   public static String convertPictureTitle(String originalName) {
     if (originalName != null) {
