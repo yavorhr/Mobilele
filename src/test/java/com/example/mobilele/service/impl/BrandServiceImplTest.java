@@ -3,6 +3,7 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.repository.BrandRepository;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+
 import java.util.Optional;
 
 
@@ -50,6 +52,15 @@ public class BrandServiceImplTest {
 
     // Assert
     Assertions.assertEquals("BMW", result.getName());
+  }
+
+  @Test
+  void testFindBrandByName_notFound() {
+    Mockito.when(brandRepository
+            .findBrandByNameIgnoreCase("none_existing_brand"))
+            .thenReturn(Optional.empty());
+
+    Assertions.assertThrows(ObjectNotFoundException.class, () -> brandService.findBrandByName("none_existing_brand"));
   }
 
 }
