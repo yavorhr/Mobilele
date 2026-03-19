@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 
 import com.example.mobilele.model.entity.BrandEntity;
+import com.example.mobilele.model.view.brand.BrandViewNameModel;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -61,6 +63,29 @@ public class BrandServiceImplTest {
             .thenReturn(Optional.empty());
 
     Assertions.assertThrows(ObjectNotFoundException.class, () -> brandService.findBrandByName("none_existing_brand"));
+  }
+
+  @Test
+  void testFindAllBrands() {
+    BrandViewNameModel viewModelAudi = new BrandViewNameModel();
+    viewModelAudi.setName("Audi");
+
+    BrandViewNameModel viewModelBmw = new BrandViewNameModel();
+    viewModelBmw.setName("BMW");
+
+    Mockito.when(brandRepository.findAll()).thenReturn(List.of(audi, bmw));
+
+    Mockito.when(modelMapper.map(audi, BrandViewNameModel.class))
+            .thenReturn(viewModelAudi);
+
+    Mockito.when(modelMapper.map(bmw, BrandViewNameModel.class))
+            .thenReturn(viewModelBmw);
+
+    List<BrandViewNameModel> result = brandService.findAllBrands();
+
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals("Audi", result.get(0).getName());
+    Assertions.assertEquals("BMW", result.get(1).getName());
   }
 
 }
