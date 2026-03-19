@@ -1,6 +1,5 @@
 package com.example.mobilele.service.impl;
 
-
 import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.model.service.brand.BrandServiceModel;
 import com.example.mobilele.model.view.brand.BrandViewNameModel;
@@ -15,9 +14,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-
 import java.util.List;
 import java.util.Optional;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +46,7 @@ public class BrandServiceImplTest {
   @Test
   void testFindBrandByName_success() {
     // Arrange
-    Mockito.when(brandRepository.findBrandByNameIgnoreCase("BMW"))
+    when(brandRepository.findBrandByNameIgnoreCase("BMW"))
             .thenReturn(Optional.of(bmw));
 
     // Act
@@ -59,7 +58,7 @@ public class BrandServiceImplTest {
 
   @Test
   void testFindBrandByName_notFound() {
-    Mockito.when(brandRepository
+    when(brandRepository
             .findBrandByNameIgnoreCase("none_existing_brand"))
             .thenReturn(Optional.empty());
 
@@ -74,12 +73,12 @@ public class BrandServiceImplTest {
     BrandViewNameModel viewModelBmw = new BrandViewNameModel();
     viewModelBmw.setName("BMW");
 
-    Mockito.when(brandRepository.findAll()).thenReturn(List.of(audi, bmw));
+    when(brandRepository.findAll()).thenReturn(List.of(audi, bmw));
 
-    Mockito.when(modelMapper.map(audi, BrandViewNameModel.class))
+    when(modelMapper.map(audi, BrandViewNameModel.class))
             .thenReturn(viewModelAudi);
 
-    Mockito.when(modelMapper.map(bmw, BrandViewNameModel.class))
+    when(modelMapper.map(bmw, BrandViewNameModel.class))
             .thenReturn(viewModelBmw);
 
     List<BrandViewNameModel> result = brandService.findAllBrands();
@@ -94,15 +93,33 @@ public class BrandServiceImplTest {
     BrandServiceModel serviceModel = new BrandServiceModel();
     serviceModel.setName("BMW");
 
-    Mockito.when(brandRepository.findAllBrandsWithModels())
+    when(brandRepository.findAllBrandsWithModels())
             .thenReturn(List.of(bmw));
 
-    Mockito.when(modelMapper.map(bmw, BrandServiceModel.class))
+    when(modelMapper.map(bmw, BrandServiceModel.class))
             .thenReturn(serviceModel);
 
     var result = brandService.getAllBrands();
 
     Assertions.assertEquals(1, result.size());
     Assertions.assertEquals("BMW", result.iterator().next().getName());
+  }
+
+  @Test
+  void testSeedBrands_whenAlreadySeeded_shouldDoNothing() {
+    when(brandRepository.count()).thenReturn(5L);
+
+    brandService.seedBrands();
+
+    Mockito.verify(brandRepository, Mockito.never()).saveAll(Mockito.any());
+  }
+
+  @Test
+  void testSeedBrands_whenEmpty_shouldSeed() {
+    when(brandRepository.count()).thenReturn(0L);
+
+    brandService.seedBrands();
+
+    Mockito.verify(brandRepository, Mockito.times(1)).saveAll(Mockito.any());
   }
 }
