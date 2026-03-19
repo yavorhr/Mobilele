@@ -3,6 +3,7 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.UserRepository;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -58,4 +60,13 @@ public class FavoritesServiceImplTest {
     assertTrue(result);
     verify(offerRepository).save(offer);
   }
+
+  @Test
+  void testToggleReservation_notFound() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> favoritesService.toggleReservation(1L, "user"));
+  }
+
 }
