@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 
 import com.example.mobilele.model.entity.BrandEntity;
+import com.example.mobilele.model.service.brand.BrandServiceModel;
 import com.example.mobilele.model.view.brand.BrandViewNameModel;
 import com.example.mobilele.repository.BrandRepository;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
@@ -88,4 +89,20 @@ public class BrandServiceImplTest {
     Assertions.assertEquals("BMW", result.get(1).getName());
   }
 
+  @Test
+  void testGetAllBrands() {
+    BrandServiceModel serviceModel = new BrandServiceModel();
+    serviceModel.setName("BMW");
+
+    Mockito.when(brandRepository.findAllBrandsWithModels())
+            .thenReturn(List.of(bmw));
+
+    Mockito.when(modelMapper.map(bmw, BrandServiceModel.class))
+            .thenReturn(serviceModel);
+
+    var result = brandService.getAllBrands();
+
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals("BMW", result.iterator().next().getName());
+  }
 }
