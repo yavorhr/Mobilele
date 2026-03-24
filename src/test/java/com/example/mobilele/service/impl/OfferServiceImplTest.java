@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
@@ -185,5 +186,34 @@ public class OfferServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> offerService.incrementViews(1L));
+  }
+
+  @Test
+  void testSeedOffers() {
+    when(offerRepository.count()).thenReturn(0L);
+
+    OfferSeedContext context = mock(OfferSeedContext.class);
+
+    ModelEntity model = new ModelEntity();
+    BrandEntity brand = new BrandEntity();
+    brand.setName("BMW");
+    model.setBrand(brand);
+    model.setName("X5");
+
+    when(context.model()).thenReturn(model);
+    when(context.seller()).thenReturn(new UserEntity());
+
+    when(seedGenerator.generateData()).thenReturn(List.of(context));
+
+    when(cloudinaryService.buildImageUrl(any()))
+            .thenReturn("url");
+
+    offerService.seedOffers();
+
+    verify(offerRepository).saveAll(argThat(iterable -> {
+      int count = 0;
+      for (Object ignored : iterable) count++;
+      return count == 1;
+    }));
   }
 }
