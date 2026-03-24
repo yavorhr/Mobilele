@@ -1,6 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.OfferEntity;
+import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
@@ -12,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,10 +39,17 @@ public class FavoritesServiceImplTest {
 
   OfferEntity offer;
 
+  UserEntity user;
+
   @BeforeEach
-  void init(){
+  void init() {
     offer = new OfferEntity();
     offer.setReserved(false);
+    offer.setId(1L);
+    offer.setFavoritedBy(new HashSet<>());
+
+    user = new UserEntity();
+    user.setUsername("user");
   }
 
   @Test
@@ -58,6 +68,7 @@ public class FavoritesServiceImplTest {
     boolean result = favoritesService.toggleReservation(1L, "user");
 
     assertTrue(result);
+    assertTrue(offer.isReserved());
     verify(offerRepository).save(offer);
   }
 
@@ -67,5 +78,24 @@ public class FavoritesServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> favoritesService.toggleReservation(1L, "user"));
+  }
+
+  @Test
+  void testToggleFavorite_Add() {
+    //Arrange
+    when(userRepository.existsByUsernameAndFavorites_Id("user", 1L))
+            .thenReturn(false);
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(user));
+    when(offerRepository.findById(1L))
+            .thenReturn(Optional.of(offer));
+
+    //Act
+    boolean result = favoritesService.toggleFavorite("user", 1L);
+
+    //Assert
+    assertTrue(result);
+    assertTrue(user.getFavorites().contains(offer));
+    assertTrue(offer.getFavoritedBy().contains(user));
   }
 }
