@@ -10,18 +10,15 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -143,6 +140,16 @@ public class FeedbackServiceImplTest {
     feedbackService.seedFeedbacks();
 
     verify(feedbackRepository, never()).saveAll(any());
+  }
 
+  @Test
+  void testSeedFeedbacks_UserNotFound() {
+    when(feedbackRepository.count()).thenReturn(0L);
+
+    when(userRepository.findByUsername("admin"))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> feedbackService.seedFeedbacks());
   }
 }
