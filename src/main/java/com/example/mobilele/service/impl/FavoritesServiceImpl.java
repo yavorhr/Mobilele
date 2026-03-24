@@ -53,13 +53,13 @@ public class FavoritesServiceImpl implements FavoritesService {
   @Override
   @Transactional
   public boolean toggleFavorite(String username, Long offerId) {
-    boolean exists = userRepository.existsByUsernameAndFavorites_Id(username, offerId);
-
     UserEntity user = this.getByUsernameOrThrow(username);
 
     OfferEntity offer = offerRepository
             .findById(offerId)
             .orElseThrow(() -> new RuntimeException("Offer not found"));
+
+    boolean exists = userRepository.existsByUsernameAndFavorites_Id(username, offerId);
 
     if (exists) {
       user.getFavorites().remove(offer);
