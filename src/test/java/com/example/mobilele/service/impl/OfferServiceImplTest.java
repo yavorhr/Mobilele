@@ -169,4 +169,13 @@ public class OfferServiceImplTest {
     verify(modelMapper).map(model, offer);
     verify(offerRepository).save(offer);
   }
+
+  @Test
+  void testIncrementViews() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
+    offerService.incrementViews(1L);
+
+    verify(offerRepository).incrementViews(1L);
+  }
 }
