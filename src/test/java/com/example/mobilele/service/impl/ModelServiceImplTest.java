@@ -91,4 +91,15 @@ public class ModelServiceImplTest {
 
     assertTrue(result.isEmpty());
   }
+
+  @Test
+  void testFindModelsByVehicleTypeAndBrand_Null() {
+    when(modelRepository.findAllByBrandNameAndVehicleType("BMW", VehicleCategoryEnum.Car))
+            .thenReturn(null);
+
+    List<String> result =
+            modelService.findModelsByVehicleTypeAndBrand("BMW", VehicleCategoryEnum.Car);
+
+    assertTrue(result.isEmpty());
+  }
 }
