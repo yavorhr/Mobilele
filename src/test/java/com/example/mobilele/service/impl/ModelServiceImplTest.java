@@ -34,6 +34,7 @@ public class ModelServiceImplTest {
   void init() {
     model = new ModelEntity();
     model.setId(1L);
+    model.setName("X5");
   }
 
   @Test
@@ -45,5 +46,15 @@ public class ModelServiceImplTest {
 
     assertTrue(result.isPresent());
     assertEquals(model, result.get());
+  }
+
+  @Test
+  void testFindByName_Success() {
+    when(modelRepository.findByName("X5")).thenReturn(Optional.of(model));
+
+    ModelEntity result = modelService.findByName("X5");
+
+    assertEquals(model, result);
+    assertEquals("X5", result.getName());
   }
 }
