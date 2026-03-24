@@ -116,4 +116,25 @@ public class FeedbackServiceImplTest {
     assertEquals(0.0, result.getRating());
     assertEquals(0L, result.getCount());
   }
+
+  @Test
+  void testSeedFeedbacks_ShouldSeed() {
+    UserEntity admin = new UserEntity();
+    admin.setUsername("admin");
+
+    UserEntity user = new UserEntity();
+    user.setUsername("user");
+
+    when(feedbackRepository.count()).thenReturn(0L);
+
+    when(userRepository.findByUsername("admin"))
+            .thenReturn(Optional.of(admin));
+
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(user));
+
+    feedbackService.seedFeedbacks();
+
+    verify(feedbackRepository).saveAll(argThat(iterable -> ((List<?>) iterable).size() == 5));
+  }
 }
