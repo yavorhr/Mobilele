@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.Feedback;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.view.feedback.FeedbackSummaryViewModel;
 import com.example.mobilele.model.view.feedback.FeedbackViewModel;
 import com.example.mobilele.repository.FeedbackRepository;
 import com.example.mobilele.repository.UserRepository;
@@ -87,5 +88,18 @@ public class FeedbackServiceImplTest {
 
     assertEquals(1, result.size());
     assertEquals(viewModel, result.get(0));
+  }
+
+  @Test
+  void testGetFeedbackSummary_WithData() {
+    when(feedbackRepository.findAverageRating())
+            .thenReturn(Optional.of(4.5));
+    when(feedbackRepository.count())
+            .thenReturn(10L);
+
+    FeedbackSummaryViewModel result = feedbackService.getFeedbackSummary();
+
+    assertEquals(4.5, result.getRating());
+    assertEquals(10L, result.getCount());
   }
 }
