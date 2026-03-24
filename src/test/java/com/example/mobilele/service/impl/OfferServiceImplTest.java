@@ -216,4 +216,13 @@ public class OfferServiceImplTest {
       return count == 1;
     }));
   }
+
+  @Test
+  void testSeedOffers_ShouldNotSeed() {
+    when(offerRepository.count()).thenReturn(5L);
+
+    offerService.seedOffers();
+
+    verify(offerRepository, never()).saveAll(any());
+  }
 }
