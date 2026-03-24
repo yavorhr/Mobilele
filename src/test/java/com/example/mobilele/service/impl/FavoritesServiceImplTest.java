@@ -16,9 +16,9 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -97,5 +97,25 @@ public class FavoritesServiceImplTest {
     assertTrue(result);
     assertTrue(user.getFavorites().contains(offer));
     assertTrue(offer.getFavoritedBy().contains(user));
+  }
+
+  @Test
+  void testToggleFavorite_Remove() {
+
+    user.setFavorites(new HashSet<>(Set.of(offer)));
+    offer.setFavoritedBy(new HashSet<>(Set.of(user)));
+
+    when(userRepository.existsByUsernameAndFavorites_Id("user", 1L))
+            .thenReturn(true);
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(user));
+    when(offerRepository.findById(1L))
+            .thenReturn(Optional.of(offer));
+
+    boolean result = favoritesService.toggleFavorite("user", 1L);
+
+    assertFalse(result);
+    assertFalse(user.getFavorites().contains(offer));
+    assertFalse(offer.getFavoritedBy().contains(user));
   }
 }
