@@ -102,4 +102,18 @@ public class FeedbackServiceImplTest {
     assertEquals(4.5, result.getRating());
     assertEquals(10L, result.getCount());
   }
+
+  @Test
+  void testGetFeedbackSummary_NoRatings() {
+    when(feedbackRepository.findAverageRating())
+            .thenReturn(Optional.empty());
+
+    when(feedbackRepository.count())
+            .thenReturn(0L);
+
+    FeedbackSummaryViewModel result = feedbackService.getFeedbackSummary();
+
+    assertEquals(0.0, result.getRating());
+    assertEquals(0L, result.getCount());
+  }
 }
