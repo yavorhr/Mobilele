@@ -102,4 +102,15 @@ public class ModelServiceImplTest {
 
     assertTrue(result.isEmpty());
   }
+
+  @Test
+  void testFindAll() {
+    List<ModelEntity> models = List.of(new ModelEntity(), new ModelEntity());
+    when(modelRepository.findAll()).thenReturn(models);
+
+    List<ModelEntity> result = modelService.findAll();
+
+    assertEquals(2, result.size());
+    assertEquals(models, result);
+  }
 }
