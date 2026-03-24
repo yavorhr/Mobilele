@@ -104,4 +104,12 @@ public class OfferServiceImplTest {
     verify(cloudinaryService).delete("pic1");
     verify(offerRepository).delete(offer);
   }
+
+  @Test
+  void testDeleteById_NotFound() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> offerService.deleteById(1L));
+  }
 }
