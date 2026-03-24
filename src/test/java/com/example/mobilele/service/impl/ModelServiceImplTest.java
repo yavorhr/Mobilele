@@ -142,5 +142,13 @@ public class ModelServiceImplTest {
     }));
   }
 
-  
+  @Test
+  void testSeedModels_BrandNotFound() {
+    when(modelRepository.count()).thenReturn(0L);
+    when(brandService.findBrandByName(any()))
+            .thenThrow(new ObjectNotFoundException("Brand missing"));
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> modelService.seedModels());
+  }
 }
