@@ -68,5 +68,4 @@ public class FavoritesServiceImplTest {
     assertThrows(ObjectNotFoundException.class,
             () -> favoritesService.toggleReservation(1L, "user"));
   }
-
 }
