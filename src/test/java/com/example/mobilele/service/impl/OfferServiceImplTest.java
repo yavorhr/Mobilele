@@ -3,6 +3,7 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
+import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -155,5 +156,17 @@ public class OfferServiceImplTest {
 
     assertEquals(1L, result.getId());
     verify(cloudinaryService).upload(file, "api");
+  }
+
+  @Test
+  void testUpdateOffer() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
+    OfferUpdateServiceModel model = new OfferUpdateServiceModel();
+
+    offerService.updateOffer(model, 1L);
+
+    verify(modelMapper).map(model, offer);
+    verify(offerRepository).save(offer);
   }
 }
