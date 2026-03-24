@@ -118,4 +118,13 @@ public class FavoritesServiceImplTest {
     assertFalse(user.getFavorites().contains(offer));
     assertFalse(offer.getFavoritedBy().contains(user));
   }
+
+  @Test
+  void testToggleFavorite_UserNotFound() {
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> favoritesService.toggleFavorite("user", 1L));
+  }
 }
