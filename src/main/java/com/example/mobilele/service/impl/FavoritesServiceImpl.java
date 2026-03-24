@@ -45,8 +45,8 @@ public class FavoritesServiceImpl implements FavoritesService {
             .orElseThrow(() -> new ObjectNotFoundException("Offer not found"));
 
     offer.setReserved(!offer.isReserved());
-    offerRepository.save(offer);
 
+    offerRepository.save(offer);
     return offer.isReserved();
   }
 
