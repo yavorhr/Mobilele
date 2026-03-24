@@ -1,6 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.ModelEntity;
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -64,5 +67,16 @@ public class ModelServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> modelService.findByName("N/A"));
+  }
+
+  @Test
+  void testFindModelsByVehicleTypeAndBrand() {
+    when(modelRepository.findAllByBrandNameAndVehicleType("BMW", VehicleCategoryEnum.SUV))
+            .thenReturn(List.of("X5", "X3"));
+
+    List<String> result =
+            modelService.findModelsByVehicleTypeAndBrand("BMW", VehicleCategoryEnum.SUV);
+
+    assertEquals(List.of("X5", "X3"), result);
   }
 }
