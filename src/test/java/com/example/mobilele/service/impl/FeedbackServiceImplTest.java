@@ -4,11 +4,13 @@ import com.example.mobilele.model.entity.Feedback;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.repository.FeedbackRepository;
 import com.example.mobilele.repository.UserRepository;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
@@ -56,6 +58,14 @@ public class FeedbackServiceImplTest {
             feedback.getUser().equals(user) &&
                     feedback.getRating() == 5 &&
                     feedback.getComment().equals("Great app!")));
+  }
 
+  @Test
+  void testLeaveFeedback_UserNotFound() {
+    when(userRepository.findByUsername("missing"))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> feedbackService.leaveFeedback("missing", 5, "test"));
   }
 }
