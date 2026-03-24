@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,5 +79,16 @@ public class ModelServiceImplTest {
             modelService.findModelsByVehicleTypeAndBrand("BMW", VehicleCategoryEnum.SUV);
 
     assertEquals(List.of("X5", "X3"), result);
+  }
+
+  @Test
+  void testFindModelsByVehicleTypeAndBrand_Empty() {
+    when(modelRepository.findAllByBrandNameAndVehicleType("BMW", VehicleCategoryEnum.SUV))
+            .thenReturn(Collections.emptyList());
+
+    List<String> result =
+            modelService.findModelsByVehicleTypeAndBrand("BMW", VehicleCategoryEnum.SUV);
+
+    assertTrue(result.isEmpty());
   }
 }
