@@ -178,4 +178,12 @@ public class OfferServiceImplTest {
 
     verify(offerRepository).incrementViews(1L);
   }
+
+  @Test
+  void testIncrementViews_NotFound() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> offerService.incrementViews(1L));
+  }
 }
