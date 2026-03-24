@@ -1,0 +1,49 @@
+package com.example.mobilele.service.impl;
+
+import com.example.mobilele.model.entity.ModelEntity;
+import com.example.mobilele.repository.ModelRepository;
+import com.example.mobilele.service.BrandService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class ModelServiceImplTest {
+
+  @Mock
+  private ModelRepository modelRepository;
+
+  @Mock
+  private BrandService brandService;
+
+  @InjectMocks
+  private ModelServiceImpl modelService;
+
+  private ModelEntity model;
+
+  @BeforeEach
+  void init() {
+    model = new ModelEntity();
+    model.setId(1L);
+  }
+
+  @Test
+  void testFindById() {
+
+    when(modelRepository.findById(1L)).thenReturn(Optional.of(model));
+
+    Optional<ModelEntity> result = modelService.findById(1L);
+
+    assertTrue(result.isPresent());
+    assertEquals(model, result.get());
+  }
+}
