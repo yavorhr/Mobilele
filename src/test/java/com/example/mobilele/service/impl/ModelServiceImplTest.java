@@ -1,5 +1,6 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.entity.BrandEntity;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.repository.ModelRepository;
@@ -18,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ModelServiceImplTest {
@@ -113,4 +114,33 @@ public class ModelServiceImplTest {
     assertEquals(2, result.size());
     assertEquals(models, result);
   }
+
+  @Test
+  void testSeedModels_ShouldNotSeed() {
+    when(modelRepository.count()).thenReturn(5L);
+
+    modelService.seedModels();
+
+    verify(modelRepository, never()).saveAll(any());
+  }
+
+  @Test
+  void testSeedModels_ShouldSeed() {
+    when(modelRepository.count()).thenReturn(0L);
+
+    BrandEntity brand = new BrandEntity();
+
+    when(brandService.findBrandByName(any()))
+            .thenReturn(brand);
+
+    modelService.seedModels();
+
+    verify(modelRepository).saveAll(argThat(iterable -> {
+      int count = 0;
+      for (Object ignored : iterable) count++;
+      return count == 48;
+    }));
+  }
+
+  
 }
