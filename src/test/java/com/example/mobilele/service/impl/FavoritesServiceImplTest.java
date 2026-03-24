@@ -1,7 +1,9 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.OfferEntity;
+import com.example.mobilele.model.entity.Picture;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
@@ -12,9 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -126,5 +132,40 @@ public class FavoritesServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> favoritesService.toggleFavorite("user", 1L));
+  }
+
+  @Test
+  void testToggleFavorite_OfferNotFound() {
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(user));
+
+    when(offerRepository.findById(1L))
+            .thenReturn(Optional.empty());
+
+    assertThrows(RuntimeException.class,
+            () -> favoritesService.toggleFavorite("user", 1L));
+  }
+
+  @Test
+  void testFindFavoriteOffers() {
+    Pageable pageable = PageRequest.of(0, 2);
+
+    Picture picture = new Picture();
+    picture.setUrl("img.jpg");
+    offer.setPictures(List.of(picture));
+
+    OfferBaseViewModel viewModel = new OfferBaseViewModel();
+
+    when(offerRepository.findFavoritesByUsername("user", pageable))
+            .thenReturn(new PageImpl<>(List.of(offer)));
+
+    when(modelMapper.map(offer, OfferBaseViewModel.class))
+            .thenReturn(viewModel);
+
+    Page<OfferBaseViewModel> result =
+            favoritesService.findFavoriteOffers("user", pageable);
+
+    assertEquals(1, result.getContent().size());
+    assertEquals("img.jpg", result.getContent().get(0).getProfileImage());
   }
 }
