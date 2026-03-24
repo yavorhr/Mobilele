@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,8 +24,6 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FeedbackServiceImplTest {
@@ -136,5 +134,15 @@ public class FeedbackServiceImplTest {
     feedbackService.seedFeedbacks();
 
     verify(feedbackRepository).saveAll(argThat(iterable -> ((List<?>) iterable).size() == 5));
+  }
+
+  @Test
+  void testSeedFeedbacks_ShouldNotSeed() {
+    when(feedbackRepository.count()).thenReturn(5L);
+
+    feedbackService.seedFeedbacks();
+
+    verify(feedbackRepository, never()).saveAll(any());
+
   }
 }
