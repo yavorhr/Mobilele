@@ -1,8 +1,8 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.init.OfferSeedGenerator;
-import com.example.mobilele.model.entity.OfferEntity;
-import com.example.mobilele.model.entity.Picture;
+import com.example.mobilele.model.entity.*;
+import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -10,6 +10,7 @@ import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +20,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static org.mockito.Mockito.verify;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class OfferServiceImplTest {
@@ -111,5 +113,47 @@ public class OfferServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> offerService.deleteById(1L));
+  }
+
+  @Test
+  void testAddOffer() throws IOException {
+    //Arrange
+    OfferAddServiceModel serviceModel = new OfferAddServiceModel();
+    serviceModel.setModel("X5");
+    serviceModel.setBrand("BMW");
+
+    MultipartFile file = mock(MultipartFile.class);
+    when(file.getOriginalFilename()).thenReturn("test.jpg");
+    serviceModel.setPictures(List.of(file));
+
+    ModelEntity model = new ModelEntity();
+    BrandEntity brand = new BrandEntity();
+    UserEntity user = new UserEntity();
+
+    OfferEntity offer = new OfferEntity();
+    offer.setPictures(new ArrayList<>());
+
+    when(modelMapper.map(serviceModel, OfferEntity.class)).thenReturn(offer);
+    when(modelService.findByName("X5")).thenReturn(model);
+    when(brandService.findBrandByName("BMW")).thenReturn(brand);
+    when(userService.findByUsername("user")).thenReturn(user);
+
+    CloudinaryImage image = new CloudinaryImage();
+    image.setUrl("url");
+    image.setPublicId("id");
+
+    when(cloudinaryService.upload(file, "api")).thenReturn(image);
+
+    when(offerRepository.save(any())).thenAnswer(inv -> {
+      OfferEntity o = inv.getArgument(0);
+      o.setId(1L);
+      return o;
+    });
+
+    OfferAddServiceModel result =
+            offerService.addOffer(serviceModel, "user");
+
+    assertEquals(1L, result.getId());
+    verify(cloudinaryService).upload(file, "api");
   }
 }
