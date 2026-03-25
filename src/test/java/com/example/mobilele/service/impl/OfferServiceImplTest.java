@@ -5,6 +5,7 @@ import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
+import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -22,6 +23,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -236,7 +241,47 @@ public class OfferServiceImplTest {
   @Test
   void testFindById_NotFound(){
     when(offerRepository.findById(1L)).thenReturn(Optional.empty());
-
     assertThrows(ObjectNotFoundException.class, ()-> offerService.findById(1L));
+  }
+
+  @Test
+  void testFindOffersByBrand() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    Pageable pageable = PageRequest.of(0, 5);
+
+    when(offerRepository.findAllByModel_Brand_Name("BMW", pageable))
+            .thenReturn(new PageImpl<>(List.of(offer)));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    Page<OfferBaseViewModel> result =
+            offerService.findOffersByBrand("BMW", pageable);
+
+    assertEquals(1, result.getContent().size());
+    verify(offerRepository).findAllByModel_Brand_Name("BMW", pageable);
+  }
+
+  @Test
+  void testFindMostViewedOffers() {
+    OfferEntity offer = new OfferEntity();
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+
+    offer.setModel(new ModelEntity() {{
+      setName("X5"); }});
+
+    when(offerRepository.findAllByOrderByViewsDesc(any(PageRequest.class)))
+            .thenReturn(List.of(offer));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    List<OfferBaseViewModel> result =
+            offerService.findMostViewedOffers(5);
+
+    assertEquals(1, result.size());
   }
 }
