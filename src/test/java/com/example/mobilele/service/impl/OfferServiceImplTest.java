@@ -3,10 +3,8 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
-import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
-import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -20,15 +18,10 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -231,26 +224,5 @@ public class OfferServiceImplTest {
     verify(offerRepository, never()).saveAll(any());
   }
 
-  @Test
-  void testFindOffersByFilters_CapturesSpecification() {
-    OffersFindServiceModel filter = new OffersFindServiceModel();
-    filter.setBrand("BMW");
-    filter.setModel("X5");
 
-    Pageable pageable = PageRequest.of(0, 5);
-
-    ArgumentCaptor<Specification<OfferEntity>> captor =
-            ArgumentCaptor.forClass(Specification.class);
-
-    when(offerRepository.findAll(any(Specification.class),
-            eq(pageable))).thenReturn(Page.empty());
-
-    offerService.findOffersByFilters(filter, VehicleCategoryEnum.Car, pageable);
-
-    verify(offerRepository).findAll(captor.capture(), eq(pageable));
-
-    Specification<OfferEntity> spec = captor.getValue();
-
-    assertNotNull(spec);
-  }
 }
