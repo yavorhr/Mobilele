@@ -85,4 +85,20 @@ public class PictureServiceImplTest {
 
     verify(pictureRepository, times(1)).saveAll(anyList());
   }
+
+  @Test
+  void testAddPicturesToOffer_UploadFails() throws IOException {
+    MultipartFile file = mock(MultipartFile.class);
+
+    when(cloudinaryService.upload(file, "api")).thenReturn(null);
+
+    PicturesAddServiceModel serviceModel = new PicturesAddServiceModel();
+    serviceModel.setPictures(List.of(file));
+
+    assertThrows(RuntimeException.class, () -> {
+      pictureService.addPicturesToOffer(serviceModel);
+    });
+
+    verify(pictureRepository, never()).saveAll(anyList());
+  }
 }
