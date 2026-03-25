@@ -98,7 +98,7 @@ public class OfferServiceImplTest {
   }
 
   @Test
-  void testDeleteById() {
+  void testDeleteById_Success() {
     OfferEntity offer = new OfferEntity();
     offer.setId(1L);
 
@@ -113,6 +113,22 @@ public class OfferServiceImplTest {
 
     verify(userRepository).deleteFavoritesByOfferId(1L);
     verify(cloudinaryService).delete("pic1");
+    verify(offerRepository).delete(offer);
+  }
+
+  @Test
+  void testDeleteById_CloudinaryFails_ShouldStillDeleteOffer() {
+    OfferEntity offer = new OfferEntity();
+    Picture pic = new Picture();
+    pic.setPublicId("123");
+    offer.setPictures(List.of(pic));
+
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
+    doThrow(new RuntimeException()).when(cloudinaryService).delete("123");
+
+    offerService.deleteById(1L);
+
     verify(offerRepository).delete(offer);
   }
 
