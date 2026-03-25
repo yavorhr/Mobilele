@@ -426,4 +426,27 @@ public class OfferServiceImplTest {
     verify(offerRepository).findTop20ByOrderByViewsDesc();
   }
 
+  @Test
+  void testFindAllOffers() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    Pageable pageable = PageRequest.of(0, 5);
+
+    when(offerRepository.findAll(pageable))
+            .thenReturn(new PageImpl<>(List.of(offer)));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    // Act
+    Page<OfferBaseViewModel> result =
+            offerService.findAllOffers(pageable);
+
+    // Assert
+    assertEquals(1, result.getContent().size());
+
+    verify(offerRepository).findAll(pageable);
+  }
 }
