@@ -52,7 +52,6 @@ public class PictureServiceImpl implements PictureService {
       }
 
       Picture picture = mapToPicture(uploaded.getUrl(), uploaded.getPublicId(), convertTitle(file.getOriginalFilename()));
-
       picture.setOffer(this.offerService.findById(serviceModel.getOfferId()));
       picture.setSeller(this.userService.findById(serviceModel.getUserId()));
 
