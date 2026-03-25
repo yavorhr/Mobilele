@@ -232,4 +232,11 @@ public class OfferServiceImplTest {
 
     assertEquals(1L, result.getId());
   }
+
+  @Test
+  void testFindById_NotFound(){
+    when(offerRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class, ()-> offerService.findById(1L));
+  }
 }
