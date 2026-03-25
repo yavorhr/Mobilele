@@ -9,6 +9,7 @@ import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.repository.UserRepository;
@@ -31,6 +32,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -356,6 +358,7 @@ public class OfferServiceImplTest {
   @Test
   void testGetUpdateForm_Success() {
     when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
     when(modelMapper.map(offer, OfferUpdateBindingForm.class))
             .thenReturn(new OfferUpdateBindingForm());
 
@@ -363,5 +366,28 @@ public class OfferServiceImplTest {
             offerService.getUpdateForm(1L);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testGetSellerPerformanceByYear() {
+    TopSellerViewModel seller = mock(TopSellerViewModel.class);
+
+    Page<TopSellerViewModel> pageResult = new PageImpl<>(List.of(seller));
+
+    when(soldOfferRepository.findSellerPerformanceByPeriod(
+            any(Instant.class),
+            any(Instant.class),
+            any(Pageable.class))).thenReturn(pageResult);
+
+    Page<TopSellerViewModel> result =
+            offerService.getSellerPerformanceByYear(2024, 0);
+
+    assertEquals(1, result.getContent().size());
+
+    verify(soldOfferRepository).findSellerPerformanceByPeriod(
+            any(Instant.class),
+            any(Instant.class),
+            argThat(p -> p.getPageNumber() == 0)
+    );
   }
 }
