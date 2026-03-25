@@ -5,6 +5,7 @@ import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.SoldOfferEntity;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,5 +53,15 @@ public class SoldOfferServiceImplTest {
     verify(soldOfferRepository).save(mappedSold);
 
     assertNotNull(mappedSold.getSaleTime());
+  }
+
+  @Test
+  void testSaveSoldOffer_notFound() {
+    Long offerId = 1L;
+
+    when(offerRepository.findById(offerId)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> soldOfferService.saveSoldOffer(offerId));
   }
 }
