@@ -301,4 +301,24 @@ public class OfferServiceImplTest {
 
     assertEquals(1, result.size());
   }
+
+  @Test
+  void testFindOffersByUserId() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    Pageable pageable = PageRequest.of(0, 5);
+
+    when(offerRepository.findAllBySeller_Username("user", pageable))
+            .thenReturn(new PageImpl<>(List.of(offer)));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    Page<OfferBaseViewModel> result =
+            offerService.findOffersByUserId("user", pageable);
+
+    assertEquals(1, result.getContent().size());
+    verify(offerRepository).findAllBySeller_Username("user", pageable);
+  }
 }
