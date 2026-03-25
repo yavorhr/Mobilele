@@ -2,6 +2,7 @@ package com.example.mobilele.service.impl;
 
 import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
+import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.entity.*;
 import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
@@ -350,5 +351,17 @@ public class OfferServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> offerService.getUpdateForm(1L));
+  }
+
+  @Test
+  void testGetUpdateForm_Success() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+    when(modelMapper.map(offer, OfferUpdateBindingForm.class))
+            .thenReturn(new OfferUpdateBindingForm());
+
+    OfferUpdateBindingForm result =
+            offerService.getUpdateForm(1L);
+
+    assertNotNull(result);
   }
 }
