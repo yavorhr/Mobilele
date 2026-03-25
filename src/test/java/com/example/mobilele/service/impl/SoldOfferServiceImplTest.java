@@ -1,0 +1,55 @@
+package com.example.mobilele.service.impl;
+
+import com.example.mobilele.init.OfferSeedGenerator;
+import com.example.mobilele.model.entity.OfferEntity;
+import com.example.mobilele.model.entity.SoldOfferEntity;
+import com.example.mobilele.repository.OfferRepository;
+import com.example.mobilele.repository.SoldOfferRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class SoldOfferServiceImplTest {
+
+  @Mock
+  private SoldOfferRepository soldOfferRepository;
+
+  @Mock
+  private OfferRepository offerRepository;
+
+  @Mock
+  private OfferSeedGenerator seedGenerator;
+
+  @Mock
+  private ModelMapper modelMapper;
+
+  @InjectMocks
+  private SoldOfferServiceImpl soldOfferService;
+
+  @Test
+  void testSaveSoldOffer_success() {
+    Long offerId = 1L;
+
+    OfferEntity offerEntity = new OfferEntity();
+    SoldOfferEntity mappedSold = new SoldOfferEntity();
+
+    when(offerRepository.findById(offerId)).thenReturn(Optional.of(offerEntity));
+    when(modelMapper.map(offerEntity, SoldOfferEntity.class)).thenReturn(mappedSold);
+
+    soldOfferService.saveSoldOffer(offerId);
+
+    verify(soldOfferRepository).save(mappedSold);
+
+    assertNotNull(mappedSold.getSaleTime());
+  }
+}
