@@ -390,4 +390,21 @@ public class OfferServiceImplTest {
             argThat(p -> p.getPageNumber() == 0)
     );
   }
+
+  @Test
+  void testGetTop20Sellers() {
+    TopSellerViewModel seller = mock(TopSellerViewModel.class);
+
+    List<TopSellerViewModel> sellers = List.of(seller);
+
+    when(soldOfferRepository.findTop20Sellers(any(PageRequest.class)))
+            .thenReturn(sellers);
+
+    List<TopSellerViewModel> result = offerService.getTop20Sellers();
+
+    assertEquals(1, result.size());
+
+    verify(soldOfferRepository)
+            .findTop20Sellers(argThat(p -> p.getPageSize() == 20));
+  }
 }
