@@ -101,4 +101,11 @@ public class PictureServiceImplTest {
 
     verify(pictureRepository, never()).saveAll(anyList());
   }
+
+  @Test
+  void testDeleteByPublicId() {
+    pictureService.deleteByPublicId("test-id");
+
+    verify(pictureRepository, times(1)).deleteByPublicId("test-id");
+  }
 }
