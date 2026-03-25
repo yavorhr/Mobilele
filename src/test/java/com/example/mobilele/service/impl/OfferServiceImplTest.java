@@ -224,5 +224,12 @@ public class OfferServiceImplTest {
     verify(offerRepository, never()).saveAll(any());
   }
 
+  @Test
+  void testFindById(){
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
 
+    OfferEntity result = offerService.findById(1L);
+
+    assertEquals(1L, result.getId());
+  }
 }
