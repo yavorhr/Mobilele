@@ -407,4 +407,23 @@ public class OfferServiceImplTest {
     verify(soldOfferRepository)
             .findTop20Sellers(argThat(p -> p.getPageSize() == 20));
   }
+
+  @Test
+  void testFindTopOffersByViews() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    when(offerRepository.findTop20ByOrderByViewsDesc())
+            .thenReturn(List.of(offer));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    List<OfferBaseViewModel> result =
+            offerService.findTopOffersByViews();
+
+    assertEquals(1, result.size());
+    verify(offerRepository).findTop20ByOrderByViewsDesc();
+  }
+
 }
