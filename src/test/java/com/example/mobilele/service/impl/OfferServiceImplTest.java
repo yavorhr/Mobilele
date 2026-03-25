@@ -267,7 +267,6 @@ public class OfferServiceImplTest {
 
   @Test
   void testFindMostViewedOffers() {
-    OfferEntity offer = new OfferEntity();
     offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
 
     offer.setModel(new ModelEntity() {{
@@ -281,6 +280,24 @@ public class OfferServiceImplTest {
 
     List<OfferBaseViewModel> result =
             offerService.findMostViewedOffers(5);
+
+    assertEquals(1, result.size());
+  }
+
+  @Test
+  void testFindLatestOffers() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    when(offerRepository.findAllByOrderByCreatedDesc(any(PageRequest.class)))
+            .thenReturn(List.of(offer));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class)))
+            .thenReturn(new OfferBaseViewModel());
+
+    List<OfferBaseViewModel> result =
+            offerService.findLatestOffers(5);
 
     assertEquals(1, result.size());
   }
