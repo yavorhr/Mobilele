@@ -3,6 +3,7 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
 import com.example.mobilele.model.entity.*;
+import com.example.mobilele.model.entity.enums.VehicleCategoryEnum;
 import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.service.offer.OfferUpdateServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
@@ -320,5 +321,34 @@ public class OfferServiceImplTest {
 
     assertEquals(1, result.getContent().size());
     verify(offerRepository).findAllBySeller_Username("user", pageable);
+  }
+
+  @Test
+  void testFindByTypeBrandAndModel() {
+    offer.setPictures(List.of(new Picture() {{ setUrl("img.jpg"); }}));
+    offer.setModel(new ModelEntity() {{ setName("X5"); }});
+
+    Pageable pageable = PageRequest.of(0, 5);
+
+    when(offerRepository
+            .findAllByModel_VehicleTypeAndModel_Brand_NameAndModel_Name(
+                    VehicleCategoryEnum.Car, "BMW", "X5", pageable))
+            .thenReturn(new PageImpl<>(List.of(offer)));
+
+    when(modelMapper.map(any(), eq(OfferBaseViewModel.class))).thenReturn(new OfferBaseViewModel());
+
+    Page<OfferBaseViewModel> result =
+            offerService.findByTypeBrandAndModel(
+                    VehicleCategoryEnum.Car, "BMW", "X5", pageable);
+
+    assertEquals(1, result.getContent().size());
+  }
+
+  @Test
+  void testGetUpdateForm_NotFound() {
+    when(offerRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> offerService.getUpdateForm(1L));
   }
 }
