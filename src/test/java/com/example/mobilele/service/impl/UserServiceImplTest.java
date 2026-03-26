@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,5 +140,21 @@ class UserServiceImplTest {
 
     assertThrows(DuplicatePhoneException.class,
             () -> userService.updateUserProfile(1L, model));
+  }
+
+  @Test
+  void deleteProfileById_shouldClearRolesAndDelete() {
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+    user.setRoles(new ArrayList<>(List.of(new UserRoleEntity())));
+
+    when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+    userService.deleteProfileById(1L);
+
+    assertTrue(user.getRoles().isEmpty());
+    verify(soldOfferRepository).clearSeller(1L);
+    verify(userRepository).save(user);
+    verify(userRepository).deleteById(1L);
   }
 }
