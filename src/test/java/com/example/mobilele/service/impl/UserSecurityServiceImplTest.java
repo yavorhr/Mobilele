@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +28,20 @@ class UserSecurityServiceImplTest {
     userSecurityService.increaseUserFailedLoginAttempts(user);
 
     assertEquals(2, user.getFailedLoginAttempts());
+    verify(userRepository).save(user);
+  }
+
+  @Test
+  void increaseUserFailedLoginAttempts_shouldLockAccount_whenReachesThree() {
+    UserEntity user = new UserEntity();
+    user.setFailedLoginAttempts(2);
+
+    userSecurityService.increaseUserFailedLoginAttempts(user);
+
+    assertTrue(user.isAccountLocked());
+    assertEquals(0, user.getFailedLoginAttempts());
+    assertNotNull(user.getLockTime());
+
     verify(userRepository).save(user);
   }
 }
