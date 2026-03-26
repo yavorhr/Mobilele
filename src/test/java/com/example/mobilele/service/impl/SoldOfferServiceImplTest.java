@@ -92,4 +92,13 @@ public class SoldOfferServiceImplTest {
             any(Pageable.class)
     );
   }
+
+  @Test
+  void testGetSoldVehiclesCount() {
+    when(soldOfferRepository.count()).thenReturn(42L);
+
+    long result = soldOfferService.getSoldVehiclesCount();
+
+    assertEquals(42L, result);
+  }
 }
