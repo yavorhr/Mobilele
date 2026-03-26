@@ -13,6 +13,7 @@ import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
 import com.example.mobilele.web.exception.DuplicatePhoneException;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -183,5 +184,14 @@ class UserServiceImplTest {
             .thenReturn(Optional.of(user));
 
     assertTrue(userService.isOwnerOrIsAdmin("admin", 999L)); // not owner, but admin
+  }
+
+  @Test
+  void getUserByUsernameOrThrow_shouldThrow_whenNotFound() {
+    when(userRepository.findByUsername("missing"))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> userService.getUserByUsernameOrThrow("missing"));
   }
 }
