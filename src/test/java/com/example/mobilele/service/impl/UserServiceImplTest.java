@@ -264,6 +264,18 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findByUsername_shouldReturnUser_whenExists() {
+    UserEntity user = new UserEntity();
+
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(user));
+
+    UserEntity result = userService.findByUsername("user");
+
+    assertEquals(user, result);
+  }
+
+  @Test
   void isEmailAvailable_shouldReturnFalse_whenEmailExists() {
     when(userRepository.findByEmailIgnoreCase("test@mail.com"))
             .thenReturn(Optional.of(new UserEntity()));
