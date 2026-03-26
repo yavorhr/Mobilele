@@ -3,6 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.repository.UserRoleRepository;
 import com.example.mobilele.service.UserAdminService;
@@ -10,15 +11,21 @@ import com.example.mobilele.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -64,11 +71,11 @@ class AdminControllerIT {
     user = new UserEntity();
     user.setPassword("password");
     user.setEnabled(true);
-    user.setUsername("admin");
-    user.setEmail("admin@abv.bg");
-    user.setFirstName("admin");
-    user.setLastName("adminov");
-    user.setRoles(List.of(adminRole, userRole));
+    user.setUsername("user");
+    user.setEmail("user@abv.bg");
+    user.setFirstName("user");
+    user.setLastName("userov");
+    user.setRoles(List.of(userRole));
     user.setAccountLocked(false);
 
     userRepository.saveAll(List.of(adminUser, user));
@@ -79,4 +86,5 @@ class AdminControllerIT {
     userRepository.deleteAll();
     roleRepository.deleteAll();
   }
+
 }
