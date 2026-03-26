@@ -253,7 +253,17 @@ class UserServiceImplTest {
 
     assertTrue(result);
   }
-  
+
+  @Test
+  void isEmailAvailable_shouldReturnFalse_whenEmailExists() {
+    when(userRepository.findByEmailIgnoreCase("test@mail.com"))
+            .thenReturn(Optional.of(new UserEntity()));
+
+    boolean result = userService.isEmailAvailable("test@mail.com");
+
+    assertFalse(result);
+  }
+
   @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
