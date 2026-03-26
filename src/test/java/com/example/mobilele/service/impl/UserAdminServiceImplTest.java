@@ -66,4 +66,10 @@ class UserAdminServiceImplTest {
     assertFalse(user.isAccountLocked());
   }
 
+  @Test
+  void isNotModifyingOwnProfile_shouldReturnFalseWhenSameUser() {
+    assertFalse(userAdminService.isNotModifyingOwnProfile("user", "user"));
+  }
+
+
 }
