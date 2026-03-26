@@ -69,4 +69,12 @@ class AdminControllerIT {
             .andExpect(view().name("admin/notifications"))
             .andExpect(model().attributeExists("usersPage", "users", "query"));
   }
+
+  @Test
+  @WithMockUser(username = "user", roles = {"USER"})
+  void testViewNotifications_Forbidden() throws Exception {
+
+    mockMvc.perform(get("/admin/notifications"))
+            .andExpect(status().isForbidden());
+  }
 }
