@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class StatsServiceImplTest {
@@ -39,5 +40,18 @@ public class StatsServiceImplTest {
 
     assertEquals(1, stats.getEndpointStats().size());
     assertEquals("/api/test", stats.getEndpointStats().get(0).getPath());
+  }
+
+  @Test
+  void testOnRequest_anonymousUser() {
+    statsService.onRequest("/home", null, false, 200, 50);
+
+    StatsViewModel stats = statsService.getStats();
+
+    assertEquals(1, stats.getTotalRequests());
+    assertEquals(0, stats.getAuthRequests());
+    assertEquals(1, stats.getAnonRequests());
+
+    assertTrue(stats.getUserStats().isEmpty());
   }
 }
