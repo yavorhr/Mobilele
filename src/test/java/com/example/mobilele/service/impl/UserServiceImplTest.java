@@ -276,6 +276,15 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findByUsername_shouldThrow_whenNotFound() {
+    when(userRepository.findByUsername("missing"))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> userService.findByUsername("missing"));
+  }
+
+  @Test
   void isEmailAvailable_shouldReturnFalse_whenEmailExists() {
     when(userRepository.findByEmailIgnoreCase("test@mail.com"))
             .thenReturn(Optional.of(new UserEntity()));
