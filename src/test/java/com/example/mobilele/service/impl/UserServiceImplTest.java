@@ -316,6 +316,18 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findAll_shouldReturnAllUsers() {
+    List<UserEntity> users = List.of(new UserEntity(), new UserEntity());
+
+    when(userRepository.findAll()).thenReturn(users);
+
+    List<UserEntity> result = userService.findAll();
+
+    assertEquals(2, result.size());
+    assertEquals(users, result);
+  }
+
+  @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
 
