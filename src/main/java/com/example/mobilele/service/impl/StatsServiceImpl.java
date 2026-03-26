@@ -110,7 +110,6 @@ public class StatsServiceImpl implements StatsService {
 
       statsRepository.save(snapshot);
     } catch (JsonProcessingException e) {
-      // in a real app you might log and/or rethrow as runtime
       throw new RuntimeException("Failed to serialize stats to JSON", e);
     }
   }
