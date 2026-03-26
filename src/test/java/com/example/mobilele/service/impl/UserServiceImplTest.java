@@ -170,4 +170,18 @@ class UserServiceImplTest {
 
     assertTrue(userService.isOwnerOrIsAdmin("user", 1L));
   }
+
+  @Test
+  void isAdmin_shouldReturnTrue_whenUserIsAdmin() {
+    UserRoleEntity role = new UserRoleEntity();
+    role.setRole(UserRoleEnum.ADMIN);
+
+    UserEntity user = new UserEntity();
+    user.setRoles(List.of(role));
+
+    when(userRepository.findByUsername("admin"))
+            .thenReturn(Optional.of(user));
+
+    assertTrue(userService.isOwnerOrIsAdmin("admin", 999L)); // not owner, but admin
+  }
 }
