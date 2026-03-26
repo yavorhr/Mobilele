@@ -255,6 +255,15 @@ class UserServiceImplTest {
   }
 
   @Test
+  void updateUser_shouldSaveUser() {
+    UserEntity user = new UserEntity();
+
+    userService.updateUser(user);
+
+    verify(userRepository).save(user);
+  }
+
+  @Test
   void isEmailAvailable_shouldReturnFalse_whenEmailExists() {
     when(userRepository.findByEmailIgnoreCase("test@mail.com"))
             .thenReturn(Optional.of(new UserEntity()));
