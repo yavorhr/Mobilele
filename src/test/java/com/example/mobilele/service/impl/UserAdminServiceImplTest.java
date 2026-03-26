@@ -4,6 +4,7 @@ import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
+import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.UserService;
@@ -13,6 +14,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -92,5 +98,29 @@ class UserAdminServiceImplTest {
     assertEquals(1, user.getRoles().size());
     assertEquals(UserRoleEnum.ADMIN, user.getRoles().get(0).getRole());
   }
+  @Test
+  void searchPaginatedUsersPerEmail_shouldMapCorrectly() {
+    UserEntity user = new UserEntity();
+    user.setEmail("test@mail.com");
 
+    UserRoleEntity role = new UserRoleEntity();
+    role.setRole(UserRoleEnum.USER);
+    user.setRoles(List.of(role));
+
+    Page<UserEntity> page = new PageImpl<>(List.of(user));
+
+    when(userRepository.findByEmailContainingIgnoreCase(eq("test"), any()))
+            .thenReturn(page);
+
+    UserAdministrationViewModel vm = new UserAdministrationViewModel();
+
+    when(modelMapper.map(user, UserAdministrationViewModel.class))
+            .thenReturn(vm);
+
+    Page<UserAdministrationViewModel> result =
+            userAdminService.searchPaginatedUsersPerEmail("test", PageRequest.of(0, 10));
+
+    assertEquals(1, result.getContent().size());
+    assertTrue(result.getContent().get(0).getRoles().contains(UserRoleEnum.USER));
+  }
 }
