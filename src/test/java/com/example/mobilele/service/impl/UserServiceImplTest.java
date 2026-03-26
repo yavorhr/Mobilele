@@ -328,6 +328,22 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findUserViewModelById_shouldReturnMappedViewModel() {
+    UserEntity user = new UserEntity();
+    UserViewModel viewModel = new UserViewModel();
+
+    when(userRepository.findById(1L))
+            .thenReturn(Optional.of(user));
+
+    when(modelMapper.map(user, UserViewModel.class))
+            .thenReturn(viewModel);
+
+    UserViewModel result = userService.findUserViewModelById(1L);
+
+    assertEquals(viewModel, result);
+  }
+
+  @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
 
