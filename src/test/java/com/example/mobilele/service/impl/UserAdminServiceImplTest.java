@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,4 +51,19 @@ class UserAdminServiceImplTest {
     assertTrue(user.isAccountLocked());
     verify(userRepository).save(user);
   }
+
+  @Test
+  void modifyLockStatus_shouldUnlockIfLocked() {
+    UserEntity user = new UserEntity();
+    user.setAccountLocked(true);
+
+    when(userService.getUserByUsernameOrThrow("user")).thenReturn(user);
+    when(modelMapper.map(any(), eq(UserUpdateStatusResponse.class)))
+            .thenReturn(new UserUpdateStatusResponse());
+
+    userAdminService.modifyLockStatus("user");
+
+    assertFalse(user.isAccountLocked());
+  }
+
 }
