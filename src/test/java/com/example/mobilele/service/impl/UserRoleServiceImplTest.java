@@ -17,8 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserRoleServiceImplTest {
@@ -65,5 +64,14 @@ class UserRoleServiceImplTest {
               && roles.contains(UserRoleEnum.ADMIN)
               && roles.size() == 2;
     }));
+  }
+
+  @Test
+  void seedRoles_shouldNotSeed_whenRepositoryNotEmpty() {
+    when(userRoleRepository.count()).thenReturn(5L);
+
+    userRoleService.seedRoles();
+
+    verify(userRoleRepository, never()).saveAll(any());
   }
 }
