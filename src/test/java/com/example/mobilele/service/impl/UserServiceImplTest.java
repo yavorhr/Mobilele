@@ -1,9 +1,11 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.model.binding.user.UserEditBindingModel;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
+import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.repository.UserRepository;
@@ -23,8 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -93,5 +94,30 @@ class UserServiceImplTest {
             .thenReturn(Optional.empty());
 
     assertTrue(userService.isUserNameAvailable("user"));
+  }
+
+  @Test
+  void updateUserProfile_shouldUpdateSuccessfully() {
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+
+    UserEditBindingModel model = new UserEditBindingModel();
+    model.setFirstName("John");
+    model.setLastName("Doe");
+    model.setPhoneNumber("123");
+
+    when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    when(userRepository.findByPhoneNumberIgnoreCase("123"))
+            .thenReturn(Optional.empty());
+
+    when(modelMapper.map(any(), eq(UserViewModel.class)))
+            .thenReturn(new UserViewModel());
+
+    userService.updateUserProfile(1L, model);
+
+    assertEquals("John", user.getFirstName());
+    assertEquals("Doe", user.getLastName());
+
+    verify(userRepository).save(user);
   }
 }
