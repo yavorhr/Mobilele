@@ -194,4 +194,24 @@ class UserServiceImplTest {
     assertThrows(ObjectNotFoundException.class,
             () -> userService.getUserByUsernameOrThrow("missing"));
   }
+
+  @Test
+  void seedUsers_shouldSeed_whenEmpty() {
+    when(userRepository.count()).thenReturn(0L);
+
+    UserRoleEntity admin = new UserRoleEntity();
+    admin.setRole(UserRoleEnum.ADMIN);
+
+    UserRoleEntity userRole = new UserRoleEntity();
+    userRole.setRole(UserRoleEnum.USER);
+
+    when(roleService.findUserRole(UserRoleEnum.ADMIN)).thenReturn(admin);
+    when(roleService.findUserRole(UserRoleEnum.USER)).thenReturn(userRole);
+
+    when(passwordEncoder.encode(any())).thenReturn("encoded");
+
+    userService.seedUsers();
+
+    verify(userRepository).saveAll(anyList());
+  }
 }
