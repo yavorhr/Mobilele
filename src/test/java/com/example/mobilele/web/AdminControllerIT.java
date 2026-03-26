@@ -22,7 +22,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.util.List;
+import java.util.Set;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,13 +49,17 @@ class AdminControllerIT {
 
   @Autowired
   private ObjectMapper objectMapper;
-  
+
   @Test
   @WithMockUser(username = "admin", roles = {"ADMIN"})
   void testViewNotifications_AdminAccess() throws Exception {
 
+    UserAdministrationViewModel userVm = new UserAdministrationViewModel();
+    userVm.setUsername("admin");
+    userVm.setRoles(Set.of(UserRoleEnum.ADMIN));
+
     Page<UserAdministrationViewModel> page =
-            new PageImpl<>(List.of(new UserAdministrationViewModel()), PageRequest.of(0, 6), 1);
+            new PageImpl<>(List.of(userVm), PageRequest.of(0, 6), 1);
 
     when(userAdminService.searchPaginatedUsersPerEmail(any(), any()))
             .thenReturn(page);
