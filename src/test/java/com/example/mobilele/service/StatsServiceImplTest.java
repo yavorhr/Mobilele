@@ -71,4 +71,17 @@ public class StatsServiceImplTest {
     assertEquals("user1", stats.getUserStats().get(0).getUsername());
     assertEquals(2, stats.getUserStats().get(0).getRequests());
   }
+
+  @Test
+  void testResetStats() {
+    statsService.onRequest("/a", "user", true, 200, 100);
+
+    statsService.resetStats();
+
+    StatsViewModel stats = statsService.getStats();
+
+    assertEquals(0, stats.getTotalRequests());
+    assertTrue(stats.getEndpointStats().isEmpty());
+    assertTrue(stats.getUserStats().isEmpty());
+  }
 }
