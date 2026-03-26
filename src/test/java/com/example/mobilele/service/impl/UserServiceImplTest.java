@@ -24,11 +24,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -195,6 +193,67 @@ class UserServiceImplTest {
             () -> userService.getUserByUsernameOrThrow("missing"));
   }
 
+  @Test
+  void isEmailAvailable_shouldReturnTrue_whenEmailNotExists() {
+    when(userRepository.findByEmailIgnoreCase("test@mail.com"))
+            .thenReturn(Optional.empty());
+
+    boolean result = userService.isEmailAvailable("test@mail.com");
+
+    assertTrue(result);
+  }
+
+  @Test
+  void isNotOwnerOrIsAdmin_shouldReturnFalse_whenOwnerAndNotAdmin() {
+    OfferEntity offer = new OfferEntity();
+    UserEntity seller = new UserEntity();
+    seller.setUsername("user");
+    offer.setSeller(seller);
+
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+    when(userRepository.findByUsername("user"))
+            .thenReturn(Optional.of(new UserEntity()));
+
+    boolean result = userService.isNotOwnerOrIsAdmin("user", 1L);
+
+    assertFalse(result);
+  }
+
+  @Test
+  void isNotOwnerOrIsAdmin_shouldReturnTrue_whenAdmin_evenIfOwner() {
+    OfferEntity offer = new OfferEntity();
+    UserEntity seller = new UserEntity();
+    seller.setUsername("admin"); // 👈 same user → isOwner = true
+    offer.setSeller(seller);
+
+    UserRoleEntity adminRole = new UserRoleEntity();
+    adminRole.setRole(UserRoleEnum.ADMIN);
+
+    UserEntity admin = new UserEntity();
+    admin.setRoles(List.of(adminRole));
+
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+    when(userRepository.findByUsername("admin"))
+            .thenReturn(Optional.of(admin));
+
+    boolean result = userService.isNotOwnerOrIsAdmin("admin", 1L);
+
+    assertTrue(result);
+  }
+  @Test
+  void isNotOwnerOrIsAdmin_shouldReturnTrue_whenNotOwner() {
+    OfferEntity offer = new OfferEntity();
+    UserEntity seller = new UserEntity();
+    seller.setUsername("other");
+    offer.setSeller(seller);
+
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
+    boolean result = userService.isNotOwnerOrIsAdmin("user", 1L);
+
+    assertTrue(result);
+  }
+  
   @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
