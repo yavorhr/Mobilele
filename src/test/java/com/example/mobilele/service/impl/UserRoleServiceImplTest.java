@@ -10,10 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,5 +49,21 @@ class UserRoleServiceImplTest {
 
     assertThrows(ObjectNotFoundException.class,
             () -> userRoleService.findUserRole(UserRoleEnum.ADMIN));
+  }
+
+  @Test
+  void seedRoles_shouldSeed_whenRepositoryIsEmpty() {
+    when(userRoleRepository.count()).thenReturn(0L);
+
+    userRoleService.seedRoles();
+
+    verify(userRoleRepository).saveAll(argThat(iterable -> {
+      List<UserRoleEnum> roles = new ArrayList<>();
+      iterable.forEach(r -> roles.add(r.getRole()));
+
+      return roles.contains(UserRoleEnum.USER)
+              && roles.contains(UserRoleEnum.ADMIN)
+              && roles.size() == 2;
+    }));
   }
 }
