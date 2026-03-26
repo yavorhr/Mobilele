@@ -1,6 +1,8 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.entity.UserRoleEntity;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
@@ -12,8 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -76,5 +77,20 @@ class UserAdminServiceImplTest {
     assertTrue(userAdminService.isNotModifyingOwnProfile("user1", "user2"));
   }
 
+  @Test
+  void updateUserRoles_shouldSetRolesCorrectly() {
+    UserEntity user = new UserEntity();
+
+    UserRoleEntity adminRole = new UserRoleEntity();
+    adminRole.setRole(UserRoleEnum.ADMIN);
+
+    when(userService.getUserByUsernameOrThrow("user")).thenReturn(user);
+    when(roleService.findUserRole(UserRoleEnum.ADMIN)).thenReturn(adminRole);
+
+    userAdminService.updateUserRoles("user", new String[]{"ADMIN"});
+
+    assertEquals(1, user.getRoles().size());
+    assertEquals(UserRoleEnum.ADMIN, user.getRoles().get(0).getRole());
+  }
 
 }
