@@ -123,4 +123,19 @@ class UserAdminServiceImplTest {
     assertEquals(1, result.getContent().size());
     assertTrue(result.getContent().get(0).getRoles().contains(UserRoleEnum.USER));
   }
+
+  @Test
+  void changeAccess_shouldDisableUser() {
+    UserEntity user = new UserEntity();
+    user.setEnabled(true);
+
+    when(userService.getUserByUsernameOrThrow("user")).thenReturn(user);
+    when(modelMapper.map(any(), eq(UserUpdateStatusResponse.class)))
+            .thenReturn(new UserUpdateStatusResponse());
+
+    userAdminService.changeAccess("user");
+
+    assertFalse(user.isEnabled());
+    verify(userRepository).save(user);
+  }
 }
