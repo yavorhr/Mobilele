@@ -8,8 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserSecurityServiceImplTest {
@@ -68,5 +71,17 @@ class UserSecurityServiceImplTest {
 
     assertEquals(0, user.getFailedLoginAttempts());
     verify(userRepository).save(user);
+  }
+
+  @Test
+  void findLockedUsers_shouldReturnLockedUsers() {
+    List<UserEntity> users = List.of(new UserEntity(), new UserEntity());
+
+    when(userRepository.findAllLockedUsers()).thenReturn(users);
+
+    List<UserEntity> result = userSecurityService.findLockedUsers();
+
+    assertEquals(2, result.size());
+    verify(userRepository).findAllLockedUsers();
   }
 }
