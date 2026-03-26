@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -137,5 +138,23 @@ class UserAdminServiceImplTest {
 
     assertFalse(user.isEnabled());
     verify(userRepository).save(user);
+  }
+
+  @Test
+  void deleteUser_shouldClearRolesAndDelete() {
+    UserEntity user = new UserEntity();
+
+    UserRoleEntity role = new UserRoleEntity();
+    role.setRole(UserRoleEnum.USER);
+
+    user.setRoles(new ArrayList<>(List.of(role)));
+
+    when(userService.getUserByUsernameOrThrow("user")).thenReturn(user);
+
+    userAdminService.deleteUser("user");
+
+    assertTrue(user.getRoles().isEmpty());
+    verify(userRepository).save(user);
+    verify(userRepository).delete(user);
   }
 }
