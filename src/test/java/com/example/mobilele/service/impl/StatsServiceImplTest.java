@@ -1,4 +1,4 @@
-package com.example.mobilele.service;
+package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.entity.StatsSnapshot;
 import com.example.mobilele.model.view.admin.EndpointStatsViewModel;
