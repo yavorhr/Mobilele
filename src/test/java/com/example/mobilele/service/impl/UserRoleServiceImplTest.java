@@ -3,6 +3,7 @@ package com.example.mobilele.service.impl;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRoleRepository;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,5 +36,14 @@ class UserRoleServiceImplTest {
     UserRoleEntity result = userRoleService.findUserRole(UserRoleEnum.ADMIN);
 
     assertEquals(UserRoleEnum.ADMIN, result.getRole());
+  }
+
+  @Test
+  void findUserRole_shouldThrow_whenNotFound() {
+    when(userRoleRepository.findByRole(UserRoleEnum.ADMIN))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> userRoleService.findUserRole(UserRoleEnum.ADMIN));
   }
 }
