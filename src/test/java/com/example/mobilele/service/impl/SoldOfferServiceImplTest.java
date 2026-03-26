@@ -113,5 +113,29 @@ public class SoldOfferServiceImplTest {
     verify(soldOfferRepository, never()).saveAll(any());
   }
 
+  @Test
+  void testSeedSoldOffers_shouldSeed() {
+    when(soldOfferRepository.count()).thenReturn(0L);
 
+    OfferSeedContext mockContext = mock(OfferSeedContext.class);
+
+    when(seedGenerator.generateData()).thenReturn(List.of(mockContext));
+
+    // Mock required getters
+    when(mockContext.model()).thenReturn(new ModelEntity());
+    when(mockContext.engine()).thenReturn(EngineEnum.Diesel);
+    when(mockContext.transmission()).thenReturn(TransmissionType.Manual);
+    when(mockContext.condition()).thenReturn(ConditionEnum.Used);
+    when(mockContext.color()).thenReturn(ColorEnum.Black);
+    when(mockContext.mileage()).thenReturn(10000.0);
+    when(mockContext.price()).thenReturn(BigDecimal.valueOf(10000));
+    when(mockContext.description()).thenReturn("desc");
+    when(mockContext.seller()).thenReturn(new UserEntity());
+    when(mockContext.country()).thenReturn(CountryEnum.Bulgaria);
+    when(mockContext.city()).thenReturn(CityEnum.Sofia);
+
+    soldOfferService.seedSoldOffers();
+
+    verify(soldOfferRepository).saveAll(anyList());
+  }
 }
