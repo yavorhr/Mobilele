@@ -58,4 +58,15 @@ class UserSecurityServiceImplTest {
 
     verify(userRepository).save(user);
   }
+
+  @Test
+  void resetFailedAttempts_shouldResetToZero() {
+    UserEntity user = new UserEntity();
+    user.setFailedLoginAttempts(4);
+
+    userSecurityService.resetFailedAttempts(user);
+
+    assertEquals(0, user.getFailedLoginAttempts());
+    verify(userRepository).save(user);
+  }
 }
