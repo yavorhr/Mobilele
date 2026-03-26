@@ -11,6 +11,10 @@ public class UserRoleEntity extends BaseEntity {
   public UserRoleEntity() {
   }
 
+  public UserRoleEntity(UserRoleEnum role) {
+    this.role = role;
+  }
+
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
 
