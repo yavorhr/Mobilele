@@ -71,5 +71,10 @@ class UserAdminServiceImplTest {
     assertFalse(userAdminService.isNotModifyingOwnProfile("user", "user"));
   }
 
+  @Test
+  void isNotModifyingOwnProfile_shouldReturnTrueWhenDifferentUsers() {
+    assertTrue(userAdminService.isNotModifyingOwnProfile("user1", "user2"));
+  }
+
 
 }
