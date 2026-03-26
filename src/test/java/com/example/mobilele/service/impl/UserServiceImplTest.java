@@ -307,6 +307,15 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findById_shouldThrow_whenNotFound() {
+    when(userRepository.findById(1L))
+            .thenReturn(Optional.empty());
+
+    assertThrows(ObjectNotFoundException.class,
+            () -> userService.findById(1L));
+  }
+
+  @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
 
