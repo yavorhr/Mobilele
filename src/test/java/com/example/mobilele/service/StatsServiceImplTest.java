@@ -54,4 +54,21 @@ public class StatsServiceImplTest {
 
     assertTrue(stats.getUserStats().isEmpty());
   }
+
+  @Test
+  void testGetStats_multipleRequests_sortedCorrectly() {
+    statsService.onRequest("/a", "user1", true, 200, 100);
+    statsService.onRequest("/a", "user1", true, 200, 200);
+    statsService.onRequest("/b", "user2", true, 500, 300);
+
+    StatsViewModel stats = statsService.getStats();
+
+    // endpoint /a should be first (2 requests)
+    assertEquals("/a", stats.getEndpointStats().get(0).getPath());
+    assertEquals(2, stats.getEndpointStats().get(0).getTotalRequests());
+
+    // user1 should be first
+    assertEquals("user1", stats.getUserStats().get(0).getUsername());
+    assertEquals(2, stats.getUserStats().get(0).getRequests());
+  }
 }
