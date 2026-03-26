@@ -11,6 +11,7 @@ import com.example.mobilele.repository.SoldOfferRepository;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserRoleService;
 import com.example.mobilele.service.impl.principal.MobileleUserServiceImpl;
+import com.example.mobilele.web.exception.DuplicatePhoneException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -119,5 +120,24 @@ class UserServiceImplTest {
     assertEquals("Doe", user.getLastName());
 
     verify(userRepository).save(user);
+  }
+
+  @Test
+  void updateUserProfile_shouldThrow_whenPhoneExists() {
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+
+    UserEntity existing = new UserEntity();
+    existing.setId(2L);
+
+    UserEditBindingModel model = new UserEditBindingModel();
+    model.setPhoneNumber("123");
+
+    when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    when(userRepository.findByPhoneNumberIgnoreCase("123"))
+            .thenReturn(Optional.of(existing));
+
+    assertThrows(DuplicatePhoneException.class,
+            () -> userService.updateUserProfile(1L, model));
   }
 }
