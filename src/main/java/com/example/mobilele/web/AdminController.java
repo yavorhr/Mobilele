@@ -4,7 +4,6 @@ import com.example.mobilele.model.binding.RoleUpdateRequest;
 import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.model.view.user.UserAdministrationViewModel;
 import com.example.mobilele.service.UserAdminService;
-import com.example.mobilele.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +18,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-  private final UserService userService;
   private final UserAdminService userAdminService;
 
-  public AdminController(UserService userService, UserAdminService userAdminService) {
-    this.userService = userService;
+  public AdminController(UserAdminService userAdminService) {
     this.userAdminService = userAdminService;
   }
 
