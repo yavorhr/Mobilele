@@ -1,6 +1,7 @@
 package com.example.mobilele.service.impl;
 
 import com.example.mobilele.model.binding.user.UserEditBindingModel;
+import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
@@ -156,5 +157,17 @@ class UserServiceImplTest {
     verify(soldOfferRepository).clearSeller(1L);
     verify(userRepository).save(user);
     verify(userRepository).deleteById(1L);
+  }
+
+  @Test
+  void isOwnerOrIsAdmin_shouldReturnTrue_whenOwner() {
+    OfferEntity offer = new OfferEntity();
+    UserEntity seller = new UserEntity();
+    seller.setUsername("user");
+    offer.setSeller(seller);
+
+    when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+
+    assertTrue(userService.isOwnerOrIsAdmin("user", 1L));
   }
 }
