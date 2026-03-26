@@ -44,4 +44,18 @@ class UserSecurityServiceImplTest {
 
     verify(userRepository).save(user);
   }
+
+  @Test
+  void lockAccount_shouldSetLockStateAndResetAttempts() {
+    UserEntity user = new UserEntity();
+    user.setFailedLoginAttempts(5);
+
+    userSecurityService.lockAccount(user);
+
+    assertTrue(user.isAccountLocked());
+    assertEquals(0, user.getFailedLoginAttempts());
+    assertNotNull(user.getLockTime());
+
+    verify(userRepository).save(user);
+  }
 }
