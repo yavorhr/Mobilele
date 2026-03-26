@@ -21,8 +21,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -83,5 +85,13 @@ class UserServiceImplTest {
 
     assertNotNull(SecurityContextHolder.getContext().getAuthentication());
     verify(userRepository).save(any(UserEntity.class));
+  }
+
+  @Test
+  void isUserNameAvailable_shouldReturnTrue_whenNotExists() {
+    when(userRepository.findByUsernameIgnoreCase("user"))
+            .thenReturn(Optional.empty());
+
+    assertTrue(userService.isUserNameAvailable("user"));
   }
 }
