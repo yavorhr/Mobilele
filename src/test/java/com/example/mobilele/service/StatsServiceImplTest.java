@@ -3,6 +3,7 @@ package com.example.mobilele.service;
 import com.example.mobilele.model.view.admin.StatsViewModel;
 import com.example.mobilele.repository.StatsRepository;
 import com.example.mobilele.service.impl.StatsServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static net.bytebuddy.matcher.ElementMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class StatsServiceImplTest {
@@ -83,5 +87,16 @@ public class StatsServiceImplTest {
     assertEquals(0, stats.getTotalRequests());
     assertTrue(stats.getEndpointStats().isEmpty());
     assertTrue(stats.getUserStats().isEmpty());
+  }
+
+  @Test
+  void testSaveSnapshot_jsonError() throws Exception {
+    StatsViewModel stats = new StatsViewModel(1, 1, 0, List.of(), List.of());
+
+    when(objectMapper.writeValueAsString(any()))
+            .thenThrow(new JsonProcessingException("boom") {});
+
+    assertThrows(RuntimeException.class,
+            () -> statsService.saveSnapshot(stats));
   }
 }
