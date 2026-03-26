@@ -9,6 +9,7 @@ import com.example.mobilele.repository.UserRoleRepository;
 import com.example.mobilele.service.UserAdminService;
 import com.example.mobilele.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,14 +20,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 class AdminControllerIT {
@@ -42,49 +46,20 @@ class AdminControllerIT {
 
   @Autowired
   private ObjectMapper objectMapper;
+  
+  @Test
+  @WithMockUser(username = "admin", roles = {"ADMIN"})
+  void testViewNotifications_AdminAccess() throws Exception {
 
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private UserRoleRepository roleRepository;
+    Page<UserAdministrationViewModel> page =
+            new PageImpl<>(List.of(new UserAdministrationViewModel()), PageRequest.of(0, 6), 1);
 
-  private UserEntity adminUser, user;
+    when(userAdminService.searchPaginatedUsersPerEmail(any(), any()))
+            .thenReturn(page);
 
-  private UserRoleEntity adminRole, userRole;
-
-  @BeforeEach
-  void setUp() {
-    adminRole = new UserRoleEntity(UserRoleEnum.ADMIN);
-    userRole = new UserRoleEntity(UserRoleEnum.USER);
-    roleRepository.saveAll(List.of(adminRole, userRole));
-
-    adminUser = new UserEntity();
-    adminUser.setPassword("password");
-    adminUser.setEnabled(true);
-    adminUser.setUsername("admin");
-    adminUser.setEmail("admin@abv.bg");
-    adminUser.setFirstName("admin");
-    adminUser.setLastName("adminov");
-    adminUser.setRoles(List.of(adminRole, userRole));
-    adminUser.setAccountLocked(false);
-
-    user = new UserEntity();
-    user.setPassword("password");
-    user.setEnabled(true);
-    user.setUsername("user");
-    user.setEmail("user@abv.bg");
-    user.setFirstName("user");
-    user.setLastName("userov");
-    user.setRoles(List.of(userRole));
-    user.setAccountLocked(false);
-
-    userRepository.saveAll(List.of(adminUser, user));
+    mockMvc.perform(get("/admin/notifications"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("admin/notifications"))
+            .andExpect(model().attributeExists("usersPage", "users", "query"));
   }
-
-  @AfterEach
-  void tearDown() {
-    userRepository.deleteAll();
-    roleRepository.deleteAll();
-  }
-
 }
