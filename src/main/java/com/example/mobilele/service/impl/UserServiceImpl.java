@@ -156,8 +156,9 @@ public class UserServiceImpl implements UserService {
   protected boolean isAdmin(String username) {
     return userRepository
             .findByUsername(username)
-            .map(user -> user.getRoles().stream()
-                    .anyMatch(r -> r.getRole() == UserRoleEnum.ADMIN))
+            .map(user -> user.getRoles() != null &&
+                    user.getRoles().stream()
+                            .anyMatch(r -> r.getRole() == UserRoleEnum.ADMIN))
             .orElse(false);
   }
 
