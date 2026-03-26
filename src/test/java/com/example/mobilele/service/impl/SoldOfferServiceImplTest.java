@@ -1,8 +1,12 @@
 package com.example.mobilele.service.impl;
 
+import com.example.mobilele.init.OfferSeedContext;
 import com.example.mobilele.init.OfferSeedGenerator;
+import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.SoldOfferEntity;
+import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.repository.OfferRepository;
 import com.example.mobilele.repository.SoldOfferRepository;
@@ -16,15 +20,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SoldOfferServiceImplTest {
@@ -101,4 +103,15 @@ public class SoldOfferServiceImplTest {
 
     assertEquals(42L, result);
   }
+  @Test
+  void testSeedSoldOffers_shouldNotSeedIfDataExists() {
+    when(soldOfferRepository.count()).thenReturn(5L);
+
+    soldOfferService.seedSoldOffers();
+
+    verify(seedGenerator, never()).generateData();
+    verify(soldOfferRepository, never()).saveAll(any());
+  }
+
+
 }
