@@ -295,6 +295,18 @@ class UserServiceImplTest {
   }
 
   @Test
+  void findById_shouldReturnUser_whenExists() {
+    UserEntity user = new UserEntity();
+
+    when(userRepository.findById(1L))
+            .thenReturn(Optional.of(user));
+
+    UserEntity result = userService.findById(1L);
+
+    assertEquals(user, result);
+  }
+
+  @Test
   void seedUsers_shouldSeed_whenEmpty() {
     when(userRepository.count()).thenReturn(0L);
 
