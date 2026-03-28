@@ -1,7 +1,6 @@
 package com.example.mobilele.model.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
