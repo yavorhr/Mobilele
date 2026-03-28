@@ -15,7 +15,7 @@ public interface UserAdminService {
 
   void updateUserRoles(String username, String[] roles);
 
-  boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser);
+  boolean isNotModifyingOwnProfile(String targetUser, String loggedInUser);
 
   Page<UserAdministrationViewModel> searchPaginatedUsersPerEmail(String emailQuery, Pageable pageable);
 }

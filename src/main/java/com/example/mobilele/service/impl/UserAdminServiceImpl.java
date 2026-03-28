@@ -49,7 +49,7 @@ public class UserAdminServiceImpl implements UserAdminService {
   }
 
   @Override
-  public boolean isNotModifyingOwnProfile(String loggedInUser, String targetUser) {
+  public boolean isNotModifyingOwnProfile(String targetUser, String loggedInUser) {
     return !loggedInUser.equals(targetUser);
   }
 
