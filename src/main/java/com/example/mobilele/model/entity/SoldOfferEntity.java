@@ -39,7 +39,8 @@ public class SoldOfferEntity extends BaseEntity {
     return this.color;
   }
 
-  @Column(columnDefinition = "TEXT")
+  @Lob
+  @Column
   public String getDescription() {
     return description;
   }

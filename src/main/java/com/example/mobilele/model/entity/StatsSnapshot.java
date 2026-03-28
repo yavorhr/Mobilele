@@ -38,13 +38,13 @@ public class StatsSnapshot extends BaseEntity {
   }
 
   @Lob
-  @Column(columnDefinition = "TEXT")
+  @Column
   public String getEndpointStatsJson() {
     return endpointStatsJson;
   }
 
   @Lob
-  @Column(columnDefinition = "TEXT")
+  @Column
   public String getUserStatsJson() {
     return userStatsJson;
   }

@@ -60,7 +60,8 @@ public class OfferEntity extends BaseEntity {
     return this.color;
   }
 
-  @Column(columnDefinition = "TEXT")
+  @Lob
+  @Column
   public String getDescription() {
     return description;
   }
