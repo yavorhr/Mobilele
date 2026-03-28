@@ -65,7 +65,7 @@ public class AdminController {
     return "admin/notifications";
   }
 
-  @PreAuthorize("@security.isNotModifyingOwnProfile(#username, #principal.username)")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#username, #authentication.name )")
   @PutMapping("/api/change-user-access/{username}")
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserAccess(@PathVariable String username,
