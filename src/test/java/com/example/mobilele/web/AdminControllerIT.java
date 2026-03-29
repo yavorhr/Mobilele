@@ -4,6 +4,7 @@ import com.example.mobilele.model.binding.RoleUpdateRequest;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
+import com.example.mobilele.model.view.UserUpdateStatusResponse;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.repository.UserRoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +20,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -124,6 +127,26 @@ class AdminControllerIT {
             .content(json))
             .andExpect(status().isOk())
             .andExpect(content().string("Roles updated successfully"))
+            .andDo(print());
+  }
+
+  @Test
+  void changeUserLockStatus_shouldReturnStatusResponse() throws Exception {
+    UserUpdateStatusResponse response = new UserUpdateStatusResponse();
+    response.setUsername(targetUser.getUsername());
+    response.setAccountLocked(false);
+    response.setEnabled(targetUser.isEnabled());
+    response.setRoles(targetUser.getRoles().stream().map(UserRoleEntity::getRole).collect(Collectors.toSet()));
+
+    String json = new ObjectMapper().writeValueAsString(response);
+
+    mockMvc.perform(put("/admin/api/change-user-lock-status/{username}",targetUser.getUsername())
+            .with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.email").value("user1@abv.bg"))
+            .andExpect(jsonPath("$.accountLocked").value(true))
             .andDo(print());
   }
 }
