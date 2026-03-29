@@ -5,7 +5,6 @@ import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.repository.UserRoleRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import java.util.ArrayList;
 import java.util.List;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
@@ -56,7 +58,7 @@ class AdminControllerIT {
     adminUser.setPassword("password");
     adminUser.setPhoneNumber("222222222");
     adminUser.setEnabled(true);
-    adminUser.setRoles(List.of(adminRole, userRole));
+    adminUser.setRoles(new ArrayList<>(List.of(adminRole, userRole)));
     adminUser.setAccountLocked(false);
 
     targetUser = new UserEntity();
@@ -65,10 +67,11 @@ class AdminControllerIT {
     targetUser.setPhoneNumber("111111111");
     targetUser.setPassword("password");
     targetUser.setEnabled(true);
-    targetUser.setRoles(List.of(userRole));
+    targetUser.setRoles(new ArrayList<>(List.of(userRole)));
     targetUser.setAccountLocked(false);
 
     userRepository.saveAll(List.of(adminUser, targetUser));
+    userRepository.flush();
   }
 
 // =========================
@@ -91,5 +94,16 @@ class AdminControllerIT {
                     "currentPage",
                     "totalPages"
             ));
+  }
+
+  @Test
+  @WithMockUser(username = "admin", roles = {"ADMIN"})
+  void changeUserAccess_shouldToggleAccess() throws Exception {
+
+    mockMvc.perform(put("/admin/api/change-user-access/{username}", targetUser.getUsername())
+            .with(csrf()))
+            .andDo(print())
+            .andExpect(status().isOk());
+
   }
 }
