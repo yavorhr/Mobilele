@@ -1,10 +1,12 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.binding.RoleUpdateRequest;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.UserRoleEntity;
 import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.repository.UserRoleRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -106,5 +108,22 @@ class AdminControllerIT {
             .andExpect(jsonPath("$.email").value("user1@abv.bg"))
             .andExpect(jsonPath("$.enabled").value(false))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+  }
+
+  @Test
+  void updateRoles_shouldUpdateAndReturnSuccessMessage() throws Exception {
+    RoleUpdateRequest request = new RoleUpdateRequest();
+    request.setUsername(targetUser.getUsername());
+    request.setRoles(new String[]{"USER", "ADMIN"});
+
+    String json = new ObjectMapper().writeValueAsString(request);
+
+    mockMvc.perform(patch("/admin/api/update-roles")
+            .with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isOk())
+            .andExpect(content().string("Roles updated successfully"))
+            .andDo(print());
   }
 }
