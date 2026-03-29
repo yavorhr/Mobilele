@@ -152,9 +152,10 @@ class AdminControllerIT {
 
   @Test
   void deleteUserByUsername_shouldReturnOkResponse() throws Exception {
-    mockMvc.perform(delete("/admin/api/remove-user/username",targetUser.getUsername())
+    mockMvc.perform(delete("/admin/api/remove-user/{username}",targetUser.getUsername())
             .with(csrf()))
             .andExpect(status().isOk())
+            .andDo(print())
             .andExpect(content().string("User deleted successfully!"));
   }
 }
