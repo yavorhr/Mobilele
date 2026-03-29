@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -97,13 +98,13 @@ class AdminControllerIT {
   }
 
   @Test
-  @WithMockUser(username = "admin", roles = {"ADMIN"})
-  void changeUserAccess_shouldToggleAccess() throws Exception {
+  void changeUserAccess_shouldReturnUpdatedStatus() throws Exception {
 
     mockMvc.perform(put("/admin/api/change-user-access/{username}", targetUser.getUsername())
             .with(csrf()))
-            .andDo(print())
-            .andExpect(status().isOk());
-
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.email").value("user1@abv.bg"))
+            .andExpect(jsonPath("$.enabled").value(false))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON));
   }
 }
