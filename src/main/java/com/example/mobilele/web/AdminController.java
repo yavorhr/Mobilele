@@ -87,7 +87,7 @@ public class AdminController {
     return ResponseEntity.ok("User deleted successfully!");
   }
 
-  @PreAuthorize("@security.isNotModifyingOwnProfile(#principal.username, #username)")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#username,#principal.username, )")
   @PutMapping("/api/change-user-lock-status/{username}")
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String username,
@@ -98,7 +98,7 @@ public class AdminController {
     return ResponseEntity.ok(statusResponse);
   }
 
-  @PreAuthorize("@security.isNotModifyingOwnProfile(#principal.username, #request.getUsername())")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#request.getUsername(),#principal.username )")
   @PatchMapping("/api/update-roles")
   @ResponseBody
   public ResponseEntity<?> updateRoles(@RequestBody RoleUpdateRequest request,
