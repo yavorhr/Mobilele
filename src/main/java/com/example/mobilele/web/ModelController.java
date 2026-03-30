@@ -22,13 +22,18 @@ public class ModelController {
           @RequestParam String brand,
           @RequestParam String vehicleType) {
 
-    VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.from(vehicleType);
+    try {
+      VehicleCategoryEnum vehicleCategoryEnum = VehicleCategoryEnum.from(vehicleType);
 
-    List<String> models =
-            modelService.findModelsByVehicleTypeAndBrand(
-                    brand.toUpperCase(Locale.ROOT),
-                    vehicleCategoryEnum);
+      List<String> models =
+              modelService.findModelsByVehicleTypeAndBrand(
+                      brand.toUpperCase(Locale.ROOT),
+                      vehicleCategoryEnum);
 
-    return ResponseEntity.ok(models);
+      return ResponseEntity.ok(models);
+
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().build();
+    }
   }
 }
