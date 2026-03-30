@@ -64,4 +64,13 @@ public class ModelControllerIT {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isEmpty());
   }
+
+  @Test
+  void getModels_shouldFail_whenInvalidVehicleType() throws Exception {
+
+    mockMvc.perform(get("/models")
+            .param("brand", "bmw")
+            .param("vehicleType", "INVALID"))
+            .andExpect(status().isBadRequest());
+  }
 }
