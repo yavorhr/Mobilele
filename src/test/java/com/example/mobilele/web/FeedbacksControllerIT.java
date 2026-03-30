@@ -4,6 +4,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.service.FeedbackService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
+import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -117,5 +117,26 @@ public class FeedbacksControllerIT {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
             .andExpect(jsonPath("$.message").value("Comment must be at least 5 characters long."));
+  }
+
+  // =========================
+  //  SERVICE THROWS EXCEPTION
+  // =========================
+
+  @Test
+  void submitFeedback_shouldFail_whenUserNotFound() throws Exception {
+
+    doThrow(new ObjectNotFoundException("User with username : " + user.getUsername() + " was not found"))
+            .when(feedbackService)
+            .leaveFeedback(anyString(), anyInt(), anyString());
+
+    mockMvc.perform(post("/users/submit-feedback")
+            .param("rating", "5")
+            .with(authentication(auth))
+            .param("comment", "Great app!")
+            .with(csrf()))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.message").value("User with username : " +user.getUsername() + " was not found"));
   }
 }
