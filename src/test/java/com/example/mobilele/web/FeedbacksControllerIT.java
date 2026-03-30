@@ -71,6 +71,10 @@ public class FeedbacksControllerIT {
     );
   }
 
+  // =========================
+  //  SUCCESS CASE
+  // =========================
+
   @Test
   void submitFeedback_shouldReturnSuccess() throws Exception {
     mockMvc.perform(post("/users/submit-feedback")
@@ -83,6 +87,10 @@ public class FeedbacksControllerIT {
             .andExpect(jsonPath("$.message").value("Thank you for your feedback!"));
   }
 
+  // =========================
+  //  INVALID RATING
+  // =========================
+
   @Test
   void submitFeedback_shouldFail_whenRatingIsZero() throws Exception {
     mockMvc.perform(post("/users/submit-feedback")
@@ -93,5 +101,21 @@ public class FeedbacksControllerIT {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
             .andExpect(jsonPath("$.message").value("Please select at least one star."));
+  }
+
+  // =========================
+  //  INVALID COMMENT
+  // =========================
+
+  @Test
+  void submitFeedback_shouldFail_whenCommentTooShort() throws Exception {
+    mockMvc.perform(post("/users/submit-feedback")
+            .with(authentication(auth))
+            .param("rating", "5")
+            .param("comment", "bad")
+            .with(csrf()))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.message").value("Comment must be at least 5 characters long."));
   }
 }
