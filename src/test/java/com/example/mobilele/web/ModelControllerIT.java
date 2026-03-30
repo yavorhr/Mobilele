@@ -49,4 +49,19 @@ public class ModelControllerIT {
             .andExpect(jsonPath("$[0]").value("X5"))
             .andExpect(jsonPath("$[1]").value("X6"));
   }
+
+  @Test
+  void getModels_shouldReturnEmptyList() throws Exception {
+
+    when(modelService.findModelsByVehicleTypeAndBrand(
+            "AUDI",
+            VehicleCategoryEnum.Car
+    )).thenReturn(List.of());
+
+    mockMvc.perform(get("/models")
+            .param("brand", "audi")
+            .param("vehicleType", "CAR"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").isEmpty());
+  }
 }
