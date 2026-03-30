@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -71,6 +72,18 @@ public class HomeControllerIT {
     mockMvc.perform(get("/sellers/top"))
             .andExpect(status().isFound())
             .andExpect(redirectedUrlPattern("**/login"));
+  }
+
+  @Test
+  @WithMockUser
+  void topSellers_shouldReturnTopSellersView_whenAuthenticated() throws Exception {
+
+    when(offerService.getTop20Sellers()).thenReturn(List.of());
+
+    mockMvc.perform(get("/sellers/top"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("top-sellers"))
+            .andExpect(model().attributeExists("topSellers"));
   }
 }
 
