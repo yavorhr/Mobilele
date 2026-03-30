@@ -64,7 +64,6 @@ public class FeedbacksControllerIT {
 
     mobileleUser = new MobileleUser(user, authorities);
 
-    // 4. Wrap into Authentication
     auth = new UsernamePasswordAuthenticationToken(
             mobileleUser,
             null,
@@ -74,12 +73,6 @@ public class FeedbacksControllerIT {
 
   @Test
   void submitFeedback_shouldReturnSuccess() throws Exception {
-
-    // 5. Mock service
-    doNothing().when(feedbackService)
-            .leaveFeedback("user1", 5, "Great app!");
-
-    // 6. Perform request
     mockMvc.perform(post("/users/submit-feedback")
             .with(authentication(auth))
             .param("rating", "5")
@@ -93,6 +86,7 @@ public class FeedbacksControllerIT {
   @Test
   void submitFeedback_shouldFail_whenRatingIsZero() throws Exception {
     mockMvc.perform(post("/users/submit-feedback")
+            .with(authentication(auth))
             .param("rating", "0")
             .param("comment", "Nice app")
             .with(csrf()))
