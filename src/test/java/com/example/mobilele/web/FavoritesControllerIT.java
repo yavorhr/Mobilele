@@ -55,4 +55,20 @@ public class FavoritesControllerIT {
             .andExpect(jsonPath("$.success").value(true))
             .andExpect(jsonPath("$.message").value("Offer added"));
   }
+
+  @Test
+  void toggleFavorite_shouldRemoveFavorite() throws Exception {
+    Long offerId = 1L;
+
+    when(favoritesService.toggleFavorite("user1", offerId))
+            .thenReturn(false);
+
+    mockMvc.perform(post("/users/favorites/{offerId}/toggle", offerId)
+            .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.message").value("Offer removed"));
+  }
+
+
 }
