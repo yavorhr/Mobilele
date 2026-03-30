@@ -70,5 +70,17 @@ public class FavoritesControllerIT {
             .andExpect(jsonPath("$.message").value("Offer removed"));
   }
 
+  @Test
+  void toggleFavorite_shouldReturnError_whenServiceThrows() throws Exception {
+    Long offerId = 1L;
 
+    when(favoritesService.toggleFavorite("user1", offerId))
+            .thenThrow(new RuntimeException("Unexpected error occurred."));
+
+    mockMvc.perform(post("/users/favorites/{offerId}/toggle", offerId)
+            .with(csrf()))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.message").value("Unexpected error occurred."));
+  }
 }
