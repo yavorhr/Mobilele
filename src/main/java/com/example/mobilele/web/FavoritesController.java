@@ -1,7 +1,6 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.service.FavoritesService;
-import com.example.mobilele.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
