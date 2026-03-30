@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -62,4 +63,14 @@ public class HomeControllerIT {
             .andExpect(model().attribute("startYear", 2025))
             .andExpect(model().attribute("soldCount", 10L));
   }
+
+  @Test
+  @WithAnonymousUser
+  void topSellers_shouldRedirectToLogin_whenNotAuthenticated() throws Exception {
+
+    mockMvc.perform(get("/sellers/top"))
+            .andExpect(status().isFound())
+            .andExpect(redirectedUrlPattern("**/login"));
+  }
 }
+
