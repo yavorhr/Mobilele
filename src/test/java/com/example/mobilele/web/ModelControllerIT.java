@@ -67,7 +67,6 @@ public class ModelControllerIT {
 
   @Test
   void getModels_shouldFail_whenInvalidVehicleType() throws Exception {
-
     mockMvc.perform(get("/models")
             .param("brand", "bmw")
             .param("vehicleType", "INVALID"))
