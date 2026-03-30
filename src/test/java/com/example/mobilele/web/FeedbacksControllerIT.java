@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,8 +27,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -138,5 +138,16 @@ public class FeedbacksControllerIT {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
             .andExpect(jsonPath("$.message").value("User with username : " +user.getUsername() + " was not found"));
+  }
+
+  @Test
+  @WithAnonymousUser
+  void submitFeedback_shouldRedirectToLogin_whenNotLoggedIn() throws Exception {
+    mockMvc.perform(post("/users/submit-feedback")
+            .param("rating", "5")
+            .param("comment", "Great app!")
+            .with(csrf()))
+            .andExpect(status().isFound())
+            .andExpect(redirectedUrlPattern("**/login"));
   }
 }
