@@ -1,8 +1,10 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.config.security.SecurityService;
+import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.service.PictureServiceModel;
+import com.example.mobilele.model.service.offer.OfferAddServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.model.view.offer.OfferViewModel;
 import com.example.mobilele.model.view.user.UserViewModel;
@@ -10,6 +12,7 @@ import com.example.mobilele.service.FavoritesService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.SoldOfferService;
+import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -19,6 +22,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,10 +38,12 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -133,6 +143,66 @@ class OffersControllerIT {
     mockMvc.perform(get("/offers"))
             .andExpect(status().isOk())
             .andExpect(view().name("add"));
+  }
+
+  // =========================
+  // ADD OFFER - VALID
+  // =========================
+
+  @Test
+  @WithMockUser(username = "user1", roles = {"USER"})
+  void addOffer_shouldRedirectToDetails_whenValid() throws Exception {
+
+    OfferAddServiceModel serviceModel = new OfferAddServiceModel();
+    serviceModel.setId(1L);
+
+    when(offerService.addOffer(any(), any()))
+            .thenReturn(serviceModel);
+
+    MockMultipartFile file =
+            new MockMultipartFile("pictures", "test.jpg",
+                    "image/jpeg", "content".getBytes());
+
+    mockMvc.perform(multipart("/offers")
+            .file(file)
+            .param("description", "Very good car description")
+            .param("price", "1000")
+            .param("vehicleType", "Car")
+            .param("model", "M3")
+            .param("brand", "BMW")
+            .param("condition", "Used")
+            .param("engine", "Gasoline")
+            .param("mileage", "100000")
+            .param("transmission", "Manual")
+            .param("year", "2020")
+            .param("color", "Black")
+            .param("country", "Bulgaria")
+            .param("city", "Sofia")
+            .with(authentication(createAuth("user1")))
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andDo(print())
+            .andExpect(redirectedUrl("/offers/details/1"));
+  }
+
+  private Authentication createAuth(String username) {
+
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+    user.setUsername(username);
+    user.setPassword("password");
+    user.setAccountLocked(false);
+
+    List<GrantedAuthority> authorities =
+            List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+    MobileleUser mobileleUser = new MobileleUser(user, authorities);
+
+    return new UsernamePasswordAuthenticationToken(
+            mobileleUser,
+            null,
+            authorities
+    );
   }
 
   private OfferViewModel createValidOffer() {
