@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.config.security.SecurityService;
+import com.example.mobilele.model.binding.offer.OfferUpdateBindingForm;
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.entity.enums.*;
 import com.example.mobilele.model.service.PictureServiceModel;
@@ -35,8 +36,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -252,6 +252,10 @@ class OffersControllerIT {
     return offer;
   }
 
+  // =========================
+  // ADD OFFER - NO PARAMS
+  // =========================
+
   @Test
   void addOffer_shouldRedirectBack_whenNoImages() throws Exception {
 
@@ -261,5 +265,30 @@ class OffersControllerIT {
             .with(authentication(createAuth("user1"))))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/offers"));
+  }
+
+  // =========================
+  // UPDATE OFFER - GET
+  // =========================
+
+  @Test
+  void getUpdateOffer_shouldReturnUpdateView_whenAuthorized() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(true);
+
+    when(offerService.findOfferById(any(), eq(id)))
+            .thenReturn(new OfferViewModel());
+
+    when(modelMapper.map(any(), eq(OfferUpdateBindingForm.class)))
+            .thenReturn(new OfferUpdateBindingForm());
+
+    mockMvc.perform(get("/offers/update/{id}", id)
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isOk())
+            .andExpect(view().name("update"))
+            .andExpect(model().attributeExists("offerUpdateBindingModel"));
   }
 }
