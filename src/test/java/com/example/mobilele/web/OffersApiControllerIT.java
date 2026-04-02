@@ -9,15 +9,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Locale;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.startsWith;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.RequestEntity.patch;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,15 +50,14 @@ class OffersApiControllerIT {
   @Test
   void getCities_shouldReturnFilteredCitiesWithLocalizedNames() throws Exception {
 
-    // Example: assuming CITY1 belongs to BULGARIA
-    when(messageSource.getMessage(startsWith("city."), any(), any()))
+    when(messageSource.getMessage(startsWith("city."), any(Object[].class), any(Locale.class)))
             .thenAnswer(invocation -> {
               String key = invocation.getArgument(0);
               return key + "_translated";
             });
 
     mockMvc.perform(get("/locations/cities")
-            .param("country", "BULGARIA")
+            .param("country", "Bulgaria")
             .locale(Locale.ENGLISH))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray());
@@ -62,9 +65,9 @@ class OffersApiControllerIT {
 
   @Test
   void getCities_shouldReturn400_whenInvalidCountry() throws Exception {
-
     mockMvc.perform(get("/locations/cities")
             .param("country", "INVALID"))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andDo(print());
   }
 }
