@@ -251,4 +251,15 @@ class OffersControllerIT {
 
     return offer;
   }
+
+  @Test
+  void addOffer_shouldRedirectBack_whenNoImages() throws Exception {
+
+    mockMvc.perform(multipart("/offers")
+            .param("description", "Test")
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers"));
+  }
 }
