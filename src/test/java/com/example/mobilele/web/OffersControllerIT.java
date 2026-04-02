@@ -37,6 +37,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -341,4 +342,25 @@ class OffersControllerIT {
             .andExpect(redirectedUrl("/"));
   }
 
+  // =========================
+  // DELETE OFFER - SOLD
+  // =========================
+
+  @Test
+  void deleteOffer_shouldMarkAsSold_whenFlagIsTrue() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(true);
+
+    mockMvc.perform(delete("/offers/{id}", id)
+            .param("soldOffer", "true")
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection());
+
+    verify(soldOfferService).saveSoldOffer(id);
+    verify(offerService).deleteById(id);
+  }
 }
