@@ -60,4 +60,11 @@ class OffersApiControllerIT {
             .andExpect(jsonPath("$").isArray());
   }
 
+  @Test
+  void getCities_shouldReturn400_whenInvalidCountry() throws Exception {
+
+    mockMvc.perform(get("/locations/cities")
+            .param("country", "INVALID"))
+            .andExpect(status().isBadRequest());
+  }
 }
