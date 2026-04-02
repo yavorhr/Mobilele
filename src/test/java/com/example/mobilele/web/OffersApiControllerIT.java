@@ -101,6 +101,24 @@ class OffersApiControllerIT {
             .andExpect(jsonPath("$.reserved").value(true));
   }
 
+  // =========================
+  // 🔹 FORBIDDEN (SECURITY FAIL)
+  // =========================
+
+  @Test
+  void toggleReservation_shouldReturn403_whenSecurityFails() throws Exception {
+
+    Long offerId = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+            .thenReturn(false);
+
+    mockMvc.perform(patch("/offers/{id}/toggle-reservation", offerId)
+            .with(authentication(createAuth("user1")))
+            .with(csrf()))
+            .andExpect(status().isForbidden());
+  }
+
   private Authentication createAuth(String username) {
 
     UserEntity user = new UserEntity();
