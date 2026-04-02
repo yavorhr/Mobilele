@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.nio.file.AccessDeniedException;
 import java.util.Map;
 
@@ -47,4 +49,12 @@ public class GlobalExceptionsHandler {
             .body(Map.of("phoneNumber", ex.getMessage()));
   }
 
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+    return ResponseEntity
+            .badRequest()
+            .body("Invalid value for parameter: " + ex.getName());
+  }
 }
+
+
