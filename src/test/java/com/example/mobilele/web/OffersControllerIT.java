@@ -74,4 +74,20 @@ class OffersControllerIT {
             .andExpect(model().attributeExists("currentPage"))
             .andExpect(model().attributeExists("totalPages"));
   }
+
+  // =========================
+  // TOP OFFERS
+  // =========================
+
+  @Test
+  void showTopOffers_shouldReturnTopOffersPage() throws Exception {
+
+    when(offerService.findTopOffersByViews())
+            .thenReturn(List.of(new OfferBaseViewModel()));
+
+    mockMvc.perform(get("/offers/top-offers"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("top-offers"))
+            .andExpect(model().attributeExists("offers"));
+  }
 }
