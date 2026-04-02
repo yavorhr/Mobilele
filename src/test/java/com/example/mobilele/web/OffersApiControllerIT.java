@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -102,7 +103,7 @@ class OffersApiControllerIT {
   }
 
   // =========================
-  // 🔹 FORBIDDEN (SECURITY FAIL)
+  // FORBIDDEN (SECURITY FAIL)
   // =========================
 
   @Test
@@ -117,6 +118,19 @@ class OffersApiControllerIT {
             .with(authentication(createAuth("user1")))
             .with(csrf()))
             .andExpect(status().isForbidden());
+  }
+
+  // =========================
+  // UNAUTHORIZED
+  // =========================
+
+  @Test
+  @WithAnonymousUser
+  void toggleReservation_shouldRedirectToLogin_whenNotAuthenticated() throws Exception {
+
+    mockMvc.perform(patch("/offers/{id}/toggle-reservation", 1L)
+            .with(csrf()))
+            .andExpect(status().isFound()); // 302
   }
 
   private Authentication createAuth(String username) {
