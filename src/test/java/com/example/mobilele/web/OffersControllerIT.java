@@ -40,8 +40,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -291,4 +290,36 @@ class OffersControllerIT {
             .andExpect(view().name("update"))
             .andExpect(model().attributeExists("offerUpdateBindingModel"));
   }
+
+  // =========================
+  // UPDATE OFFER - PATCH VALID
+  // =========================
+
+  @Test
+  void updateOffer_shouldRedirectToDetails_whenValid() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(true);
+
+    mockMvc.perform(patch("/offers/update/{id}", id)
+            .param("description", "Very good car description")
+            .param("price", "1000")
+            .param("model", "M3")
+            .param("brand", "BMW")
+            .param("condition", "Used")
+            .param("engine", "Gasoline")
+            .param("mileage", "100000")
+            .param("transmission", "Manual")
+            .param("year", "2020")
+            .param("color", "Black")
+            .param("country", "Bulgaria")
+            .param("city", "Sofia")
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers/details/" + id));
+  }
+
 }
