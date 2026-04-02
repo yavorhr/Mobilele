@@ -363,4 +363,21 @@ class OffersControllerIT {
     verify(soldOfferService).saveSoldOffer(id);
     verify(offerService).deleteById(id);
   }
+
+  // =========================
+  // SECURITY - FORBIDDEN
+  // =========================
+
+  @Test
+  void updateOffer_shouldReturn403_whenUnauthorized() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(false);
+
+    mockMvc.perform(get("/offers/update/{id}", id)
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isForbidden());
+  }
 }
