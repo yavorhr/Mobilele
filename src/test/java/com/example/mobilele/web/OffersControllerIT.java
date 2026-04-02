@@ -322,4 +322,23 @@ class OffersControllerIT {
             .andExpect(redirectedUrl("/offers/details/" + id));
   }
 
+  // =========================
+  // DELETE OFFER
+  // =========================
+
+  @Test
+  void deleteOffer_shouldRedirectHome_whenAuthorized() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(true);
+
+    mockMvc.perform(delete("/offers/{id}", id)
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/"));
+  }
+
 }
