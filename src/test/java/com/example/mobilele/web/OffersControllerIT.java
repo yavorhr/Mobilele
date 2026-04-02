@@ -1,7 +1,11 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.config.security.SecurityService;
+import com.example.mobilele.model.entity.enums.*;
+import com.example.mobilele.model.service.PictureServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
+import com.example.mobilele.model.view.offer.OfferViewModel;
+import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.service.FavoritesService;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
@@ -18,9 +22,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -89,5 +96,75 @@ class OffersControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("top-offers"))
             .andExpect(model().attributeExists("offers"));
+  }
+
+  // =========================
+  // OFFER DETAILS
+  // =========================
+
+  @Test
+  void getOfferDetails_shouldWork() throws Exception {
+
+    Long id = 1L;
+
+    OfferViewModel offer = createValidOffer();
+
+    when(offerService.findOfferById(any(), eq(id)))
+            .thenReturn(offer);
+
+    when(modelMapper.map(any(), eq(OfferViewModel.class)))
+            .thenReturn(offer);
+
+    mockMvc.perform(get("/offers/details/{id}", id))
+            .andExpect(status().isOk())
+            .andExpect(view().name("details"))
+            .andExpect(model().attributeExists("offer"));
+  }
+
+  private OfferViewModel createValidOffer() {
+
+    OfferViewModel offer = new OfferViewModel();
+
+    offer.setId(1L);
+    offer.setDescription("Test description");
+    offer.setPrice(BigDecimal.valueOf(10000));
+    offer.setViews(10L);
+
+    offer.setModelBrandName("BMW");
+    offer.setModelName("M3");
+    offer.setModelYear(2020);
+    offer.setModelVehicleType("CAR");
+
+    offer.setMileage(100000.0);
+
+    offer.setCountry(CountryEnum.Bulgaria);
+    offer.setCity(CityEnum.Sofia);
+
+    offer.setEngine(EngineEnum.Gasoline);
+    offer.setTransmission(TransmissionType.Manual);
+    offer.setColor(ColorEnum.Black);
+    offer.setCondition(ConditionEnum.Used);
+
+    offer.setCreated(Instant.now());
+    offer.setModified(Instant.now());
+
+    offer.setCanModify(false);
+    offer.setNotOwnerOrIsAdmin(true);
+    offer.setReserved(false);
+
+    UserViewModel seller = new UserViewModel();
+    seller.setFirstName("John");
+    seller.setLastName("Doe");
+    seller.setEmail("john@test.com");
+    seller.setPhoneNumber("123456789");
+    offer.setSeller(seller);
+
+    PictureServiceModel picture = new PictureServiceModel();
+    picture.setPictureUrl("https://test.com/image.jpg");
+    picture.setPicturePublicId("public-id");
+
+    offer.setPictures(List.of(picture));
+
+    return offer;
   }
 }
