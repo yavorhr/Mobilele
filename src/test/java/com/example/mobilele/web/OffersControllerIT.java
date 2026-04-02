@@ -31,11 +31,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -185,73 +183,6 @@ class OffersControllerIT {
             .andExpect(redirectedUrl("/offers/details/1"));
   }
 
-  private Authentication createAuth(String username) {
-
-    UserEntity user = new UserEntity();
-    user.setId(1L);
-    user.setUsername(username);
-    user.setPassword("password");
-    user.setAccountLocked(false);
-
-    List<GrantedAuthority> authorities =
-            List.of(new SimpleGrantedAuthority("ROLE_USER"));
-
-    MobileleUser mobileleUser = new MobileleUser(user, authorities);
-
-    return new UsernamePasswordAuthenticationToken(
-            mobileleUser,
-            null,
-            authorities
-    );
-  }
-
-  private OfferViewModel createValidOffer() {
-
-    OfferViewModel offer = new OfferViewModel();
-
-    offer.setId(1L);
-    offer.setDescription("Test description");
-    offer.setPrice(BigDecimal.valueOf(10000));
-    offer.setViews(10L);
-
-    offer.setModelBrandName("BMW");
-    offer.setModelName("M3");
-    offer.setModelYear(2020);
-    offer.setModelVehicleType("CAR");
-
-    offer.setMileage(100000.0);
-
-    offer.setCountry(CountryEnum.Bulgaria);
-    offer.setCity(CityEnum.Sofia);
-
-    offer.setEngine(EngineEnum.Gasoline);
-    offer.setTransmission(TransmissionType.Manual);
-    offer.setColor(ColorEnum.Black);
-    offer.setCondition(ConditionEnum.Used);
-
-    offer.setCreated(Instant.now());
-    offer.setModified(Instant.now());
-
-    offer.setCanModify(false);
-    offer.setNotOwnerOrIsAdmin(true);
-    offer.setReserved(false);
-
-    UserViewModel seller = new UserViewModel();
-    seller.setFirstName("John");
-    seller.setLastName("Doe");
-    seller.setEmail("john@test.com");
-    seller.setPhoneNumber("123456789");
-    offer.setSeller(seller);
-
-    PictureServiceModel picture = new PictureServiceModel();
-    picture.setPictureUrl("https://test.com/image.jpg");
-    picture.setPicturePublicId("public-id");
-
-    offer.setPictures(List.of(picture));
-
-    return offer;
-  }
-
   // =========================
   // ADD OFFER - NO PARAMS
   // =========================
@@ -323,6 +254,26 @@ class OffersControllerIT {
             .andExpect(redirectedUrl("/offers/details/" + id));
   }
 
+  @Test
+  void updateOffer_shouldRedirectToErrorPage_whenInvalid() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(true);
+
+    mockMvc.perform(patch("/offers/update/{id}", id)
+            .param("description", "short") // ❌ invalid
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers/update/errors/" + id))
+            .andExpect(flash().attributeExists("offerUpdateBindingModel"))
+            .andExpect(flash().attributeExists(
+                    "org.springframework.validation.BindingResult.offerUpdateBindingModel"
+            ));
+  }
+
   // =========================
   // DELETE OFFER
   // =========================
@@ -379,5 +330,72 @@ class OffersControllerIT {
     mockMvc.perform(get("/offers/update/{id}", id)
             .with(authentication(createAuth("user1"))))
             .andExpect(status().isForbidden());
+  }
+
+  private Authentication createAuth(String username) {
+
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+    user.setUsername(username);
+    user.setPassword("password");
+    user.setAccountLocked(false);
+
+    List<GrantedAuthority> authorities =
+            List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+    MobileleUser mobileleUser = new MobileleUser(user, authorities);
+
+    return new UsernamePasswordAuthenticationToken(
+            mobileleUser,
+            null,
+            authorities
+    );
+  }
+
+  private OfferViewModel createValidOffer() {
+
+    OfferViewModel offer = new OfferViewModel();
+
+    offer.setId(1L);
+    offer.setDescription("Test description");
+    offer.setPrice(BigDecimal.valueOf(10000));
+    offer.setViews(10L);
+
+    offer.setModelBrandName("BMW");
+    offer.setModelName("M3");
+    offer.setModelYear(2020);
+    offer.setModelVehicleType("CAR");
+
+    offer.setMileage(100000.0);
+
+    offer.setCountry(CountryEnum.Bulgaria);
+    offer.setCity(CityEnum.Sofia);
+
+    offer.setEngine(EngineEnum.Gasoline);
+    offer.setTransmission(TransmissionType.Manual);
+    offer.setColor(ColorEnum.Black);
+    offer.setCondition(ConditionEnum.Used);
+
+    offer.setCreated(Instant.now());
+    offer.setModified(Instant.now());
+
+    offer.setCanModify(false);
+    offer.setNotOwnerOrIsAdmin(true);
+    offer.setReserved(false);
+
+    UserViewModel seller = new UserViewModel();
+    seller.setFirstName("John");
+    seller.setLastName("Doe");
+    seller.setEmail("john@test.com");
+    seller.setPhoneNumber("123456789");
+    offer.setSeller(seller);
+
+    PictureServiceModel picture = new PictureServiceModel();
+    picture.setPictureUrl("https://test.com/image.jpg");
+    picture.setPicturePublicId("public-id");
+
+    offer.setPictures(List.of(picture));
+
+    return offer;
   }
 }
