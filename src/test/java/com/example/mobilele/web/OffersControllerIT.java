@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -119,6 +120,19 @@ class OffersControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("details"))
             .andExpect(model().attributeExists("offer"));
+  }
+
+  // =========================
+  // ADD OFFER - GET
+  // =========================
+
+  @Test
+  @WithMockUser
+  void getAddOfferPage_shouldReturnAddView() throws Exception {
+
+    mockMvc.perform(get("/offers"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("add"));
   }
 
   private OfferViewModel createValidOffer() {
