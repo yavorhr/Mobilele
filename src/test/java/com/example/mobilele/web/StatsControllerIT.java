@@ -121,7 +121,7 @@ class StatsControllerIT {
 
     mockMvc.perform(get("/admin/history"))
             .andExpect(status().isOk())
-            .andExpect(view().name("/admin/history"))
+            .andExpect(view().name("admin/history"))
             .andExpect(model().attributeExists("snapshots"));
   }
 
