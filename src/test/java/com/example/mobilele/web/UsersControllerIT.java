@@ -116,4 +116,17 @@ class UsersControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("login"));
   }
+
+  //==============================
+  //  INVALID CREDENTIALS CASE
+  //==============================
+
+  @Test
+  void login_shouldShowError_whenInvalidCredentials() throws Exception {
+
+    mockMvc.perform(get("/users/login")
+            .param("errorType", "INVALID_CREDENTIALS"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("login_error_message"));
+  }
 }
