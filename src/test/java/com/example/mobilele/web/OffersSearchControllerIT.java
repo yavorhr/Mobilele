@@ -1,12 +1,10 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.offer.OffersFindBindingModel;
-import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.service.offer.OffersFindServiceModel;
 import com.example.mobilele.model.view.offer.OfferBaseViewModel;
 import com.example.mobilele.service.ModelService;
 import com.example.mobilele.service.OfferService;
-import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -17,16 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -40,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@WithMockUser
 class OffersSearchControllerIT {
 
   @Autowired
@@ -62,7 +55,6 @@ class OffersSearchControllerIT {
   // =========================
 
   @Test
-  @WithMockUser
   void getFindOffersView_shouldReturnCategoriesPage() throws Exception {
 
     mockMvc.perform(get("/offers/find"))
@@ -75,7 +67,6 @@ class OffersSearchControllerIT {
   // ============================
 
   @Test
-  @WithMockUser
   void getSearchFormByCategory_shouldReturnFormWithVehicleType() throws Exception {
 
     mockMvc.perform(get("/offers/find/CAR"))
@@ -89,7 +80,6 @@ class OffersSearchControllerIT {
   // ========================================
 
   @Test
-  @WithMockUser
   void submitFindOffers_shouldRedirectBack_whenInvalid() throws Exception {
 
     mockMvc.perform(post("/offers/find/CAR")
@@ -105,7 +95,6 @@ class OffersSearchControllerIT {
   // =======================================
 
   @Test
-  @WithMockUser
   void submitFindOffers_shouldRedirectToResults_whenValid() throws Exception {
 
     mockMvc.perform(post("/offers/find/CAR")
@@ -197,6 +186,7 @@ class OffersSearchControllerIT {
   // =============================
 
   @Test
+  @WithMockUser
   void quickSearch_shouldRedirectHome_whenInvalid() throws Exception {
 
     mockMvc.perform(post("/offers/quick-search")
@@ -205,5 +195,29 @@ class OffersSearchControllerIT {
             .with(csrf()))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/"));
+  }
+
+  // =============
+  // BRAND SEARCH
+  // =============
+
+  @Test
+  @WithMockUser
+  void getOffersByBrand_shouldReturnOffersPage() throws Exception {
+
+    Page<OfferBaseViewModel> page =
+            new PageImpl<>(List.of(new OfferBaseViewModel()));
+
+    when(offerService.findOffersByBrand(any(), any()))
+            .thenReturn(page);
+
+    when(messageSource.getMessage(any(), any(), any()))
+            .thenReturn("Brand Title");
+
+    mockMvc.perform(get("/offers/brands/bmw"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("offers"))
+            .andExpect(model().attributeExists("offers"))
+            .andExpect(model().attributeExists("title"));
   }
 }
