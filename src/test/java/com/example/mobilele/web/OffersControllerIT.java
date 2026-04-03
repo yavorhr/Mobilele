@@ -223,6 +223,26 @@ class OffersControllerIT {
             .andExpect(model().attributeExists("offerUpdateBindingModel"));
   }
 
+  @Test
+  void editOfferErrors_shouldLoadFromService_whenNoFlashAttribute() throws Exception {
+
+    Long id = 1L;
+
+    OfferUpdateBindingForm form = new OfferUpdateBindingForm();
+
+    when(offerService.getUpdateForm(id))
+            .thenReturn(form);
+
+    mockMvc.perform(get("/offers/update/errors/{id}", id)
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isOk())
+            .andExpect(view().name("update"))
+            .andExpect(model().attributeExists("offerUpdateBindingModel"))
+            .andExpect(model().attribute("offerUpdateBindingModel", form));
+
+    verify(offerService).getUpdateForm(id);
+  }
+
   // =========================
   // UPDATE OFFER - PATCH VALID
   // =========================
@@ -263,7 +283,7 @@ class OffersControllerIT {
             .thenReturn(true);
 
     mockMvc.perform(patch("/offers/update/{id}", id)
-            .param("description", "short") // ❌ invalid
+            .param("description", "short") //
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andExpect(status().is3xxRedirection())
@@ -272,6 +292,23 @@ class OffersControllerIT {
             .andExpect(flash().attributeExists(
                     "org.springframework.validation.BindingResult.offerUpdateBindingModel"
             ));
+  }
+
+  // =========================
+  // SECURITY - FORBIDDEN
+  // =========================
+
+  @Test
+  void updateOffer_shouldReturn403_whenUnauthorized() throws Exception {
+
+    Long id = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(id)))
+            .thenReturn(false);
+
+    mockMvc.perform(get("/offers/update/{id}", id)
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isForbidden());
   }
 
   // =========================
@@ -313,23 +350,6 @@ class OffersControllerIT {
 
     verify(soldOfferService).saveSoldOffer(id);
     verify(offerService).deleteById(id);
-  }
-
-  // =========================
-  // SECURITY - FORBIDDEN
-  // =========================
-
-  @Test
-  void updateOffer_shouldReturn403_whenUnauthorized() throws Exception {
-
-    Long id = 1L;
-
-    when(securityService.canModifyOffer(anyString(), eq(id)))
-            .thenReturn(false);
-
-    mockMvc.perform(get("/offers/update/{id}", id)
-            .with(authentication(createAuth("user1"))))
-            .andExpect(status().isForbidden());
   }
 
   private Authentication createAuth(String username) {
