@@ -19,9 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -116,6 +114,25 @@ class PicturesControllerIT {
             .andExpect(status().isNoContent());
 
     verify(pictureService).deleteByPublicId("public-id");
+  }
+
+  @Test
+  void deletePicture_shouldReturn409_whenCloudinaryFails() throws Exception {
+
+    Long offerId = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+            .thenReturn(true);
+
+    when(cloudinaryService.delete("public-id"))
+            .thenReturn(false);
+
+    mockMvc.perform(delete("/pictures")
+            .param("public_id", "public-id")
+            .param("offer_id", String.valueOf(offerId))
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isConflict());
   }
 
   private Authentication createAuth(String username) {
