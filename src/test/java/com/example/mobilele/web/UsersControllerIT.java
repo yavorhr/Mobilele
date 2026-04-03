@@ -42,4 +42,18 @@ class UsersControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("register"));
   }
+
+  //====================
+  // POST REGISTER USER
+  //====================
+
+  @Test
+  void register_shouldRedirectBack_whenInvalid() throws Exception {
+    mockMvc.perform(post("/users/register")
+            .param("username", "")
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("register"))
+            .andExpect(flash().attributeExists("userRegisterBindingModel"));
+  }
 }
