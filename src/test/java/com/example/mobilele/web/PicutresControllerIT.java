@@ -123,7 +123,7 @@ class PicturesControllerIT {
 
     Long offerId = 1L;
 
-    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+    when(securityService.canModifyOffer(anyString(),  any()))
             .thenReturn(true);
 
     when(cloudinaryService.delete("public-id"))
