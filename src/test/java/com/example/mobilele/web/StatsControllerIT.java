@@ -37,6 +37,10 @@ class StatsControllerIT {
   @MockBean
   private SoldOfferService soldOfferService;
 
+  //=========================
+  // GET LIVE STATS - SUCCESS
+  //=========================
+
   @Test
   @WithMockUser(roles = "ADMIN")
   void statistics_shouldReturnView_whenAdmin() throws Exception {
@@ -48,5 +52,17 @@ class StatsControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("admin/live-stats"))
             .andExpect(model().attributeExists("stats"));
+  }
+
+  //============================
+  // GET LIVE STATS - FORBIDDEN
+  //============================
+
+  @Test
+  @WithMockUser(roles = "USER")
+  void statistics_shouldReturn403_whenNotAdmin() throws Exception {
+
+    mockMvc.perform(get("/admin/statistics"))
+            .andExpect(status().isForbidden());
   }
 }
