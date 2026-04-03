@@ -129,4 +129,19 @@ class UsersControllerIT {
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("login_error_message"));
   }
+
+  //==============================
+  //  UNKNOWN ERROR CASE
+  //==============================
+
+  @Test
+  void login_shouldHandleUnknownErrorType() throws Exception {
+
+    mockMvc.perform(get("/users/login")
+            .param("errorType", "UNKNOWN"))
+            .andExpect(status().isOk())
+            .andExpect(model().attribute("login_error_message", "An unknown error occurred."));
+  }
+
+
 }
