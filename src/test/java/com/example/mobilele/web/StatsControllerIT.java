@@ -196,7 +196,7 @@ class StatsControllerIT {
 
   //===============================
   // GET SOLD CARS STATS - SUCCESS
-  //==============================
+  //===============================
 
   @Test
   @WithMockUser(roles = "ADMIN")
@@ -214,5 +214,17 @@ class StatsControllerIT {
             .andExpect(view().name("admin/sold-cars-year"))
             .andExpect(model().attributeExists("cars"))
             .andExpect(model().attributeExists("years"));
+  }
+
+  //=================================
+  // GET SOLD CARS STATS - FORBIDDEN
+  //=================================
+
+  @Test
+  @WithMockUser(roles = "USER")
+  void sellersPerformance_shouldReturn403_whenNotAdmin() throws Exception {
+
+    mockMvc.perform(get("/admin/sellers-performance"))
+            .andExpect(status().isForbidden());
   }
 }
