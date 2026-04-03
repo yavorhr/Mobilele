@@ -92,5 +92,16 @@ class StatsControllerIT {
     verify(statsService).resetStats();
   }
 
- 
+  //============================
+  // SAVE SNAPSHOT - FORBIDDEN
+  //============================
+
+  @Test
+  @WithMockUser(roles = "USER")
+  void saveStatsSnapshot_shouldReturn403_whenNotAdmin() throws Exception {
+
+    mockMvc.perform(post("/admin/statistics")
+            .with(csrf()))
+            .andExpect(status().isForbidden());
+  }
 }
