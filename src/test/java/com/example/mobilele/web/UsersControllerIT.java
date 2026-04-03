@@ -104,4 +104,16 @@ class UsersControllerIT {
 
     verify(userService).registerAndLoginUser(any());
   }
+
+  //==============================
+  //      GET LOGIN PAGE
+  //==============================
+
+  @Test
+  void login_shouldReturnView() throws Exception {
+
+    mockMvc.perform(get("/users/login"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("login"));
+  }
 }
