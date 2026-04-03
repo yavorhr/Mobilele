@@ -53,7 +53,7 @@ public class StatsController {
   @GetMapping("/history")
   public String statsHistory(Model model) {
     model.addAttribute("snapshots", statsService.getAllSnapshots());
-    return "/admin/history";
+    return "admin/history";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
