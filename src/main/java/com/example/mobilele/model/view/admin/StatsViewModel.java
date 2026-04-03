@@ -25,6 +25,9 @@ public class StatsViewModel {
     this.userStats = userStats;
   }
 
+  public StatsViewModel() {
+  }
+
   public Long getId() {
     return id;
   }
