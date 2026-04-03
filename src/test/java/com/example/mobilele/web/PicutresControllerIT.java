@@ -27,6 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -94,6 +95,27 @@ class PicturesControllerIT {
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andExpect(status().isForbidden());
+  }
+
+  @Test
+  void deletePicture_shouldReturn204_whenSuccessful() throws Exception {
+
+    Long offerId = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+            .thenReturn(true);
+
+    when(cloudinaryService.delete("public-id"))
+            .thenReturn(true);
+
+    mockMvc.perform(delete("/pictures")
+            .param("public_id", "public-id")
+            .param("offer_id", String.valueOf(offerId))
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isNoContent());
+
+    verify(pictureService).deleteByPublicId("public-id");
   }
 
   private Authentication createAuth(String username) {
