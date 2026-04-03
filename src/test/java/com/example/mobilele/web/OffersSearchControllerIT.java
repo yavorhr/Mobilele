@@ -196,5 +196,14 @@ class OffersSearchControllerIT {
   // POST - QUICK SEARCH INVALID
   // =============================
 
+  @Test
+  void quickSearch_shouldRedirectHome_whenInvalid() throws Exception {
 
+    mockMvc.perform(post("/offers/quick-search")
+            .param("vehicleType", "car")
+            .param("brand", "") // invalid
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/"));
+  }
 }
