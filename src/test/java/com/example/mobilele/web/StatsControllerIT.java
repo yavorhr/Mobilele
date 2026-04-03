@@ -176,4 +176,20 @@ class StatsControllerIT {
             .andExpect(model().attributeExists("sellers"))
             .andExpect(model().attributeExists("years"));
   }
+
+  //===========================================
+  // GET SELLERS PERFORMANCE WITH DEFAULT YEAR
+  //===========================================
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void sellersPerformance_shouldUseCurrentYear_whenNotProvided() throws Exception {
+
+    when(offerService.getSellerPerformanceByYear(anyInt(), anyInt()))
+            .thenReturn(new PageImpl<>(List.of()));
+
+    mockMvc.perform(get("/admin/sellers-performance"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("selectedYear"));
+  }
 }
