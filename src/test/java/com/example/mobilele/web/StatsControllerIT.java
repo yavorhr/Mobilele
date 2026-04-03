@@ -14,6 +14,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -103,5 +105,18 @@ class StatsControllerIT {
     mockMvc.perform(post("/admin/statistics")
             .with(csrf()))
             .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void history_shouldReturnView() throws Exception {
+
+    when(statsService.getAllSnapshots())
+            .thenReturn(List.of());
+
+    mockMvc.perform(get("/admin/history"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("/admin/history"))
+            .andExpect(model().attributeExists("snapshots"));
   }
 }
