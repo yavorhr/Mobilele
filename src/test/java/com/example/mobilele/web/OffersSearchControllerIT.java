@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -48,6 +48,10 @@ class OffersSearchControllerIT {
   @MockBean
   private MessageSource messageSource;
 
+  // =========================
+  // GET OFFERS/FIND
+  // =========================
+
   @Test
   @WithMockUser
   void getFindOffersView_shouldReturnCategoriesPage() throws Exception {
@@ -57,12 +61,33 @@ class OffersSearchControllerIT {
             .andExpect(view().name("offers-categories"));
   }
 
+  // ============================
+  // GET OFFERS/FIND/VEHICLE TYPE
+  // ============================
+
   @Test
+  @WithMockUser
   void getSearchFormByCategory_shouldReturnFormWithVehicleType() throws Exception {
 
     mockMvc.perform(get("/offers/find/CAR"))
             .andExpect(status().isOk())
             .andExpect(view().name("offers-find"))
             .andExpect(model().attributeExists("vehicleType"));
+  }
+
+  // ============================
+  // POST OFFERS/FIND/VEHICLE TYPE
+  // ============================
+
+  @Test
+  @WithMockUser
+  void submitFindOffers_shouldRedirectBack_whenInvalid() throws Exception {
+
+    mockMvc.perform(post("/offers/find/CAR")
+            .param("brand", "")
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers/find/CAR"))
+            .andExpect(flash().attributeExists("offersFindBindingModel"));
   }
 }
