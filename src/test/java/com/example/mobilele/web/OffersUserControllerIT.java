@@ -108,4 +108,11 @@ class OffersUserControllerIT {
     mockMvc.perform(get("/offers/my-offers"))
             .andExpect(status().isFound());
   }
+
+  @Test
+  void showFavorites_shouldRedirectToLogin_whenAnonymous() throws Exception {
+
+    mockMvc.perform(get("/offers/favorites"))
+            .andExpect(status().isFound());
+  }
 }
