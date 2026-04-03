@@ -46,6 +46,10 @@ class OffersUserControllerIT {
   @MockBean
   private MessageSource messageSource;
 
+  // ==========
+  // MY OFFERS
+  // ==========
+
   @Test
   @WithMockUser(username = "user1")
   void showMyOffers_shouldReturnOffersPage() throws Exception {
@@ -68,6 +72,10 @@ class OffersUserControllerIT {
     verify(offerService).findOffersByUserId(eq("user1"), any());
   }
 
+  // ==========
+  // FAVORITES
+  // ===========
+
   @Test
   @WithMockUser(username = "user1")
   void showFavoriteOffers_shouldReturnOffersPage() throws Exception {
@@ -88,5 +96,16 @@ class OffersUserControllerIT {
             .andExpect(model().attribute("baseUrl", "/offers/favorites"));
 
     verify(favoritesService).findFavoriteOffers(eq("user1"), any());
+  }
+
+  // =====================
+  // UNAUTHORIZED ACCESS
+  // =====================
+
+  @Test
+  void showMyOffers_shouldRedirectToLogin_whenAnonymous() throws Exception {
+
+    mockMvc.perform(get("/offers/my-offers"))
+            .andExpect(status().isFound());
   }
 }
