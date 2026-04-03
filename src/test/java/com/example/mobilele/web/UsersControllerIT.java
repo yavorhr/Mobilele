@@ -75,7 +75,6 @@ class UsersControllerIT {
   //==============================
 
   @Test
-  @WithMockUser
   void register_shouldRedirectHome_whenValid() throws Exception {
 
     when(modelMapper.map(any(), eq(UserRegisterServiceModel.class)))
