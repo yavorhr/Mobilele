@@ -175,7 +175,26 @@ class OffersSearchControllerIT {
     verify(offerService).findByTypeBrandAndModel(any(), any(), any(), any());
   }
 
-  // ==========================================
-  // POST - QUICK SEARCH
-  // ==========================================
+  // =============================
+  // POST - QUICK SEARCH SUCCESS
+  // =============================
+
+  @Test
+  @WithMockUser
+  void quickSearch_shouldRedirectToResults_whenValid() throws Exception {
+
+    mockMvc.perform(post("/offers/quick-search")
+            .param("vehicleType", "car")
+            .param("brand", "BMW")
+            .param("model", "M3")
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers/find/car/bmw/m3"));
+  }
+
+  // =============================
+  // POST - QUICK SEARCH INVALID
+  // =============================
+
+
 }
