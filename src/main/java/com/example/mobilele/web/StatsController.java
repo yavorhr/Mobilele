@@ -37,6 +37,7 @@ public class StatsController {
     return "admin/live-stats";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/statistics")
   public String saveStatsSnapshot(RedirectAttributes redirectAttributes) {
     StatsViewModel stats = statsService.getStats();
