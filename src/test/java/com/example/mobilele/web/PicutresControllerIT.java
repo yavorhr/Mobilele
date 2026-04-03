@@ -52,6 +52,10 @@ class PicturesControllerIT {
   @MockBean(name = "security")
   private SecurityService securityService;
 
+  //=======================
+  // ADD PICTURE - SUCCESS
+  //=======================
+
   @Test
   void addOfferPictures_shouldRedirectToDetails_whenAuthorized() throws Exception {
 
@@ -71,6 +75,25 @@ class PicturesControllerIT {
             .andExpect(redirectedUrl("/offers/details/" + offerId));
 
     verify(pictureService).addPicturesToOffer(any());
+  }
+
+  //=========================
+  // ADD PICTURE - FORBIDDEN
+  //=========================
+
+  @Test
+  void addOfferPictures_shouldReturn403_whenUnauthorized() throws Exception {
+
+    Long offerId = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+            .thenReturn(false);
+
+    mockMvc.perform(multipart("/pictures")
+            .param("offerId", String.valueOf(offerId))
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isForbidden());
   }
 
   private Authentication createAuth(String username) {
