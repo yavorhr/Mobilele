@@ -118,9 +118,9 @@ class OffersSearchControllerIT {
             .andExpect(redirectedUrl("/offers/find/CAR/bmw/m3"));
   }
 
-  // =======================================
-  // POST OFFERS/FIND/VEHICLE TYPE - SUCCESS
-  // =======================================
+  // ==========================================
+  // RESULT - FILTERED OFFERS (WITH FLASH ATTR.)
+  // ==========================================
 
   @Test
   void showOffersByModel_shouldUseFilters_whenPresent() throws Exception {
@@ -149,4 +149,33 @@ class OffersSearchControllerIT {
 
     verify(offerService).findOffersByFilters(any(), any(), any());
   }
+
+  // ==========================================
+  // RESULT - FILTERED OFFERS - WITHOUT FILTERS
+  // ==========================================
+
+  @Test
+  @WithMockUser
+  void showOffersByModel_shouldUseDirectSearch_whenNoFilters() throws Exception {
+
+    Page<OfferBaseViewModel> page =
+            new PageImpl<>(List.of(new OfferBaseViewModel()));
+
+    when(offerService.findByTypeBrandAndModel(any(), any(), any(), any()))
+            .thenReturn(page);
+
+    when(messageSource.getMessage(any(), any(), any()))
+            .thenReturn("Title");
+
+    mockMvc.perform(get("/offers/find/CAR/bmw/m3"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("offers"))
+            .andExpect(model().attributeExists("offers"));
+
+    verify(offerService).findByTypeBrandAndModel(any(), any(), any(), any());
+  }
+
+  // ==========================================
+  // POST - QUICK SEARCH
+  // ==========================================
 }
