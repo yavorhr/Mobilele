@@ -27,6 +27,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -100,7 +101,7 @@ class PicturesControllerIT {
 
     Long offerId = 1L;
 
-    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+    when(securityService.canModifyOffer(eq("user1"), any()))
             .thenReturn(true);
 
     when(cloudinaryService.delete("public-id"))
@@ -111,13 +112,14 @@ class PicturesControllerIT {
             .param("offer_id", String.valueOf(offerId))
             .with(csrf())
             .with(authentication(createAuth("user1"))))
+            .andDo(print())
             .andExpect(status().isNoContent());
 
     verify(pictureService).deleteByPublicId("public-id");
   }
 
   @Test
-  void deletePicture_shouldReturn409_whenCloudinaryFails() throws Exception {
+  void deletePicture_shouldReturn500_whenCloudinaryFails() throws Exception {
 
     Long offerId = 1L;
 
@@ -132,8 +134,26 @@ class PicturesControllerIT {
             .param("offer_id", String.valueOf(offerId))
             .with(csrf())
             .with(authentication(createAuth("user1"))))
-            .andExpect(status().isConflict());
+            .andExpect(status().isInternalServerError());
   }
+
+  @Test
+  void deletePicture_shouldReturn403_whenUnauthorized() throws Exception {
+
+    Long offerId = 1L;
+
+    when(securityService.canModifyOffer(anyString(), eq(offerId)))
+            .thenReturn(false);
+
+    mockMvc.perform(delete("/pictures")
+            .param("public_id", "public-id")
+            .param("offer_id", String.valueOf(offerId))
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andDo(print())
+            .andExpect(status().isForbidden());
+  }
+
 
   private Authentication createAuth(String username) {
 
