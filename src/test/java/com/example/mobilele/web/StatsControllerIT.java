@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.admin.StatsViewModel;
+import com.example.mobilele.model.view.offer.SoldOfferViewModel;
 import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.SoldOfferService;
@@ -191,5 +192,27 @@ class StatsControllerIT {
     mockMvc.perform(get("/admin/sellers-performance"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("selectedYear"));
+  }
+
+  //===============================
+  // GET SOLD CARS STATS - SUCCESS
+  //==============================
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void soldCarsStats_shouldReturnView() throws Exception {
+
+    Page<SoldOfferViewModel> page =
+            new PageImpl<>(List.of(new SoldOfferViewModel()));
+
+    when(soldOfferService.getSoldCarsByYear(anyInt(), anyInt()))
+            .thenReturn(page);
+
+    mockMvc.perform(get("/admin/sold-cars-stats")
+            .param("year", "2024"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("admin/sold-cars-year"))
+            .andExpect(model().attributeExists("cars"))
+            .andExpect(model().attributeExists("years"));
   }
 }
