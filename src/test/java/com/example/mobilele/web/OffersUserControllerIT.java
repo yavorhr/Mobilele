@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -64,5 +66,27 @@ class OffersUserControllerIT {
             .andExpect(model().attribute("baseUrl", "/offers/my-offers"));
 
     verify(offerService).findOffersByUserId(eq("user1"), any());
+  }
+
+  @Test
+  @WithMockUser(username = "user1")
+  void showFavoriteOffers_shouldReturnOffersPage() throws Exception {
+
+    Page<OfferBaseViewModel> page =
+            new PageImpl<>(List.of(new OfferBaseViewModel()));
+
+    when(favoritesService.findFavoriteOffers(eq("user1"), any()))
+            .thenReturn(page);
+
+    when(messageSource.getMessage(any(), any(), any()))
+            .thenReturn("Favorites");
+
+    mockMvc.perform(get("/offers/favorites"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("offers"))
+            .andExpect(model().attributeExists("offers"))
+            .andExpect(model().attribute("baseUrl", "/offers/favorites"));
+
+    verify(favoritesService).findFavoriteOffers(eq("user1"), any());
   }
 }
