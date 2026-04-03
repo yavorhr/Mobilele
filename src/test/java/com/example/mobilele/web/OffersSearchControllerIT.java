@@ -50,9 +50,9 @@ class OffersSearchControllerIT {
   @MockBean
   private MessageSource messageSource;
 
-  // =========================
+  // ================
   // GET OFFERS/FIND
-  // =========================
+  // ================
 
   @Test
   void getFindOffersView_shouldReturnCategoriesPage() throws Exception {
