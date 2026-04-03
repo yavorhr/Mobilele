@@ -40,15 +40,13 @@ public class PicturesController {
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
 
-  @PreAuthorize("@security.canModifyOffer(#principal.username, #bindingModel.offerId)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #offerId)")
   @DeleteMapping("/pictures")
   @ResponseBody
   public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId,
-                                            @RequestParam("offer_id") String offerId,
                                             @AuthenticationPrincipal MobileleUser principal) {
 
     boolean cloudinaryDeleted = this.cloudinaryService.delete(publicId);
-
     if (!cloudinaryDeleted) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Could not delete picture from Cloudinary");
     }
