@@ -107,6 +107,10 @@ class StatsControllerIT {
             .andExpect(status().isForbidden());
   }
 
+  //============================
+  //      GET HISTORY
+  //============================
+
   @Test
   @WithMockUser(roles = "ADMIN")
   void history_shouldReturnView() throws Exception {
@@ -118,5 +122,24 @@ class StatsControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("/admin/history"))
             .andExpect(model().attributeExists("snapshots"));
+  }
+
+  //============================
+  //   GET SNAPSHOT DETAILS
+  //============================
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void snapshotDetails_shouldReturnView() throws Exception {
+
+    Long id = 1L;
+
+    when(statsService.getSnapshotViewById(id))
+            .thenReturn(new StatsViewModel());
+
+    mockMvc.perform(get("/admin/history/{id}", id))
+            .andExpect(status().isOk())
+            .andExpect(view().name("admin/snapshot-details"))
+            .andExpect(model().attributeExists("stats"));
   }
 }
