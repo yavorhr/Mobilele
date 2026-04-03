@@ -1,6 +1,7 @@
 package com.example.mobilele.web;
 
 import com.example.mobilele.model.view.admin.StatsViewModel;
+import com.example.mobilele.model.view.user.TopSellerViewModel;
 import com.example.mobilele.service.OfferService;
 import com.example.mobilele.service.SoldOfferService;
 import com.example.mobilele.service.StatsService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -141,5 +144,36 @@ class StatsControllerIT {
             .andExpect(status().isOk())
             .andExpect(view().name("admin/snapshot-details"))
             .andExpect(model().attributeExists("stats"));
+  }
+
+  //============================
+  // GET SELLERS PERFORMANCE
+  //============================
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void sellersPerformance_shouldReturnView() throws Exception {
+
+    TopSellerViewModel seller = mock(TopSellerViewModel.class);
+
+    when(seller.getFirstName()).thenReturn("John");
+    when(seller.getLastName()).thenReturn("Doe");
+    when(seller.getEmail()).thenReturn("john@test.com");
+    when(seller.getPhoneNumber()).thenReturn("123456");
+    when(seller.getSoldCount()).thenReturn(5L);
+
+    Page<TopSellerViewModel> page =
+            new PageImpl<>(List.of(seller));
+
+    when(offerService.getSellerPerformanceByYear(anyInt(), anyInt()))
+            .thenReturn(page);
+
+    mockMvc.perform(get("/admin/sellers-performance")
+            .param("year", "2024")
+            .param("page", "0"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("admin/sellers-performance"))
+            .andExpect(model().attributeExists("sellers"))
+            .andExpect(model().attributeExists("years"));
   }
 }
