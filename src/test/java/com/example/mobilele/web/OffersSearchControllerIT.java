@@ -90,4 +90,18 @@ class OffersSearchControllerIT {
             .andExpect(redirectedUrl("/offers/find/CAR"))
             .andExpect(flash().attributeExists("offersFindBindingModel"));
   }
+
+  @Test
+  @WithMockUser
+  void submitFindOffers_shouldRedirectToResults_whenValid() throws Exception {
+
+    mockMvc.perform(post("/offers/find/CAR")
+            .param("brand", "BMW")
+            .param("model", "M3")
+            .param("price", "1000")
+            .param("mileage", "1000")
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/offers/find/CAR/bmw/m3"));
+  }
 }
