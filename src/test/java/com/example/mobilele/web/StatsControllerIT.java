@@ -13,11 +13,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -65,4 +67,30 @@ class StatsControllerIT {
     mockMvc.perform(get("/admin/statistics"))
             .andExpect(status().isForbidden());
   }
+
+  //============================
+  // SAVE SNAPSHOT - SUCCESS
+  //============================
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void saveStatsSnapshot_shouldRedirect() throws Exception {
+
+    StatsViewModel stats = new StatsViewModel();
+
+    when(statsService.getStats()).thenReturn(stats);
+    doNothing().when(statsService).saveSnapshot(any());
+    doNothing().when(statsService).resetStats();
+
+    mockMvc.perform(post("/admin/statistics")
+            .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/admin/statistics"))
+            .andExpect(flash().attributeExists("message"));
+
+    verify(statsService).saveSnapshot(stats);
+    verify(statsService).resetStats();
+  }
+
+ 
 }
