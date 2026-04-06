@@ -101,6 +101,7 @@ public class UsersController {
   }
 
   //4. Profile
+  @PreAuthorize("isAuthenticated()")
   @GetMapping("/profile")
   public String showProfile(Model model,
                             @AuthenticationPrincipal MobileleUser principal) {
@@ -110,9 +111,10 @@ public class UsersController {
     return "profile";
   }
 
+  @PreAuthorize("isAuthenticated()")
   @PatchMapping("/profile")
   @ResponseBody
-  public ResponseEntity<UserViewModel> updateProfile(@RequestBody UserEditBindingModel bindingModel,
+  public ResponseEntity<UserViewModel> updateProfile(@Valid @RequestBody UserEditBindingModel bindingModel,
                                                      @AuthenticationPrincipal MobileleUser principal) {
 
     Long userId = principal.getId();
