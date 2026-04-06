@@ -166,6 +166,18 @@ class UsersControllerIT {
     verify(userService).deleteProfileById(1L);
   }
 
+  //================================
+  //  DELETE PROFILE - UNAUTHORIZED
+  //================================
+
+  @Test
+  void deleteProfile_shouldRedirectToLogin_whenAnonymous() throws Exception {
+
+    mockMvc.perform(delete("/users/delete")
+            .with(csrf()))
+            .andExpect(status().isFound()); // 302
+  }
+
   private Authentication createAuth(String username) {
     UserEntity user = new UserEntity();
     user.setId(1L);
