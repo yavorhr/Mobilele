@@ -1,8 +1,10 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserService;
+import com.example.mobilele.service.impl.principal.MobileleUser;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -10,19 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -143,5 +149,39 @@ class UsersControllerIT {
             .andExpect(model().attribute("login_error_message", "An unknown error occurred."));
   }
 
+  //==============================
+  //  DELETE PROFILE - SUCCESS
+  //==============================
 
+
+  @Test
+  void deleteProfile_shouldRedirectHome() throws Exception {
+
+    mockMvc.perform(delete("/users/delete")
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/"));
+
+    verify(userService).deleteProfileById(1L);
+  }
+
+  private Authentication createAuth(String username) {
+    UserEntity user = new UserEntity();
+    user.setId(1L);
+    user.setUsername(username);
+    user.setPassword("password");
+    user.setAccountLocked(false);
+
+    List<GrantedAuthority> authorities =
+            List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+    MobileleUser mobileleUser = new MobileleUser(user, authorities);
+
+    return new UsernamePasswordAuthenticationToken(
+            mobileleUser,
+            null,
+            authorities
+    );
+  }
 }
