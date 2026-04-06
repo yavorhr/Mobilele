@@ -17,12 +17,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -179,6 +176,10 @@ class UsersControllerIT {
             .andExpect(status().isFound()); // 302
   }
 
+  //================================
+  //  GET PROFILE
+  //================================
+
   @Test
   void showProfile_shouldReturnView() throws Exception {
 
@@ -191,6 +192,10 @@ class UsersControllerIT {
             .andExpect(view().name("profile"))
             .andExpect(model().attributeExists("user"));
   }
+
+  //================================
+  //  UPDATE PROFILE - SUCCESS
+  //================================
 
   @Test
   void updateProfile_shouldReturnUpdatedUser() throws Exception {
@@ -211,6 +216,10 @@ class UsersControllerIT {
             .with(authentication(createAuth("user1"))))
             .andExpect(status().isOk());
   }
+
+  //================================
+  //  UPDATE PROFILE - FAIL
+  //================================
 
   @Test
   void updateProfile_shouldReturnUnauthorized_whenAnonymous() throws Exception {
