@@ -212,6 +212,17 @@ class UsersControllerIT {
             .andExpect(status().isOk());
   }
 
+  @Test
+  void updateProfile_shouldReturnUnauthorized_whenAnonymous() throws Exception {
+
+    mockMvc.perform(patch("/users/profile")
+            .contentType("application/json")
+            .content("{}")
+            .with(csrf()))
+            .andExpect(status().isFound());
+  }
+
+
   private Authentication createAuth(String username) {
     UserEntity user = new UserEntity();
     user.setId(1L);
