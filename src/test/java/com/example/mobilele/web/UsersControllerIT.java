@@ -192,6 +192,26 @@ class UsersControllerIT {
             .andExpect(model().attributeExists("user"));
   }
 
+  @Test
+  void updateProfile_shouldReturnUpdatedUser() throws Exception {
+
+    UserViewModel user = new UserViewModel();
+
+    when(userService.updateUserProfile(eq(1L), any()))
+            .thenReturn(user);
+
+    mockMvc.perform(patch("/users/profile")
+            .contentType("application/json")
+            .content("""
+                {
+                  "firstName": "John"
+                }
+            """)
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isOk());
+  }
+
   private Authentication createAuth(String username) {
     UserEntity user = new UserEntity();
     user.setId(1L);
