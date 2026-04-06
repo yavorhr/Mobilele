@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,6 +86,7 @@ public class UsersController {
   }
 
   //3. Delete Profile
+  @PreAuthorize("isAuthenticated()")
   @DeleteMapping("/delete")
   public String deleteUserProfile(
           @AuthenticationPrincipal MobileleUser principal,
