@@ -2,6 +2,7 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.entity.UserEntity;
 import com.example.mobilele.model.service.user.UserRegisterServiceModel;
+import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
@@ -176,6 +177,19 @@ class UsersControllerIT {
     mockMvc.perform(delete("/users/delete")
             .with(csrf()))
             .andExpect(status().isFound()); // 302
+  }
+
+  @Test
+  void showProfile_shouldReturnView() throws Exception {
+
+    when(userService.findUserViewModelById(1L))
+            .thenReturn(new UserViewModel());
+
+    mockMvc.perform(get("/users/profile")
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isOk())
+            .andExpect(view().name("profile"))
+            .andExpect(model().attributeExists("user"));
   }
 
   private Authentication createAuth(String username) {
