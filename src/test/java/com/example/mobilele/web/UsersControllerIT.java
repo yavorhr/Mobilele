@@ -208,10 +208,12 @@ class UsersControllerIT {
     mockMvc.perform(patch("/users/profile")
             .contentType("application/json")
             .content("""
-                {
-                  "firstName": "John"
-                }
-            """)
+                       {
+                       "firstName": "John",
+                       "lastName": "Doe",
+                       "phoneNumber": "+359888888888"
+                        }
+                    """)
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andExpect(status().isOk());
