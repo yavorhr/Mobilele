@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +37,9 @@ class UserServiceImplTest {
 
   @Mock
   private PasswordEncoder passwordEncoder;
+
+  @Mock
+  private MessageSource messageSource;
 
   @Mock
   private UserRepository userRepository;
@@ -137,6 +141,9 @@ class UserServiceImplTest {
     when(userRepository.findById(1L)).thenReturn(Optional.of(user));
     when(userRepository.findByPhoneNumberIgnoreCase("123"))
             .thenReturn(Optional.of(existing));
+
+    when(messageSource.getMessage(anyString(), any(), any()))
+            .thenReturn("Phone already exists");
 
     assertThrows(DuplicatePhoneException.class,
             () -> userService.updateUserProfile(1L, model));
