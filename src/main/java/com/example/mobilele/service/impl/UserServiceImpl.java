@@ -17,13 +17,14 @@ import com.example.mobilele.web.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Slf4j
@@ -36,8 +37,9 @@ public class UserServiceImpl implements UserService {
   private final MobileleUserServiceImpl mobileleUserService;
   private final ModelMapper modelMapper;
   private final SoldOfferRepository soldOfferRepository;
+  private final MessageSource messageSource;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, OfferRepository offerRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper, SoldOfferRepository soldOfferRepository) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, OfferRepository offerRepository, UserRoleService roleService, MobileleUserServiceImpl mobileleUserService, ModelMapper modelMapper, SoldOfferRepository soldOfferRepository, MessageSource messageSource) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.offerRepository = offerRepository;
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
     this.mobileleUserService = mobileleUserService;
     this.modelMapper = modelMapper;
     this.soldOfferRepository = soldOfferRepository;
+    this.messageSource = messageSource;
   }
 
   @Override
@@ -111,7 +114,14 @@ public class UserServiceImpl implements UserService {
 
     if (!Objects.equals(userEntity.getPhoneNumber(), newPhone)) {
       if (userRepository.findByPhoneNumberIgnoreCase(newPhone).isPresent()) {
-        throw new DuplicatePhoneException("Phone number already in use");
+
+        String message = messageSource.getMessage(
+                "validation.phone.unique",
+                null,
+                LocaleContextHolder.getLocale()
+        );
+
+        throw new DuplicatePhoneException(message);
       }
       userEntity.setPhoneNumber(newPhone);
     }
