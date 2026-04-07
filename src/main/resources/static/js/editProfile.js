@@ -109,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 const errors = await response.json();
-                console.log("ERRORS:", errors);
 
                 Object.keys(errors).forEach(field => {
                     const errorElement = document.getElementById(`${field}-error`);
