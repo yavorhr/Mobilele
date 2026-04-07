@@ -41,6 +41,11 @@
     display: none !important;
 }
 
+#save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .editable-input,
 .readonly-input {
     width: 100%;
