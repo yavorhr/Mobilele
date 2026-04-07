@@ -30,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -73,17 +74,23 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public OfferViewModel findOfferById(String name, Long id) {
-    OfferEntity offer =
-            this.offerRepository
-                    .findById(id)
-                    .orElseThrow(() -> new ObjectNotFoundException("Offer with ID: " + id + " does not exist!"));
+    OfferEntity offer = this.offerRepository
+            .findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException(
+                    "Offer with ID: " + id + " does not exist!"
+            ));
 
     OfferViewModel model = this.modelMapper.map(offer, OfferViewModel.class);
 
-    model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
-    model.setNotOwnerOrIsAdmin(userService.isNotOwnerOrIsAdmin(name, offer.getId()));
-    model.setReserved(offer.isReserved());
+    if (name != null && !name.isBlank()) {
+      model.setCanModify(userService.isOwnerOrIsAdmin(name, offer.getId()));
+      model.setNotOwnerOrIsAdmin(userService.isNotOwnerOrIsAdmin(name, offer.getId()));
+    } else {
+      model.setCanModify(false);
+      model.setNotOwnerOrIsAdmin(false);
+    }
 
+    model.setReserved(offer.isReserved());
     return model;
   }
 
@@ -324,7 +331,7 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public OfferUpdateBindingForm getUpdateForm(Long id) {
     return modelMapper.map(
-            offerRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Offer with id :" + id + "does not exist!")),
+            offerRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Offer with id :" + id + "does not exist!")),
             OfferUpdateBindingForm.class
     );
   }
