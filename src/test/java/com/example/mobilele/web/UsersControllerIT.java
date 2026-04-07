@@ -6,6 +6,7 @@ import com.example.mobilele.model.view.user.UserViewModel;
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.UserService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
+import com.example.mobilele.web.exception.DuplicatePhoneException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -237,6 +238,30 @@ class UsersControllerIT {
             .with(authentication(createAuth("user1"))))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.firstName").exists());
+  }
+
+  //=======================================
+  //  UPDATE PROFILE - DUPLICATE PHONE EXC
+  //=======================================
+
+  @Test
+  void updateProfile_shouldReturn409_whenPhoneExists() throws Exception {
+
+    when(userService.updateUserProfile(eq(1L), any()))
+            .thenThrow(new DuplicatePhoneException("Phone exists"));
+
+    mockMvc.perform(patch("/users/profile")
+            .contentType("application/json")
+            .content("""
+              {
+                "firstName": "John",
+                "lastName": "Doe",
+                "phoneNumber": "+359888888888"
+              }
+          """)
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isConflict());
   }
 
   //================================
