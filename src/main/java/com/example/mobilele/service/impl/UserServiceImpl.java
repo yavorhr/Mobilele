@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Slf4j
@@ -103,17 +104,20 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserViewModel updateUserProfile(Long userId, UserEditBindingModel bindingModel) {
+
     UserEntity userEntity = this.getUserByIdOrThrow(userId);
 
-    Optional<UserEntity> existing = userRepository.findByPhoneNumberIgnoreCase(bindingModel.getPhoneNumber());
+    String newPhone = bindingModel.getPhoneNumber();
 
-    if (existing.isPresent() && !existing.get().getId().equals(userId)) {
-      throw new DuplicatePhoneException("Phone number already in use");
+    if (!Objects.equals(userEntity.getPhoneNumber(), newPhone)) {
+      if (userRepository.findByPhoneNumberIgnoreCase(newPhone).isPresent()) {
+        throw new DuplicatePhoneException("Phone number already in use");
+      }
+      userEntity.setPhoneNumber(newPhone);
     }
 
     userEntity.setFirstName(bindingModel.getFirstName());
     userEntity.setLastName(bindingModel.getLastName());
-    userEntity.setPhoneNumber(bindingModel.getPhoneNumber());
 
     userRepository.save(userEntity);
 
@@ -182,6 +186,13 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id)
             .orElseThrow(() ->
                     new ObjectNotFoundException("User with id: " + id + " does not exist!"));
+  }
+
+  @Override
+  public UserEntity getUserByPhoneNumberOrThrow(String phoneNumber) {
+    return userRepository.findByPhoneNumberIgnoreCase(phoneNumber)
+            .orElseThrow(() ->
+                    new ObjectNotFoundException("User with phone number: " + phoneNumber + " does not exist!"));
   }
 
   // Init users

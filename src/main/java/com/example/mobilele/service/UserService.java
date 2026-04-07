@@ -43,4 +43,7 @@ public interface UserService {
 
   UserEntity getUserByIdOrThrow(Long id);
 
+  UserEntity getUserByPhoneNumberOrThrow(String phoneNumber);
+
+
 }

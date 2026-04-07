@@ -1,6 +1,5 @@
 package com.example.mobilele.model.binding.user;
 
-import com.example.mobilele.validator.UniquePhoneNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,11 +12,11 @@ public class UserEditBindingModel {
   public UserEditBindingModel() {
   }
 
-  @UniquePhoneNumber(message = "{validation.phone.unique}")
   @Pattern(
           regexp = "^\\+359\\d{9}$",
           message = "{validation.phone.invalid}"
   )
+  @NotBlank(message = "{validation.required}")
   public String getPhoneNumber() {
     return phoneNumber;
   }
