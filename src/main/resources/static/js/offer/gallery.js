@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
     // 3. Next / Prev
     nextBtn.addEventListener("click", () => {
         currentIndex = (currentIndex + 1) % thumbnails.length;
@@ -58,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // II. Delete current image
+    if (deleteBtn){
     deleteBtn.addEventListener("click", async () => {
 
         const publicId = mainImage.dataset.publicId;
@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Error deleting picture.");
         }
     });
+    }
 
     // Delete Button Visibility (removed for "Default" pictures)
     function updateDeleteButtonVisibility() {
