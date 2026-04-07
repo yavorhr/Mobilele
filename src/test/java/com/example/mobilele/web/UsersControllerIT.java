@@ -219,8 +219,28 @@ class UsersControllerIT {
             .andExpect(status().isOk());
   }
 
+  //=====================================
+  //  UPDATE PROFILE - INVALID FORM ARGS
+  //=====================================
+
+  @Test
+  void updateProfile_shouldReturn400_whenInvalidData() throws Exception {
+
+    mockMvc.perform(patch("/users/profile")
+            .contentType("application/json")
+            .content("""
+              {
+                "firstName": "a"
+              }
+          """)
+            .with(csrf())
+            .with(authentication(createAuth("user1"))))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.firstName").exists());
+  }
+
   //================================
-  //  UPDATE PROFILE - FAIL
+  //  UPDATE PROFILE - UNAUTHORIZED
   //================================
 
   @Test
