@@ -2,6 +2,7 @@ package com.example.mobilele.web.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +10,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.ModelAndView;
 
 import java.nio.file.AccessDeniedException;
+import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
@@ -39,14 +41,6 @@ public class GlobalExceptionsHandler {
       modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return modelAndView;
-  }
-
-  @ExceptionHandler(DuplicatePhoneException.class)
-  @ResponseBody
-  public ResponseEntity<Map<String, String>> handleDuplicatePhone(DuplicatePhoneException ex) {
-    return ResponseEntity
-            .status(HttpStatus.CONFLICT)
-            .body(Map.of("phoneNumber", ex.getMessage()));
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
