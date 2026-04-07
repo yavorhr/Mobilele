@@ -27,10 +27,13 @@ public class PicturesController {
     this.pictureService = pictureService;
   }
 
-  @PreAuthorize("@security.canModifyOffer(#principal.username, #bindingModel.offerId)")
+  @PreAuthorize("@security.canModifyOffer(#principal.username, #offerId)")
   @PostMapping("/pictures")
   public String addOfferPictures(PicturesAddBindingModel bindingModel,
+                                 @RequestParam("offerId") Long offerId,
                                  @AuthenticationPrincipal MobileleUser principal) throws IOException {
+
+    bindingModel.setOfferId(offerId);
 
     PicturesAddServiceModel serviceModel = this.modelMapper.map(bindingModel, PicturesAddServiceModel.class);
     serviceModel.setUserId(principal.getId());
@@ -43,7 +46,8 @@ public class PicturesController {
   @PreAuthorize("@security.canModifyOffer(#principal.username, #offerId)")
   @DeleteMapping("/pictures")
   @ResponseBody
-  public ResponseEntity<Void> deletePicture(@RequestParam("public_id") String publicId,
+  public ResponseEntity<Void> deletePicture(@RequestParam("publicId") String publicId,
+                                            @RequestParam("offerId") Long offerId,
                                             @AuthenticationPrincipal MobileleUser principal) {
 
     boolean cloudinaryDeleted = this.cloudinaryService.delete(publicId);

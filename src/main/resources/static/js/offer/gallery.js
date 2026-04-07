@@ -59,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // II. Delete current image
     deleteBtn.addEventListener("click", async () => {
+
         const publicId = mainImage.dataset.publicId;
         const offerId = deleteBtn.dataset.offerId;
 
         if (!publicId) return;
-        if (!confirm("Are you sure you want to delete this picture?")) return;
 
         // 🔒 lock UI
         deleteBtn.classList.add("disabled");
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const response = await fetch(
-                `/pictures?public_id=${encodeURIComponent(publicId)}&offer_id=${offerId}`,
+                `/pictures?publicId=${encodeURIComponent(publicId)}&offerId=${offerId}`,
                 {
                     method: "DELETE",
                     headers: {
