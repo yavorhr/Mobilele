@@ -43,9 +43,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     editableFields.forEach(field => {
-        document
-            .getElementById(`${field}-input`)
-            .addEventListener("input", updateSaveButtonState);
+        const input = document.getElementById(`${field}-input`);
+
+        input.addEventListener("input", () => {
+            const errorElement = document.getElementById(`${field}-error`);
+            if (errorElement) {
+                errorElement.textContent = "";
+                errorElement.classList.add("hidden");
+            }
+
+            updateSaveButtonState();
+        });
     });
 
     editBtn.addEventListener("click", () => toggleEditMode(true));
@@ -93,12 +101,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 toggleEditMode(false);
 
-            } else if (response.status === 409) {
-                const error = await response.json();
+            } else if (response.status === 400 || response.status === 409) {
 
-                errorBox.textContent = error.phoneNumber || "Phone already exists.";
-                errorBox.classList.remove("hidden");
+                document.querySelectorAll(".error-msg").forEach(e => {
+                    e.textContent = "";
+                    e.classList.add("hidden");
+                });
 
+                const errors = await response.json();
+                console.log("ERRORS:", errors);
+
+                Object.keys(errors).forEach(field => {
+                    const errorElement = document.getElementById(`${field}-error`);
+                    if (errorElement) {
+                        errorElement.textContent = errors[field];
+                        errorElement.classList.remove("hidden");
+                    }
+                });
             } else {
                 alert("Failed to update profile.");
             }

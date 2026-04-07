@@ -25,6 +25,7 @@
                 <strong th:text="#{profile.firstName}">First Name:</strong>
                 <span id="firstName-display" th:text="*{firstName}"></span>
                 <input id="firstName-input" type="text" th:value="*{firstName}" class="hidden editable-input">
+            <div id="firstName-error" class="error-msg hidden"></div>
             </p>
 
             <!-- Last Name -->
@@ -32,6 +33,7 @@
                 <strong th:text="#{profile.lastName}">Last Name:</strong>
                 <span id="lastName-display" th:text="*{lastName}"></span>
                 <input id="lastName-input" type="text" th:value="*{lastName}" class="hidden editable-input">
+            <div id="lastName-error" class="error-msg hidden"></div>
             </p>
 
             <!-- Email -->
