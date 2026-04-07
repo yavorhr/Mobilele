@@ -9,10 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const editableFields = ["firstName", "lastName", "phoneNumber"];
 
+    const originalData = {
+        firstName: document.getElementById("firstName-input").value,
+        lastName: document.getElementById("lastName-input").value,
+        phoneNumber: document.getElementById("phoneNumber-input").value
+    };
+
     function toggleEditMode(editing) {
         editableFields.forEach(field => {
             const span = document.getElementById(`${field}-display`);
             const input = document.getElementById(`${field}-input`);
+
             span.classList.toggle("hidden", editing);
             input.classList.toggle("hidden", !editing);
         });
@@ -20,10 +27,37 @@ document.addEventListener("DOMContentLoaded", () => {
         editBtn.classList.toggle("hidden", editing);
         saveBtn.classList.toggle("hidden", !editing);
         cancelBtn.classList.toggle("hidden", !editing);
+
+        updateSaveButtonState();
     }
 
+    function hasChanges() {
+        return editableFields.some(field => {
+            const currentValue = document.getElementById(`${field}-input`).value;
+            return currentValue !== originalData[field];
+        });
+    }
+
+    function updateSaveButtonState() {
+        saveBtn.disabled = !hasChanges();
+    }
+
+    editableFields.forEach(field => {
+        document
+            .getElementById(`${field}-input`)
+            .addEventListener("input", updateSaveButtonState);
+    });
+
     editBtn.addEventListener("click", () => toggleEditMode(true));
-    cancelBtn.addEventListener("click", () => toggleEditMode(false));
+
+    cancelBtn.addEventListener("click", () => {
+        editableFields.forEach(field => {
+            document.getElementById(`${field}-input`).value = originalData[field];
+        });
+
+        errorBox.classList.add("hidden");
+        toggleEditMode(false);
+    });
 
     saveBtn.addEventListener("click", async () => {
         const data = {
@@ -44,18 +78,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 errorBox.classList.add("hidden");
+
                 const updated = await response.json();
-                // Update the displayed values
+
                 for (let key in updated) {
                     const span = document.getElementById(`${key}-display`);
+                    const input = document.getElementById(`${key}-input`);
+
                     if (span) span.textContent = updated[key];
+                    if (input) input.value = updated[key];
                 }
+
+                Object.assign(originalData, data);
+
                 toggleEditMode(false);
+
             } else if (response.status === 409) {
-
                 const error = await response.json();
-                errorBox.textContent = error.phoneNumber;
 
+                errorBox.textContent = error.phoneNumber || "Phone already exists.";
                 errorBox.classList.remove("hidden");
 
             } else {
@@ -65,4 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error updating profile:", err);
         }
     });
+
+    updateSaveButtonState();
 });
