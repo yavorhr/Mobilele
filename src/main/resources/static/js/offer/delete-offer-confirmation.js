@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const deleteBtn = document.getElementById('delete-offer-btn');
+
+    if (!deleteBtn) return;
+
     const deleteForm = document.getElementById('delete-offer-form');
     const soldInput = document.getElementById('soldOffer');
 
@@ -9,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const noBtn = document.getElementById('confirm-no');
     const cancelBtn = document.getElementById('confirm-cancel');
 
-    deleteBtn.addEventListener('click', () => {
-        overlay.classList.remove('hidden');
-    });
+        deleteBtn.addEventListener('click', () => {
+            overlay.classList.remove('hidden');
+        })
 
     cancelBtn.addEventListener('click', () => {
         overlay.classList.add('hidden');

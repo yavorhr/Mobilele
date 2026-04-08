@@ -22,7 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             mainImage.src = "";
             mainImage.removeAttribute("data-public-id");
             mainImage.removeAttribute("data-deletable");
+            if (deleteBtn){
             deleteBtn.style.display = "none";
+            }
             return;
         }
 
@@ -110,6 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Delete Button Visibility (removed for "Default" pictures)
     function updateDeleteButtonVisibility() {
+        if (!deleteBtn) return;
+
         const canDelete = mainImage.dataset.deletable === "true";
         deleteBtn.style.display = canDelete ? "block" : "none";
     }

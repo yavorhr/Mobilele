@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const uploadSuccess = document.getElementById("uploadSuccess");
     const uploadFail = document.getElementById("uploadFail");
 
+    if (!fileInput || !form) return;
+
     const allowedTypes = [
         "image/jpeg",
         "image/png",
