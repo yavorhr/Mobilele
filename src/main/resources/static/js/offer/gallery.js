@@ -31,7 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const thumb = thumbnails[currentIndex];
 
         // Update main image
-        mainImage.src = thumb.src;
+        if (mainImage.src !== thumb.src) {
+            const img = new Image();
+            img.src = thumb.src;
+
+            img.onload = () => {
+                mainImage.src = thumb.src;
+            };
+        }
+
         mainImage.dataset.publicId = thumb.dataset.publicId;
         mainImage.dataset.deletable = thumb.dataset.deletable;
 
