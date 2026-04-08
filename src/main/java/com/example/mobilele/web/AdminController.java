@@ -50,9 +50,7 @@ public class AdminController {
 
     model.addAttribute("paginationBase", paginationBase);
     model.addAttribute(
-            "paginationBase",
-            "/admin/notifications?query=" + query + "&size=" + size
-    );
+            "paginationBase", paginationBase);
 
     model.addAttribute("size", size);
     model.addAttribute("usersPage", usersPage);
@@ -87,7 +85,7 @@ public class AdminController {
     return ResponseEntity.ok("User deleted successfully!");
   }
 
-  @PreAuthorize("@security.isNotModifyingOwnProfile(#username,#principal.username, )")
+  @PreAuthorize("@security.isNotModifyingOwnProfile(#username,#principal.username)")
   @PutMapping("/api/change-user-lock-status/{username}")
   @ResponseBody
   public ResponseEntity<UserUpdateStatusResponse> changeUserLockStatus(@PathVariable String username,
