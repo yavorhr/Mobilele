@@ -7,7 +7,7 @@
   />
 </p>
 
-<h1 align="center"> Mobilelel</h1>
+<h1 align="center">🚗 Mobilele</h1>
 
 <p align="center">
   <b>A modern web Full-stack application for creating, sharing, and exploring routes</b><br>
@@ -33,13 +33,17 @@
 
 ## 📖 About the Project
 
-Pathfinder is a full-stack MVC web application that enables users to create, share, and explore travel routes enriched with detailed metadata such as distance, difficulty, landmarks, and more.
+Mobilele is a full-stack car marketplace platform where users can browse, search, and manage vehicle listings with advanced filtering, personal profiles, and real-time statistics.
+
+The MVC web application focuses on providing a smooth user experience combined with powerful backend features like analytics, role-based access control, and seller performance tracking.
 
 The application is fully responsive and optimized for desktop, tablet, and mobile devices. It uses JavaScript (Fetch API) to handle dynamic interactions without page reloads, creating a smooth, SPA-like experience while preserving the Spring MVC architecture.
 
 > ⚙️ Tech Stack:
 
-- Backend: Java, Spring Boot (MVC), REST APIs
+- Backend: Java, Spring Boot (MVC), Spring Security (authentication & authorization), Hibernate / JPA, REST APIs
+
+- Database : MySQL (production), HSQLDB (testing)
 
 - Frontend: Thymeleaf, JavaScript, HTML5, CSS3, Bootstrap
 
@@ -49,32 +53,26 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
   - Cloudinary for media storage
 
-  - Leaflet.js for interactive map rendering
-
-  - Chart.js for data visualization
-
-  - Redis (Dockerized) for caching and performance optimization
-
 ---
 
 ## ✨ Features
 
 ### 👤 General Users
 - 🔑 **Authentication** with Spring Security (Login/Logout)
-- 🛤️ **Routes**
-  - Add new routes with **categories** (Pedestrian, Bicycle, Motorcycle, Car)  
+- 🚘 ** Listing Management**
+  - Add new offers with **categories** (Pedestrian, Bicycle, Motorcycle, Car)  
   - Attach **GPX coordinates** (render with **Leaflet.js** library)
   - **YouTube video embedded**
   - Upload an **image gallery** (via Cloudinary API)  
   - Delete route (author or admin only)  
   - Browse all routes or filter by category  
-  - Homepage highlights **Most Commented Route**  
-- 🌦️ **Weather API Integration**  
-  - Current weather in Sofia & Plovdiv (via **OpenWeather API**)  
+  - Homepage highlights **Most Commented Route**
+    
 - 👤 **Profile**  
   - Customize profile fields (age, name, social links)  
   - Change or reset profile picture (**Cloudinary API**)  
   - Leveling system based on created routes
+    
 - **⚡Dynamic interactions with JavaScript Fetch API**
   - Comment routes, update profile fields, and more — all without refreshing the page
 
