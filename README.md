@@ -56,26 +56,37 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 ---
 
 ## ✨ Features
+### 👤 Public / Guests
+- 🔍 Browse vehicle offers:
+  - All offers with sorting + pagination (`/offers/all`)
+  - Top 20 most viewed offers (`/offers/top-offers`)
+  - Offer details pages (`/offers/details/{id}`)
+- 🧭 Find offers by:
+  - Vehicle type + brand + model (`/offers/find/**`)
+  - Brand page (`/offers/brands/{brand}`)
+  - Quick search component (homepage fragment)
+- 🌍 Dynamic locations dropdown:
+  - Load cities by country via API (`/locations/cities`)
+- 🏠 Homepage:
+  - Latest offers + most viewed offers
+  - Community feedback preview + rating summary
+  - Brand cards and quick navigation
+  - Top sellers page (`/sellers/top`)
 
-### 👤 General Users
-- 🔑 **Authentication** with Spring Security (Login/Logout)
-- 🚘 ** Listing Management**
-  - Add new offers with **categories** (Pedestrian, Bicycle, Motorcycle, Car)  
-  - Attach **GPX coordinates** (render with **Leaflet.js** library)
-  - **YouTube video embedded**
-  - Upload an **image gallery** (via Cloudinary API)  
-  - Delete route (author or admin only)  
-  - Browse all routes or filter by category  
-  - Homepage highlights **Most Commented Route**
+### ✅ Authenticated Users
+- 🔑 Authentication (login/register/logout)
+- ➕ Create offers with image upload (Cloudinary)
+- ✏️ Update own offers
+- 🗑️ Delete own offers
+- 💖 Favorites:
+  - Add/remove favorite offers (AJAX)
+  - View favorites list (`/offers/favorites`)
+- 📌 Reservation:
+  - Toggle offer reservation (owner/admin-only) via API endpoint (AJAX)
+- 👤 Profile:
+  - View profile (`/users/profile`)
+  - Edit profile fields (AJAX `PATCH`)
     
-- 👤 **Profile**  
-  - Customize profile fields (age, name, social links)  
-  - Change or reset profile picture (**Cloudinary API**)  
-  - Leveling system based on created routes
-    
-- **⚡Dynamic interactions with JavaScript Fetch API**
-  - Comment routes, update profile fields, and more — all without refreshing the page
-
 ### 🛠️ Admin Panel
 - 👥 **User management** (`/admin/notifications`)
   - Search + pagination support
