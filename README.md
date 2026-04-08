@@ -77,14 +77,18 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   - Comment routes, update profile fields, and more — all without refreshing the page
 
 ### 🛠️ Admin Panel
-- 📊 **Most viewed pages statistics** with reset functionality  
-- 👥 **User Management**  
-  - Delete, disable/enable, lock/unlock accounts  
-  - Send emails to users  
-  - Update user roles  
+- 👥 **User management** (`/admin/notifications`)
   - Search + pagination support
-- **⚡AJAX-style controls for user management and admin actions**
-- Lock/unlock, change roles, remove accounts and send notifications dynamically
+  - Enable/disable user access (AJAX)
+  - Lock/unlock accounts (AJAX)
+  - Update roles (AJAX)
+  - Remove user (AJAX)
+- 📊 **Live endpoint statistics** (`/admin/statistics`)
+  - Save snapshot + reset counters
+- 🕓 **History of snapshots** (`/admin/history`, `/admin/history/{id}`)
+- 📈 **Seller performance by year** (`/admin/sellers-performance`)
+- 🚙 **Sold vehicles statistics by year** (`/admin/sold-cars-stats`)
+
   
 ### 🧪 Testing
 - **90%+ coverage** with **JUnit 5** and **Spring MockMVC**.  
