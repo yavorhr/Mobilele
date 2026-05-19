@@ -349,6 +349,7 @@
     min-width: 280px;
     max-width: 300px;
     flex-shrink: 0;
+    cursor: pointer;
     transition: transform 0.3s ease, background 0.3s ease;
 }
 
