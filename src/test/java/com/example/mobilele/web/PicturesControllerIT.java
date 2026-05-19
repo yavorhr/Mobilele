@@ -108,14 +108,14 @@ class PicturesControllerIT {
             .thenReturn(true);
 
     mockMvc.perform(delete("/pictures")
-            .param("publicId", "public-id")
+            .param("publicId", "publicId")
             .param("offerId", String.valueOf(offerId))
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andDo(print())
             .andExpect(status().isNoContent());
 
-    verify(pictureService).deleteByPublicId("public-id");
+    verify(pictureService).deleteByPublicId("publicId");
   }
 
   @Test
