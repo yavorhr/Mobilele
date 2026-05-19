@@ -195,7 +195,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   <tr>
     <td valign="top" width="50%">
       <a href="https://github.com/user-attachments/assets/fbf51917-faff-4dc0-9f3c-0702d5497e9f">
-		      <img src="https://github.com/user-attachments/assets/40e98e73-1855-4b21-8df8-98f3ebc37e8b" alt="Register - 2" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+		      <img src="https://github.com/user-attachments/assets/40e98e73-1855-4b21-8df8-98f3ebc37e8b" alt="Register - 2" style="height:auto; width:auto; margin-top:6px; border:1px solid #ccc;"/>
       </a>
     </td>
      <td valign="top" style="padding-left:20px;">
