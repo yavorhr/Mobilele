@@ -59,9 +59,6 @@ public class ApplicationSecurityConfiguration {
 
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-
-    // WARNING: This exposes whether a username exists and should not be used in production without caution.
-    // Used here for educational/demo purposes to show custom error handling.
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService);
     authProvider.setPasswordEncoder(passwordEncoder);
