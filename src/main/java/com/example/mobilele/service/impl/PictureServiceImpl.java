@@ -9,6 +9,7 @@ import com.example.mobilele.service.UserService;
 import com.example.mobilele.util.cloudinary.CloudinaryImage;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
 import com.example.mobilele.web.exception.ObjectNotFoundException;
+import com.example.mobilele.web.exception.PictureUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,8 @@ import java.util.List;
 
 @Service
 public class PictureServiceImpl implements PictureService {
+  private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
+
   private final PictureRepository pictureRepository;
   private final OfferService offerService;
   private final UserService userService;
@@ -45,10 +48,16 @@ public class PictureServiceImpl implements PictureService {
     List<Picture> uploadedPictures = new ArrayList<>();
 
     for (MultipartFile file : serviceModel.getPictures()) {
+      if (file.getSize() > MAX_FILE_SIZE) {
+        throw new PictureUploadException(
+                file.getOriginalFilename() +
+                        " exceeds the 5MB limit.");
+      }
+
       CloudinaryImage uploaded = cloudinaryService.upload(file, "api");
 
       if (uploaded == null || uploaded.getUrl() == null || uploaded.getUrl().isBlank()) {
-        throw new RuntimeException("Image upload failed! ");
+        throw new PictureUploadException("Image upload failed!");
       }
 
       Picture picture = mapToPicture(uploaded.getUrl(), uploaded.getPublicId(), convertTitle(file.getOriginalFilename()));
