@@ -48,5 +48,4 @@ public class ApplicationBeanConfig {
     messageSource.setDefaultEncoding("UTF-8");
     return messageSource;
   }
-
 }
