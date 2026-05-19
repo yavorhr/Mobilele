@@ -208,7 +208,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
           Includes <b>input validation</b>: minimal fields length, unique email/username, required selected options (e.g., gender, biirthday, categories).  
           <br/>
           <a href="https://github.com/user-attachments/assets/1b825eb5-7a97-4b80-bd99-7634b9f6c878">
-            <img src="https://github.com/user-attachments/assets/1b825eb5-7a97-4b80-bd99-7634b9f6c878" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+            <img src="https://github.com/user-attachments/assets/1b825eb5-7a97-4b80-bd99-7634b9f6c878" style="width:500px; height:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
         </li>
         <li>After successful registration, users are redirected to <b>Login</b>.</li>
