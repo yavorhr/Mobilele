@@ -10,8 +10,8 @@
 <h1 align="center">🚗 Mobilele</h1>
 
 <p align="center">
-  <b>A modern web Full-stack application for creating, sharing, and exploring routes</b><br>
-  Built with <code>Spring Boot</code>, <code>Thymeleaf, HTML&CSS</code>, and <code>MySQL</code>
+  <b>A modern full-stack Spring MVC application for browsing, listing, and managing vehicle offers</b><br>
+  Built with <code>Spring Boot</code>, <code>Spring Security</code>, <code>Thymeleaf</code>, <code>JavaScript (Fetch API)</code>, and <code>MySQL</code>
 </p>
 
 ---
@@ -41,50 +41,65 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 > ⚙️ Tech Stack:
 
-- Backend: Java, Spring Boot (MVC), Spring Security (authentication & authorization), Hibernate / JPA, REST APIs
+- Backend: Java 22, Spring Boot 3.3.x, Spring Security (authentication & authorization), Hibernate / JPA, REST APIs
 
-- Database : MySQL (production), HSQLDB (testing)
+- Database : MySQL (dev), HSQLDB (tests)
 
-- Frontend: Thymeleaf, JavaScript, HTML5, CSS3, Bootstrap
+- Frontend: Thymeleaf (templates + fragments), JavaScript, HTML5, CSS3, Bootstrap
 
 - Design: Responsive design, dynamic data updates, metadata-driven UI
 
-- Integrations:
+- Integrations: Cloudinary for media storage
 
-  - Cloudinary for media storage
+- Testing: JUnit 5 + Spring Boot Test + Spring Security Test
 
 ---
 
 ## ✨ Features
+### 👤 Public / Guests
+- 🔍 Browse vehicle offers:
+  - All offers with sorting + pagination (`/offers/all`)
+  - Top 20 most viewed offers (`/offers/top-offers`)
+  - Offer details pages (`/offers/details/{id}`)
+- 🧭 Find offers by:
+  - Vehicle type + brand + model (`/offers/find/**`)
+  - Brand page (`/offers/brands/{brand}`)
+  - Quick search component (homepage fragment)
+- 🌍 Dynamic locations dropdown:
+  - Load cities by country via API (`/locations/cities`)
+- 🏠 Homepage:
+  - Latest offers + most viewed offers
+  - Community feedback preview + rating summary
+  - Brand cards and quick navigation
+  - Top sellers page (`/sellers/top`)
 
-### 👤 General Users
-- 🔑 **Authentication** with Spring Security (Login/Logout)
-- 🚘 ** Listing Management**
-  - Add new offers with **categories** (Pedestrian, Bicycle, Motorcycle, Car)  
-  - Attach **GPX coordinates** (render with **Leaflet.js** library)
-  - **YouTube video embedded**
-  - Upload an **image gallery** (via Cloudinary API)  
-  - Delete route (author or admin only)  
-  - Browse all routes or filter by category  
-  - Homepage highlights **Most Commented Route**
+### ✅ Authenticated Users
+- 🔑 Authentication (login/register/logout)
+- ➕ Create offers with image upload (Cloudinary)
+- ✏️ Update own offers
+- 🗑️ Delete own offers
+- 💖 Favorites:
+  - Add/remove favorite offers (AJAX)
+  - View favorites list (`/offers/favorites`)
+- 📌 Reservation:
+  - Toggle offer reservation (owner/admin-only) via API endpoint (AJAX)
+- 👤 Profile:
+  - View profile (`/users/profile`)
+  - Edit profile fields (AJAX `PATCH`)
     
-- 👤 **Profile**  
-  - Customize profile fields (age, name, social links)  
-  - Change or reset profile picture (**Cloudinary API**)  
-  - Leveling system based on created routes
-    
-- **⚡Dynamic interactions with JavaScript Fetch API**
-  - Comment routes, update profile fields, and more — all without refreshing the page
-
 ### 🛠️ Admin Panel
-- 📊 **Most viewed pages statistics** with reset functionality  
-- 👥 **User Management**  
-  - Delete, disable/enable, lock/unlock accounts  
-  - Send emails to users  
-  - Update user roles  
+- 👥 **User management** (`/admin/notifications`)
   - Search + pagination support
-- **⚡AJAX-style controls for user management and admin actions**
-- Lock/unlock, change roles, remove accounts and send notifications dynamically
+  - Enable/disable user access (AJAX)
+  - Lock/unlock accounts (AJAX)
+  - Update roles (AJAX)
+  - Remove user (AJAX)
+- 📊 **Live endpoint statistics** (`/admin/statistics`)
+  - Save snapshot + reset counters
+- 🕓 **History of snapshots** (`/admin/history`, `/admin/history/{id}`)
+- 📈 **Seller performance by year** (`/admin/sellers-performance`)
+- 🚙 **Sold vehicles statistics by year** (`/admin/sold-cars-stats`)
+
   
 ### 🧪 Testing
 - **90%+ coverage** with **JUnit 5** and **Spring MockMVC**.  
@@ -451,23 +466,50 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ## 📡 API Endpoints
 
-### 🔑 Authentication
-| Method | Endpoint         | Description       | Access  |
-|--------|------------------|-------------------|---------|
-| GET    | `/users/login`   | Get login page    | Public  |
-| POST   | `/users/login`   | User login       | Public  |
-| POST   | `/users/register` | User registration | Public  |
-| POST   | `/users/logout` | User logout | User  |
+### 🔑 Authentication / Users
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/users/register` | Register page | Public |
+| POST | `/users/register` | Register user | Public |
+| GET | `/users/login` | Login page | Public |
+| GET | `/users/profile` | Profile page | User |
+| PATCH | `/users/profile` | Update profile (AJAX) | User |
+| DELETE | `/users/delete` | Delete own profile | User |
+| POST | `/users/logout` | Logout | User |
 
-### 🛤️ Routes
-| Method | Endpoint        | Description                        | Access      |
-|--------|-----------------|------------------------------------|-------------|
-| GET    | `/routes`       | Get all routes                     | User        |
-| GET    | `/routes/{category}`  | Get routes by category       | User        |
-| GET    | `/routes/details/{id}`  | Get route by ID            | User        |
-| GET    | `/routes/most-commented` | Get the routes with most comments | User |
-| POST   | `/routes`       | Create new route               | User        |
-| DELETE | `/routes`  | Delete a route (author/admin only) | User/Admin  |
+### 🚘 Offers (MVC)
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/offers/all` | All offers (sort/pagination) | Public |
+| GET | `/offers/top-offers` | Top 20 most viewed | Public |
+| GET | `/offers/details/{id}` | Offer details | Public |
+| GET | `/offers` | Add offer page | User |
+| POST | `/offers` | Create offer | User |
+| GET | `/offers/update/{id}` | Update offer page | Owner/Admin |
+| PATCH | `/offers/update/{id}` | Update offer | Owner/Admin |
+| DELETE | `/offers/{id}` | Delete offer (`soldOffer` optional) | Owner/Admin |
+
+### 🔎 Offer Search
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/offers/find` | Offers categories | Public |
+| GET | `/offers/find/{vehicleType}` | Find form | Public |
+| POST | `/offers/find/{vehicleType}` | Submit filters (PRG) | Public |
+| GET | `/offers/find/{vehicleType}/{brand}/{modelName}` | Results | Public |
+| POST | `/offers/quick-search` | Quick search (PRG) | Public |
+| GET | `/offers/brands/{brand}` | Offers by brand | Public |
+
+### 💖 Favorites
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/offers/favorites` | Favorite offers page | User |
+| POST | `/users/favorites/{offerId}/toggle` | Toggle favorite (AJAX) | User |
+
+### 🖼️ Pictures (Cloudinary API)
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| POST | `/pictures` | Add pictures to offer | Owner/Admin |
+| DELETE | `/pictures` | Delete picture by publicId | Owner/Admin |
 
 ### 👤 Profile
 | Method | Endpoint             | Description             | Access |
@@ -475,36 +517,37 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 | GET    | `/users/profile`| Get user profile        | User   |
 | PATCH    | `/users/profile/edit`  | Update profile details  | User   |
 
-### ⚙️ Admin
-| Method | Endpoint                  | Description             | Access |
-|--------|---------------------------|-------------------------|--------|
-| GET    | `/admin/notifications`     | Get users  table    | Admin  |
-| GET    | `/admin/statistics`     | Get most visited endpoints    | Admin  |
-| POST    | `/admin/statistics/reset`     | Reset most visited endpoints    | Admin  |
-| PUT   | `/admin/api/change-user-access/{email}`  | Enable/disable user | Admin  |
-| PUT   | `/admin/api/change-user-lock-status/{email}`| Lock/unlock user | Admin  |
-| PATCH   | `/admin/api/update-roles`| Change user roles  | Admin  |
-| DELETE   | `/admin/api/remove-user/{email}`| Remove user  | Admin  |
+### 🌍 Location / Models APIs
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/locations/cities?country=...` | Cities for a country | Public |
+| GET | `/models?brand=...&vehicleType=...` | Models by brand/type | Public |
+
+### 📌 Reservation (API)
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| PATCH | `/offers/{id}/toggle-reservation` | Toggle reservation | Owner/Admin |
+
+### 🛠️ Admin
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/admin/notifications` | User admin page | Admin |
+| PUT | `/admin/api/change-user-access/{username}` | Enable/disable user (AJAX) | Admin |
+| PUT | `/admin/api/change-user-lock-status/{username}` | Lock/unlock (AJAX) | Admin |
+| PATCH | `/admin/api/update-roles` | Update roles (AJAX) | Admin |
+| DELETE | `/admin/api/remove-user/{username}` | Delete user (AJAX) | Admin |
+| GET | `/admin/statistics` | Live stats | Admin |
+| POST | `/admin/statistics` | Save snapshot + reset | Admin |
+| GET | `/admin/history` | Stats snapshots history | Admin |
+| GET | `/admin/history/{id}` | Snapshot details | Admin |
+| GET | `/admin/sellers-performance` | Seller performance by year | Admin |
+| GET | `/admin/sold-cars-stats` | Sold cars by year | Admin |
 
 ### 🏠 Home page
 | Method | Endpoint                  | Description             | Access |
 |--------|---------------------------|-------------------------|--------|
 | GET    | `/`     | Get home page   | Public  |
 | GET    | `/about`     | Get about page   | Public  |
-
-### 🖼️ Cloudinary API
-| Method | Endpoint                  | Description             | Access |
-|--------|---------------------------|-------------------------|--------|
-| POST    | `/pictures/add`     | User add picture to route | User |
-| DELETE    | `/pictures/delete`     | User deletes picture from route | User |
-| POST    | `/api/profile/image-upload`     | User uploads new profile image | User |
-| DELETE    | `/api/profile/image-delete`     | User deletes old profile image  | User |
-
-### 💬 Comments
-| Method | Endpoint                  | Description             | Access |
-|--------|---------------------------|-------------------------|--------|
-| GET    | `/api/{routeId}/comments`     | Get all route comments   | User  |
-| POST    | `/api/{routeId}/add-comment`     | Add comment to route   | User  |
 
 ---
 
