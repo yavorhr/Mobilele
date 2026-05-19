@@ -104,12 +104,12 @@ class PicturesControllerIT {
     when(securityService.canModifyOffer(eq("user1"), any()))
             .thenReturn(true);
 
-    when(cloudinaryService.delete("public-id"))
+    when(cloudinaryService.delete("publicId"))
             .thenReturn(true);
 
     mockMvc.perform(delete("/pictures")
-            .param("public_id", "public-id")
-            .param("offer_id", String.valueOf(offerId))
+            .param("publicId", "public-id")
+            .param("offerId", String.valueOf(offerId))
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andDo(print())
@@ -146,8 +146,8 @@ class PicturesControllerIT {
             .thenReturn(false);
 
     mockMvc.perform(delete("/pictures")
-            .param("public_id", "public-id")
-            .param("offer_id", String.valueOf(offerId))
+            .param("publicId", "public-id")
+            .param("offerId", String.valueOf(offerId))
             .with(csrf())
             .with(authentication(createAuth("user1"))))
             .andDo(print())
