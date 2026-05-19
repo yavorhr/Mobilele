@@ -19,7 +19,7 @@
     padding-bottom: 0.5rem;
 }
 
-.profile-info p {
+.profile-info .field {
     padding: 0.5rem 0;
     margin: 0.3rem 0;
     font-size: 1.1rem;
