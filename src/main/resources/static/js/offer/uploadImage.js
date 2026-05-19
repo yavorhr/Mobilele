@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "image/webp"
     ];
 
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
     fileInput.addEventListener("change", () => {
         const files = fileInput.files;
         if (!files || files.length === 0) return;
@@ -21,8 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
         hideMessages();
 
         for (const file of files) {
+
+            // TYPE VALIDATION
             if (!allowedTypes.includes(file.type)) {
-                show(uploadFail);
+                show(uploadFail, "Invalid image format!");
+                fileInput.value = "";
+                return;
+            }
+
+            // SIZE VALIDATION
+            if (file.size > MAX_SIZE) {
+                show(uploadFail, `${file.name} exceeds 5MB limit!`);
                 fileInput.value = "";
                 return;
             }
@@ -35,9 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 400);
     });
 
-    function show(el) {
+    function show(el, message) {
+
+        if (message) {
+            el.textContent = message;
+        }
+
         el.classList.add("show");
-        setTimeout(() => el.classList.remove("show"), 2000);
+
+        setTimeout(() => {
+            el.classList.remove("show");
+        }, 2000);
     }
 
     function hideMessages() {

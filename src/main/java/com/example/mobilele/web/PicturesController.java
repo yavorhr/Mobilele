@@ -5,6 +5,7 @@ import com.example.mobilele.model.service.user.PicturesAddServiceModel;
 import com.example.mobilele.service.PictureService;
 import com.example.mobilele.service.impl.principal.MobileleUser;
 import com.example.mobilele.util.cloudinary.CloudinaryService;
+import com.example.mobilele.web.exception.PictureUploadException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
 @Controller
@@ -30,15 +32,23 @@ public class PicturesController {
   @PreAuthorize("@security.canModifyOffer(#principal.username, #offerId)")
   @PostMapping("/pictures")
   public String addOfferPictures(PicturesAddBindingModel bindingModel,
+                                 RedirectAttributes redirectAttributes,
                                  @RequestParam("offerId") Long offerId,
-                                 @AuthenticationPrincipal MobileleUser principal) throws IOException {
+                                 @AuthenticationPrincipal MobileleUser principal
+  ) throws IOException {
 
     bindingModel.setOfferId(offerId);
 
     PicturesAddServiceModel serviceModel = this.modelMapper.map(bindingModel, PicturesAddServiceModel.class);
     serviceModel.setUserId(principal.getId());
 
-    this.pictureService.addPicturesToOffer(serviceModel);
+    try {
+      this.pictureService.addPicturesToOffer(serviceModel);
+    } catch (PictureUploadException e) {
+      redirectAttributes.addFlashAttribute(
+              "uploadError",
+              e.getMessage());
+    }
 
     return "redirect:/offers/details/" + bindingModel.getOfferId();
   }
