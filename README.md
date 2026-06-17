@@ -490,6 +490,10 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </tr>
 </table>
 
+
+<img width="1892" height="901" alt="Profile - Ediit Validation" src="5" />
+
+
 ---
 
 ### User profile in "Edit mode"
@@ -497,8 +501,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/8f5d46d4-c5d2-461f-b1bb-911fb30a646">
-  <img src="https://github.com/user-attachments/assets/8f5d46d4-c5d2-461f-b1bb-911fb30a646" style="width:500px; height:auto;"/>
+<a href="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a">
+  <img src="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a" style="width:500px; height:auto;"/>
 </a></td>
     <td valign="top" style="padding-left:20px;">
       <p>User is able to edit dynamically own profile as follows:</p>
@@ -514,12 +518,16 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </li>
   <li>All interactions are <b>asynchronous</b> for better UX, with immediate feedback on changes.</li>
 	     <li><b>Input validation:</b> Input validation is applied on First name and Last name of the user. <b>Invalid inputs</b> are displayed directly on the form to guide the user.</li>
-     <a href="https://github.com/user-attachments/assets/da1d7b4b-c215-4e11-b802-070f9373fc39">
-        <br/>
-            <img src="https://github.com/user-attachments/assets/da1d7b4b-c215-4e11-b802-070f9373fc39" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+	    <br/>
+          <a href="https://github.com/user-attachments/assets/7e3c01c6-624f-41de-90fb-99efa19100a5">
+            <img src="https://github.com/user-attachments/assets/7e3c01c6-624f-41de-90fb-99efa19100a5" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          </a>
+	    <a href="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d">
+            <img src="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
 </ul>
     </td>
+
   </tr>
 </table>
 
