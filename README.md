@@ -164,23 +164,25 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
-<img src="images/home-1.jpg" width="100%">
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/9f7dff30-162f-46a9-9714-9f8d3c662b0e">
+  <img src="https://github.com/user-attachments/assets/9f7dff30-162f-46a9-9714-9f8d3c662b0e" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
+</a>
 </td>
-<td width="45%">
-
-### Hero Section & Quick Search
+<td valign="top" style="padding-left:20px;">
+## Hero Section & Quick Search
 
 - Welcome banner with call-to-action button.
 - Advanced vehicle search by:
+
   - Category
   - Brand
   - Model
   - Price
   - Manufacturing year
 - Direct navigation to all available offers.
-
 </td>
+
 </tr>
 </table>
 
@@ -193,7 +195,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </td>
 <td width="45%">
 
-### Recently Added Offers
+## Recently Added Offers
 
 - Displays the latest vehicle listings.
 - Shows vehicle specifications.
@@ -214,7 +216,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </td>
 <td width="45%">
 
-### Most Viewed Offers
+## Most Viewed Offers
 
 - Highlights the most popular listings.
 - Ranked based on user views.
@@ -233,7 +235,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </td>
 <td width="45%">
 
-### Browse by Brand
+## Browse by Brand
 
 - Browse vehicles by manufacturer.
 - Quick shortcuts to brand-specific listings.
@@ -273,7 +275,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </td>
 <td width="45%">
 
-### User Reviews
+## User Reviews
 
 - Community feedback section.
 - User ratings and testimonials.
