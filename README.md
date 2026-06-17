@@ -162,8 +162,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ### Home Page
 
-<h2>🏠 Home Page</h2>
-
 <table>
 <tr>
 <td width="55%">
