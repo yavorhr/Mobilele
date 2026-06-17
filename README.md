@@ -168,10 +168,9 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <tr>
     <td valign="top" width="50%">
 <a href="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a">
-  <img src="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a" alt="home 1 - browser offers + quick search" style="width:500px; height:100%;"/>
+  <img src="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
 </a>
 </td>
-
 <td valign="top" style="padding-left:20px;" width="50%">
 
 - Welcome banner with call-to-action button.
@@ -192,10 +191,14 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
-<img src="images/home-2.jpg" width="100%">
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab">
+  <img src="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab" alt="home 2 - recently added offers" style="width:500px; height:auto;"/>
+</a>
 </td>
-<td width="45%">
+
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
 
 - Displays the latest vehicle listings.
 - Shows vehicle specifications.
