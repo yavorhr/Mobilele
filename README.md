@@ -115,8 +115,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
     <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/9e06ce71-c6df-4609-9e71-3dd11491e5d1">
-  <img src="https://github.com/user-attachments/assets/9e06ce71-c6df-4609-9e71-3dd11491e5d1" style="width:500px; height:300px;"/>
+<a href="https://github.com/user-attachments/assets/5cc48a18-4189-4611-a5b2-56ce6ee8ce1c">
+  <img src="https://github.com/user-attachments/assets/5cc48a18-4189-4611-a5b2-56ce6ee8ce1c" alt="Admin - User Notification" style="width:500px; height:300px;"/>
 </a>
     </td>
     <td valign="top" style="padding-left:20px;">
@@ -160,31 +160,131 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
-### Home Page
+## Home Page
+
+### Hero Section & Quick Search
 
 <table>
-  <tr>
+<tr width="100%">
     <td valign="top" width="50%">
-      <!-- Images column -->
-      <a href="https://github.com/user-attachments/assets/4d39db9a-5cc5-479e-87b6-da2bab844ef5">
-        <img src="https://github.com/user-attachments/assets/4d39db9a-5cc5-479e-87b6-da2bab844ef5" style="width:500px; height:auto;"/>
-      </a>
-      <br/>
-      <a href="https://github.com/user-attachments/assets/53e604da-3557-4e7a-942c-1a7219ba9da1">
-        <img src="https://github.com/user-attachments/assets/53e604da-3557-4e7a-942c-1a7219ba9da1" style="width:500px; height:auto;"/>
-      </a>
-    </td>
-    <td valign="top" style="padding-left:20px;">
-      <p>The homepage is the start point of the application. It includes the following features:</p>
-        <ul>
-          <li>Quick link to all users routes</li>
-          <li>Link tabs to routes, sorted by category (car, pedestrian, etc.)</li>
-          <li>Live weather forecast</li>
-          <li>Link to the most commented route</li>
-          <li>Gallery with all recent route images</li>
-        </ul>
-    </td>
-  </tr>
+<a href="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a">
+  <img src="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
+</a>
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+
+- Welcome banner with call-to-action button.
+- Advanced vehicle search by:
+
+  - Category
+  - Brand
+  - Model
+  - Price
+  - Manufacturing year
+- Direct navigation to all available offers.
+</td>
+
+</tr>
+</table>
+
+### Recently Added Offers
+
+<table>
+<tr>
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab">
+  <img src="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab" alt="home 2 - recently added offers" style="width:500px; height:auto;"/>
+</a>
+</td>
+
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+
+- Displays the latest vehicle listings.
+- Shows vehicle specifications.
+- Includes pricing information.
+- Tracks listing views.
+- Quick access to the full offers catalog.
+
+</td>
+</tr>
+</table>
+
+### Most Viewed Offers
+
+<table>
+<tr>
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/d73b9ea3-873c-4305-b03a-497d4725710b">
+  <img src="https://github.com/user-attachments/assets/d73b9ea3-873c-4305-b03a-497d4725710b" alt="home 3 - most viewed offers" style="width:500px; height:auto;"/>
+</a>
+</td>
+
+<td valign="top" style="padding-left:20px;" width="50%">
+
+- Highlights the most popular listings.
+- Ranked based on user views.
+- Provides quick access to trending vehicles.
+
+</td>
+</tr>
+</table>
+
+### Browse by Brand
+
+<table>
+<tr>
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/e1862856-4320-4c49-a1b6-93a8a8169a99">
+  <img src="https://github.com/user-attachments/assets/e1862856-4320-4c49-a1b6-93a8a8169a99" alt="home 4 - browse by brand" style="width:500px; height:auto;"/>
+</a>
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+- Browse vehicles by manufacturer.
+- Quick shortcuts to brand-specific listings.
+- Supports all major car brands available in the platform.
+</td>
+</tr>
+</table>
+
+### Why Choose MobileLeLe
+
+<table>
+<tr>
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/4973b473-94ce-4781-87cf-7e21632d9143">
+  <img src="https://github.com/user-attachments/assets/4973b473-94ce-4781-87cf-7e21632d9143" alt="home 5 - why choose Mobilelele" style="width:500px; height:auto;"/>
+</a>
+</td>
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+- Community rating system.
+- Verified seller program.
+- Marketplace statistics.
+- Transparent pricing.
+- Fast and easy vehicle discovery.
+</td>
+</tr>
+</table>
+
+## User Reviews
+
+<table>
+<tr>
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/582889d3-f579-498e-994a-6c5dccd69059">
+  <img src="https://github.com/user-attachments/assets/582889d3-f579-498e-994a-6c5dccd69059" alt="home 6 - feedback from users" style="width:500px; height:auto;"/>
+</a>
+</td>
+
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+- Community feedback section.
+- User ratings and testimonials.
+- Displays overall platform satisfaction.
+- Builds trust through real customer experiences.
+</td>
+</tr>
 </table>
 
 ---
@@ -194,8 +294,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
     <td valign="top" width="50%">
-      <a href="https://github.com/user-attachments/assets/fbf51917-faff-4dc0-9f3c-0702d5497e9f">
-        <img src="https://github.com/user-attachments/assets/fbf51917-faff-4dc0-9f3c-0702d5497e9f" style="width:500px; height:auto;"/>
+      <a href="https://github.com/user-attachments/assets/ecff7372-0e76-4578-bc1c-eff908426c80"">
+	 <img src="https://github.com/user-attachments/assets/ecff7372-0e76-4578-bc1c-eff908426c80" alt="Register - 2" style="height:400px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
       </a>
     </td>
      <td valign="top" style="padding-left:20px;">
@@ -207,8 +307,11 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
         <li>
           Includes <b>input validation</b>: minimal fields length, unique email/username, required selected options (e.g., gender, biirthday, categories).  
           <br/>
-          <a href="https://github.com/user-attachments/assets/1b825eb5-7a97-4b80-bd99-7634b9f6c878">
-            <img src="https://github.com/user-attachments/assets/1b825eb5-7a97-4b80-bd99-7634b9f6c878" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          <a href="https://github.com/user-attachments/assets/ad9a1015-a389-4750-901e-e091b0339a4c">
+            <img src="https://github.com/user-attachments/assets/ad9a1015-a389-4750-901e-e091b0339a4c" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          </a>
+        <a href="https://github.com/user-attachments/assets/afb03221-b32b-4134-8d18-7cb84026bf09">
+            <img src="https://github.com/user-attachments/assets/afb03221-b32b-4134-8d18-7cb84026bf09" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
         </li>
         <li>After successful registration, users are redirected to <b>Login</b>.</li>
@@ -220,13 +323,14 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
+
 ### Login
 
 <table>
   <tr>
      <td valign="top" width="50%">
-       <a href="https://github.com/user-attachments/assets/1fec1b02-436f-41f8-bf1a-f0ebd5e4ddd7">
-        <img src="https://github.com/user-attachments/assets/1fec1b02-436f-41f8-bf1a-f0ebd5e4ddd7" style="width:500px; height:auto;"/>
+       <a href="https://github.com/user-attachments/assets/86e65132-cb93-4d2e-9fd1-769af595f6c4">
+        <img src="https://github.com/user-attachments/assets/86e65132-cb93-4d2e-9fd1-769af595f6c4" style="width:500px; height:auto;"/>
       </a>
     </td>
      <td valign="top" style="padding-left:20px;">
@@ -238,17 +342,11 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
         <li>If account is locked 3 times → becomes <b>disabled</b> (admin-only reactivation).</li>
         <li>The backend returns specific error messages to the client (e.g. account locked, account expired, user disabled, or user not found). This is implemented only for development and testing use and it is not advised for production where it exposes sensitive authentication information.</li>
        <br/>
-          <a href="https://github.com/user-attachments/assets/b2f2c2d5-fedc-4fa2-a172-b5fa986771aa">
-            <img src="https://github.com/user-attachments/assets/b2f2c2d5-fedc-4fa2-a172-b5fa986771aa" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          <a href="https://github.com/user-attachments/assets/e615f3ac-bc67-498b-954a-50a3626aa697">
+            <img src="https://github.com/user-attachments/assets/e615f3ac-bc67-498b-954a-50a3626aa697" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
-        <a href="https://github.com/user-attachments/assets/a1864c2c-60dc-4c43-b3b6-f48f317ce5c5">
-            <img src="https://github.com/user-attachments/assets/a1864c2c-60dc-4c43-b3b6-f48f317ce5c5" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
-          </a>
-		   <a href="https://github.com/user-attachments/assets/0ca8093b-b2d1-476a-9071-7d8990c0a506">
-            <img src="https://github.com/user-attachments/assets/0ca8093b-b2d1-476a-9071-7d8990c0a506" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
-          </a>
-		   <a href="https://github.com/user-attachments/assets/da152506-37e2-400e-b961-92b5a9226858">
-            <img src="https://github.com/user-attachments/assets/da152506-37e2-400e-b961-92b5a9226858" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+        <a href="https://github.com/user-attachments/assets/5077f2cd-4e0f-413e-9eee-51b01509456f">
+            <img src="https://github.com/user-attachments/assets/5077f2cd-4e0f-413e-9eee-51b01509456f" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
       </ul>
     </td>
@@ -313,8 +411,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
-
-
 ### Create route
 
 <table>
@@ -376,8 +472,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/ac9a7eec-7d15-4b6b-8930-1199ae093f9e">
-  <img src="https://github.com/user-attachments/assets/ac9a7eec-7d15-4b6b-8930-1199ae093f9e" style="width:500px; height:auto;"/>
+<a href="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19">
+  <img src="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19" style="width:500px; height:auto;"/>
 </a>
     </td>
     <td valign="top" style="padding-left:20px;">
@@ -394,6 +490,10 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </tr>
 </table>
 
+
+<img width="1892" height="901" alt="Profile - Ediit Validation" src="5" />
+
+
 ---
 
 ### User profile in "Edit mode"
@@ -401,8 +501,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/767f09d6-96f0-405a-b8cf-0e15b4cf02b8">
-  <img src="https://github.com/user-attachments/assets/767f09d6-96f0-405a-b8cf-0e15b4cf02b8" style="width:500px; height:auto;"/>
+<a href="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a">
+  <img src="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a" style="width:500px; height:auto;"/>
 </a></td>
     <td valign="top" style="padding-left:20px;">
       <p>User is able to edit dynamically own profile as follows:</p>
@@ -418,14 +518,21 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </li>
   <li>All interactions are <b>asynchronous</b> for better UX, with immediate feedback on changes.</li>
 	     <li><b>Input validation:</b> Input validation is applied on First name and Last name of the user. <b>Invalid inputs</b> are displayed directly on the form to guide the user.</li>
-     <a href="https://github.com/user-attachments/assets/da1d7b4b-c215-4e11-b802-070f9373fc39">
-        <br/>
-            <img src="https://github.com/user-attachments/assets/da1d7b4b-c215-4e11-b802-070f9373fc39" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+	    <br/>
+          <a href="https://github.com/user-attachments/assets/d989f1c8-ecc3-4932-862a-4c58ba069aaa">
+            <img src="https://github.com/user-attachments/assets/d989f1c8-ecc3-4932-862a-4c58ba069aaa" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          </a>
+	    <br/>
+	    <a href="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d">
+            <img src="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
 </ul>
     </td>
   </tr>
 </table>
+
+<img width="716" height="654" alt="Profile - Ediit Validation" src="" />
+
 
 ### About page
 
