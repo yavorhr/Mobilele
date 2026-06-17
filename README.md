@@ -519,8 +519,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   <li>All interactions are <b>asynchronous</b> for better UX, with immediate feedback on changes.</li>
 	     <li><b>Input validation:</b> Input validation is applied on First name and Last name of the user. <b>Invalid inputs</b> are displayed directly on the form to guide the user.</li>
 	    <br/>
-          <a href="https://github.com/user-attachments/assets/d989f1c8-ecc3-4932-862a-4c58ba069aaa">
-            <img src="https://github.com/user-attachments/assets/d989f1c8-ecc3-4932-862a-4c58ba069aaa" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          <a href="https://github.com/user-attachments/assets/46d220b7-e411-4c6b-98f6-53c9b9ecc19e">
+            <img src="https://github.com/user-attachments/assets/46d220b7-e411-4c6b-98f6-53c9b9ecc19e" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
 	    <br/>
 	    <a href="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d">
@@ -530,9 +530,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
     </td>
   </tr>
 </table>
-
-<img width="716" height="654" alt="Profile - Ediit Validation" src="" />
-
 
 ### About page
 
