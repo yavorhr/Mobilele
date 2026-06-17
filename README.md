@@ -323,13 +323,14 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
+
 ### Login
 
 <table>
   <tr>
      <td valign="top" width="50%">
-       <a href="https://github.com/user-attachments/assets/1fec1b02-436f-41f8-bf1a-f0ebd5e4ddd7">
-        <img src="https://github.com/user-attachments/assets/1fec1b02-436f-41f8-bf1a-f0ebd5e4ddd7" style="width:500px; height:auto;"/>
+       <a href="https://github.com/user-attachments/assets/86e65132-cb93-4d2e-9fd1-769af595f6c4">
+        <img src="https://github.com/user-attachments/assets/86e65132-cb93-4d2e-9fd1-769af595f6c4" style="width:500px; height:auto;"/>
       </a>
     </td>
      <td valign="top" style="padding-left:20px;">
@@ -341,17 +342,11 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
         <li>If account is locked 3 times → becomes <b>disabled</b> (admin-only reactivation).</li>
         <li>The backend returns specific error messages to the client (e.g. account locked, account expired, user disabled, or user not found). This is implemented only for development and testing use and it is not advised for production where it exposes sensitive authentication information.</li>
        <br/>
-          <a href="https://github.com/user-attachments/assets/b2f2c2d5-fedc-4fa2-a172-b5fa986771aa">
-            <img src="https://github.com/user-attachments/assets/b2f2c2d5-fedc-4fa2-a172-b5fa986771aa" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+          <a href="https://github.com/user-attachments/assets/e615f3ac-bc67-498b-954a-50a3626aa697">
+            <img src="https://github.com/user-attachments/assets/e615f3ac-bc67-498b-954a-50a3626aa697" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
-        <a href="https://github.com/user-attachments/assets/a1864c2c-60dc-4c43-b3b6-f48f317ce5c5">
-            <img src="https://github.com/user-attachments/assets/a1864c2c-60dc-4c43-b3b6-f48f317ce5c5" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
-          </a>
-		   <a href="https://github.com/user-attachments/assets/0ca8093b-b2d1-476a-9071-7d8990c0a506">
-            <img src="https://github.com/user-attachments/assets/0ca8093b-b2d1-476a-9071-7d8990c0a506" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
-          </a>
-		   <a href="https://github.com/user-attachments/assets/da152506-37e2-400e-b961-92b5a9226858">
-            <img src="https://github.com/user-attachments/assets/da152506-37e2-400e-b961-92b5a9226858" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+        <a href="https://github.com/user-attachments/assets/5077f2cd-4e0f-413e-9eee-51b01509456f">
+            <img src="https://github.com/user-attachments/assets/5077f2cd-4e0f-413e-9eee-51b01509456f" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
       </ul>
     </td>
