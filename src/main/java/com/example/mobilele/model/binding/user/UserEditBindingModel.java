@@ -13,7 +13,7 @@ public class UserEditBindingModel {
   }
 
   @Pattern(
-          regexp = "^\\+359\\d{8}$",
+          regexp = "^\\+359\\d{9}$",
           message = "{validation.phone.invalid}"
   )
   @NotBlank(message = "{validation.required}")
