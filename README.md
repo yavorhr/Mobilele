@@ -472,8 +472,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/ac9a7eec-7d15-4b6b-8930-1199ae093f9e">
-  <img src="https://github.com/user-attachments/assets/ac9a7eec-7d15-4b6b-8930-1199ae093f9e" style="width:500px; height:auto;"/>
+<a href="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19">
+  <img src="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19" style="width:500px; height:auto;"/>
 </a>
     </td>
     <td valign="top" style="padding-left:20px;">
@@ -497,8 +497,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/767f09d6-96f0-405a-b8cf-0e15b4cf02b8">
-  <img src="https://github.com/user-attachments/assets/767f09d6-96f0-405a-b8cf-0e15b4cf02b8" style="width:500px; height:auto;"/>
+<a href="https://github.com/user-attachments/assets/8f5d46d4-c5d2-461f-b1bb-911fb30a646">
+  <img src="https://github.com/user-attachments/assets/8f5d46d4-c5d2-461f-b1bb-911fb30a646" style="width:500px; height:auto;"/>
 </a></td>
     <td valign="top" style="padding-left:20px;">
       <p>User is able to edit dynamically own profile as follows:</p>
