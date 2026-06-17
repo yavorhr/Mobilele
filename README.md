@@ -188,7 +188,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-<hr>
+## Recently Added Offers
 
 <table>
 <tr>
@@ -196,8 +196,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <img src="images/home-2.jpg" width="100%">
 </td>
 <td width="45%">
-
-## Recently Added Offers
 
 - Displays the latest vehicle listings.
 - Shows vehicle specifications.
@@ -209,7 +207,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-<hr>
+## Most Viewed Offers
 
 <table>
 <tr>
@@ -217,8 +215,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <img src="images/home-3.jpg" width="100%">
 </td>
 <td width="45%">
-
-## Most Viewed Offers
 
 - Highlights the most popular listings.
 - Ranked based on user views.
@@ -228,7 +224,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-<hr>
+## Browse by Brand
 
 <table>
 <tr>
@@ -236,8 +232,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <img src="images/home-4.jpg" width="100%">
 </td>
 <td width="45%">
-
-## Browse by Brand
 
 - Browse vehicles by manufacturer.
 - Quick shortcuts to brand-specific listings.
@@ -247,7 +241,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-<hr>
+### Why Choose MobileLeLe
 
 <table>
 <tr>
@@ -255,8 +249,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <img src="images/home-5.jpg" width="100%">
 </td>
 <td width="45%">
-
-### Why Choose MobileLeLe
 
 - Community rating system.
 - Verified seller program.
@@ -268,7 +260,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-<hr>
+## User Reviews
 
 <table>
 <tr>
@@ -276,8 +268,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 <img src="images/home-6.jpg" width="100%">
 </td>
 <td width="45%">
-
-## User Reviews
 
 - Community feedback section.
 - User ratings and testimonials.
