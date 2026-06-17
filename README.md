@@ -165,7 +165,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 ### Hero Section & Quick Search
 
 <table>
-<tr>
+<tr width="100%">
     <td valign="top" width="50%">
 <a href="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a">
   <img src="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
