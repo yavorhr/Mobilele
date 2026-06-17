@@ -214,10 +214,13 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
-<img src="images/home-3.jpg" width="100%">
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/d73b9ea3-873c-4305-b03a-497d4725710b">
+  <img src="https://github.com/user-attachments/assets/d73b9ea3-873c-4305-b03a-497d4725710b" alt="home 3 - most viewed offers" style="width:500px; height:auto;"/>
+</a>
 </td>
-<td width="45%">
+
+<td valign="top" style="padding-left:20px;" width="50%">
 
 - Highlights the most popular listings.
 - Ranked based on user views.
@@ -231,15 +234,15 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
-<img src="images/home-4.jpg" width="100%">
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/e1862856-4320-4c49-a1b6-93a8a8169a99">
+  <img src="https://github.com/user-attachments/assets/e1862856-4320-4c49-a1b6-93a8a8169a99" alt="home 4 - browse by brand" style="width:500px; height:auto;"/>
+</a>
 </td>
-<td width="45%">
-
+<td valign="top" style="padding-left:20px;" width="50%">
 - Browse vehicles by manufacturer.
 - Quick shortcuts to brand-specific listings.
 - Supports all major car brands available in the platform.
-
 </td>
 </tr>
 </table>
@@ -248,17 +251,19 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/4973b473-94ce-4781-87cf-7e21632d9143">
+  <img src="https://github.com/user-attachments/assets/4973b473-94ce-4781-87cf-7e21632d9143" alt="home 5 - why choose Mobilelele" style="width:500px; height:auto;"/>
+</a>
+</td>
 <img src="images/home-5.jpg" width="100%">
 </td>
-<td width="45%">
-
+<td valign="top" style="padding-left:20px;" width="50%">
 - Community rating system.
 - Verified seller program.
 - Marketplace statistics.
 - Transparent pricing.
 - Fast and easy vehicle discovery.
-
 </td>
 </tr>
 </table>
@@ -267,16 +272,18 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 <table>
 <tr>
-<td width="55%">
+  <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/582889d3-f579-498e-994a-6c5dccd69059">
+  <img src="https://github.com/user-attachments/assets/582889d3-f579-498e-994a-6c5dccd69059" alt="home 6 - feedback from users" style="width:500px; height:auto;"/>
+</a>
+</td>
 <img src="images/home-6.jpg" width="100%">
 </td>
-<td width="45%">
-
+<td valign="top" style="padding-left:20px;" width="50%">
 - Community feedback section.
 - User ratings and testimonials.
 - Displays overall platform satisfaction.
 - Builds trust through real customer experiences.
-
 </td>
 </tr>
 </table>
