@@ -256,7 +256,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   <img src="https://github.com/user-attachments/assets/4973b473-94ce-4781-87cf-7e21632d9143" alt="home 5 - why choose Mobilelele" style="width:500px; height:auto;"/>
 </a>
 </td>
-<img src="images/home-5.jpg" width="100%">
 </td>
 <td valign="top" style="padding-left:20px;" width="50%">
 - Community rating system.
@@ -277,7 +276,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   <img src="https://github.com/user-attachments/assets/582889d3-f579-498e-994a-6c5dccd69059" alt="home 6 - feedback from users" style="width:500px; height:auto;"/>
 </a>
 </td>
-<img src="images/home-6.jpg" width="100%">
+
 </td>
 <td valign="top" style="padding-left:20px;" width="50%">
 - Community feedback section.
