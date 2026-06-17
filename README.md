@@ -162,29 +162,128 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ### Home Page
 
+<h2>🏠 Home Page</h2>
+
 <table>
-  <tr>
-    <td valign="top" width="50%">
-      <!-- Images column -->
-      <a href="https://github.com/user-attachments/assets/4d39db9a-5cc5-479e-87b6-da2bab844ef5">
-        <img src="https://github.com/user-attachments/assets/4d39db9a-5cc5-479e-87b6-da2bab844ef5" style="width:500px; height:auto;"/>
-      </a>
-      <br/>
-      <a href="https://github.com/user-attachments/assets/53e604da-3557-4e7a-942c-1a7219ba9da1">
-        <img src="https://github.com/user-attachments/assets/53e604da-3557-4e7a-942c-1a7219ba9da1" style="width:500px; height:auto;"/>
-      </a>
-    </td>
-    <td valign="top" style="padding-left:20px;">
-      <p>The homepage is the start point of the application. It includes the following features:</p>
-        <ul>
-          <li>Quick link to all users routes</li>
-          <li>Link tabs to routes, sorted by category (car, pedestrian, etc.)</li>
-          <li>Live weather forecast</li>
-          <li>Link to the most commented route</li>
-          <li>Gallery with all recent route images</li>
-        </ul>
-    </td>
-  </tr>
+<tr>
+<td width="55%">
+<img src="images/home-1.jpg" width="100%">
+</td>
+<td width="45%">
+
+### Hero Section & Quick Search
+
+- Welcome banner with call-to-action button.
+- Advanced vehicle search by:
+  - Category
+  - Brand
+  - Model
+  - Price
+  - Manufacturing year
+- Direct navigation to all available offers.
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table>
+<tr>
+<td width="55%">
+<img src="images/home-2.jpg" width="100%">
+</td>
+<td width="45%">
+
+### Recently Added Offers
+
+- Displays the latest vehicle listings.
+- Shows vehicle specifications.
+- Includes pricing information.
+- Tracks listing views.
+- Quick access to the full offers catalog.
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table>
+<tr>
+<td width="55%">
+<img src="images/home-3.jpg" width="100%">
+</td>
+<td width="45%">
+
+### Most Viewed Offers
+
+- Highlights the most popular listings.
+- Ranked based on user views.
+- Provides quick access to trending vehicles.
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table>
+<tr>
+<td width="55%">
+<img src="images/home-4.jpg" width="100%">
+</td>
+<td width="45%">
+
+### Browse by Brand
+
+- Browse vehicles by manufacturer.
+- Quick shortcuts to brand-specific listings.
+- Supports all major car brands available in the platform.
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table>
+<tr>
+<td width="55%">
+<img src="images/home-5.jpg" width="100%">
+</td>
+<td width="45%">
+
+### Why Choose MobileLeLe
+
+- Community rating system.
+- Verified seller program.
+- Marketplace statistics.
+- Transparent pricing.
+- Fast and easy vehicle discovery.
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table>
+<tr>
+<td width="55%">
+<img src="images/home-6.jpg" width="100%">
+</td>
+<td width="45%">
+
+### User Reviews
+
+- Community feedback section.
+- User ratings and testimonials.
+- Displays overall platform satisfaction.
+- Builds trust through real customer experiences.
+
+</td>
+</tr>
 </table>
 
 ---
