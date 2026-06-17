@@ -162,6 +162,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ### Home Page
 
+## Hero Section & Quick Search
+
 <table>
 <tr>
     <td valign="top" width="50%">
@@ -169,8 +171,8 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   <img src="https://github.com/user-attachments/assets/9f7dff30-162f-46a9-9714-9f8d3c662b0e" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
 </a>
 </td>
-<td valign="top" style="padding-left:20px;">
-## Hero Section & Quick Search
+<td valign="top" style="padding-left:20px;" width="50%">
+
 
 - Welcome banner with call-to-action button.
 - Advanced vehicle search by:
