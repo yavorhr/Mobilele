@@ -160,9 +160,9 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
-### Home Page
+## Home Page
 
-## Hero Section & Quick Search
+### Hero Section & Quick Search
 
 <table>
 <tr>
@@ -188,7 +188,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-## Recently Added Offers
+### Recently Added Offers
 
 <table>
 <tr>
@@ -207,7 +207,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-## Most Viewed Offers
+### Most Viewed Offers
 
 <table>
 <tr>
@@ -224,7 +224,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 </tr>
 </table>
 
-## Browse by Brand
+### Browse by Brand
 
 <table>
 <tr>
