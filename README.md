@@ -523,30 +523,9 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
             <img src="https://github.com/user-attachments/assets/46d220b7-e411-4c6b-98f6-53c9b9ecc19e" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
 	    <br/>
-	    <a href="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d">
-            <img src="https://github.com/user-attachments/assets/a7346b87-7cf7-4b25-91f1-05e5acee5e6d" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
+	    <a href="https://github.com/user-attachments/assets/64a34949-6d87-4ff6-b665-e6d5240b76d9">
+            <img src="https://github.com/user-attachments/assets/64a34949-6d87-4ff6-b665-e6d5240b76d9" style="height:120px; width:auto; margin-top:6px; border:1px solid #ccc;"/>
           </a>
-</ul>
-    </td>
-  </tr>
-</table>
-
-### About page
-
-<table>
-  <tr>
-   <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/c3903367-3c7f-4624-ba8f-984cb9b1608e">
-  <img src="https://github.com/user-attachments/assets/c3903367-3c7f-4624-ba8f-984cb9b1608e" style="width:500px; height:350px;"/>
-</a>
-    </td>
-    <td valign="top" style="padding-left:20px;">
- <ul>
-  <li>Provides <b>meta information</b> about the project and its purpose.</li>
-  <li>Summarizes the <b>main features</b> of the application (routes, profiles, comments, admin tools, etc.).</li>
-  <li>Includes a clear overview of the <b>tech stack</b> used (Spring Boot, Thymeleaf, JavaScript, MySQL, Redis, Cloudinary, Leaflet, etc.).</li>
-  <li>Presents a <b>roadmap</b> with expected enhancements and future improvements.</li>
-  <li>Styled with <b>custom CSS</b> to ensure readability and a pleasant user experience.</li>
 </ul>
     </td>
   </tr>
@@ -651,7 +630,6 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 | Method | Endpoint                  | Description             | Access |
 |--------|---------------------------|-------------------------|--------|
 | GET    | `/`     | Get home page   | Public  |
-| GET    | `/about`     | Get about page   | Public  |
 
 ---
 
@@ -680,7 +658,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 | Feature / Permission       | Guest | User | Author | Admin |
 |----------------------------|:-----:|:----:|:------:|:-----:|
-| View Home & About page     | ✅    | ✅   | ✅     | ✅    |
+| Home page  | ✅    | ✅   | ✅     | ✅    |
 | Register                   | ✅    | ❌   | ❌     | ❌    |
 | View all routes            | ❌    | ✅   | ✅     | ✅    |
 | Create new routes          | ❌    | ✅   | ✅     | ✅    |
