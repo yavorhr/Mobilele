@@ -475,11 +475,64 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
+## Home Page
+
+### Hero Section & Quick Search
+
+<table>
+<tr width="100%">
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a">
+  <img src="https://github.com/user-attachments/assets/05e95e84-4959-4f6e-b5ea-ef9a532d577a" alt="home 1 - browser offers + quick search" style="width:500px; height:auto;"/>
+</a>
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+
+- Welcome banner with call-to-action button.
+- Advanced vehicle search by:
+
+  - Category
+  - Brand
+  - Model
+  - Price
+  - Manufacturing year
+- Direct navigation to all available offers.
+</td>
+
+</tr>
+</table>
+
+### Recently Added Offers
+
+<table>
+<tr>
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab">
+  <img src="https://github.com/user-attachments/assets/996cd5e3-d846-453d-b0f2-ade18219d9ab" alt="home 2 - recently added offers" style="width:500px; height:auto;"/>
+</a>
+</td>
+
+</td>
+<td valign="top" style="padding-left:20px;" width="50%">
+
+- Displays the latest vehicle listings.
+- Shows vehicle specifications.
+- Includes pricing information.
+- Tracks listing views.
+- Quick access to the full offers catalog.
+
+</td>
+</tr>
+</table>
+
+
+## User profile & features
+
 ### User profile
 
 <table>
-  <tr>
-   <td valign="top" width="50%">
+<tr width="100%">
+    <td valign="top" width="50%">
 <a href="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19">
   <img src="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19" style="width:500px; height:auto;"/>
 </a>
@@ -498,16 +551,10 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </tr>
 </table>
 
-
-<img width="1892" height="901" alt="Profile - Ediit Validation" src="5" />
-
-
----
-
 ### User profile in "Edit mode"
 
 <table>
-  <tr>
+ <tr width="100%">
    <td valign="top" width="50%">
 <a href="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a">
   <img src="https://github.com/user-attachments/assets/a1b5c338-a30d-41b8-b0ab-2b4f89bb689a" style="width:500px; height:auto;"/>
@@ -539,7 +586,34 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
   </tr>
 </table>
 
+### User's Favourites
+<img width="1900" height="909" alt="Profile - Favorites" src="https://github.com/user-attachments/assets/834ffc3c-a635-4251-985b-d50e059b4307" />
+
+<table>
+<tr width="100%">
+    <td valign="top" width="50%">
+<a href="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19">
+  <img src="https://github.com/user-attachments/assets/d9e44208-bdce-49e2-8a0b-409927ed3b19" style="width:500px; height:auto;"/>
+</a>
+    </td>
+    <td valign="top" style="padding-left:20px;">
+   <ul>
+  <p>This user's profile page brings the following features:</p>
+  <li><b>Profile image</b>: Displays the user’s profile picture (or placeholder if none).</li>
+  <li><b>Image upload</b>: Users can change their profile image via a button.  
+      – Implemented with <b>Fetch API</b> and <b>Cloudinary</b> for seamless uploads without page reload. Image persists in the database.</li>
+  <li><b>User level</b>: Displays user’s level, calculated dynamically based on the number of routes they have added.</li>
+  <li><b>Personal information</b>: Shows user details (name, email, etc.) and connected <b>social accounts</b>.</li>
+  <li><b>Enhanced UX</b>: Clean CSS styling for a visually appealing and user-friendly profile page.</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+
 ---
+
+
 
 # ⚙️ Technical Details
 
