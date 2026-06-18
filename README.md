@@ -355,7 +355,7 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
-### All routes
+### All offers
 
 <table>
   <tr>
@@ -382,17 +382,21 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
 
 ---
 
-### Route Details
+### Offer Details
 
 <table>
   <tr>
    <td valign="top" width="50%">
-<a href="https://github.com/user-attachments/assets/3f5ea2e2-381c-429a-baad-b44929908193">
-  <img src="https://github.com/user-attachments/assets/3f5ea2e2-381c-429a-baad-b44929908193"  style="width:500px; height:300px;"/>
+<a href="https://github.com/user-attachments/assets/6f992d29-334b-4d54-b428-ec9e449151ee">
+  <img src="https://github.com/user-attachments/assets/6f992d29-334b-4d54-b428-ec9e449151ee"  style="width:500px; height:300px;"/>
 </a>
  <br/>
-<a href="https://github.com/user-attachments/assets/96fbac8f-f164-47ba-8ca2-135a12ca505c">
-  <img src="https://github.com/user-attachments/assets/96fbac8f-f164-47ba-8ca2-135a12ca505c"  style="width:500px; height:200px;"/>
+<a href="https://github.com/user-attachments/assets/c56a8002-dd79-4593-9f63-a8261ab6254f">
+  <img src="https://github.com/user-attachments/assets/c56a8002-dd79-4593-9f63-a8261ab6254f"  style="width:500px; height:300px;"/>
+</a>
+<br/>
+<a href="https://github.com/user-attachments/assets/f02aa52d-5e91-46ea-9268-37ac676a57ef">
+  <img src="https://github.com/user-attachments/assets/f02aa52d-5e91-46ea-9268-37ac676a57ef"  style="width:500px; height:300px;"/>
 </a>
     </td>
     <td valign="top" style="padding-left:20px;">
@@ -408,6 +412,10 @@ The application is fully responsive and optimized for desktop, tablet, and mobil
     </td>
   </tr>
 </table>
+
+
+
+
 
 ---
 
